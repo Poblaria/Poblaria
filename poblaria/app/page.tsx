@@ -1,25 +1,17 @@
-import React from "react";
+import Link from 'next/link';
 
-const Project: React.FC = () => {
+const Project = () => {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-indigo-600">Welcome to POBLARIA!</h1>
+    <div>
+        <h1 className="text-4xl font-bold bg-green-500">Welcome to POBLARIA!</h1>
         <p className="text-lg mt-4 text-gray-600">
           Discover Your Perfect Rural Escape
         </p>
-      </header>
 
       <div className="flex space-x-6">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-          Button 1
-        </button>
-        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
-          Button 2
-        </button>
-        <button className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
-          Button 3
-        </button>
+        <Link href="/explore" className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+          Explore
+        </Link>
       </div>
     </div>
   );
