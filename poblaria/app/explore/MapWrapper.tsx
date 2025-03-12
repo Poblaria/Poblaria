@@ -6,7 +6,7 @@ const MapComponent = dynamic(
   () => import('./MapComponent'),
   { 
     ssr: false,
-    loading: () => <div className="h-[600px] animate-pulse bg-gray-200 rounded-lg" />
+    loading: () => <div className="h-[1000px] animate-pulse bg-gray-200 rounded-lg" />
   }
 );
 
