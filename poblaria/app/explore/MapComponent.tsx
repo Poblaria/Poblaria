@@ -51,31 +51,55 @@ const JOBS = [
 export default function Map() {
   const [showHouses, setShowHouses] = useState(true);
   const [showJobs, setShowJobs] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   return (
     <div className="container mx-auto p-4">
-      {/* Filter Controls - Now in separate div */}
-      <div className="bg-grey p-4 rounded-lg shadow-md flex gap-4 mb-4">
-        <label className="flex items-center gap-2 cursor-pointer">
-        <input
-            type="checkbox"
-            checked={showHouses}
-            onChange={(e) => setShowHouses(e.target.checked)}
-            className="h-4 w-4 house"
-            />
-          <span>Houses ({HOUSES.length})</span>
-        </label>
-
-        <label className="flex items-center gap-2 cursor-pointer">
-        <input
-            type="checkbox"
-            checked={showJobs}
-            onChange={(e) => setShowJobs(e.target.checked)}
-            className="h-4 w-4 job"
-            />
-          <span>Jobs ({JOBS.length})</span>
-        </label>
+      {/* Filter Button */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="flex items-center gap-2 bg-white hover:bg-gray-50 px-4 py-2 rounded-lg shadow-md transition-all"
+        >
+          <img
+            src="/images/filter-icon.png"
+            alt="Filter options"
+            className="w-5 h-5"
+          />
+          <span className="text-sm font-medium">Filters</span>
+        </button>
       </div>
+
+      {/* Filter Options */}
+      {showFilters && (
+        <div className="bg-white p-4 rounded-lg shadow-md mb-4 space-y-3">
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="housesFilter"
+              checked={showHouses}
+              onChange={(e) => setShowHouses(e.target.checked)}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label htmlFor="housesFilter" className="text-sm font-medium">
+              Houses ({HOUSES.length})
+            </label>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              id="jobsFilter"
+              checked={showJobs}
+              onChange={(e) => setShowJobs(e.target.checked)}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            />
+            <label htmlFor="jobsFilter" className="text-sm font-medium">
+              Jobs ({JOBS.length})
+            </label>
+          </div>
+        </div>
+      )}
 
       {/* Map Container */}
       <div className="h-[600px] w-full rounded-lg overflow-hidden">

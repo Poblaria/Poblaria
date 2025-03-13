@@ -32,7 +32,6 @@ body {
   width: 100%;
 }
 
-/* Custom checkbox styling */
 input[type="checkbox"] {
   -webkit-appearance: none;
   appearance: none;
@@ -46,7 +45,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-  background-color: #3b82f6; /* Default blue */
+  background-color: #3b82f6;
   border-color: #3b82f6;
 }
 
@@ -62,13 +61,25 @@ input[type="checkbox"]:checked::after {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
-/* Specific colors for house/job checkboxes */
 input[type="checkbox"].house:checked {
-  background-color: #ef4444; /* Red */
+  background-color: #ef4444;
   border-color: #ef4444;
 }
 
 input[type="checkbox"].job:checked {
-  background-color: #3b82f6; /* Blue */
+  background-color: #3b82f6; 
+  border-color: #3b82f6;
+}
+
+input, select, textarea {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
   border-color: #3b82f6;
 }
