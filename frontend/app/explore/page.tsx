@@ -1,5 +1,4 @@
 // poblaria/next/app/explore/page.tsx
-
 "use client";
 import MapWrapper from "./components/MapWrapper";
 
@@ -38,4 +37,3 @@ export default function Explore() {
     </main>
   );
 }*/
-
