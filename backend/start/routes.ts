@@ -12,6 +12,7 @@ import { middleware } from "#start/kernel";
 
 const AuthController = () => import("#controllers/auth_controller");
 const HousingController = () => import("#controllers/housing_controller");
+const JobController = () => import("#controllers/job_controller");
 
 router
     .group(() => {
@@ -30,3 +31,13 @@ router
         router.delete("housings.delete", [HousingController, "delete"]).as("housings.delete");
     })
     .as("housings");
+
+router
+    .group(() => {
+        router.get("jobs.list", [JobController, "list"]).as("jobs.list");
+        router.post("jobs.create", [JobController, "create"]).as("jobs.create");
+        router.get("jobs.read", [JobController, "read"]).as("jobs.read");
+        router.put("jobs.update", [JobController, "update"]).as("jobs.update");
+        router.delete("jobs.delete", [JobController, "delete"]).as("jobs.delete");
+    })
+    .as("jobs");
