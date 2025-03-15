@@ -24,20 +24,20 @@ router
 
 router
     .group(() => {
-        router.get("housings.list", [HousingController, "list"]).as("housings.list");
-        router.post("housings.create", [HousingController, "create"]).as("housings.create");
-        router.get("housings.read", [HousingController, "read"]).as("housings.read");
-        router.put("housings.update", [HousingController, "update"]).as("housings.update");
-        router.delete("housings.delete", [HousingController, "delete"]).as("housings.delete");
+        router.get("list", [HousingController, "list"]).as("list");
+        router.post("create", [HousingController, "create"]).as("create");
+        router.get("read", [HousingController, "read"]).as("read");
+        router.put("update", [HousingController, "update"]).as("update");
+        router.delete("delete", [HousingController, "delete"]).as("delete");
     })
-    .as("housings");
+    .prefix("housings");
 
 router
     .group(() => {
-        router.get("jobs.list", [JobController, "list"]).as("jobs.list");
-        router.post("jobs.create", [JobController, "create"]).as("jobs.create");
-        router.get("jobs.read", [JobController, "read"]).as("jobs.read");
-        router.put("jobs.update", [JobController, "update"]).as("jobs.update");
-        router.delete("jobs.delete", [JobController, "delete"]).as("jobs.delete");
+        router.get("list", [JobController, "list"]).as("list");
+        router.post("create", [JobController, "create"]).as("create");
+        router.get("read", [JobController, "read"]).as("read");
+        router.put("update", [JobController, "update"]).as("update");
+        router.delete("delete", [JobController, "delete"]).as("delete");
     })
-    .as("jobs");
+    .prefix("jobs");

@@ -11,7 +11,13 @@ export default class extends BaseSchema {
             table.string("company").notNullable();
             table.string("address").notNullable();
             table.integer("salary").notNullable().unsigned();
-            table.string("jobType").notNullable();
+            table
+                .integer("job_type_id")
+                .notNullable()
+                .unsigned()
+                .references("id")
+                .inTable("job_types")
+                .onDelete("CASCADE");
             table.boolean("is_available").notNullable().defaultTo(true);
 
             table.timestamp("created_at").notNullable();

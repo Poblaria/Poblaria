@@ -1,5 +1,6 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import Housing from "#models/housing";
+import { createHousingValidator, updateHousingValidator } from "#validators/housing";
 
 export default class HousingController {
     async list({ response }: HttpContext) {
@@ -8,22 +9,7 @@ export default class HousingController {
     }
 
     async create({ request, response }: HttpContext) {
-        const data = request.only([
-            "title",
-            "description",
-            "price",
-            "housing_type_id",
-            "housing_offer_type_id",
-            "rooms",
-            "bathrooms",
-            "area",
-            "land_area",
-            "address",
-            "latitude",
-            "longitude",
-            "is_available"
-        ]);
-
+        const data = await request.validateUsing(createHousingValidator);
         const housing = await Housing.create(data);
         return response.created(housing);
     }
@@ -39,22 +25,7 @@ export default class HousingController {
         const housing = await Housing.find(params.id);
         if (!housing) return response.notFound({ message: "Housing not found" });
 
-        const data = request.only([
-            "title",
-            "description",
-            "price",
-            "housing_type_id",
-            "housing_offer_type_id",
-            "rooms",
-            "bathrooms",
-            "area",
-            "land_area",
-            "address",
-            "latitude",
-            "longitude",
-            "is_available"
-        ]);
-
+        const data = await request.validateUsing(updateHousingValidator);
         housing.merge(data);
         await housing.save();
 
