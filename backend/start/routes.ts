@@ -30,7 +30,8 @@ router
         router.put("update", [HousingController, "update"]).as("update");
         router.delete("delete", [HousingController, "delete"]).as("delete");
     })
-    .prefix("housings");
+    .prefix("housings")
+    .as("housings");
 
 router
     .group(() => {
@@ -40,4 +41,5 @@ router
         router.put("update", [JobController, "update"]).as("update");
         router.delete("delete", [JobController, "delete"]).as("delete");
     })
-    .prefix("jobs");
+    .prefix("jobs")
+    .as("jobs");

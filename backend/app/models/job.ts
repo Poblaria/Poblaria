@@ -22,6 +22,9 @@ export default class Job extends BaseModel {
     @column()
     declare salary: number;
 
+    @column()
+    declare typeId: number;
+
     @belongsTo(() => JobType)
     declare type: BelongsTo<typeof JobType>;
 

@@ -10,5 +10,5 @@ export default class JobType extends BaseModel {
     declare name: "full-time" | "part-time" | "apprenticeship" | "internship" | "interim";
 
     @hasMany(() => Job)
-    declare housings: HasMany<typeof Job>;
+    declare job: HasMany<typeof Job>;
 }
