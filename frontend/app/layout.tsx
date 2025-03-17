@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body style={{ height: "100vh", margin: 0 }}>
         <NavBar />
         {children}
       </body>
