@@ -38,6 +38,7 @@ export default function MapComponent() {
   const [showFilters, setShowFilters] = useState(false);
   const toogleShowFilters = () => setShowFilters((prev) => !prev);
   const [selectedFilterType, setSelectedFilterType] = useState<"jobs" | "houses" | null>(null);
+
   const [housingFilters, setHousingFilters] = useState({
     propertyType: [] as string[],
     housingOptions: [] as string[],
@@ -47,9 +48,8 @@ export default function MapComponent() {
 
   // Job filters state
   const [jobFilters, setJobFilters] = useState({
-    jobType: "",
-    domain: "",
-    location: "",
+    jobIndustry: [] as string[],
+    jobType: [] as string[],
   });
 
   // Housing filter handler
