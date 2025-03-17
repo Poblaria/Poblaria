@@ -17,7 +17,7 @@ export default class Job extends BaseModel {
     declare company: string;
 
     @column()
-    declare location: string;
+    declare address: string;
 
     @column()
     declare salary: number;

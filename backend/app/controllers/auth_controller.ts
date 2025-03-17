@@ -1,10 +1,14 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import { loginValidator, registerValidator } from "#validators/auth";
 import User from "#models/user";
+import snakecaseKeys from "snakecase-keys";
 
 export default class AuthController {
     async register({ request, response }: HttpContext) {
-        return response.created(await User.create(await request.validateUsing(registerValidator)));
+        const data = await request.validateUsing(registerValidator);
+        const user = await User.create(data);
+
+        return response.created(snakecaseKeys(user.serialize()));
     }
 
     async login({ request, response }: HttpContext) {
@@ -19,6 +23,6 @@ export default class AuthController {
         const token = user.currentAccessToken.identifier;
 
         await User.accessTokens.delete(user, token);
-        return response.ok("");
+        return response.ok({ message: "User successfully logged out" });
     }
 }

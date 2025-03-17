@@ -1,23 +1,34 @@
 import vine from "@vinejs/vine";
 
-export const createJobValidator = vine.compile(
-    vine.object({
-        title: vine.string().minLength(3).maxLength(255),
-        description: vine.string().optional(),
-        salary: vine.number().positive().optional(),
-        job_type_id: vine.number().positive(),
-        location: vine.string().maxLength(255).optional(),
-        is_remote: vine.boolean().optional(),
-    })
-);
+const jobValidator = (allowOptional = true) =>
+    vine.compile(
+        vine.object({
+            title: vine.string().minLength(3).maxLength(255),
+            description: allowOptional ? vine.string().optional() : vine.string(),
+            company: vine.string().maxLength(255),
+            address: allowOptional
+                ? vine.string().maxLength(255).optional()
+                : vine.string().maxLength(255),
+            salary: allowOptional ? vine.number().positive().optional() : vine.number().positive(),
+            type_id: vine.number().positive(),
+            location: allowOptional
+                ? vine.string().maxLength(255).optional()
+                : vine.string().maxLength(255),
+            is_remote: allowOptional ? vine.boolean().optional() : vine.boolean()
+        })
+    );
 
-export const updateJobValidator = vine.compile(
+export const postJobValidator = jobValidator();
+
+export const putJobValidator = jobValidator(false);
+
+export const patchJobValidator = vine.compile(
     vine.object({
         title: vine.string().minLength(3).maxLength(255).optional(),
         description: vine.string().optional(),
         salary: vine.number().positive().optional(),
-        job_type_id: vine.number().positive().optional(),
+        type_id: vine.number().positive().optional(),
         location: vine.string().maxLength(255).optional(),
-        is_remote: vine.boolean().optional(),
+        is_remote: vine.boolean().optional()
     })
 );
