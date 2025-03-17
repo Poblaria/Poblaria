@@ -6,7 +6,7 @@ import { HomeIcon, BriefcaseIcon, UsersIcon, ChatBubbleLeftRightIcon } from '@he
 export default function Home() {
   return (
     <div>
-      <header className="pt-16">
+      <header className="pt-5">
         <div className="container mx-auto px-4 pt-20 pb-30 rounded-3xl">
           <div className="overflow-hidden h-[550px] w-full relative rounded-3xl">
             <Image
