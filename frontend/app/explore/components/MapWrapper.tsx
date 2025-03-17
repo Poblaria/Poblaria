@@ -1,5 +1,5 @@
 "use client";
-
+import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
@@ -35,7 +35,7 @@ export default function MapWrapper() {
   };
 
   return (
-    <div className="w-full h-full relative">
+    <Box className="w-full h-full relative">
       {viewMode === "map" ? <MapComponent /> : <ListView />}
 
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 bg-white" >
@@ -50,7 +50,7 @@ export default function MapWrapper() {
           aria-label="map view"
           sx={{
             "&.Mui-selected": {
-            backgroundColor: "#83A16C",
+            backgroundColor: "#5E7749",
             color: "white",
             "&hover": {
               backgroundColor: "#83A16C",
@@ -67,7 +67,7 @@ export default function MapWrapper() {
           aria-label="list view"
           sx={{
             "&.Mui-selected": {
-            backgroundColor: "#83A16C",
+            backgroundColor: "#5E7749",
             color: "white",
             "&hover": {
               backgroundColor: "#83A16C",
@@ -82,7 +82,7 @@ export default function MapWrapper() {
       </ToggleButtonGroup>
 
       </div>
-    </div>
+    </Box>
 
   );
 }

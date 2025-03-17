@@ -4,8 +4,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Box from "@mui/material/Box";
-import { HOUSES, JOBS } from "./data/Data";
-import FilterBar, {DataType} from "./FilterBar";
+import { HOUSES, JOBS } from "../data/Data";
+import FilterBar, { DataType } from "./FilterBar";
 
 const HomeLeafletIcon = L.icon({
   iconUrl: "/images/home-icon1.png",
@@ -25,7 +25,11 @@ export default function MapComponent() {
   const toogleShowFilters = () => setShowFilters((prev) => !prev);
 
   return (
-    <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }} marginTop={8}>
+    <Box
+      height={"100%"}
+      sx={{ display: "flex", flexDirection: "column" }}
+      marginTop={8}
+    >
       {/* FilterBar component */}
       <FilterBar
         selectedOption={selectedOption}
@@ -101,6 +105,20 @@ export default function MapComponent() {
             >
               <Popup>
                 <Box sx={{ minWidth: 250 }}>
+                  {house.image && (
+                    <Box
+                      component="img"
+                      src={house.image}
+                      alt={house.title}
+                      sx={{
+                        width: "100%",
+                        height: "auto",
+                        mb: 2,
+                        borderRadius: 1,
+                        objectFit: "cover",
+                      }}
+                    />
+                  )}
                   <Box
                     component="h3"
                     sx={{ fontWeight: "bold", fontSize: "1.125rem", mb: 2 }}
