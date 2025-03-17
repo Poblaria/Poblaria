@@ -10,14 +10,14 @@ export default class extends BaseSchema {
             table.text("description").notNullable().defaultTo("");
             table.integer("price").notNullable().unsigned();
             table
-                .integer("housing_type_id")
+                .integer("type_id")
                 .notNullable()
                 .unsigned()
                 .references("id")
                 .inTable("housing_types")
                 .onDelete("CASCADE");
             table
-                .integer("housing_offer_type_id")
+                .integer("offer_type_id")
                 .notNullable()
                 .unsigned()
                 .references("id")
@@ -26,7 +26,7 @@ export default class extends BaseSchema {
             table.integer("rooms").notNullable().unsigned();
             table.integer("bathrooms").notNullable().unsigned();
             table.integer("area").notNullable().unsigned();
-            table.integer("land_area").notNullable().unsigned();
+            table.integer("land_area").unsigned();
             table.string("address").notNullable();
             table.float("latitude").notNullable();
             table.float("longitude").notNullable();

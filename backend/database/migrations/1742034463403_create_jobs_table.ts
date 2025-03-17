@@ -9,10 +9,10 @@ export default class extends BaseSchema {
             table.string("title").notNullable();
             table.text("description").notNullable().defaultTo("");
             table.string("company").notNullable();
-            table.string("address").notNullable();
-            table.integer("salary").notNullable().unsigned();
+            table.string("address");
+            table.integer("salary").unsigned();
             table
-                .integer("job_type_id")
+                .integer("type_id")
                 .notNullable()
                 .unsigned()
                 .references("id")
