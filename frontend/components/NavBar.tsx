@@ -35,15 +35,15 @@ export const NavBar = () => {
         <Button
           variant="text"
           sx={{
-            backgroundColor: path === "/home" ? "#5E7749" : "",
-            color: path === "/home" ? "white" : "black",
+            backgroundColor: path === "/" ? "#5E7749" : "",
+            color: path === "/" ? "white" : "black",
             "&:hover": {
               backgroundColor: "#83A16C",
               color: "white",
             },
           }}
         >
-          <Link href="/home">Home</Link>
+          <Link href="/">Home</Link>
         </Button>
         <Button
           variant="text"
