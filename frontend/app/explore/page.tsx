@@ -1,5 +1,17 @@
 // poblaria/next/app/explore/page.tsx
-'use client';
+"use client";
+import MapWrapper from "./components/MapWrapper";
+
+export default function Explore() {
+  return (
+    <main className="w-full h-full">
+      {/* <FilterBar></FilterBar> */}
+      <MapWrapper />
+    </main>
+  );
+}
+
+/*'use client';
 
 import { useState } from 'react';
 import MapWrapper from './MapWrapper';
@@ -24,4 +36,4 @@ export default function Explore() {
       <MapWrapper />
     </main>
   );
-}
+}*/

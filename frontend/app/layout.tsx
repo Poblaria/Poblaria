@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Nunito } from "next/font/google";
+import { NavBar } from "../components/NavBar";
 
 const font = Nunito({
   subsets: ["latin"],
@@ -18,9 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={font.className}
-      >
+      <body style={{ overflow: "hidden", height: "100vh", margin: 0 }}>
+        <NavBar />
         {children}
       </body>
     </html>
