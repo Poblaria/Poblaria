@@ -19,6 +19,7 @@ export default function ListView() {
         onOptionChange={setDataType}
         showFilters={showFilters}
         toggleShowFilters={toggleShowFilters}
+        setShowFilters={setShowFilters}
       />
       <Grid container spacing={2} marginLeft={6} marginRight={6}>
         {data.map((item) => (

@@ -3,6 +3,7 @@ import React from "react";
 import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { FilterList as FilterListIcon, Home as HomeIcon, Work as WorkIcon } from "@mui/icons-material";
 import Box from "@mui/material/Box";
+import { Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 
 export type DataType = "jobs" | "houses";
 
@@ -11,6 +12,7 @@ interface FilterBarProps {
   onOptionChange: (newOption: DataType) => void;
   showFilters: boolean;
   toggleShowFilters: () => void;
+  setShowFilters: (value: boolean) => void;
 }
 
 export default function FilterBar({
@@ -18,6 +20,7 @@ export default function FilterBar({
     onOptionChange,
     showFilters,
     toggleShowFilters,
+    setShowFilters,
 }: FilterBarProps) {
     return (
         <Box
@@ -96,6 +99,50 @@ export default function FilterBar({
             &nbsp;House
           </ToggleButton>
         </ToggleButtonGroup>
+
+              {/* Dialog for Filters */}
+      <Dialog
+        open={showFilters}
+        onClose={() => setShowFilters(false)}
+        fullWidth
+        maxWidth="sm"
+      >
+        <DialogTitle>Filters</DialogTitle>
+        <DialogContent dividers>
+          {/* Insert the filters that we need here */}
+          <p className="text-sm">We need to insert the filters here</p>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: "space-between", px: 3, py: 2 }}>
+          <Button
+            onClick={() => setShowFilters(false)}
+            variant="outlined"
+            sx={{
+              height: "40px",
+              color: "black",
+              borderColor: "#DCDCDC",
+              "&:hover": {
+                borderColor: "#DCDCDC",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => setShowFilters(false)}
+            variant="contained"
+            sx={{
+              height: "40px",
+              backgroundColor: "#5E7749",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#5E7749",
+              },
+            }}
+          >
+            Done
+          </Button>
+        </DialogActions>
+      </Dialog>
         
       </Box>
     )

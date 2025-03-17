@@ -3,13 +3,6 @@ import { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
 import Box from "@mui/material/Box";
 import { HOUSES, JOBS } from "./data/Data";
 import FilterBar, {DataType} from "./FilterBar";
@@ -39,50 +32,8 @@ export default function MapComponent() {
         onOptionChange={setSelectedOption}
         showFilters={showFilters}
         toggleShowFilters={toogleShowFilters}
+        setShowFilters={setShowFilters}
       />
-      {/* Dialog for Filters */}
-      <Dialog
-        open={showFilters}
-        onClose={() => setShowFilters(false)}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle>Filters</DialogTitle>
-        <DialogContent dividers>
-          {/* Insert the filters that we need here */}
-          <p className="text-sm">We need to insert the filters here</p>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: "space-between", px: 3, py: 2 }}>
-          <Button
-            onClick={() => setShowFilters(false)}
-            variant="outlined"
-            sx={{
-              height: "40px",
-              color: "black",
-              borderColor: "#DCDCDC",
-              "&:hover": {
-                borderColor: "#DCDCDC",
-              },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => setShowFilters(false)}
-            variant="contained"
-            sx={{
-              height: "40px",
-              backgroundColor: "#5E7749",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#5E7749",
-              },
-            }}
-          >
-            Done
-          </Button>
-        </DialogActions>
-      </Dialog>
 
       {/* Map Container */}
       <MapContainer
