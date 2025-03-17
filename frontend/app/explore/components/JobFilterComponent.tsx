@@ -1,75 +1,123 @@
 "use client";
 import {
+  Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Typography,
-  Select,
-  MenuItem,
-  TextField,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Divider,
   Button,
   Box,
   IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-interface JobFiltersFormProps {
+interface JobsFiltersFormProps {
+  open: boolean;
   onClose: () => void;
   onBack: () => void;
   jobFilters: {
-    jobType: string;
-    domain: string;
-    location: string;
+    jobIndustry: string[];
+    jobType: string[];
   };
-  onFilterChange: (field: keyof typeof jobFilters, value: string) => void;
+  onFilterChange: (category: keyof typeof jobFilters, value: string) => void;
 }
 
-export default function JobFiltersForm({
+export default function jobsFiltersForm({
+  open,
   onClose,
   onBack,
   jobFilters,
   onFilterChange,
-}: JobFiltersFormProps) {
+}: JobsFiltersFormProps) {
   return (
     <>
       <DialogTitle
+        component="div"
         sx={{
           display: "flex",
           alignItems: "center",
           gap: 2,
           borderBottom: "1px solid #e0e0e0",
-          padding: "16px 24px",
         }}
       >
         <IconButton onClick={onBack} sx={{ color: "#666" }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+        <Typography component="div" sx={{ fontWeight: "bold" }}>
           Job Filters
         </Typography>
       </DialogTitle>
+
       <DialogContent dividers sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}>
-        {/* Existing job filters content */}
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {/* Job Type Section */}
           <div>
-            <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
-              Job Type
-            </Typography>
-            <Select
-              value={jobFilters.jobType}
-              onChange={(e) => onFilterChange("jobType", e.target.value)}
-              fullWidth
-              displayEmpty
-              sx={{ backgroundColor: "white" }}
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
             >
-              <MenuItem value="">Any Type</MenuItem>
-              <MenuItem value="seasonal">Seasonal</MenuItem>
-              <MenuItem value="permanent">Permanent</MenuItem>
-              <MenuItem value="part-time">Part-time</MenuItem>
-            </Select>
+              Job type 
+            </Typography>
+            <FormGroup>
+              {["Seasonal", "Part-Time", "Temporary", "Casual"].map((option) => (
+                <FormControlLabel
+                  key={option}
+                  control={
+                    <Checkbox
+                      checked={jobFilters.jobType.includes(option)}
+                      onChange={() => onFilterChange("jobType", option)}
+                      sx={{
+                        color: "#83A16C",
+                        "&.Mui-checked": {
+                          color: "#83A16C",
+                        },
+                      }}
+                    />
+                  }
+                  label={option}
+                />
+              ))}
+            </FormGroup>
           </div>
-          {/* Rest of the job filters sections... */}
+
+          <Divider />
+
+          {/* Job industry Section */}
+          <div>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
+              Job Industry
+            </Typography>
+            <FormGroup>
+              {["Agriculture & Farming", "Skilled Trades & Craftsmanship", "Tourism & Hospitality", "Cultural Preservation"].map((option) => (
+                <FormControlLabel
+                  key={option}
+                  control={
+                    <Checkbox
+                      checked={jobFilters.jobIndustry.includes(option)}
+                      onChange={() => onFilterChange("jobIndustry", option)}
+                      sx={{
+                        color: "#83A16C",
+                        "&.Mui-checked": {
+                          color: "#83A16C",
+                        },
+                      }}
+                    />
+                  }
+                  label={option}
+                />
+              ))}
+            </FormGroup>
+          </div>
+
         </Box>
       </DialogContent>
       <DialogActions sx={{ 

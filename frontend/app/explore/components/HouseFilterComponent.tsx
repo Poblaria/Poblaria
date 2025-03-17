@@ -38,6 +38,7 @@ export default function HousingFiltersForm({
   return (
     <>
       <DialogTitle
+        component="div"
         sx={{
           display: "flex",
           alignItems: "center",
@@ -48,7 +49,7 @@ export default function HousingFiltersForm({
         <IconButton onClick={onBack} sx={{ color: "#666" }}>
           <ArrowBackIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+        <Typography component="div" sx={{ fontWeight: "bold" }}>
           Housing Filters
         </Typography>
       </DialogTitle>
@@ -57,7 +58,7 @@ export default function HousingFiltersForm({
           {/* Property Type Section */}
           <div>
             <Typography
-              variant="h6"
+              component="div"
               gutterBottom
               sx={{ fontWeight: "bold", color: "#555" }}
             >
@@ -90,7 +91,7 @@ export default function HousingFiltersForm({
           {/* Housing Options Section */}
           <div>
             <Typography
-              variant="h6"
+              component="div"
               gutterBottom
               sx={{ fontWeight: "bold", color: "#555" }}
             >
@@ -123,7 +124,7 @@ export default function HousingFiltersForm({
           {/* Condition Section */}
           <div>
             <Typography
-              variant="h6"
+              component="div"
               gutterBottom
               sx={{ fontWeight: "bold", color: "#555" }}
             >
@@ -156,7 +157,7 @@ export default function HousingFiltersForm({
           {/* Furnished Section */}
           <div>
             <Typography
-              variant="h6"
+              component="div"
               gutterBottom
               sx={{ fontWeight: "bold", color: "#555" }}
             >
