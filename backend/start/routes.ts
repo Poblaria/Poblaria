@@ -22,24 +22,6 @@ router
     })
     .as("auth");
 
-router
-    .group(() => {
-        router.get("list", [HousingController, "list"]).as("list");
-        router.post("create", [HousingController, "create"]).as("create");
-        router.get("read", [HousingController, "read"]).as("read");
-        router.put("update", [HousingController, "update"]).as("update");
-        router.delete("delete", [HousingController, "delete"]).as("delete");
-    })
-    .prefix("housings")
-    .as("housings");
+router.resource("housings", HousingController).apiOnly().where("id", router.matchers.number());
 
-router
-    .group(() => {
-        router.get("list", [JobController, "list"]).as("list");
-        router.post("create", [JobController, "create"]).as("create");
-        router.get("read", [JobController, "read"]).as("read");
-        router.put("update", [JobController, "update"]).as("update");
-        router.delete("delete", [JobController, "delete"]).as("delete");
-    })
-    .prefix("jobs")
-    .as("jobs");
+router.resource("jobs", JobController).apiOnly().where("id", router.matchers.number());
