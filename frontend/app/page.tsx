@@ -1,100 +1,205 @@
-import { Suspense } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { HomeIcon, BriefcaseIcon, UsersIcon, ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline';
+"use client";
+import { Suspense, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Home as HomeIcon, Work as WorkIcon } from "@mui/icons-material";
+import ContactSupportIcon from "@mui/icons-material/ContactSupport";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardMedia,
+} from "@mui/material";
 
 export default function Home() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const path = usePathname();
+  console.log(path);
+
   return (
     <div>
-      <header className="pt-5">
-        <div className="container mx-auto px-4 pt-20 pb-30 rounded-3xl">
-          <div className="overflow-hidden h-[550px] w-full relative rounded-3xl">
+      <Box
+        sx={{
+          position: "relative",
+          height: { xs: "400px", md: "550px" },
+          width: "100%",
+        }}
+      >
+        <Card sx={{ height: "100%", overflow: "hidden", position: "relative" }}>
+          <CardMedia>
             <Image
-              src="/images/fam-happy.png"
+              src="/images/happy-family-pictures.jpg"
               alt="Countryside Living"
-              fill
-              className="object-cover"
-              priority
-            />
-        </div>
-      </div>
-    </header>
+              layout="fill"
+              objectFit="cover"
+              quality={90}
+            ></Image>
+          </CardMedia>
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.2)",
+            }}
+          />
+          <Box
+            sx={{
+              position: "absolute",
+              bottom: "20%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              textAlign: "center",
+              color: "white",
+              zIndex: 2,
+            }}
+          >
+            <Typography variant="h3" fontWeight={700}>
+              Discover a New Way of Living
+            </Typography>
+            <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
+              Make theCountrysideYour Home
+            </Typography>
+          </Box>
+        </Card>
+      </Box>
 
-    {/* Search Section */}
-    <section className="py-16 bg-gray-100">
-      <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-8 text-gray-900">
-          Discover Your Perfect Rural Escape
-        </h2>
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-full shadow-lg p-2 flex">
-            <input
-              type="text"
-              placeholder="Search villages, jobs, housing..."
-              className="flex-1 px-6 py-3 rounded-full focus:outline-none"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
+      <Box sx={{ py: 8, bgcolor: "grey.100", textAlign: "center" }}>
+        <Container>
+          <Typography
+            variant="h4"
+            fontWeight="bold"
+            sx={{ mb: 3, color: "grey.900" }}
+          >
+            Discover Your Perfect Rural Escape
+          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "center", mb: 6 }}>
+            <Box
+              sx={{
+                bgcolor: "white",
+                boxShadow: 2,
+                borderRadius: 4,
+                px: 3,
+                py: 1.5,
+                width: { xs: "90%", md: "50%" },
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Search villages, jobs, housing..."
+                className="flex-1 px-3 py-2 border-0 focus:outline-none w-full"
+                style={{ borderRadius: "4px" }}
+              />
+            </Box>
+          </Box>
+        </Container>
+      </Box>
 
-    {/* Features Grid */}
-    <section className="py-16 bg-gray-100">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
-            <div className="bg-green-100 w-fit p-4 rounded-xl mb-4">
-              <HomeIcon className="h-8 w-8 text-green-600" />
-            </div>
-            <h3 className="text-2xl font-bold text-green-900 mb-3">Find Your Home</h3>
-            <p className="text-gray-600 mb-4">Browse traditional stone houses, modern apartments, and community-supported housing options</p>
-            <Link href="/housing" className="text-green-800 font-medium hover:underline">
-              View Properties →
-            </Link>
-          </div>
-          
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
-            <div className="bg-green-100 w-fit p-4 rounded-xl mb-4">
-              <BriefcaseIcon className="h-8 w-8 text-green-800" />
-            </div>
-            <h3 className="text-2xl font-bold text-green-900 mb-3">Local Employment</h3>
-            <p className="text-gray-600 mb-4">Discover opportunities in agriculture, tourism, and traditional crafts</p>
-            <Link href="/jobs" className="text-green-800 font-medium hover:underline">
-              Browse Jobs →
-            </Link>
-          </div>
-
-          <div className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
-            <div className="bg-green-100 w-fit p-4 rounded-xl mb-4">
-              <UsersIcon className="h-8 w-8 text-green-800" />
-            </div>
-            <h3 className="text-2xl font-bold text-green-900 mb-3">Community Hub</h3>
-            <p className="text-gray-600 mb-4">Connect with locals, join cultural events, and access relocation support</p>
-            <Link href="/community" className="text-green-800 font-medium hover:underline">
-              Meet the Community →
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {/* CTA Section */}
-      <section className="py-16 bg-white text-black">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready for Your New Beginning?</h2>
-            <p className="text-lg mb-8 opacity-90">Join us today and take the first step towards discovering a new way of living.</p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+      {/* Features Grid */}
+      <section className="py-16 bg-gray-100">
+        <Box className="container mx-auto px-4">
+          <Box className="grid md:grid-cols-3 gap-8 mb-16">
+            <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
+              <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
+                <HomeIcon className="h-8 w-8" style={{ color: "#5E7749" }} />
+              </Box>
+              <Typography variant="h5" fontWeight={700} mb={3}>
+                Find Your Home
+              </Typography>
+              <Typography variant="body1" color="text.secondary" mb={4}>
+                Browse traditional stone houses, modern apartments, and
+                community-supported housing options
+              </Typography>
               <Link
-                href="/contact"
-                className="bg-green-800 text-white px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition flex items-center gap-2"
+                href="/explore"
+                className="font-medium hover:underline"
+                style={{ color: "#5E7749" }}
               >
-                <ChatBubbleLeftRightIcon className="h-5 w-5" />
-                Contact Our Team
+                Explore Housing →
               </Link>
-            </div>
-          </div>
-          </div>
+            </Box>
+
+            <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
+              <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
+                <WorkIcon className="h-8 w-8" style={{ color: "#5E7749" }} />
+              </Box>
+              <Typography variant="h5" fontWeight={700} mb={3}>
+                Local Employment
+              </Typography>
+              <Typography variant="body1" color="text.secondary" mb={4}>
+                Discover opportunities in agriculture, tourism, and traditional
+                crafts
+              </Typography>
+              <Link
+                href="/explore"
+                className="font-medium hover:underline"
+                style={{ color: "#5E7749" }}
+              >
+                Browse Jobs →
+              </Link>
+            </Box>
+
+            <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
+              <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
+                <ContactSupportIcon
+                  className="h-8 w-8"
+                  style={{ color: "#5E7749" }}
+                />
+              </Box>
+              <Typography variant="h5" fontWeight={700} mb={3}>
+                Support
+              </Typography>
+              <Typography variant="body1" color="text.secondary" mb={4}>
+                Access resources and guides to make your transition to rural
+                life seamless and stress-free
+              </Typography>
+              <Link
+                href="/Eplore"
+                className="font-medium hover:underline"
+                style={{ color: "#5E7749" }}
+              >
+                Check the resources →
+              </Link>
+            </Box>
+          </Box>
+        </Box>
+      </section>
+
+      <section className="py-16 bg-white text-black">
+        <Box className="container mx-auto px-4 text-center">
+          <Box className="max-w-2xl mx-auto">
+            <Typography variant="h5" fontWeight={700} mb={3}>
+              Ready for Your New Beginning?
+            </Typography>
+            <Typography variant="body1" color="text.secondary" mb={4}>
+              Join us today and take the first step towards discovering a new
+              way of living.
+            </Typography>
+            <Box className="flex flex-col md:flex-row gap-4 justify-center">
+              <Button
+                variant="contained"
+                onClick={() => path === "/contact"}
+                sx={{
+                  height: "40px",
+                  backgroundColor: "#5E7749",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#83A16C",
+                  },
+                }}
+              >
+                Contact Our Team
+              </Button>
+            </Box>
+          </Box>
+        </Box>
       </section>
     </div>
   );
