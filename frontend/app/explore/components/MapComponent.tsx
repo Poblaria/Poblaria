@@ -5,21 +5,14 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
   Button,
-  ToggleButton,
-  ToggleButtonGroup,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
 } from "@mui/material";
-
 import Box from "@mui/material/Box";
-
-import {
-  FilterList as FilterListIcon,
-  Home as HomeIcon,
-  Work as WorkIcon,
-} from "@mui/icons-material";
+import { HOUSES, JOBS } from "./data/Data";
+import FilterBar, {DataType} from "./FilterBar";
 
 const HomeLeafletIcon = L.icon({
   iconUrl: "/images/home-icon1.png",
@@ -33,129 +26,20 @@ const JobLeafletIcon = L.icon({
   iconAnchor: [17, 35],
 });
 
-const HOUSES = [
-  {
-    id: 1,
-    coordinates: [42.4436, 1.1344],
-    title: "Traditional Stone House",
-    price: "€350,000",
-    details: "3 beds · 2 baths · 180m²",
-  },
-  {
-    id: 2,
-    coordinates: [42.444, 1.135],
-    title: "Mountain View Villa",
-    price: "€550,000",
-    details: "4 beds · 3 baths · 250m²",
-  },
-];
-
-const JOBS = [
-  {
-    id: 1,
-    coordinates: [42.4437, 1.1345],
-    title: "Baker at La Fornal",
-    salary: "€650,000",
-  },
-  {
-    id: 2,
-    coordinates: [42.4441, 1.1347],
-    title: "Bartender at La Taverna",
-    salary: "€550,000",
-  },
-];
-
 export default function MapComponent() {
-  const [selectedOption, setSelectedOption] = useState<"jobs" | "houses">(
-    "jobs"
-  );
+  const [selectedOption, setSelectedOption] = useState<DataType>("jobs");
   const [showFilters, setShowFilters] = useState(false);
-
-  const handleToggle = (
-    event: React.MouseEvent<HTMLElement>,
-    newOption: "jobs" | "houses" | null
-  ) => {
-    if (newOption !== null) {
-      setSelectedOption(newOption);
-    }
-  };
+  const toogleShowFilters = () => setShowFilters((prev) => !prev);
 
   return (
     <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }} marginTop={8}>
-      <Box
-        sx={{
-          mb: 4,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          marginLeft: 10,
-          marginRight: 10,
-        }}
-      >
-        <Button
-          variant="outlined"
-          startIcon={<FilterListIcon />}
-          onClick={() => setShowFilters(!showFilters)}
-          sx={{
-            height: "40px",
-            backgroundColor: showFilters ? "#83A16C" : "",
-            color: showFilters ? "white" : "black",
-            borderColor: showFilters ? "#83A16C" : "#DCDCDC",
-            "&:hover": {
-              backgroundColor: showFilters ? "#83A16C" : "",
-              borderColor: showFilters ? "#83A16C" : "#DCDCDC",
-            },
-          }}
-        >
-          Filters
-        </Button>
-
-        <ToggleButtonGroup
-          value={selectedOption}
-          exclusive
-          onChange={handleToggle}
-          aria-label="job or house"
-          sx={{ height: "40px" }}
-        >
-          <ToggleButton
-            value="jobs"
-            aria-label="jobs"
-            sx={{
-              height: "40px",
-              "&.Mui-selected": {
-                backgroundColor: "#83A16C",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#83A16C",
-                },
-              },
-              color: "black",
-            }}
-          >
-            <WorkIcon fontSize="small" />
-            &nbsp;Job
-          </ToggleButton>
-          <ToggleButton
-            value="houses"
-            aria-label="houses"
-            sx={{
-              height: "40px",
-              "&.Mui-selected": {
-                backgroundColor: "#83A16C",
-                color: "white",
-                "&:hover": {
-                  backgroundColor: "#83A16C",
-                },
-              },
-              color: "black",
-            }}
-          >
-            <HomeIcon fontSize="small" />
-            &nbsp;House
-          </ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
-
+      {/* FilterBar component */}
+      <FilterBar
+        selectedOption={selectedOption}
+        onOptionChange={setSelectedOption}
+        showFilters={showFilters}
+        toggleShowFilters={toogleShowFilters}
+      />
       {/* Dialog for Filters */}
       <Dialog
         open={showFilters}
