@@ -11,7 +11,7 @@ import {
   Button,
   Card,
 } from "@mui/material";
-import { CurrencyDollarIcon } from "@heroicons/react/20/solid";
+import { BookOpenIcon, CurrencyDollarIcon } from "@heroicons/react/20/solid";
 
 export default function Resources() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -109,7 +109,7 @@ export default function Resources() {
 
             <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
               <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
-                <ContactSupportIcon
+                <BookOpenIcon
                   className="h-8 w-8"
                   style={{ color: "#5E7749" }}
                 />
@@ -118,7 +118,7 @@ export default function Resources() {
                 Success Stories
               </Typography>
               <Typography variant="body1" color="text.secondary" mb={4}>
-                Real families share their journey of relocating to the countryside
+                Personal expriences based on their journey of relocating to the countryside
               </Typography>
               <Link
                 href="/Eplore"

@@ -82,7 +82,7 @@ export const NavBar = () => {
               },
           }}
         >
-          Support
+          <Link href="/support">Support</Link>
         </Button>
         <Button
           variant="text"
