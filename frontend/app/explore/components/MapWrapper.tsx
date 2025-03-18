@@ -2,12 +2,10 @@
 import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { selectClasses, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
-import {
-  Map as MapIcon,
-  List as ListIcon,
-} from '@mui/icons-material';
+import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
+import FilterBar, { DataType } from "./FilterBar";
 
 const MapComponent = dynamic(() => import("./MapComponent"), {
   ssr: false,
@@ -18,9 +16,10 @@ const MapComponent = dynamic(() => import("./MapComponent"), {
 
 const ListView = dynamic(() => import("./ListingComponent"), {
   ssr: false,
-  loading: () => <div className="h-full animate-pulse bg-gray-200 rounded-lg" />,
+  loading: () => (
+    <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
+  ),
 });
-
 
 export default function MapWrapper() {
   const [viewMode, setViewMode] = useState<"map" | "list">("map");
@@ -35,55 +34,119 @@ export default function MapWrapper() {
     }
   };
 
+  ////////////
+
+  const [dataType, setDataType] = useState<DataType>("jobs");
+  const [showFilters, setShowFilters] = useState(false);
+
+  const [jobFilters, setJobFilters] = useState({
+    jobIndustry: [] as string[],
+    jobType: [] as string[],
+  });
+
+  const [housingFilters, setHousingFilters] = useState({
+    propertyType: [] as string[],
+    housingOptions: [] as string[],
+    condition: [] as string[],
+    furnished: [] as string[],
+  });
+
+  const toggleShowFilters = () => setShowFilters((prev) => !prev);
+
+  const handleJobFilterChange = (
+    category: "jobIndustry" | "jobType",
+    value: string
+  ) => {
+    setJobFilters((prev) => ({
+      ...prev,
+      [category]: prev[category].includes(value)
+        ? prev[category].filter((item) => item !== value)
+        : [...prev[category], value],
+    }));
+  };
+
+  const handleHousingFilterChange = (
+    category: "propertyType" | "housingOptions" | "condition" | "furnished",
+    value: string
+  ) => {
+    setHousingFilters((prev) => ({
+      ...prev,
+      [category]: prev[category].includes(value)
+        ? prev[category].filter((item) => item !== value)
+        : [...prev[category], value],
+    }));
+  };
+
+  ////////////
+
   return (
-    <Box className="w-full h-full relative">
-      {viewMode === "map" ? <MapComponent /> : <ListView />}
+    <Box
+      height={"100%"}
+      sx={{ display: "flex", flexDirection: "column" }}
+      marginTop={8}
+    >
+      <FilterBar
+        selectedOption={dataType}
+        onOptionChange={setDataType}
+        showFilters={showFilters}
+        toggleShowFilters={toggleShowFilters}
+        setShowFilters={setShowFilters}
+        jobFilters={jobFilters}
+        housingFilters={housingFilters}
+        handleJobFilterChange={handleJobFilterChange}
+        handleHousingFilterChange={handleHousingFilterChange}
+      />
+      <Box className="w-full h-full relative">
+        {viewMode === "map" ? (
+          <MapComponent dataType={dataType}/>
+        ) : (
+          <ListView dataType={dataType} showFilters={showFilters} />
+        )}
 
-      <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 bg-white" >
-      <ToggleButtonGroup
-        value={viewMode}
-        exclusive
-        onChange={handleViewMode}
-        aria-label="map or list"
-      >
-        <ToggleButton
-          value="map"
-          aria-label="map view"
-          sx={{
-            "&.Mui-selected": {
-            backgroundColor: "#83A16C",
-            color: "white",
-            "&hover": {
-              backgroundColor: "#83A16C",
-            },
-          },
-            color: "black",
-          }}
+        <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 bg-white">
+          <ToggleButtonGroup
+            value={viewMode}
+            exclusive
+            onChange={handleViewMode}
+            aria-label="map or list"
           >
-          <MapIcon fontSize="small"/>
-          &nbsp;Map
-        </ToggleButton>
-        <ToggleButton
-          value="list"
-          aria-label="list view"
-          sx={{
-            "&.Mui-selected": {
-            backgroundColor: "#83A16C",
-            color: "white",
-            "&hover": {
-              backgroundColor: "#83A16C",
-            },
-          },
-            color: "black",
-          }}
-          >
-          <ListIcon fontSize="small"/>
+            <ToggleButton
+              value="map"
+              aria-label="map view"
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "#83A16C",
+                  color: "white",
+                  "&hover": {
+                    backgroundColor: "#83A16C",
+                  },
+                },
+                color: "black",
+              }}
+            >
+              <MapIcon fontSize="small" />
+              &nbsp;Map
+            </ToggleButton>
+            <ToggleButton
+              value="list"
+              aria-label="list view"
+              sx={{
+                "&.Mui-selected": {
+                  backgroundColor: "#83A16C",
+                  color: "white",
+                  "&hover": {
+                    backgroundColor: "#83A16C",
+                  },
+                },
+                color: "black",
+              }}
+            >
+              <ListIcon fontSize="small" />
               &nbsp;List
-        </ToggleButton>
-      </ToggleButtonGroup>
-
-      </div>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+      </Box>
     </Box>
-
   );
 }

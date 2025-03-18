@@ -1,61 +1,27 @@
 "use client";
 import React, { useState } from "react";
-import { Card, CardMedia, CardContent, CardActions, Button, Typography, Grid, Box } from "@mui/material";
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Button,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
 import { HOUSES, JOBS } from "../data/Data";
-import FilterBar, { DataType } from "./FilterBar";
+import { DataType } from "./FilterBar";
 
-export default function ListView() {
-  const [dataType, setDataType] = useState<DataType>("jobs");
-  const [showFilters, setShowFilters] = useState(false);
-  
-  const [jobFilters, setJobFilters] = useState({
-    jobIndustry: [] as string[],
-    jobType: [] as string[],
-  });
-  
-  const [housingFilters, setHousingFilters] = useState({
-    propertyType: [] as string[],
-    housingOptions: [] as string[],
-    condition: [] as string[],
-    furnished: [] as string[],
-  });
+interface ListViewProps {
+  dataType: DataType;
+  showFilters: boolean;
+}
 
-  const toggleShowFilters = () => setShowFilters((prev) => !prev);
-
-  const handleJobFilterChange = (category: "jobIndustry" | "jobType", value: string) => {
-    setJobFilters((prev) => ({
-      ...prev,
-      [category]: prev[category].includes(value)
-        ? prev[category].filter((item) => item !== value)
-        : [...prev[category], value],
-    }));
-  };
-
-  const handleHousingFilterChange = (
-    category: "propertyType" | "housingOptions" | "condition" | "furnished",
-    value: string
-  ) => {
-    setHousingFilters((prev) => ({
-      ...prev,
-      [category]: prev[category].includes(value)
-        ? prev[category].filter((item) => item !== value)
-        : [...prev[category], value],
-    }));
-  };
-
+export default function ListView(props: ListViewProps) {
+  const { dataType, showFilters } = props;
   return (
-    <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }} marginTop={8}>
-      <FilterBar
-        selectedOption={dataType}
-        onOptionChange={setDataType}
-        showFilters={showFilters}
-        toggleShowFilters={toggleShowFilters}
-        setShowFilters={setShowFilters}
-        jobFilters={jobFilters}
-        housingFilters={housingFilters}
-        handleJobFilterChange={handleJobFilterChange}
-        handleHousingFilterChange={handleHousingFilterChange}
-      />
+    <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }}>
       {dataType === "jobs" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>

@@ -32,17 +32,19 @@ interface FilterBarProps {
   ) => void;
 }
 
-export default function FilterBar({
-  selectedOption,
-  onOptionChange,
-  showFilters,
-  toggleShowFilters,
-  setShowFilters,
-  jobFilters,
-  housingFilters,
-  handleJobFilterChange,
-  handleHousingFilterChange,
-}: FilterBarProps) {
+export default function FilterBar(props: FilterBarProps) {
+  const {
+    selectedOption,
+    onOptionChange,
+    showFilters,
+    toggleShowFilters,
+    setShowFilters,
+    jobFilters,
+    housingFilters,
+    handleJobFilterChange,
+    handleHousingFilterChange,
+  } = props
+
   return (
     <Box
       sx={{
