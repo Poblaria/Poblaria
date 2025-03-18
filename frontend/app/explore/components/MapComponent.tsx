@@ -5,7 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
-import FilterBar, { DataType } from "./FilterBar";
+import { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
 
 const HomeLeafletIcon = L.icon({
@@ -20,59 +20,15 @@ const JobLeafletIcon = L.icon({
   iconAnchor: [17, 35],
 });
 
-export default function MapComponent() {
-  const [selectedOption, setSelectedOption] = useState<DataType>("jobs");
+interface MapComponentProps {
+  dataType: DataType;
+}
 
-  const [showFilters, setShowFilters] = useState(false);
-  const toggleShowFilters = () => setShowFilters((prev) => !prev);
-
-  const [jobFilters, setJobFilters] = useState({
-    jobIndustry: [] as string[],
-    jobType: [] as string[],
-  });
-
-  const [housingFilters, setHousingFilters] = useState({
-    propertyType: [] as string[],
-    housingOptions: [] as string[],
-    condition: [] as string[],
-    furnished: [] as string[],
-  });
-
-  const handleJobFilterChange = (category: "jobIndustry" | "jobType", value: string) => {
-    setJobFilters((prev) => ({
-      ...prev,
-      [category]: prev[category].includes(value)
-        ? prev[category].filter((item) => item !== value)
-        : [...prev[category], value],
-    }));
-  };
-
-  const handleHousingFilterChange = (
-    category: "propertyType" | "housingOptions" | "condition" | "furnished",
-    value: string
-  ) => {
-    setHousingFilters((prev) => ({
-      ...prev,
-      [category]: prev[category].includes(value)
-        ? prev[category].filter((item) => item !== value)
-        : [...prev[category], value],
-    }));
-  };
+export default function MapComponent(props: MapComponentProps) {
+  const { dataType } = props;
 
   return (
-    <Box height="100%" sx={{ display: "flex", flexDirection: "column" }} marginTop={8}>
-      <FilterBar
-        selectedOption={selectedOption}
-        onOptionChange={setSelectedOption}
-        showFilters={showFilters}
-        toggleShowFilters={toggleShowFilters}
-        setShowFilters={setShowFilters}
-        jobFilters={jobFilters}
-        housingFilters={housingFilters}
-        handleJobFilterChange={handleJobFilterChange}
-        handleHousingFilterChange={handleHousingFilterChange}
-      />
-
+    <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
       {/* Map Container */}
       <MapContainer
         center={[42.4436, 1.1344]}
@@ -86,7 +42,7 @@ export default function MapComponent() {
         />
 
         {/* Markers for Jobs */}
-        {selectedOption === "jobs" &&
+        {dataType === "jobs" &&
           JOBS.map((job) => (
             <Marker
               key={`job-${job.id}`}
@@ -99,7 +55,10 @@ export default function MapComponent() {
                   <Typography variant="body2" color="text.secondary">
                     {job.salary}
                   </Typography>
-                  <Button variant="contained" sx={{ mt: 2, backgroundColor: "#5E7749" }}>
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 2, backgroundColor: "#5E7749" }}
+                  >
                     View Details
                   </Button>
                 </Box>
@@ -108,7 +67,7 @@ export default function MapComponent() {
           ))}
 
         {/* Markers for Houses */}
-        {selectedOption === "houses" &&
+        {dataType === "houses" &&
           HOUSES.map((house) => (
             <Marker
               key={`house-${house.id}`}
@@ -135,7 +94,10 @@ export default function MapComponent() {
                   <Typography variant="body2" color="text.secondary">
                     {house.price}
                   </Typography>
-                  <Button variant="contained" sx={{ mt: 2, backgroundColor: "#5E7749" }}>
+                  <Button
+                    variant="contained"
+                    sx={{ mt: 2, backgroundColor: "#5E7749" }}
+                  >
                     View Details
                   </Button>
                 </Box>
