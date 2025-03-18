@@ -16,7 +16,7 @@ const MapComponent = dynamic(() => import("./MapComponent"), {
   ),
 });
 
-const ListView = dynamic(() => import("./Listing"), {
+const ListView = dynamic(() => import("./ListingComponent"), {
   ssr: false,
   loading: () => <div className="h-full animate-pulse bg-gray-200 rounded-lg" />,
 });

@@ -1,6 +1,6 @@
 "use client";
+import React from "react";
 import {
-  Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
@@ -25,7 +25,10 @@ interface HousingFiltersFormProps {
     condition: string[];
     furnished: string[];
   };
-  onFilterChange: (category: keyof typeof housingFilters, value: string) => void;
+  onFilterChange: (
+    category: "propertyType" | "housingOptions" | "condition" | "furnished",
+    value: string
+  ) => void;
 }
 
 export default function HousingFiltersForm({
@@ -57,11 +60,7 @@ export default function HousingFiltersForm({
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {/* Property Type Section */}
           <div>
-            <Typography
-              component="div"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
+            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
               Property
             </Typography>
             <FormGroup>
@@ -90,11 +89,7 @@ export default function HousingFiltersForm({
 
           {/* Housing Options Section */}
           <div>
-            <Typography
-              component="div"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
+            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
               Housing Options
             </Typography>
             <FormGroup>
@@ -123,11 +118,7 @@ export default function HousingFiltersForm({
 
           {/* Condition Section */}
           <div>
-            <Typography
-              component="div"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
+            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
               Condition of Property
             </Typography>
             <FormGroup>
@@ -156,11 +147,7 @@ export default function HousingFiltersForm({
 
           {/* Furnished Section */}
           <div>
-            <Typography
-              component="div"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
+            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
               Furnished
             </Typography>
             <FormGroup>
@@ -186,12 +173,14 @@ export default function HousingFiltersForm({
           </div>
         </Box>
       </DialogContent>
-      <DialogActions sx={{ 
-        justifyContent: "space-between",
-        padding: "16px",
-        backgroundColor: "#f9f9f9",
-        borderTop: "1px solid #e0e0e0",
-      }}>
+      <DialogActions
+        sx={{
+          justifyContent: "space-between",
+          padding: "16px",
+          backgroundColor: "#f9f9f9",
+          borderTop: "1px solid #e0e0e0",
+        }}
+      >
         <Button
           onClick={onClose}
           variant="outlined"
