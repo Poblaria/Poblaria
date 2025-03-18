@@ -1,6 +1,6 @@
 "use client";
+import React from "react";
 import {
-  Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
@@ -23,10 +23,10 @@ interface JobsFiltersFormProps {
     jobIndustry: string[];
     jobType: string[];
   };
-  onFilterChange: (category: keyof typeof jobFilters, value: string) => void;
+  onFilterChange: (category: "jobIndustry" | "jobType", value: string) => void;
 }
 
-export default function jobsFiltersForm({
+export default function JobFiltersForm({
   open,
   onClose,
   onBack,
@@ -56,12 +56,8 @@ export default function jobsFiltersForm({
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {/* Job Type Section */}
           <div>
-            <Typography
-              component="div"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
-              Job type 
+            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+              Job Type
             </Typography>
             <FormGroup>
               {["Seasonal", "Part-Time", "Temporary", "Casual"].map((option) => (
@@ -87,17 +83,18 @@ export default function jobsFiltersForm({
 
           <Divider />
 
-          {/* Job industry Section */}
+          {/* Job Industry Section */}
           <div>
-            <Typography
-              component="div"
-              gutterBottom
-              sx={{ fontWeight: "bold", color: "#555" }}
-            >
+            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
               Job Industry
             </Typography>
             <FormGroup>
-              {["Agriculture & Farming", "Skilled Trades & Craftsmanship", "Tourism & Hospitality", "Cultural Preservation"].map((option) => (
+              {[
+                "Agriculture & Farming",
+                "Skilled Trades & Craftsmanship",
+                "Tourism & Hospitality",
+                "Cultural Preservation",
+              ].map((option) => (
                 <FormControlLabel
                   key={option}
                   control={
@@ -117,15 +114,16 @@ export default function jobsFiltersForm({
               ))}
             </FormGroup>
           </div>
-
         </Box>
       </DialogContent>
-      <DialogActions sx={{ 
-        justifyContent: "space-between",
-        padding: "16px",
-        backgroundColor: "#f9f9f9",
-        borderTop: "1px solid #e0e0e0",
-      }}>
+      <DialogActions
+        sx={{
+          justifyContent: "space-between",
+          padding: "16px",
+          backgroundColor: "#f9f9f9",
+          borderTop: "1px solid #e0e0e0",
+        }}
+      >
         <Button
           onClick={onClose}
           variant="outlined"

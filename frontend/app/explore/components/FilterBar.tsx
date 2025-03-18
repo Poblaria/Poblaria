@@ -1,18 +1,11 @@
 "use client";
 import React from "react";
-import { Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
-import {
-  FilterList as FilterListIcon,
-  Home as HomeIcon,
-  Work as WorkIcon,
-} from "@mui/icons-material";
-import Box from "@mui/material/Box";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
+import { Button, ToggleButton, ToggleButtonGroup, Dialog, Box } from "@mui/material";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import WorkIcon from "@mui/icons-material/Work";
+import HomeIcon from "@mui/icons-material/Home";
+import JobFiltersForm from "./JobFilterComponent";
+import HousingFiltersForm from "./HouseFilterComponent";
 
 export type DataType = "jobs" | "houses";
 
@@ -22,6 +15,21 @@ interface FilterBarProps {
   showFilters: boolean;
   toggleShowFilters: () => void;
   setShowFilters: (value: boolean) => void;
+  jobFilters: {
+    jobIndustry: string[];
+    jobType: string[];
+  };
+  housingFilters: {
+    propertyType: string[];
+    housingOptions: string[];
+    condition: string[];
+    furnished: string[];
+  };
+  handleJobFilterChange: (category: "jobIndustry" | "jobType", value: string) => void;
+  handleHousingFilterChange: (
+    category: "propertyType" | "housingOptions" | "condition" | "furnished",
+    value: string
+  ) => void;
 }
 
 export default function FilterBar({
@@ -30,6 +38,10 @@ export default function FilterBar({
   showFilters,
   toggleShowFilters,
   setShowFilters,
+  jobFilters,
+  housingFilters,
+  handleJobFilterChange,
+  handleHousingFilterChange,
 }: FilterBarProps) {
   return (
     <Box
@@ -78,13 +90,11 @@ export default function FilterBar({
           sx={{
             height: "40px",
             "&.Mui-selected": {
-              backgroundColor: selectedOption ? "#5E7749" : "",
-              color: selectedOption ? "white" : "black",
-              borderColor: showFilters ? "#83A16C" : "#DCDCDC",
+              backgroundColor: "#5E7749",
+              color: "white",
+              borderColor: "#83A16C",
               "&:hover": {
-                backgroundColor: showFilters ? "" : "#83A16C",
-                color: "white",
-                borderColor: showFilters ? "#83A16C" : "#DCDCDC",
+                backgroundColor: "#83A16C",
               },
             },
             color: "black",
@@ -120,41 +130,23 @@ export default function FilterBar({
         fullWidth
         maxWidth="sm"
       >
-        <DialogTitle>Filters</DialogTitle>
-        <DialogContent dividers>
-          {/* Insert the filters that we need here */}
-          <p className="text-sm">We need to insert the filters here</p>
-        </DialogContent>
-        <DialogActions sx={{ justifyContent: "space-between", px: 3, py: 2 }}>
-          <Button
-            onClick={() => setShowFilters(false)}
-            variant="outlined"
-            sx={{
-              height: "40px",
-              color: "black",
-              borderColor: "#DCDCDC",
-              "&:hover": {
-                borderColor: "#DCDCDC",
-              },
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => setShowFilters(false)}
-            variant="contained"
-            sx={{
-              height: "40px",
-              backgroundColor: "#5E7749",
-              color: "white",
-              "&:hover": {
-                backgroundColor: "#83A16C",
-              },
-            }}
-          >
-            Done
-          </Button>
-        </DialogActions>
+        {selectedOption === "jobs" ? (
+          <JobFiltersForm
+            open={showFilters}
+            onClose={() => setShowFilters(false)}
+            onBack={toggleShowFilters}
+            jobFilters={jobFilters}
+            onFilterChange={handleJobFilterChange}
+          />
+        ) : (
+          <HousingFiltersForm
+            open={showFilters}
+            onClose={() => setShowFilters(false)}
+            onBack={toggleShowFilters}
+            housingFilters={housingFilters}
+            onFilterChange={handleHousingFilterChange}
+          />
+        )}
       </Dialog>
     </Box>
   );

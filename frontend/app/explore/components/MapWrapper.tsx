@@ -16,7 +16,7 @@ const MapComponent = dynamic(() => import("./MapComponent"), {
   ),
 });
 
-const ListView = dynamic(() => import("./Listing"), {
+const ListView = dynamic(() => import("./ListingComponent"), {
   ssr: false,
   loading: () => <div className="h-full animate-pulse bg-gray-200 rounded-lg" />,
 });
@@ -30,6 +30,7 @@ export default function MapWrapper() {
     newMode: "map" | "list" | null
   ) => {
     if (newMode !== null) {
+      console.log("newMode:", newMode);
       setViewMode(newMode);
     }
   };
@@ -50,7 +51,7 @@ export default function MapWrapper() {
           aria-label="map view"
           sx={{
             "&.Mui-selected": {
-            backgroundColor: "#5E7749",
+            backgroundColor: "#83A16C",
             color: "white",
             "&hover": {
               backgroundColor: "#83A16C",
@@ -67,7 +68,7 @@ export default function MapWrapper() {
           aria-label="list view"
           sx={{
             "&.Mui-selected": {
-            backgroundColor: "#5E7749",
+            backgroundColor: "#83A16C",
             color: "white",
             "&hover": {
               backgroundColor: "#83A16C",
