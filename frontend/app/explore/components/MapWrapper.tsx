@@ -30,6 +30,7 @@ export default function MapWrapper() {
     newMode: "map" | "list" | null
   ) => {
     if (newMode !== null) {
+      console.log("newMode:", newMode);
       setViewMode(newMode);
     }
   };

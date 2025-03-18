@@ -1,26 +1,42 @@
 "use client";
 import React, { useState } from "react";
-import { Card, CardMedia, CardContent, CardActions, Button, Typography, Grid, Box } from "@mui/material";
-import { HOUSES, JOBS } from "../data/Data";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import Box from "@mui/material/Box";
+import { Button, Typography } from "@mui/material";
 import FilterBar, { DataType } from "./FilterBar";
+import { HOUSES, JOBS } from "../data/Data";
 
-export default function ListView() {
-  const [dataType, setDataType] = useState<DataType>("jobs");
+const HomeLeafletIcon = L.icon({
+  iconUrl: "/images/home-icon1.png",
+  iconSize: [35, 35],
+  iconAnchor: [17, 35],
+});
+
+const JobLeafletIcon = L.icon({
+  iconUrl: "/images/job-icon.png",
+  iconSize: [35, 35],
+  iconAnchor: [17, 35],
+});
+
+export default function MapComponent() {
+  const [selectedOption, setSelectedOption] = useState<DataType>("jobs");
+
   const [showFilters, setShowFilters] = useState(false);
-  
+  const toggleShowFilters = () => setShowFilters((prev) => !prev);
+
   const [jobFilters, setJobFilters] = useState({
     jobIndustry: [] as string[],
     jobType: [] as string[],
   });
-  
+
   const [housingFilters, setHousingFilters] = useState({
     propertyType: [] as string[],
     housingOptions: [] as string[],
     condition: [] as string[],
     furnished: [] as string[],
   });
-
-  const toggleShowFilters = () => setShowFilters((prev) => !prev);
 
   const handleJobFilterChange = (category: "jobIndustry" | "jobType", value: string) => {
     setJobFilters((prev) => ({
@@ -44,10 +60,10 @@ export default function ListView() {
   };
 
   return (
-    <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }} marginTop={8}>
+    <Box height="100%" sx={{ display: "flex", flexDirection: "column" }} marginTop={8}>
       <FilterBar
-        selectedOption={dataType}
-        onOptionChange={setDataType}
+        selectedOption={selectedOption}
+        onOptionChange={setSelectedOption}
         showFilters={showFilters}
         toggleShowFilters={toggleShowFilters}
         setShowFilters={setShowFilters}
@@ -56,89 +72,77 @@ export default function ListView() {
         handleJobFilterChange={handleJobFilterChange}
         handleHousingFilterChange={handleHousingFilterChange}
       />
-      {dataType === "jobs" && (
-        <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
-          <Grid container spacing={2}>
-            {JOBS.map((job) => (
-              <Grid item xs={12} sm={6} md={6} key={job.id}>
-                <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
-                  <CardContent>
-                    <Typography variant="h6">{job.title}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.salary}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        height: "40px",
-                        backgroundColor: showFilters ? "#83A16C" : "#5E7749",
-                        color: "white",
-                        borderColor: showFilters ? "#83A16C" : "#DCDCDC",
-                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
-                        "&:hover": {
-                          backgroundColor: "#83A16C",
-                          borderColor: "#83A16C",
-                        },
-                      }}
-                    >
-                      View Details
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
-      {dataType === "houses" && (
-        <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
-          <Grid container spacing={2}>
-            {HOUSES.map((house) => (
-              <Grid item xs={12} sm={6} md={6} key={house.id}>
-                <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
+
+      {/* Map Container */}
+      <MapContainer
+        center={[42.4436, 1.1344]}
+        zoom={16}
+        scrollWheelZoom
+        style={{ height: "calc(100vh - 120px)", width: "100%" }}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        {/* Markers for Jobs */}
+        {selectedOption === "jobs" &&
+          JOBS.map((job) => (
+            <Marker
+              key={`job-${job.id}`}
+              position={job.coordinates as [number, number]}
+              icon={JobLeafletIcon}
+            >
+              <Popup>
+                <Box sx={{ minWidth: 250 }}>
+                  <Typography variant="h6">{job.title}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {job.salary}
+                  </Typography>
+                  <Button variant="contained" sx={{ mt: 2, backgroundColor: "#5E7749" }}>
+                    View Details
+                  </Button>
+                </Box>
+              </Popup>
+            </Marker>
+          ))}
+
+        {/* Markers for Houses */}
+        {selectedOption === "houses" &&
+          HOUSES.map((house) => (
+            <Marker
+              key={`house-${house.id}`}
+              position={house.coordinates as [number, number]}
+              icon={HomeLeafletIcon}
+            >
+              <Popup>
+                <Box sx={{ minWidth: 250 }}>
                   {house.image && (
-                    <CardMedia
+                    <Box
                       component="img"
-                      image={house.image}
+                      src={house.image}
                       alt={house.title}
-                      sx={{ height: 140, objectFit: "cover" }}
+                      sx={{
+                        width: "100%",
+                        height: "auto",
+                        mb: 2,
+                        borderRadius: 1,
+                        objectFit: "cover",
+                      }}
                     />
                   )}
-                  <CardContent>
-                    <Typography variant="h6">{house.title}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {house.price}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {house.details}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        height: "40px",
-                        backgroundColor: showFilters ? "#83A16C" : "#5E7749",
-                        color: "white",
-                        borderColor: showFilters ? "#83A16C" : "#DCDCDC",
-                        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.05)",
-                        "&:hover": {
-                          backgroundColor: "#83A16C",
-                          borderColor: "#83A16C",
-                        },
-                      }}
-                    >
-                      View Details
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
+                  <Typography variant="h6">{house.title}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {house.price}
+                  </Typography>
+                  <Button variant="contained" sx={{ mt: 2, backgroundColor: "#5E7749" }}>
+                    View Details
+                  </Button>
+                </Box>
+              </Popup>
+            </Marker>
+          ))}
+      </MapContainer>
     </Box>
   );
 }
