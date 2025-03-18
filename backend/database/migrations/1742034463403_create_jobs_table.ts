@@ -18,6 +18,7 @@ export default class extends BaseSchema {
                 .references("id")
                 .inTable("job_types")
                 .onDelete("CASCADE");
+            table.boolean("is_remote").notNullable().defaultTo(false);
             table.boolean("is_available").notNullable().defaultTo(true);
 
             table.timestamp("created_at").notNullable();

@@ -29,6 +29,9 @@ export default class Job extends BaseModel {
     declare type: BelongsTo<typeof JobType>;
 
     @column()
+    declare isRemote: boolean;
+
+    @column()
     declare isAvailable: boolean;
 
     @column.dateTime({ autoCreate: true })
