@@ -50,7 +50,7 @@ export default function MapWrapper() {
           aria-label="map view"
           sx={{
             "&.Mui-selected": {
-            backgroundColor: "#5E7749",
+            backgroundColor: "#83A16C",
             color: "white",
             "&hover": {
               backgroundColor: "#83A16C",
@@ -67,7 +67,7 @@ export default function MapWrapper() {
           aria-label="list view"
           sx={{
             "&.Mui-selected": {
-            backgroundColor: "#5E7749",
+            backgroundColor: "#83A16C",
             color: "white",
             "&hover": {
               backgroundColor: "#83A16C",
