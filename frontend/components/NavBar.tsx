@@ -69,7 +69,7 @@ export const NavBar = () => {
               },
           }}
         >
-          Resources
+          <Link href="/resources">Resources</Link>
         </Button>
         <Button
           variant="text"
