@@ -7,9 +7,9 @@ export default class extends BaseSchema {
         this.schema.createTable(this.tableName, (table) => {
             table.increments("id").notNullable().unsigned();
             table.string("title").notNullable();
-            table.text("description").notNullable().defaultTo("");
+            table.text("description").nullable();
             table.string("company").notNullable();
-            table.string("address");
+            table.string("address").nullable();
             table.integer("salary").unsigned();
             table
                 .integer("type_id")
@@ -18,6 +18,7 @@ export default class extends BaseSchema {
                 .references("id")
                 .inTable("job_types")
                 .onDelete("CASCADE");
+            table.boolean("is_remote").notNullable().defaultTo(false);
             table.boolean("is_available").notNullable().defaultTo(true);
 
             table.timestamp("created_at").notNullable();

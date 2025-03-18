@@ -11,13 +11,13 @@ export default class Job extends BaseModel {
     declare title: string;
 
     @column()
-    declare description: string;
+    declare description: string | null;
 
     @column()
     declare company: string;
 
     @column()
-    declare address: string;
+    declare address: string | null;
 
     @column()
     declare salary: number;
@@ -27,6 +27,9 @@ export default class Job extends BaseModel {
 
     @belongsTo(() => JobType)
     declare type: BelongsTo<typeof JobType>;
+
+    @column()
+    declare isRemote: boolean;
 
     @column()
     declare isAvailable: boolean;

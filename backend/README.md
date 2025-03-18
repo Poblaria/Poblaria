@@ -65,23 +65,26 @@ Let's split the command:
 You can also start the backend without running the migrations and/or rebuilding the images:
 
 - Start the backend without running the migrations and without rebuilding the images:
+
 ```bash
 docker compose up
 ```
 
 - Start the backend running the migrations but without rebuilding the images:
+
 ```bash
 DB_MIGRATE=1 docker compose up
 ```
 
 - Start the backend without running the migrations but rebuilding the images:
+
 ```bash
 docker compose up --build
 ```
 
 You can also use the `-d` flag to run the containers in the background.
 
-To stop the containers, first press *Ctrl + C* if you are not in detached mode.
+To stop the containers, first press _Ctrl + C_ if you are not in detached mode.
 Then, run the following command:
 
 ```bash
