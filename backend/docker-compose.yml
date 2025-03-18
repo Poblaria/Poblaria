@@ -1,0 +1,43 @@
+services:
+    db:
+        image: postgres
+        restart: always
+        shm_size: 128mb
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_DATABASE}
+        volumes:
+            - db_volume:/var/lib/postgresql/data
+        ports:
+            - 5432:${DB_PORT}
+        healthcheck:
+            test: [ "CMD", "pg_isready", "-U", "${DB_USER}" ]
+            interval: 5s
+            retries: 5
+            timeout: 3s
+
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - "8080:8080"
+
+    server:
+        build:
+            context: .
+        depends_on:
+            db:
+                condition: service_healthy
+        ports:
+            - ${PORT}:${PORT}
+        env_file:
+            - .env
+        environment:
+            HOST: 0.0.0.0
+            NODE_ENV: production
+            DB_HOST: db
+            DB_MIGRATE: ${DB_MIGRATE}
+
+volumes:
+    db_volume:
