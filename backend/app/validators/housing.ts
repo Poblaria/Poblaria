@@ -4,7 +4,7 @@ const housingValidator = (allowOptional = true) =>
     vine.compile(
         vine.object({
             title: vine.string().minLength(3).maxLength(255),
-            description: allowOptional ? vine.string().optional() : vine.string(),
+            description: allowOptional ? vine.string().optional() : vine.string().nullable(),
             price: vine.number().positive(),
             type_id: vine.number().positive(),
             offer_type_id: vine.number().positive(),

@@ -12,7 +12,7 @@ export default class Housing extends BaseModel {
     declare title: string;
 
     @column()
-    declare description: string;
+    declare description: string | null;
 
     @column()
     declare price: number;

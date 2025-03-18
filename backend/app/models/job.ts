@@ -11,13 +11,13 @@ export default class Job extends BaseModel {
     declare title: string;
 
     @column()
-    declare description: string;
+    declare description: string | null;
 
     @column()
     declare company: string;
 
     @column()
-    declare address: string;
+    declare address: string | null;
 
     @column()
     declare salary: number;

@@ -4,11 +4,11 @@ const jobValidator = (allowOptional = true) =>
     vine.compile(
         vine.object({
             title: vine.string().minLength(3).maxLength(255),
-            description: allowOptional ? vine.string().optional() : vine.string(),
+            description: allowOptional ? vine.string().optional() : vine.string().nullable(),
             company: vine.string().maxLength(255),
             address: allowOptional
                 ? vine.string().maxLength(255).optional()
-                : vine.string().maxLength(255),
+                : vine.string().maxLength(255).nullable(),
             salary: allowOptional ? vine.number().positive().optional() : vine.number().positive(),
             type_id: vine.number().positive(),
             location: allowOptional
