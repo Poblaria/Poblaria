@@ -32,6 +32,12 @@ export default class Job extends BaseModel {
     declare isRemote: boolean;
 
     @column()
+    declare latitude: number | null;
+
+    @column()
+    declare longitude: number | null;
+
+    @column()
     declare isAvailable: boolean;
 
     @column.dateTime({ autoCreate: true })

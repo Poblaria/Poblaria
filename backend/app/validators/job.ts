@@ -12,6 +12,8 @@ const jobValidator = (allowOptional = true) =>
             salary: allowOptional ? vine.number().positive().optional() : vine.number().positive(),
             type_id: vine.number().positive(),
             is_remote: allowOptional ? vine.boolean().optional() : vine.boolean(),
+            latitude: allowOptional ? vine.number().optional() : vine.number().nullable(),
+            longitude: allowOptional ? vine.number().optional() : vine.number().nullable(),
             is_available: allowOptional ? vine.boolean().optional() : vine.boolean()
         })
     );
@@ -29,6 +31,8 @@ export const patchJobValidator = vine.compile(
         salary: vine.number().positive().optional(),
         type_id: vine.number().positive().optional(),
         is_remote: vine.boolean().optional(),
+        latitude: vine.number().optional(),
+        longitude: vine.number().optional(),
         is_available: vine.boolean().optional()
     })
 );
