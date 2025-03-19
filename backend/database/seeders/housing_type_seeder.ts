@@ -4,9 +4,9 @@ import HousingType from "#models/housing_type";
 export default class extends BaseSeeder {
     async run() {
         await HousingType.updateOrCreateMany("name", [
-            { name: "apartment" },
-            { name: "house" },
-            { name: "studio" }
+            { name: "Apartment" },
+            { name: "House" },
+            { name: "Studio" }
         ]);
     }
 }

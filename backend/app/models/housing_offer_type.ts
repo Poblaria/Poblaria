@@ -7,7 +7,7 @@ export default class HousingOfferType extends BaseModel {
     declare id: number;
 
     @column()
-    declare name: "rent" | "sale";
+    declare name: string;
 
     @hasMany(() => Housing)
     declare housings: HasMany<typeof Housing>;

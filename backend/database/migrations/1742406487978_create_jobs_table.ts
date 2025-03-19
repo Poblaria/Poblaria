@@ -18,6 +18,13 @@ export default class extends BaseSchema {
                 .references("id")
                 .inTable("job_types")
                 .onDelete("CASCADE");
+            table
+                .integer("industry_id")
+                .notNullable()
+                .unsigned()
+                .references("id")
+                .inTable("job_industries")
+                .onDelete("CASCADE");
             table.boolean("is_remote").notNullable().defaultTo(false);
             table.float("latitude").nullable();
             table.float("longitude").nullable();

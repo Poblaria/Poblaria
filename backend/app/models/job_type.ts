@@ -1,13 +1,13 @@
 import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm";
-import Job from "#models/job";
 import type { HasMany } from "@adonisjs/lucid/types/relations";
+import Job from "#models/job";
 
 export default class JobType extends BaseModel {
     @column({ isPrimary: true })
     declare id: number;
 
     @column()
-    declare name: "full-time" | "part-time" | "apprenticeship" | "internship" | "interim";
+    declare name: string;
 
     @hasMany(() => Job)
     declare jobs: HasMany<typeof Job>;

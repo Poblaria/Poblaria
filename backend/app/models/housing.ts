@@ -4,6 +4,7 @@ import type { BelongsTo } from "@adonisjs/lucid/types/relations";
 import HousingImage from "#models/housing_image";
 import HousingType from "#models/housing_type";
 import HousingOfferType from "#models/housing_offer_type";
+import HousingCondition from "#models/housing_condition";
 
 export default class Housing extends BaseModel {
     @column({ isPrimary: true })
@@ -35,6 +36,12 @@ export default class Housing extends BaseModel {
 
     @belongsTo(() => HousingOfferType)
     declare offerType: BelongsTo<typeof HousingOfferType>;
+
+    @column()
+    declare conditionId: number;
+
+    @belongsTo(() => HousingCondition)
+    declare condition: BelongsTo<typeof HousingCondition>;
 
     @column()
     declare rooms: number;

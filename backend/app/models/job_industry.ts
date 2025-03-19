@@ -1,14 +1,14 @@
 import { BaseModel, column, hasMany } from "@adonisjs/lucid/orm";
 import type { HasMany } from "@adonisjs/lucid/types/relations";
-import Housing from "#models/housing";
+import Job from "#models/job";
 
-export default class HousingType extends BaseModel {
+export default class JobIndustry extends BaseModel {
     @column({ isPrimary: true })
     declare id: number;
 
     @column()
     declare name: string;
 
-    @hasMany(() => Housing)
-    declare housings: HasMany<typeof Housing>;
+    @hasMany(() => Job)
+    declare jobs: HasMany<typeof Job>;
 }

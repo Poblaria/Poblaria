@@ -30,6 +30,13 @@ export default class extends BaseSchema {
                 .references("id")
                 .inTable("housing_offer_types")
                 .onDelete("CASCADE");
+            table
+                .integer("condition_id")
+                .notNullable()
+                .unsigned()
+                .references("id")
+                .inTable("housing_conditions")
+                .onDelete("CASCADE");
             table.integer("rooms").notNullable().unsigned();
             table.integer("bathrooms").notNullable().unsigned();
             table.integer("area").notNullable().unsigned();
