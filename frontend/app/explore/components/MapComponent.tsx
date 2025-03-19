@@ -75,7 +75,7 @@ export default function MapComponent(props: MapComponentProps) {
           [...JOBS, ...dataJob].map((job) => {
             const position =
               job.coordinates ||
-              (job.lat && job.lng ? [job.lat, job.lng] : null);
+              (job.latitude && job.longitude ? [job.latitude, job.longitude] : null);
 
             if (!position || position.length !== 2) {
               console.warn("Skipping job due to missing coordinates:", job);

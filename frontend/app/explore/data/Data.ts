@@ -1,6 +1,6 @@
 export const HOUSES = [
   {
-    id: 3,
+    id: 1,
     coordinates: [42.4436, 1.1344],
     title: "Traditional Stone House",
     price: "€350,000",
@@ -8,7 +8,7 @@ export const HOUSES = [
     image: "/images/villa_for_rent_in_spain_026-1.png",
   },
   {
-    id: 4,
+    id: 2,
     coordinates: [42.444, 1.135],
     title: "Mountain View Villa",
     price: "€550,000",

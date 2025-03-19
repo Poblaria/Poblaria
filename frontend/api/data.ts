@@ -33,5 +33,7 @@ export interface JobData {
   salary?: number;
   type_id: number;
   is_remote?: boolean;
+  latitude: number;
+  longitude: number;
   is_available?: boolean;
 }
