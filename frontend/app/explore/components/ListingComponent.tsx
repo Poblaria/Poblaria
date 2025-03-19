@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { HOUSES, JOBS } from "../data/Data";
 import { DataType } from "./FilterBar";
+import { fetchHousings, fetchJobs } from "../../../api/api";
 
 interface ListViewProps {
   dataType: DataType;
