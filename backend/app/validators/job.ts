@@ -24,6 +24,8 @@ export const patchJobValidator = vine.compile(
     vine.object({
         title: vine.string().minLength(3).maxLength(255).optional(),
         description: vine.string().optional(),
+        company: vine.string().maxLength(255).optional(),
+        address: vine.string().maxLength(255).optional(),
         salary: vine.number().positive().optional(),
         type_id: vine.number().positive().optional(),
         is_remote: vine.boolean().optional(),
