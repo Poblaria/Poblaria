@@ -14,6 +14,7 @@ import {
   IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { fetchHousings, fetchJobs } from "../../../api/api";
 
 interface JobsFiltersFormProps {
   open: boolean;
