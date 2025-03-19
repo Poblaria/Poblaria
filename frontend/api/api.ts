@@ -1,42 +1,6 @@
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
-
-export interface UserData {
-  username: string;
-  password: string;
-  // Add additional fields as needed (e.g., email, fullName, etc.)
-}
-
-export interface LoginData {
-  username: string;
-  password: string;
-}
-
-export interface HousingData {
-  title: string;
-  description?: string;
-  price: number;
-  type_id: number;
-  offer_type_id: number;
-  rooms: number;
-  bathrooms: number;
-  area: number;
-  land_area?: number;
-  address: string;
-  latitude: number;
-  longitude: number;
-  is_available?: boolean;
-}
-
-export interface JobData {
-  title: string;
-  description?: string;
-  company: string;
-  address?: string;
-  salary?: number;
-  type_id: number;
-  is_remote?: boolean;
-  is_available?: boolean;
-}
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3333";
+import { UserData, LoginData, HousingData, JobData } from "./data";
 
 // POST /register
 export async function registerUser(userData: UserData): Promise<any> {
@@ -114,7 +78,10 @@ export async function createHousing(housingData: HousingData): Promise<any> {
 }
 
 // PUT /housings/:id and PATCH /housings/:id
-export async function updateHousing(id: number | string, housingData: Partial<HousingData>): Promise<any> {
+export async function updateHousing(
+  id: number | string,
+  housingData: Partial<HousingData>
+): Promise<any> {
   const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
     method: "PUT", // or "PATCH"
     headers: { "Content-Type": "application/json" },
@@ -176,7 +143,10 @@ export async function createJob(jobData: JobData): Promise<any> {
 }
 
 // PUT /jobs/:id and PATCH /jobs/:id
-export async function updateJob(id: number | string, jobData: Partial<JobData>): Promise<any> {
+export async function updateJob(
+  id: number | string,
+  jobData: Partial<JobData>
+): Promise<any> {
   const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
     method: "PUT", // or "PATCH"
     headers: { "Content-Type": "application/json" },
