@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardMedia,
@@ -21,18 +21,47 @@ interface ListViewProps {
 
 export default function ListView(props: ListViewProps) {
   const { dataType, showFilters } = props;
+  const [dataHouse, setDataHouses] = useState<any[]>([]);
+  const [dataJob, setDataJob] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        if (dataType === "houses") {
+          const housings = await fetchHousings();
+          console.log("Fetched Houses:", housings);
+          setDataHouses(housings);
+        } else {
+          const jobs = await fetchJobs();
+          console.log("Fetched Jobs:", jobs);
+          setDataJob(jobs);
+        }
+      } catch (err: any) {
+        setError(err.message);
+      }
+    };
+    loadData();
+  }, [dataType]);
+
+  if (error) return <div>Error: {error}</div>;
+  if (dataType === "houses" && !dataHouse.length && !HOUSES.length)
+    return <div>Loading houses...</div>;
+  if (dataType === "jobs" && !dataJob.length && !JOBS.length)
+    return <div>Loading jobs...</div>;
+
   return (
     <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }}>
       {dataType === "jobs" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>
-            {JOBS.map((job) => (
+            {[...JOBS, ...dataJob].map((job) => (
               <Grid item xs={12} sm={6} md={6} key={job.id}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   <CardContent>
                     <Typography variant="h6">{job.title}</Typography>
                     <Typography variant="body2" color="text.secondary">
-                      {job.salary}
+                      {job.salary} €
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -59,10 +88,11 @@ export default function ListView(props: ListViewProps) {
           </Grid>
         </Box>
       )}
+
       {dataType === "houses" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>
-            {HOUSES.map((house) => (
+            {[...HOUSES, ...dataHouse].map((house) => (
               <Grid item xs={12} sm={6} md={6} key={house.id}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   {house.image && (
@@ -76,7 +106,7 @@ export default function ListView(props: ListViewProps) {
                   <CardContent>
                     <Typography variant="h6">{house.title}</Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {house.price}
+                      {house.price} €
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
                       {house.details}
