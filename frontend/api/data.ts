@@ -1,5 +1,5 @@
 export interface UserData {
-  fullName: string;
+  fullName: string | null;
   email: string;
   password: string;
 }
@@ -11,29 +11,34 @@ export interface LoginData {
 
 export interface HousingData {
   title: string;
-  description?: string;
+  description?: string | null;
+  image?: string; // base64
   price: number;
   type_id: number;
   offer_type_id: number;
   rooms: number;
   bathrooms: number;
   area: number;
-  land_area?: number;
+  land_area?: number | null;
   address: string;
   latitude: number;
   longitude: number;
   is_available?: boolean;
 }
 
+export interface HousingImageData {
+  image: string; // base64
+}
+
 export interface JobData {
   title: string;
-  description?: string;
+  description?: string | null;
   company: string;
-  address?: string;
+  address?: string | null;
   salary?: number;
   type_id: number;
   is_remote?: boolean;
-  latitude: number;
-  longitude: number;
+  latitude?: number | null;
+  longitude?: number | null;
   is_available?: boolean;
 }

@@ -1,29 +1,41 @@
 import vine from "@vinejs/vine";
 
-const housingValidator = (allowOptional = true) =>
-    vine.compile(
-        vine.object({
-            title: vine.string().minLength(3).maxLength(255),
-            description: allowOptional ? vine.string().optional() : vine.string().nullable(),
-            price: vine.number().positive(),
-            type_id: vine.number().positive(),
-            offer_type_id: vine.number().positive(),
-            rooms: vine.number().positive(),
-            bathrooms: vine.number().positive(),
-            area: vine.number().positive(),
-            land_area: allowOptional
-                ? vine.number().positive().optional()
-                : vine.number().positive(),
-            address: vine.string().maxLength(255),
-            latitude: vine.number(),
-            longitude: vine.number(),
-            is_available: allowOptional ? vine.boolean().optional() : vine.boolean()
-        })
-    );
+export const postHousingValidator = vine.compile(
+    vine.object({
+        title: vine.string().minLength(3).maxLength(255),
+        description: vine.string().optional(),
+        image: vine.string().optional(),
+        price: vine.number().positive(),
+        type_id: vine.number().positive(),
+        offer_type_id: vine.number().positive(),
+        rooms: vine.number().positive(),
+        bathrooms: vine.number().positive(),
+        area: vine.number().positive(),
+        land_area: vine.number().positive().optional(),
+        address: vine.string().maxLength(255),
+        latitude: vine.number(),
+        longitude: vine.number(),
+        is_available: vine.boolean().optional()
+    })
+);
 
-export const postHousingValidator = housingValidator();
-
-export const putHousingValidator = housingValidator(false);
+export const putHousingValidator = vine.compile(
+    vine.object({
+        title: vine.string().minLength(3).maxLength(255),
+        description: vine.string().nullable(),
+        price: vine.number().positive(),
+        type_id: vine.number().positive(),
+        offer_type_id: vine.number().positive(),
+        rooms: vine.number().positive(),
+        bathrooms: vine.number().positive(),
+        area: vine.number().positive(),
+        land_area: vine.number().positive().nullable(),
+        address: vine.string().maxLength(255),
+        latitude: vine.number(),
+        longitude: vine.number(),
+        is_available: vine.boolean()
+    })
+);
 
 export const patchHousingValidator = vine.compile(
     vine.object({

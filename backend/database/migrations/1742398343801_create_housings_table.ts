@@ -8,6 +8,13 @@ export default class extends BaseSchema {
             table.increments("id").notNullable();
             table.string("title").notNullable();
             table.text("description").nullable();
+            table
+                .integer("image_id")
+                .nullable()
+                .unsigned()
+                .references("id")
+                .inTable("housing_images")
+                .onDelete("CASCADE");
             table.integer("price").notNullable().unsigned();
             table
                 .integer("type_id")
@@ -26,7 +33,7 @@ export default class extends BaseSchema {
             table.integer("rooms").notNullable().unsigned();
             table.integer("bathrooms").notNullable().unsigned();
             table.integer("area").notNullable().unsigned();
-            table.integer("land_area").unsigned();
+            table.integer("land_area").nullable().unsigned();
             table.string("address").notNullable();
             table.float("latitude").notNullable();
             table.float("longitude").notNullable();

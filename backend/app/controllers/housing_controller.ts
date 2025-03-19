@@ -6,6 +6,7 @@ import {
     patchHousingValidator
 } from "#validators/housing";
 import snakecaseKeys from "snakecase-keys";
+import HousingImage from "#models/housing_image";
 
 export default class HousingController {
     async index({ response }: HttpContext) {
@@ -16,7 +17,13 @@ export default class HousingController {
 
     async store({ request, response }: HttpContext) {
         const data = await request.validateUsing(postHousingValidator);
-        const housing = await Housing.create(data);
+
+        let image;
+        if (data.image) image = await HousingImage.create({ image: Buffer.from(data.image) });
+
+        delete data.image;
+
+        const housing = await Housing.create({ ...data, imageId: image?.id });
 
         return response.created(snakecaseKeys(housing.serialize()));
     }
@@ -47,7 +54,9 @@ export default class HousingController {
 
     async destroy({ params, response }: HttpContext) {
         const housing = await Housing.findOrFail(params.id);
+        const image = await HousingImage.find(housing.imageId);
 
+        if (image) await image.delete();
         await housing.delete();
 
         return response.ok({ message: "Housing successfully deleted" });
