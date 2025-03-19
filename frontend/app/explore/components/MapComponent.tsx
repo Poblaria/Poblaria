@@ -111,7 +111,7 @@ export default function MapComponent(props: MapComponentProps) {
           [...HOUSES, ...dataHouse].map((house) => {
             const position =
               house.coordinates ||
-              (house.lat && house.lng ? [house.lat, house.lng] : null);
+              (house.latitude && house.longitude ? [house.latitude, house.longitude] : null);
 
             if (!position || position.length !== 2) {
               console.warn("Skipping house due to missing coordinates:", house);
