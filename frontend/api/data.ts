@@ -1,10 +1,11 @@
 export interface UserData {
-  username: string;
+  fullName: string;
+  email: string;
   password: string;
 }
 
 export interface LoginData {
-  username: string;
+  email: string;
   password: string;
 }
 

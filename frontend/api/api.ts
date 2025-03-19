@@ -80,7 +80,7 @@ export async function createHousing(housingData: HousingData): Promise<any> {
 // PUT /housings/:id and PATCH /housings/:id
 export async function updateHousing(
   id: number | string,
-  housingData: Partial<HousingData>
+  housingData: Required<HousingData> // Required with PUT, Partial with PATCH
 ): Promise<any> {
   const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
     method: "PUT", // or "PATCH"
@@ -145,7 +145,7 @@ export async function createJob(jobData: JobData): Promise<any> {
 // PUT /jobs/:id and PATCH /jobs/:id
 export async function updateJob(
   id: number | string,
-  jobData: Partial<JobData>
+  jobData: Required<JobData> // Required with PUT, Partial with PATCH
 ): Promise<any> {
   const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
     method: "PUT", // or "PATCH"
