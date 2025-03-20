@@ -59,10 +59,13 @@ export default function ListView(props: ListViewProps) {
               <Grid item xs={12} sm={6} md={6} key={job.id}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   <CardContent>
-                    <Typography variant="h6" sx={{ fontWeight: "bold"}}>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                       {job.title}
                     </Typography>
-                    <Typography variant="body1" sx={{ fontWeight: "bold",  marginBottom: 1}}>
+                    <Typography
+                      variant="body1"
+                      sx={{ fontWeight: "bold", marginBottom: 1 }}
+                    >
                       {job.company} - {job.address}
                     </Typography>
 
@@ -119,8 +122,15 @@ export default function ListView(props: ListViewProps) {
                   )}
                   {console.log("House Image:", house.image)}
                   <CardContent>
-                    <Typography variant="h6" sx={{ fontWeight: "bold"}}>{house.title}</Typography>
-                    <Typography variant="body1" sx={{ marginBottom: 1, fontWeight: "bold"}}>{house.address} </Typography>
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {house.title}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ marginBottom: 1, fontWeight: "bold" }}
+                    >
+                      {house.address}{" "}
+                    </Typography>
 
                     <Typography variant="body2" sx={{ marginBottom: 3 }}>
                       {house.description}
