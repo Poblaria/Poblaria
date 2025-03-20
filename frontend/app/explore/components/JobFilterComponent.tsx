@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   DialogTitle,
   DialogContent,
@@ -14,17 +14,18 @@ import {
   IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { fetchHousings, fetchJobs } from "../../../api/api";
+import { fetchJobTypes, fetchJobIndustries } from "@/api/api";
 
 interface JobsFiltersFormProps {
   open: boolean;
   onClose: () => void;
   onBack: () => void;
+  jobIndustries: { id: number; name: string }[];
   jobFilters: {
-    jobIndustry: string[];
-    jobType: string[];
+    jobIndustry: number[];
+    jobType: number[];
   };
-  onFilterChange: (category: "jobIndustry" | "jobType", value: string) => void;
+  onFilterChange: (category: "jobIndustry" | "jobType", value: number) => void;
 }
 
 export default function JobFiltersForm({
@@ -34,6 +35,16 @@ export default function JobFiltersForm({
   jobFilters,
   onFilterChange,
 }: JobsFiltersFormProps) {
+  const [jobTypes, setJobTypes] = useState<{ id: number; name: string }[]>([]);
+  const [jobIndustries, setJobIndustries] = useState<{ id: number; name: string }[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setJobTypes(await fetchJobTypes());
+      setJobIndustries(await fetchJobIndustries());
+    })();
+  }, []);
+
   return (
     <>
       <DialogTitle
@@ -68,14 +79,14 @@ export default function JobFiltersForm({
               Job Type
             </Typography>
             <FormGroup>
-              {["Seasonal", "Part-Time", "Temporary", "Casual"].map(
+              {jobTypes.map(
                 (option) => (
                   <FormControlLabel
-                    key={option}
+                    key={option.id}
                     control={
                       <Checkbox
-                        checked={jobFilters.jobType.includes(option)}
-                        onChange={() => onFilterChange("jobType", option)}
+                        checked={jobFilters.jobType.includes(option.id)}
+                        onChange={() => onFilterChange("jobType", option.id)}
                         sx={{
                           color: "#83A16C",
                           "&.Mui-checked": {
@@ -84,7 +95,7 @@ export default function JobFiltersForm({
                         }}
                       />
                     }
-                    label={option}
+                    label={option.name}
                   />
                 )
               )}
@@ -103,18 +114,13 @@ export default function JobFiltersForm({
               Job Industry
             </Typography>
             <FormGroup>
-              {[
-                "Agriculture & Farming",
-                "Skilled Trades & Craftsmanship",
-                "Tourism & Hospitality",
-                "Cultural Preservation",
-              ].map((option) => (
+              {jobIndustries.map((option) => (
                 <FormControlLabel
-                  key={option}
+                  key={option.id}
                   control={
                     <Checkbox
-                      checked={jobFilters.jobIndustry.includes(option)}
-                      onChange={() => onFilterChange("jobIndustry", option)}
+                      checked={jobFilters.jobIndustry.includes(option.id)}
+                      onChange={() => onFilterChange("jobIndustry", option.id)}
                       sx={{
                         color: "#83A16C",
                         "&.Mui-checked": {
@@ -123,7 +129,7 @@ export default function JobFiltersForm({
                       }}
                     />
                   }
-                  label={option}
+                  label={option.name}
                 />
               ))}
             </FormGroup>

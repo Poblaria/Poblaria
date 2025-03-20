@@ -238,3 +238,19 @@ export async function fetchHousingTypes(): Promise<{ id: number; name: string }[
   }
   return response.json();
 }
+
+// GET /job-types
+export async function fetchJobTypes(): Promise<{ id: number; name: string }[]> {
+  const response = await fetch(`${API_BASE_URL}/job-types`);
+  if (!response.ok)
+    throw new Error("Failed to fetch job types");
+  return response.json();
+}
+
+// GET /job-industries
+export async function fetchJobIndustries(): Promise<{ id: number; name: string }[]> {
+  const response = await fetch(`${API_BASE_URL}/job-industries`);
+  if (!response.ok)
+    throw new Error("Failed to fetch job industries");
+  return response.json();
+}
