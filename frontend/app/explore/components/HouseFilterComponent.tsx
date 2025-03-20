@@ -56,11 +56,18 @@ export default function HousingFiltersForm({
           Housing Filters
         </Typography>
       </DialogTitle>
-      <DialogContent dividers sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}>
+      <DialogContent
+        dividers
+        sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}
+      >
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {/* Property Type Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Property
             </Typography>
             <FormGroup>
@@ -89,7 +96,11 @@ export default function HousingFiltersForm({
 
           {/* Housing Options Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Housing Options
             </Typography>
             <FormGroup>
@@ -118,7 +129,11 @@ export default function HousingFiltersForm({
 
           {/* Condition Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Condition of Property
             </Typography>
             <FormGroup>
@@ -147,7 +162,11 @@ export default function HousingFiltersForm({
 
           {/* Furnished Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Furnished
             </Typography>
             <FormGroup>
@@ -197,10 +216,12 @@ export default function HousingFiltersForm({
           onClick={onClose}
           variant="contained"
           sx={{
-            backgroundColor: "#83A16C",
+            backgroundColor: "#5E7749",
             borderRadius: "13px",
             color: "white",
-            "&:hover": { backgroundColor: "#388e3c" },
+            "&:hover": {
+              backgroundColor: "#83A16C",
+            },
           }}
         >
           Apply Filters

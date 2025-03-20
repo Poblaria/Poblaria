@@ -53,32 +53,41 @@ export default function JobFiltersForm({
         </Typography>
       </DialogTitle>
 
-      <DialogContent dividers sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}>
+      <DialogContent
+        dividers
+        sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}
+      >
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {/* Job Type Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Job Type
             </Typography>
             <FormGroup>
-              {["Seasonal", "Part-Time", "Temporary", "Casual"].map((option) => (
-                <FormControlLabel
-                  key={option}
-                  control={
-                    <Checkbox
-                      checked={jobFilters.jobType.includes(option)}
-                      onChange={() => onFilterChange("jobType", option)}
-                      sx={{
-                        color: "#83A16C",
-                        "&.Mui-checked": {
+              {["Seasonal", "Part-Time", "Temporary", "Casual"].map(
+                (option) => (
+                  <FormControlLabel
+                    key={option}
+                    control={
+                      <Checkbox
+                        checked={jobFilters.jobType.includes(option)}
+                        onChange={() => onFilterChange("jobType", option)}
+                        sx={{
                           color: "#83A16C",
-                        },
-                      }}
-                    />
-                  }
-                  label={option}
-                />
-              ))}
+                          "&.Mui-checked": {
+                            color: "#83A16C",
+                          },
+                        }}
+                      />
+                    }
+                    label={option}
+                  />
+                )
+              )}
             </FormGroup>
           </div>
 
@@ -86,7 +95,11 @@ export default function JobFiltersForm({
 
           {/* Job Industry Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Job Industry
             </Typography>
             <FormGroup>
@@ -141,10 +154,12 @@ export default function JobFiltersForm({
           onClick={onClose}
           variant="contained"
           sx={{
-            backgroundColor: "#83A16C",
+            backgroundColor: "#5E7749",
             borderRadius: "13px",
             color: "white",
-            "&:hover": { backgroundColor: "#388e3c" },
+            "&:hover": {
+              backgroundColor: "#83A16C",
+            },
           }}
         >
           Apply Filters
