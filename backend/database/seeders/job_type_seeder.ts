@@ -5,13 +5,15 @@ export default class extends BaseSeeder {
     async run() {
         await JobType.updateOrCreateMany("name", [
             { name: "Apprenticeship" },
+            { name: "Contract" },
             { name: "Freelance" },
             { name: "Full-Time" },
             { name: "Interim" },
             { name: "Internship" },
             { name: "Part-Time" },
             { name: "Seasonal" },
-            { name: "Temporary" }
+            { name: "Temporary" },
+            { name: "Other" }
         ]);
     }
 }
