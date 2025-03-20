@@ -211,3 +211,30 @@ export async function deleteJob(id: number | string): Promise<any> {
   }
   return response.json();
 }
+
+// GET /housing-conditions
+export async function fetchHousingConditions(): Promise<{ id: number; name: string }[]> {
+  const response = await fetch(`${API_BASE_URL}/housing-conditions`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch housing conditions");
+  }
+  return response.json();
+}
+
+// GET /housing-offer-types
+export async function fetchHousingOfferTypes(): Promise<{ id: number; name: string }[]> {
+  const response = await fetch(`${API_BASE_URL}/housing-offer-types`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch housing offer types");
+  }
+  return response.json();
+}
+
+// GET /housing-types
+export async function fetchHousingTypes(): Promise<{ id: number; name: string }[]> {
+  const response = await fetch(`${API_BASE_URL}/housing-types`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch housing types");
+  }
+  return response.json();
+}
