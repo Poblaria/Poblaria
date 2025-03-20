@@ -103,6 +103,7 @@ export default function ListView(props: ListViewProps) {
                       sx={{ height: 140, objectFit: "cover" }}
                     />
                   )}
+                  {console.log("House Image:", house.image)}
                   <CardContent>
                     <Typography variant="h6">{house.title}</Typography>
                     <Typography variant="body2" color="textSecondary">

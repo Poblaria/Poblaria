@@ -75,7 +75,9 @@ export default function MapComponent(props: MapComponentProps) {
           [...JOBS, ...dataJob].map((job) => {
             const position =
               job.coordinates ||
-              (job.latitude && job.longitude ? [job.latitude, job.longitude] : null);
+              (job.latitude && job.longitude
+                ? [job.latitude, job.longitude]
+                : null);
 
             if (!position || position.length !== 2) {
               console.warn("Skipping job due to missing coordinates:", job);
@@ -111,7 +113,9 @@ export default function MapComponent(props: MapComponentProps) {
           [...HOUSES, ...dataHouse].map((house) => {
             const position =
               house.coordinates ||
-              (house.latitude && house.longitude ? [house.latitude, house.longitude] : null);
+              (house.latitude && house.longitude
+                ? [house.latitude, house.longitude]
+                : null);
 
             if (!position || position.length !== 2) {
               console.warn("Skipping house due to missing coordinates:", house);
@@ -127,18 +131,11 @@ export default function MapComponent(props: MapComponentProps) {
                 <Popup>
                   <Box sx={{ minWidth: 250 }}>
                     {house.image && (
-                      <Box
-                        component="img"
-                        src={house.image}
-                        alt={house.title}
-                        sx={{
-                          width: "100%",
-                          height: "auto",
-                          mb: 2,
-                          borderRadius: 1,
-                          objectFit: "cover",
-                        }}
-                      />
+                        <img
+                          src={house.image}
+                          alt={house.title}
+                          style={{ width: "100%", height: "auto", borderRadius: 6 }}
+                        />
                     )}
                     <Typography variant="h6">{house.title}</Typography>
                     <Typography variant="body2" color="text.secondary">
