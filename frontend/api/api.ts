@@ -42,45 +42,22 @@ export async function logoutUser(): Promise<any> {
 
 // GET /housings
 export async function fetchHousings(): Promise<any> {
-  try {
-    const response = await fetch(`${API_BASE_URL}/housings`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+  const response = await fetch(`${API_BASE_URL}/housings`, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch housings");
-    }
-
-    const housings = await response.json();
-
-    // Fetch images in parallel but handle failures gracefully
-    const housingsWithImages = await Promise.all(
-      housings.map(async (house: any) => {
-        if (house.image_id) {
-          try {
-            const imageResponse = await fetch(`${API_BASE_URL}/housing-images/${house.image_id}`);
-            if (imageResponse.ok) {
-              const imageData = await imageResponse.json();
-              if (imageData.image) {
-                return { ...house, image: `data:image/jpeg;base64,${imageData.image}` };
-              }
-            }
-          } catch (error) {
-            console.error(`Failed to fetch image for house ID ${house.id}:`, error);
-          }
-        }
-        return { ...house, image: null };
-      })
-    );
-
-    return housingsWithImages;
-  } catch (error) {
-    console.error("Error fetching housings:", error);
-    return [];
+  if (!response.ok) {
+    throw new Error("Failed to fetch housings");
   }
-}
 
+  const housings = await response.json();
+
+  return housings.map((house: any) => ({
+    ...house,
+    image: house.image || "/images/Torre-Caballe-Catalonia-Olivers-Travels1.jpg", // Use default if no image is available
+  }));
+}
 
 // GET /housings/:id
 export async function fetchHousingById(id: number | string): Promise<any> {
@@ -133,22 +110,6 @@ export async function deleteHousing(id: number | string): Promise<any> {
     throw new Error(`Failed to delete housing with id: ${id}`);
   }
   return response.json();
-}
-
-// GET /housing-images/:id
-export async function fetchHousingImage(id: number | string): Promise<string> {
-  const response = await fetch(`${API_BASE_URL}/housing-images/${id}`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
-
-  if (!response.ok) {
-    throw new Error(`Failed to fetch image for housing with id: ${id}`);
-  }
-
-  const data = (await response.json()) as HousingData;
-
-  return `data:image/jpeg;base64,${data.image}`;
 }
 
 export async function uploadHousingImage(
