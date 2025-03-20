@@ -3,6 +3,7 @@ import Job from "#models/job";
 import JobType from "#models/job_type";
 import JobIndustry from "#models/job_industry";
 import jobs from "#data/jobs";
+import locations from "#data/locations";
 
 const jobTypes = await JobType.all();
 const JOB_TYPES = jobTypes.map((jobType) => ({
@@ -47,8 +48,8 @@ export default class extends BaseSeeder {
                 type_id: getJobTypeId(job.employment_statuses[0]),
                 industry_id: getJobIndustryId(job.company_object.industry),
                 is_remote: job.remote,
-                latitude: job.latitude,
-                longitude: job.longitude
+                latitude: job.latitude ?? locations[job.location || ""]?.latitude ?? null,
+                longitude: job.longitude ?? locations[job.location || ""]?.longitude ?? null
             }))
         );
     }
