@@ -70,7 +70,7 @@ export async function fetchHousings(): Promise<any> {
             console.error(`Failed to fetch image for house ID ${house.id}:`, error);
           }
         }
-        return { ...house, image: "/images/default-house.png" }; // Placeholder image
+        return { ...house, image: null };
       })
     );
 
