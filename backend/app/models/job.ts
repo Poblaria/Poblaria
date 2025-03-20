@@ -21,7 +21,7 @@ export default class Job extends BaseModel {
     declare address: string | null;
 
     @column()
-    declare salary: number;
+    declare salary: number | null;
 
     @column()
     declare typeId: number;

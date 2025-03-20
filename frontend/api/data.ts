@@ -35,7 +35,7 @@ export interface JobData {
   description?: string | null;
   company: string;
   address?: string | null;
-  salary?: number;
+  salary?: number | null;
   type_id: number;
   is_remote?: boolean;
   latitude?: number | null;
