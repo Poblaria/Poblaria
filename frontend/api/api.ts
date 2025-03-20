@@ -53,10 +53,26 @@ export async function fetchHousings(): Promise<any> {
 
   const housings = await response.json();
 
-  return housings.map((house: any) => ({
-    ...house,
-    image: house.image || "/images/Torre-Caballe-Catalonia-Olivers-Travels1.jpg", // Use default if no image is available
-  }));
+  // Fetch images for each house
+  const housingsWithImages = await Promise.all(
+    housings.map(async (house: any) => {
+      if (house.image_id) {
+        try {
+          const imageResponse = await fetch(`${API_BASE_URL}/housing-images/${house.image_id}`);
+          if (imageResponse.ok) {
+            const imageData = await imageResponse.json();
+            console.log(`Image for house ${house.id}:`, imageData.image);
+            return { ...house, image: `data:image/jpeg;base64,${imageData.image}` };
+          }
+        } catch (error) {
+          console.error(`Failed to fetch image for house ${house.id}:`, error);
+        }
+      }
+      return { ...house, image: "/images/Torre-Caballe-Catalonia-Olivers-Travels1.jpg" };
+    })
+  );
+
+  return housingsWithImages;
 }
 
 // GET /housings/:id
