@@ -1,5 +1,4 @@
 "use client";
-import { Suspense, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
@@ -12,7 +11,6 @@ import {
 } from "@mui/material";
 
 export default function Support() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const path = usePathname();
   console.log(path);
 
