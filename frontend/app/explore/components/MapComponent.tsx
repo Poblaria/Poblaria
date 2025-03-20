@@ -92,8 +92,15 @@ export default function MapComponent(props: MapComponentProps) {
               >
                 <Popup>
                   <Box sx={{ minWidth: 250 }}>
-                    <Typography variant="h6">{job.title}</Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {job.title}
+                    </Typography>
+                    <Typography variant="body1">{job.address}</Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontWeight: "bold" }}
+                    >
                       {job.salary} €
                     </Typography>
                     <Button
@@ -131,14 +138,25 @@ export default function MapComponent(props: MapComponentProps) {
                 <Popup>
                   <Box sx={{ minWidth: 250 }}>
                     {house.image && (
-                        <img
-                          src={house.image}
-                          alt={house.title}
-                          style={{ width: "100%", height: "auto", borderRadius: 6 }}
-                        />
+                      <img
+                        src={house.image}
+                        alt={house.title}
+                        style={{
+                          width: "100%",
+                          height: "auto",
+                          borderRadius: 6,
+                        }}
+                      />
                     )}
-                    <Typography variant="h6">{house.title}</Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {house.title}{" "}
+                    </Typography>
+                    <Typography variant="body1">{house.address} </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      sx={{ fontWeight: "bold" }}
+                    >
                       {house.price} €
                     </Typography>
                     <Button
