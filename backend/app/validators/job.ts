@@ -9,7 +9,9 @@ const jobValidator = (allowOptional = true) =>
             address: allowOptional
                 ? vine.string().maxLength(255).optional()
                 : vine.string().maxLength(255).nullable(),
-            salary: allowOptional ? vine.number().positive().optional() : vine.number().positive(),
+            salary: allowOptional
+                ? vine.number().positive().optional()
+                : vine.number().positive().nullable(),
             type_id: vine.number().positive(),
             industry_id: vine.number().positive(),
             is_remote: allowOptional ? vine.boolean().optional() : vine.boolean(),

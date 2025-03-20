@@ -10,7 +10,7 @@ export default class extends BaseSchema {
             table.text("description").nullable();
             table.string("company").notNullable();
             table.string("address").nullable();
-            table.integer("salary").unsigned();
+            table.float("salary").nullable().unsigned();
             table
                 .integer("type_id")
                 .notNullable()
