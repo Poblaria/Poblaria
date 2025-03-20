@@ -13,23 +13,19 @@ interface FilterBarProps {
   selectedOption: DataType;
   onOptionChange: (newOption: DataType) => void;
   showFilters: boolean;
-  toggleShowFilters: () => void;
-  setShowFilters: (value: boolean) => void;
+  toggleShowFilters: () => unknown;
+  onFilter: () => unknown;
   jobFilters: {
-    jobIndustry: string[];
-    jobType: string[];
+    jobIndustry: number[];
+    jobType: number[];
   };
   housingFilters: {
-    propertyType: string[];
-    housingOptions: string[];
-    condition: string[];
-    furnished: string[];
+    type: number[];
+    offerType: number[];
+    condition: number[];
   };
-  handleJobFilterChange: (category: "jobIndustry" | "jobType", value: string) => void;
-  handleHousingFilterChange: (
-    category: "propertyType" | "housingOptions" | "condition" | "furnished",
-    value: string
-  ) => void;
+  handleJobFilterChange: (category: "jobIndustry" | "jobType", value: number) => void;
+  handleHousingFilterChange: (category: "type" | "offerType" | "condition", value: number) => unknown;
 }
 
 export default function FilterBar(props: FilterBarProps) {
@@ -38,7 +34,7 @@ export default function FilterBar(props: FilterBarProps) {
     onOptionChange,
     showFilters,
     toggleShowFilters,
-    setShowFilters,
+    onFilter,
     jobFilters,
     housingFilters,
     handleJobFilterChange,
@@ -128,23 +124,21 @@ export default function FilterBar(props: FilterBarProps) {
       {/* Dialog for Filters */}
       <Dialog
         open={showFilters}
-        onClose={() => setShowFilters(false)}
+        onClose={toggleShowFilters}
         fullWidth
         maxWidth="sm"
       >
         {selectedOption === "jobs" ? (
           <JobFiltersForm
-            open={showFilters}
-            onClose={() => setShowFilters(false)}
-            onBack={toggleShowFilters}
+            onClose={toggleShowFilters}
+            onFilter={onFilter}
             jobFilters={jobFilters}
             onFilterChange={handleJobFilterChange}
           />
         ) : (
           <HousingFiltersForm
-            open={showFilters}
-            onClose={() => setShowFilters(false)}
-            onBack={toggleShowFilters}
+            onClose={toggleShowFilters}
+            onFilter={onFilter}
             housingFilters={housingFilters}
             onFilterChange={handleHousingFilterChange}
           />

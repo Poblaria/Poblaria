@@ -17,10 +17,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { fetchJobTypes, fetchJobIndustries } from "@/api/api";
 
 interface JobsFiltersFormProps {
-  open: boolean;
-  onClose: () => void;
-  onBack: () => void;
-  jobIndustries: { id: number; name: string }[];
+  onClose: () => unknown;
+  onFilter: () => unknown;
   jobFilters: {
     jobIndustry: number[];
     jobType: number[];
@@ -29,9 +27,8 @@ interface JobsFiltersFormProps {
 }
 
 export default function JobFiltersForm({
-  open,
   onClose,
-  onBack,
+  onFilter,
   jobFilters,
   onFilterChange,
 }: JobsFiltersFormProps) {
@@ -56,7 +53,7 @@ export default function JobFiltersForm({
           borderBottom: "1px solid #e0e0e0",
         }}
       >
-        <IconButton onClick={onBack} sx={{ color: "#666" }}>
+        <IconButton onClick={onClose} sx={{ color: "#666" }}>
           <ArrowBackIcon />
         </IconButton>
         <Typography component="div" sx={{ fontWeight: "bold" }}>
@@ -157,7 +154,7 @@ export default function JobFiltersForm({
           Cancel
         </Button>
         <Button
-          onClick={onClose}
+          onClick={onFilter}
           variant="contained"
           sx={{
             backgroundColor: "#5E7749",

@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import {
   Card,
   CardMedia,
@@ -7,47 +6,25 @@ import {
   CardActions,
   Button,
   Typography,
-  Grid,
+  Grid2 as Grid,
   Box,
 } from "@mui/material";
 import { HOUSES, JOBS } from "../data/Data";
 import { DataType } from "./FilterBar";
-import { fetchHousings, fetchJobs } from "../../../api/api";
 
 interface ListViewProps {
   dataType: DataType;
   showFilters: boolean;
+  housings: any[] | null;
+  jobs: any[] | null;
+  error: string | null;
 }
 
-export default function ListView(props: ListViewProps) {
-  const { dataType, showFilters } = props;
-  const [dataHouse, setDataHouses] = useState<any[]>([]);
-  const [dataJob, setDataJob] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        if (dataType === "houses") {
-          const housings = await fetchHousings();
-          console.log("Fetched Houses:", housings);
-          setDataHouses(housings);
-        } else {
-          const jobs = await fetchJobs();
-          console.log("Fetched Jobs:", jobs);
-          setDataJob(jobs);
-        }
-      } catch (err: any) {
-        setError(err.message);
-      }
-    };
-    loadData();
-  }, [dataType]);
-
+export default function ListView({ dataType, showFilters, housings, jobs, error }: ListViewProps) {
   if (error) return <div>Error: {error}</div>;
-  if (dataType === "houses" && !dataHouse.length && !HOUSES.length)
+  if (dataType === "houses" && !housings && !HOUSES.length)
     return <div>Loading houses...</div>;
-  if (dataType === "jobs" && !dataJob.length && !JOBS.length)
+  if (dataType === "jobs" && !jobs && !JOBS.length)
     return <div>Loading jobs...</div>;
 
   return (
@@ -55,8 +32,8 @@ export default function ListView(props: ListViewProps) {
       {dataType === "jobs" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>
-            {[...JOBS, ...dataJob].map((job) => (
-              <Grid item xs={12} sm={6} md={6} key={job.id}>
+            {[...JOBS, ...(jobs || [])].map((job) => (
+              <Grid key={job.id} size={{ xs: 12, sm: 6, md: 6 }}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   <CardContent>
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -109,8 +86,8 @@ export default function ListView(props: ListViewProps) {
       {dataType === "houses" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>
-            {[...HOUSES, ...dataHouse].map((house) => (
-              <Grid item xs={12} sm={6} md={6} key={house.id}>
+            {[...HOUSES, ...(housings || [])].map((house) => (
+              <Grid key={house.id} size={{ xs: 12, sm: 6, md: 6 }}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   {house.image && (
                     <CardMedia
@@ -120,7 +97,6 @@ export default function ListView(props: ListViewProps) {
                       sx={{ height: 140, objectFit: "cover" }}
                     />
                   )}
-                  {console.log("House Image:", house.image)}
                   <CardContent>
                     <Typography variant="h6" sx={{ fontWeight: "bold" }}>
                       {house.title}

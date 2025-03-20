@@ -1,5 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -7,7 +6,6 @@ import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
 import { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
-import { fetchHousings, fetchJobs } from "../../../api/api";
 
 const HomeLeafletIcon = L.icon({
   iconUrl: "/images/home-icon1.png",
@@ -23,37 +21,16 @@ const JobLeafletIcon = L.icon({
 
 interface MapComponentProps {
   dataType: DataType;
+  housings: any[] | null;
+  jobs: any[] | null;
+  error: string | null;
 }
 
-export default function MapComponent(props: MapComponentProps) {
-  const { dataType } = props;
-  const [dataHouse, setDataHouses] = useState<any[]>([]);
-  const [dataJob, setDataJob] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        if (dataType === "houses") {
-          const housings = await fetchHousings();
-          console.log("Fetched Houses:", housings);
-          setDataHouses(housings);
-        } else {
-          const jobs = await fetchJobs();
-          console.log("Fetched Jobs:", jobs);
-          setDataJob(jobs);
-        }
-      } catch (err: any) {
-        setError(err.message);
-      }
-    };
-    loadData();
-  }, [dataType]);
-
+export default function MapComponent({ dataType, housings, jobs, error }: MapComponentProps) {
   if (error) return <div>Error: {error}</div>;
-  if (dataType === "houses" && !dataHouse.length && !HOUSES.length)
+  if (dataType === "houses" && !housings && !HOUSES.length)
     return <div>Loading houses...</div>;
-  if (dataType === "jobs" && !dataJob.length && !JOBS.length)
+  if (dataType === "jobs" && !jobs && !JOBS.length)
     return <div>Loading jobs...</div>;
 
   return (
@@ -72,7 +49,7 @@ export default function MapComponent(props: MapComponentProps) {
 
         {/* Markers for Jobs */}
         {dataType === "jobs" &&
-          [...JOBS, ...dataJob].map((job) => {
+          [...JOBS, ...(jobs || [])].map((job) => {
             const position =
               job.coordinates ||
               (job.latitude && job.longitude
@@ -117,7 +94,7 @@ export default function MapComponent(props: MapComponentProps) {
 
         {/* Markers for Houses */}
         {dataType === "houses" &&
-          [...HOUSES, ...dataHouse].map((house) => {
+          [...HOUSES, ...(housings || [])].map((house) => {
             const position =
               house.coordinates ||
               (house.latitude && house.longitude

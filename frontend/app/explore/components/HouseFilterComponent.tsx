@@ -14,54 +14,39 @@ import {
   IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-  fetchHousingConditions,
-  fetchHousingOfferTypes,
-  fetchHousingTypes,
-} from "../../../api/api";
+import { fetchHousingConditions, fetchHousingOfferTypes, fetchHousingTypes } from "@/api/api";
 
 interface HousingFiltersFormProps {
-  open: boolean;
-  onClose: () => void;
-  onBack: () => void;
+  onClose: () => unknown;
+  onFilter: () => unknown;
   housingFilters: {
-    propertyType: string[];
-    housingOptions: string[];
-    condition: string[];
-    furnished: string[];
+    type: number[];
+    offerType: number[];
+    condition: number[];
   };
-  onFilterChange: (
-    category: "propertyType" | "housingOptions" | "condition" | "furnished",
-    value: string
-  ) => void;
+  onFilterChange: (category: "type" | "offerType" | "condition", value: number) => unknown;
 }
 
 export default function HousingFiltersForm({
-  open,
   onClose,
-  onBack,
+  onFilter,
   housingFilters,
   onFilterChange,
 }: HousingFiltersFormProps) {
-  const [propertyTypes, setPropertyTypes] = useState<{ id: number; name: string }[]>([]);
-  const [housingOptions, setHousingOptions] = useState<{ id: number; name: string }[]>([]);
+  const [types, setTypes] = useState<{ id: number; name: string }[]>([]);
+  const [offertTypes, setOffertTypes] = useState<{ id: number; name: string }[]>([]);
   const [conditions, setConditions] = useState<{ id: number; name: string }[]>([]);
 
   useEffect(() => {
-    async function fetchData() {
+    (async function fetchData() {
       try {
-        const types = await fetchHousingTypes();
-        const options = await fetchHousingOfferTypes();
-        const conditionsData = await fetchHousingConditions();
-        setPropertyTypes(types);
-        setHousingOptions(options);
-        setConditions(conditionsData);
+        setTypes(await fetchHousingTypes());
+        setOffertTypes(await fetchHousingOfferTypes());
+        setConditions(await fetchHousingConditions());
       } catch (error) {
         console.error("Error fetching filter options:", error);
       }
-    }
-
-    fetchData();
+    })();
   }, []);
 
   return (
@@ -75,7 +60,7 @@ export default function HousingFiltersForm({
           borderBottom: "1px solid #e0e0e0",
         }}
       >
-        <IconButton onClick={onBack} sx={{ color: "#666" }}>
+        <IconButton onClick={onClose} sx={{ color: "#666" }}>
           <ArrowBackIcon />
         </IconButton>
         <Typography component="div" sx={{ fontWeight: "bold" }}>
@@ -90,13 +75,13 @@ export default function HousingFiltersForm({
               Property Type
             </Typography>
             <FormGroup>
-              {propertyTypes.map((type) => (
+              {types.map((type) => (
                 <FormControlLabel
                   key={type.id}
                   control={
                     <Checkbox
-                      checked={housingFilters.propertyType.includes(type.name)}
-                      onChange={() => onFilterChange("propertyType", type.name)}
+                      checked={housingFilters.type.includes(type.id)}
+                      onChange={() => onFilterChange("type", type.id)}
                       sx={{
                         color: "#83A16C",
                         "&.Mui-checked": { color: "#83A16C" },
@@ -117,20 +102,20 @@ export default function HousingFiltersForm({
               Housing Options
             </Typography>
             <FormGroup>
-              {housingOptions.map((option) => (
+              {offertTypes.map((offerType) => (
                 <FormControlLabel
-                  key={option.id}
+                  key={offerType.id}
                   control={
                     <Checkbox
-                      checked={housingFilters.housingOptions.includes(option.name)}
-                      onChange={() => onFilterChange("housingOptions", option.name)}
+                      checked={housingFilters.offerType.includes(offerType.id)}
+                      onChange={() => onFilterChange("offerType", offerType.id)}
                       sx={{
                         color: "#83A16C",
                         "&.Mui-checked": { color: "#83A16C" },
                       }}
                     />
                   }
-                  label={option.name}
+                  label={offerType.name}
                 />
               ))}
             </FormGroup>
@@ -149,8 +134,8 @@ export default function HousingFiltersForm({
                   key={condition.id}
                   control={
                     <Checkbox
-                      checked={housingFilters.condition.includes(condition.name)}
-                      onChange={() => onFilterChange("condition", condition.name)}
+                      checked={housingFilters.condition.includes(condition.id)}
+                      onChange={() => onFilterChange("condition", condition.id)}
                       sx={{
                         color: "#83A16C",
                         "&.Mui-checked": { color: "#83A16C" },
@@ -163,32 +148,32 @@ export default function HousingFiltersForm({
             </FormGroup>
           </div>
 
-          <Divider />
+          {/*<Divider />*/}
 
           {/* Furnished Section */}
-          <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
-              Furnished
-            </Typography>
-            <FormGroup>
-              {["Yes", "No"].map((option) => (
-                <FormControlLabel
-                  key={option}
-                  control={
-                    <Checkbox
-                      checked={housingFilters.furnished.includes(option)}
-                      onChange={() => onFilterChange("furnished", option)}
-                      sx={{
-                        color: "#83A16C",
-                        "&.Mui-checked": { color: "#83A16C" },
-                      }}
-                    />
-                  }
-                  label={option}
-                />
-              ))}
-            </FormGroup>
-          </div>
+          {/*<div>*/}
+          {/*  <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>*/}
+          {/*    Furnished*/}
+          {/*  </Typography>*/}
+          {/*  <FormGroup>*/}
+          {/*    {["Yes", "No"].map((option) => (*/}
+          {/*      <FormControlLabel*/}
+          {/*        key={option}*/}
+          {/*        control={*/}
+          {/*          <Checkbox*/}
+          {/*            checked={housingFilters.furnished.includes(option)}*/}
+          {/*            onChange={() => onFilterChange("furnished", option)}*/}
+          {/*            sx={{*/}
+          {/*              color: "#83A16C",*/}
+          {/*              "&.Mui-checked": { color: "#83A16C" },*/}
+          {/*            }}*/}
+          {/*          />*/}
+          {/*        }*/}
+          {/*        label={option}*/}
+          {/*      />*/}
+          {/*    ))}*/}
+          {/*  </FormGroup>*/}
+          {/*</div>*/}
         </Box>
       </DialogContent>
       <DialogActions
@@ -212,7 +197,7 @@ export default function HousingFiltersForm({
           Cancel
         </Button>
         <Button
-          onClick={onClose}
+          onClick={onFilter}
           variant="contained"
           sx={{
             backgroundColor: "#5E7749",
