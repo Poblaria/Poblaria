@@ -1,5 +1,6 @@
 "use client";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useState, useEffect } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Box from "@mui/material/Box";
@@ -19,6 +20,12 @@ const JobLeafletIcon = L.icon({
   iconAnchor: [17, 35],
 });
 
+const CenterLeafletIcon = L.icon({
+  iconUrl: "/images/marker-icon-2x.png",
+  iconSize: [40, 40],
+  iconAnchor: [17, 35],
+});
+
 interface MapComponentProps {
   dataType: DataType;
   housings: any[] | null;
@@ -26,7 +33,29 @@ interface MapComponentProps {
   error: string | null;
 }
 
+function ZoomListener({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
+  const map = useMap();
+
+  useEffect(() => {
+    const handleZoom = () => {
+      onZoomChange(map.getZoom());
+    };
+
+    handleZoom();
+
+    map.on('zoomend', handleZoom);
+
+    return () => {
+      map.off('zoomend', handleZoom);
+    };
+  }, [map, onZoomChange]);
+
+  return null;
+}
+
 export default function MapComponent({ dataType, housings, jobs, error }: MapComponentProps) {
+  const [ currentZoom, setCurrentZoom ] = useState(16);
+
   if (error) return <div>Error: {error}</div>;
   if (dataType === "houses" && !housings && !HOUSES.length)
     return <div>Loading houses...</div>;
@@ -42,13 +71,21 @@ export default function MapComponent({ dataType, housings, jobs, error }: MapCom
         scrollWheelZoom
         style={{ height: "calc(100vh - 120px)", width: "100%" }}
       >
+        <ZoomListener onZoomChange={setCurrentZoom} />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
+        {/* Central Marker - visible when zoom <= 16 */}
+        {currentZoom <= 16 && (
+          <Marker position={[42.4436, 1.1344]} icon={CenterLeafletIcon}>
+            <Popup>Rialp Village</Popup>
+          </Marker>
+        )}
+
         {/* Markers for Jobs */}
-        {dataType === "jobs" &&
+        {dataType === "jobs" && currentZoom >= 17 &&
           [...JOBS, ...(jobs || [])].map((job) => {
             const position =
               job.coordinates ||
@@ -93,7 +130,7 @@ export default function MapComponent({ dataType, housings, jobs, error }: MapCom
           })}
 
         {/* Markers for Houses */}
-        {dataType === "houses" &&
+        {dataType === "houses" && currentZoom >= 17 &&
           [...HOUSES, ...(housings || [])].map((house) => {
             const position =
               house.coordinates ||

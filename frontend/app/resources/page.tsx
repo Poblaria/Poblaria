@@ -103,7 +103,7 @@ export default function Resources() {
                 className="font-medium hover:underline"
                 style={{ color: "#5E7749" }}
               >
-                Browse Jobs →
+                Discover the support →
               </Link>
             </Box>
 

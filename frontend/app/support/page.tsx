@@ -1,10 +1,7 @@
 "use client";
 import { Suspense, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Home as HomeIcon, Work as WorkIcon } from "@mui/icons-material";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
 import {
   Box,
   Container,
