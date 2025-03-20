@@ -85,7 +85,7 @@ export default function MapComponent({ dataType, housings, jobs, error }: MapCom
         )}
 
         {/* Markers for Jobs */}
-        {dataType === "jobs" && currentZoom >= 17 &&
+        {dataType === "jobs" && /* currentZoom >= 17 && */
           [...JOBS, ...(jobs || [])].map((job) => {
             const position =
               job.coordinates ||
@@ -130,7 +130,7 @@ export default function MapComponent({ dataType, housings, jobs, error }: MapCom
           })}
 
         {/* Markers for Houses */}
-        {dataType === "houses" && currentZoom >= 17 &&
+        {dataType === "houses" && /* currentZoom >= 17 && */
           [...HOUSES, ...(housings || [])].map((house) => {
             const position =
               house.coordinates ||
