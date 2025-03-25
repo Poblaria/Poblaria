@@ -1,5 +1,4 @@
 "use client";
-import React, { useState } from "react";
 import {
   Card,
   CardMedia,
@@ -7,7 +6,7 @@ import {
   CardActions,
   Button,
   Typography,
-  Grid,
+  Grid2 as Grid,
   Box,
 } from "@mui/material";
 import { HOUSES, JOBS } from "../data/Data";
@@ -16,22 +15,47 @@ import { DataType } from "./FilterBar";
 interface ListViewProps {
   dataType: DataType;
   showFilters: boolean;
+  housings: any[] | null;
+  jobs: any[] | null;
+  error: string | null;
 }
 
-export default function ListView(props: ListViewProps) {
-  const { dataType, showFilters } = props;
+export default function ListView({ dataType, showFilters, housings, jobs, error }: ListViewProps) {
+  if (error) return <div>Error: {error}</div>;
+  if (dataType === "houses" && !housings && !HOUSES.length)
+    return <div>Loading houses...</div>;
+  if (dataType === "jobs" && !jobs && !JOBS.length)
+    return <div>Loading jobs...</div>;
+
   return (
     <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }}>
       {dataType === "jobs" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>
-            {JOBS.map((job) => (
-              <Grid item xs={12} sm={6} md={6} key={job.id}>
+            {[...JOBS, ...(jobs || [])].map((job) => (
+              <Grid key={job.id} size={{ xs: 12, sm: 6, md: 6 }}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   <CardContent>
-                    <Typography variant="h6">{job.title}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {job.salary}
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {job.title}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ fontWeight: "bold", marginBottom: 1 }}
+                    >
+                      {job.company} - {job.address}
+                    </Typography>
+
+                    <Typography variant="body2" sx={{ marginBottom: 3 }}>
+                      {job.description}
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {job.salary} €
                     </Typography>
                   </CardContent>
                   <CardActions>
@@ -58,11 +82,12 @@ export default function ListView(props: ListViewProps) {
           </Grid>
         </Box>
       )}
+
       {dataType === "houses" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
           <Grid container spacing={2}>
-            {HOUSES.map((house) => (
-              <Grid item xs={12} sm={6} md={6} key={house.id}>
+            {[...HOUSES, ...(housings || [])].map((house) => (
+              <Grid key={house.id} size={{ xs: 12, sm: 6, md: 6 }}>
                 <Card sx={{ mb: 2, backgroundColor: "#F5F5F5" }}>
                   {house.image && (
                     <CardMedia
@@ -73,10 +98,33 @@ export default function ListView(props: ListViewProps) {
                     />
                   )}
                   <CardContent>
-                    <Typography variant="h6">{house.title}</Typography>
-                    <Typography variant="body2" color="textSecondary">
-                      {house.price}
+                    <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                      {house.title}
                     </Typography>
+                    <Typography
+                      variant="body1"
+                      sx={{ marginBottom: 1, fontWeight: "bold" }}
+                    >
+                      {house.address}{" "}
+                    </Typography>
+
+                    <Typography variant="body2" sx={{ marginBottom: 3 }}>
+                      {house.description}
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      sx={{ fontWeight: "bold" }}
+                    >
+                      {house.price} €
+                    </Typography>
+
+                    <Typography variant="body2" color="textSecondary">
+                      {house.rooms} rooms · {house.bathrooms} bathrooms ·{" "}
+                      {house.area}m²
+                    </Typography>
+
                     <Typography variant="body2" color="textSecondary">
                       {house.details}
                     </Typography>

@@ -1,20 +1,11 @@
 "use client";
-import { Suspense, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home as HomeIcon, Work as WorkIcon } from "@mui/icons-material";
-import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  Card,
-} from "@mui/material";
+import { Box, Typography, Card } from "@mui/material";
 import { BookOpenIcon, CurrencyDollarIcon } from "@heroicons/react/20/solid";
 
 export default function Resources() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const path = usePathname();
   console.log(path);
 

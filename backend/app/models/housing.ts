@@ -1,8 +1,10 @@
 import { DateTime } from "luxon";
 import { BaseModel, column, belongsTo } from "@adonisjs/lucid/orm";
+import type { BelongsTo } from "@adonisjs/lucid/types/relations";
+import HousingImage from "#models/housing_image";
 import HousingType from "#models/housing_type";
 import HousingOfferType from "#models/housing_offer_type";
-import type { BelongsTo } from "@adonisjs/lucid/types/relations";
+import HousingCondition from "#models/housing_condition";
 
 export default class Housing extends BaseModel {
     @column({ isPrimary: true })
@@ -13,6 +15,12 @@ export default class Housing extends BaseModel {
 
     @column()
     declare description: string | null;
+
+    @column()
+    declare imageId: number;
+
+    @belongsTo(() => HousingImage)
+    declare image: BelongsTo<typeof HousingImage>;
 
     @column()
     declare price: number;
@@ -30,6 +38,12 @@ export default class Housing extends BaseModel {
     declare offerType: BelongsTo<typeof HousingOfferType>;
 
     @column()
+    declare conditionId: number;
+
+    @belongsTo(() => HousingCondition)
+    declare condition: BelongsTo<typeof HousingCondition>;
+
+    @column()
     declare rooms: number;
 
     @column()
@@ -39,7 +53,7 @@ export default class Housing extends BaseModel {
     declare area: number;
 
     @column()
-    declare landArea: number;
+    declare landArea: number | null;
 
     @column()
     declare address: string;

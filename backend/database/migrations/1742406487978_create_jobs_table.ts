@@ -10,7 +10,7 @@ export default class extends BaseSchema {
             table.text("description").nullable();
             table.string("company").notNullable();
             table.string("address").nullable();
-            table.integer("salary").unsigned();
+            table.float("salary").nullable().unsigned();
             table
                 .integer("type_id")
                 .notNullable()
@@ -18,7 +18,17 @@ export default class extends BaseSchema {
                 .references("id")
                 .inTable("job_types")
                 .onDelete("CASCADE");
+            table
+                .integer("industry_id")
+                .notNullable()
+                .unsigned()
+                .references("id")
+                .inTable("job_industries")
+                .onDelete("CASCADE");
             table.boolean("is_remote").notNullable().defaultTo(false);
+            table.float("latitude").nullable();
+            table.float("longitude").nullable();
+
             table.boolean("is_available").notNullable().defaultTo(true);
 
             table.timestamp("created_at").notNullable();

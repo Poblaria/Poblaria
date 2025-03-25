@@ -1,5 +1,4 @@
 "use client";
-import { Suspense, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
@@ -12,7 +11,6 @@ import {
 } from "@mui/material";
 
 export default function Support() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const path = usePathname();
   console.log(path);
 
@@ -28,7 +26,7 @@ export default function Support() {
         <Card sx={{ height: "100%", overflow: "hidden", position: "relative" }}>
           <CardMedia>
             <Image
-              src="/images/support-photo.png"
+              src="/images/rupit.jpg"
               alt="Countryside Living"
               layout="fill"
               objectFit="cover"
@@ -91,15 +89,17 @@ export default function Support() {
                 Help us expand and connect more families to rural opportunities
               </Typography>
               <Button
-                variant="text"
-                    sx={{
-                        backgroundColor: "#83A16C",
-                        borderRadius: "13px",
-                        color: "white",
-                        "&:hover": { backgroundColor: "#388e3c" },
-                      }}
-                
-                >
+                variant="contained"
+                onClick={() => path === "/contact"}
+                sx={{
+                  height: "40px",
+                  backgroundColor: "#5E7749",
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#83A16C",
+                  },
+                }}
+              >
                     Donate Now
                 </Button>
             </Box>
@@ -112,14 +112,17 @@ export default function Support() {
                 Partner, volunteer, or share your expertise to support rural communities
               </Typography>
               <Button
-                variant="text"
+                variant="contained"
+                onClick={() => path === "/contact"}
                 sx={{
+                  height: "40px",
+                  backgroundColor: "#5E7749",
+                  color: "white",
+                  "&:hover": {
                     backgroundColor: "#83A16C",
-                    borderRadius: "13px",
-                    color: "white",
-                    "&:hover": { backgroundColor: "#388e3c" },
-                  }}
-                >
+                  },
+                }}
+              >
                     Get Involved
                 </Button>
             </Box>
@@ -132,14 +135,17 @@ export default function Support() {
                 Work with us to drive sustainable rural development. - For Associations & Governments
               </Typography>
               <Button
-                variant="text"
+                variant="contained"
+                onClick={() => path === "/contact"}
                 sx={{
+                  height: "40px",
+                  backgroundColor: "#5E7749",
+                  color: "white",
+                  "&:hover": {
                     backgroundColor: "#83A16C",
-                    borderRadius: "13px",
-                    color: "white",
-                    "&:hover": { backgroundColor: "#388e3c" },
-                  }}
-                >
+                  },
+                }}
+              >
                     Become a Partner
                 </Button>
             </Box>

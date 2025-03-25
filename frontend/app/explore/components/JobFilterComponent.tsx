@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   DialogTitle,
   DialogContent,
@@ -14,25 +14,34 @@ import {
   IconButton,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { fetchJobTypes, fetchJobIndustries } from "@/api/api";
 
 interface JobsFiltersFormProps {
-  open: boolean;
-  onClose: () => void;
-  onBack: () => void;
+  onClose: () => unknown;
+  onFilter: () => unknown;
   jobFilters: {
-    jobIndustry: string[];
-    jobType: string[];
+    jobIndustry: number[];
+    jobType: number[];
   };
-  onFilterChange: (category: "jobIndustry" | "jobType", value: string) => void;
+  onFilterChange: (category: "jobIndustry" | "jobType", value: number) => void;
 }
 
 export default function JobFiltersForm({
-  open,
   onClose,
-  onBack,
+  onFilter,
   jobFilters,
   onFilterChange,
 }: JobsFiltersFormProps) {
+  const [jobTypes, setJobTypes] = useState<{ id: number; name: string }[]>([]);
+  const [jobIndustries, setJobIndustries] = useState<{ id: number; name: string }[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      setJobTypes(await fetchJobTypes());
+      setJobIndustries(await fetchJobIndustries());
+    })();
+  }, []);
+
   return (
     <>
       <DialogTitle
@@ -44,7 +53,7 @@ export default function JobFiltersForm({
           borderBottom: "1px solid #e0e0e0",
         }}
       >
-        <IconButton onClick={onBack} sx={{ color: "#666" }}>
+        <IconButton onClick={onClose} sx={{ color: "#666" }}>
           <ArrowBackIcon />
         </IconButton>
         <Typography component="div" sx={{ fontWeight: "bold" }}>
@@ -52,32 +61,41 @@ export default function JobFiltersForm({
         </Typography>
       </DialogTitle>
 
-      <DialogContent dividers sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}>
+      <DialogContent
+        dividers
+        sx={{ padding: "24px", backgroundColor: "#f9f9f9" }}
+      >
         <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {/* Job Type Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Job Type
             </Typography>
             <FormGroup>
-              {["Seasonal", "Part-Time", "Temporary", "Casual"].map((option) => (
-                <FormControlLabel
-                  key={option}
-                  control={
-                    <Checkbox
-                      checked={jobFilters.jobType.includes(option)}
-                      onChange={() => onFilterChange("jobType", option)}
-                      sx={{
-                        color: "#83A16C",
-                        "&.Mui-checked": {
+              {jobTypes.map(
+                (option) => (
+                  <FormControlLabel
+                    key={option.id}
+                    control={
+                      <Checkbox
+                        checked={jobFilters.jobType.includes(option.id)}
+                        onChange={() => onFilterChange("jobType", option.id)}
+                        sx={{
                           color: "#83A16C",
-                        },
-                      }}
-                    />
-                  }
-                  label={option}
-                />
-              ))}
+                          "&.Mui-checked": {
+                            color: "#83A16C",
+                          },
+                        }}
+                      />
+                    }
+                    label={option.name}
+                  />
+                )
+              )}
             </FormGroup>
           </div>
 
@@ -85,22 +103,21 @@ export default function JobFiltersForm({
 
           {/* Job Industry Section */}
           <div>
-            <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>
+            <Typography
+              component="div"
+              gutterBottom
+              sx={{ fontWeight: "bold", color: "#555" }}
+            >
               Job Industry
             </Typography>
             <FormGroup>
-              {[
-                "Agriculture & Farming",
-                "Skilled Trades & Craftsmanship",
-                "Tourism & Hospitality",
-                "Cultural Preservation",
-              ].map((option) => (
+              {jobIndustries.map((option) => (
                 <FormControlLabel
-                  key={option}
+                  key={option.id}
                   control={
                     <Checkbox
-                      checked={jobFilters.jobIndustry.includes(option)}
-                      onChange={() => onFilterChange("jobIndustry", option)}
+                      checked={jobFilters.jobIndustry.includes(option.id)}
+                      onChange={() => onFilterChange("jobIndustry", option.id)}
                       sx={{
                         color: "#83A16C",
                         "&.Mui-checked": {
@@ -109,7 +126,7 @@ export default function JobFiltersForm({
                       }}
                     />
                   }
-                  label={option}
+                  label={option.name}
                 />
               ))}
             </FormGroup>
@@ -137,13 +154,15 @@ export default function JobFiltersForm({
           Cancel
         </Button>
         <Button
-          onClick={onClose}
+          onClick={onFilter}
           variant="contained"
           sx={{
-            backgroundColor: "#83A16C",
+            backgroundColor: "#5E7749",
             borderRadius: "13px",
             color: "white",
-            "&:hover": { backgroundColor: "#388e3c" },
+            "&:hover": {
+              backgroundColor: "#83A16C",
+            },
           }}
         >
           Apply Filters
