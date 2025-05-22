@@ -1,0 +1,24 @@
+---
+name: Poblaria Mirror
+
+on:
+    workflow_call:
+
+jobs:
+    mirror:
+        name: Mirror
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            - name: Mirror
+              uses: pixta-dev/repository-mirroring-action@v1
+              with:
+                # The URL of the target repository to mirror. This should be a valid repository URL.
+                target_repo_url: ${{ vars.MIRROR_REPO_URL }}
+                # The private SSH key used for authentication to the target repository.
+                # Ensure this key has the correct permissions and is stored securely in GitHub Secrets.
+                ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}

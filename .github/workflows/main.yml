@@ -1,0 +1,11 @@
+---
+name: Poblaria
+
+on:
+    push:
+
+jobs:
+    mirror:
+        name: Mirror
+        uses: ./.github/workflows/mirror.yml
+        secrets: inherit
