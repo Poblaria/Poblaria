@@ -4,7 +4,7 @@ name: Setup workflow job
 on:
     workflow_call:
         inputs:
-            workdir:
+            working-directory:
                 required: true
                 type: string
 
@@ -19,5 +19,5 @@ jobs:
                   node-version: lts/*
 
             - name: Install dependencies
-              working-directory: ${{ inputs.workdir }}
+              working-directory: ${{ inputs.working-directory }}
               run: npm ci
