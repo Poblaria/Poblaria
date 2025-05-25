@@ -5,7 +5,13 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-    ...compat.extends("next/core-web-vitals", "next/typescript", "prettier")
+    ...compat.extends("next/core-web-vitals", "next/typescript", "prettier"),
+    {
+        rules: {
+            "no-await-in-loop": "error",
+            "no-console": "error"
+        }
+    }
 ];
 
 export default eslintConfig;
