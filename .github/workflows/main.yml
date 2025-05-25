@@ -5,7 +5,35 @@ on:
     push:
 
 jobs:
-    mirror:
-        name: Mirror
-        uses: ./.github/workflows/mirror.yml
-        secrets: inherit
+    lint:
+        name: Lint, check files format and check types
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: true
+            matrix:
+                project: [backend, frontend]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install dependencies
+              working-directory: ${{ matrix.project }}
+              run: npm ci
+
+            - name: Lint
+              working-directory: ${{ matrix.project }}
+              run: npm run lint
+
+            - name: Check files format
+              working-directory: ${{ matrix.project }}
+              run: npm run format:check
+
+            - name: Check types
+              working-directory: ${{ matrix.project }}
+              run: npm run typecheck
