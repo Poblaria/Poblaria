@@ -1,0 +1,26 @@
+---
+name: Setup workflow job
+
+on:
+    workflow_call:
+        inputs:
+            workdir:
+                required: true
+                type: string
+
+jobs:
+    setup:
+        name: Setup workflow job
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: lts/*
+
+            - name: Install dependencies
+              working-directory: ${{ inputs.workdir }}
+              run: npm ci
