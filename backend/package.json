@@ -68,5 +68,5 @@
             "./app/middleware/*.ts"
         ]
     },
-    "prettier": "@adonisjs/prettier-config"
+    "prettier": "./.prettierrc"
 }
