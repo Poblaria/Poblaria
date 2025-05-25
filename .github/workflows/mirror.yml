@@ -2,7 +2,7 @@
 name: Poblaria Mirror
 
 on:
-    workflow_call:
+    push:
 
 jobs:
     mirror:
