@@ -1,8 +1,9 @@
 ---
 name: Poblaria Mirror
+run-name: "[Mirror] ${{ github.event.head_commit.message }}"
 
 on:
-    workflow_call:
+    push:
 
 jobs:
     mirror:
