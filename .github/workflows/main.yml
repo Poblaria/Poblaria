@@ -64,6 +64,11 @@ jobs:
               with:
                   working-directory: backend
 
+            - name: Initialize environment
+              run: |
+                cp .env.example .env
+                node ace generate:key
+
             - name: Run tests
               working-directory: backend
               run: npm test
