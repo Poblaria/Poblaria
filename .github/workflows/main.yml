@@ -69,6 +69,6 @@ jobs:
               with:
                   working-directory: ${{ matrix.project }}
 
-            - name: Check types
+            - name: Build project
               working-directory: ${{ matrix.project }}
               run: npm run build
