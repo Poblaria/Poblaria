@@ -1,23 +1,20 @@
 ---
 name: Setup workflow job
 
-on:
-    workflow_call:
-        inputs:
-            working-directory:
-                required: true
-                type: string
+inputs:
+    working-directory:
+        description: "The working directory where the Node project is located"
+        required: true
 
-jobs:
-    setup:
-        name: Setup workflow job
-        runs-on: ubuntu-latest
-        steps:
-            - name: Setup Node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: lts/*
+runs:
+    using: "composite"
+    steps:
+        -   name: Setup Node
+            uses: actions/setup-node@v4
+            with:
+                node-version: lts/*
 
-            - name: Install dependencies
-              working-directory: ${{ github.event.inputs.working-directory }}
-              run: npm ci
+        -   name: Install dependencies
+            working-directory: ${{ inputs.working-directory }}
+            run: npm ci
+            shell: bash
