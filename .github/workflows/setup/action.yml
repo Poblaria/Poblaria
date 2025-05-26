@@ -4,7 +4,6 @@ name: Setup workflow job
 inputs:
     working-directory:
         description: "The working directory where the Node project is located"
-        default: "."
         required: true
 
 runs:

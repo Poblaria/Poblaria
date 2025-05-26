@@ -65,6 +65,8 @@ jobs:
 
             - name: Setup
               uses: ./.github/workflows/setup
+              with:
+                  working-directory: ${{ matrix.project }}
 
             - name: Initialize environment
               run: |
