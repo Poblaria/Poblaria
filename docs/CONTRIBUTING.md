@@ -21,7 +21,7 @@ To ensure clarity and structure, follow these guidelines when naming branches:
 ### Optional Scope
 
 The optional scope is either `backend` or `frontend`.
-Whether it concerns both or something else, there is no need to precise it.
+Whether it concerns both or something else, there is no need to specify it.
 
 ### Branch Naming Rules
 
@@ -84,5 +84,5 @@ Follow the [Conventional Commits](https://conventionalcommits.org) format for cl
 2. Request for people to review (add them to reviewers).
 3. Wait for the PR to be reviewed.
 4. Make changes if necessary.
-5. Merge the PR (you can use the default commit name, or custom it, or use a _Conventional Commits_ one).
+5. Merge the PR (you can use the default commit name, or customize it, or use a _Conventional Commits_ one).
 6. Delete the branch if it is no longer useful.
