@@ -1,5 +1,6 @@
 ---
 name: Poblaria
+run-name: [Poblaria] ${{ github.event.head_commit.message }}
 
 on:
     push:
@@ -66,7 +67,7 @@ jobs:
             - name: Setup
               uses: ./.github/workflows/setup
               with:
-                  working-directory: ${{ matrix.project }}
+                  working-directory: backend
 
             - name: Initialize environment
               run: |
