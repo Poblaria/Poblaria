@@ -1,6 +1,6 @@
 ---
 name: Poblaria
-run-name: [Poblaria] ${{ github.event.head_commit.message }}
+run-name: "[Poblaria] ${{ github.event.head_commit.message }}"
 
 on:
     push:
