@@ -6,8 +6,8 @@
         "dev": "next dev --turbopack",
         "build": "next build --turbopack",
         "start": "next start",
-        "lint": "eslint",
-        "lint:fix": "eslint --fix",
+        "lint": "eslint --max-warnings=0",
+        "lint:fix": "eslint --max-warnings=0 --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "typecheck": "tsc --noEmit"
