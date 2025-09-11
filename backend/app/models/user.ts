@@ -11,7 +11,9 @@ const AuthFinder = withAuthFinder(() => hash.use("scrypt"), {
 });
 
 export default class User extends compose(BaseModel, AuthFinder) {
-    static accessTokens = DbAccessTokensProvider.forModel(User);
+    static accessTokens = DbAccessTokensProvider.forModel(User, {
+        expiresIn: "30 days"
+    });
 
     @column({ isPrimary: true })
     declare id: number;
