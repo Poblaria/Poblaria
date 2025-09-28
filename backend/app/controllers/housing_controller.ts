@@ -18,9 +18,9 @@ export default class HousingController {
         let image;
         if (data.image) image = await HousingImage.create({ image: Buffer.from(data.image) });
 
-        delete data.image;
+        const { image: _image, ...housing } = data;
 
-        return response.created(await Housing.create({ ...data, imageId: image?.id }));
+        return response.created(await Housing.create({ ...housing, imageId: image?.id }));
     }
 
     async show({ params }: HttpContext) {
