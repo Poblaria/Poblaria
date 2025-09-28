@@ -45,4 +45,3 @@ export default [
     { location: "Pinto", latitude: 40.2415, longitude: 3.699 },
     { location: "Montcada I Reixac", latitude: 41.5, longitude: 2.1833 }
 ];
-// as Record<string, {  number | null;  number | null }>;

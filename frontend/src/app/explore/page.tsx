@@ -39,8 +39,6 @@ export default function Explore() {
         if (newMode !== null) setViewMode(newMode);
     };
 
-    ////////////
-
     const [dataType, setDataType] = useState<DataType>("jobs");
     const [showFilters, setShowFilters] = useState(false);
 
@@ -142,11 +140,8 @@ export default function Explore() {
         })();
     }, [dataType]);
 
-    ////////////
-
     return (
         <main className="w-full h-full">
-            {/* <FilterBar></FilterBar> */}
             <Box
                 height={"100%"}
                 sx={{ display: "flex", flexDirection: "column" }}
@@ -238,30 +233,3 @@ export default function Explore() {
         </main>
     );
 }
-
-/*'use client';
-
-import { useState } from 'react';
-import MapWrapper from './MapWrapper';
-import FormComponent from './components/FormComponent';
-
-export default function Explore() {
-  const [showForm, setShowForm] = useState(false);
-
-  return (
-    <main className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Explore Rialp, Lleida</h1>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
-        >
-          {showForm ? 'Close Form' : 'Open Form'}
-        </button>
-      </div>
-
-      {showForm && <FormComponent />}
-      <MapWrapper />
-    </main>
-  );
-}*/

@@ -1,4 +1,3 @@
-// poblaria/next/app/api/submit-form/route.ts
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {

@@ -197,33 +197,6 @@ export default function HousingFiltersForm({
                             ))}
                         </FormGroup>
                     </div>
-
-                    {/*<Divider />*/}
-
-                    {/* Furnished Section */}
-                    {/*<div>*/}
-                    {/*  <Typography component="div" gutterBottom sx={{ fontWeight: "bold", color: "#555" }}>*/}
-                    {/*    Furnished*/}
-                    {/*  </Typography>*/}
-                    {/*  <FormGroup>*/}
-                    {/*    {["Yes", "No"].map((option) => (*/}
-                    {/*      <FormControlLabel*/}
-                    {/*        key={option}*/}
-                    {/*        control={*/}
-                    {/*          <Checkbox*/}
-                    {/*            checked={housingFilters.furnished.includes(option)}*/}
-                    {/*            onChange={() => onFilterChange("furnished", option)}*/}
-                    {/*            sx={{*/}
-                    {/*              color: "#83A16C",*/}
-                    {/*              "&.Mui-checked": { color: "#83A16C" },*/}
-                    {/*            }}*/}
-                    {/*          />*/}
-                    {/*        }*/}
-                    {/*        label={option}*/}
-                    {/*      />*/}
-                    {/*    ))}*/}
-                    {/*  </FormGroup>*/}
-                    {/*</div>*/}
                 </Box>
             </DialogContent>
             <DialogActions
