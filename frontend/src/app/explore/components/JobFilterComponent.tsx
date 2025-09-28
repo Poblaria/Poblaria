@@ -43,7 +43,7 @@ export default function JobFiltersForm({
     >([]);
 
     useEffect(() => {
-        (async () => {
+        void (async () => {
             setJobTypes(await fetchJobTypes());
             setJobIndustries(await fetchJobIndustries());
         })();

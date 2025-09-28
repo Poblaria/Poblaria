@@ -117,7 +117,7 @@ export default function Explore() {
     };
 
     useEffect(() => {
-        (async () => {
+        void (async () => {
             try {
                 if (dataType === "houses") {
                     const housings = await fetchHousings();

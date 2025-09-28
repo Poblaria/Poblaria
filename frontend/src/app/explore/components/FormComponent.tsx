@@ -59,7 +59,12 @@ export default function FormComponent({ onClose }: { onClose?: () => void }) {
                     Thank you for your submission!
                 </div>
             ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form
+                    onSubmit={(e) => {
+                        void handleSubmit(e);
+                    }}
+                    className="space-y-4"
+                >
                     <div>
                         <label className="block text-sm font-medium mb-1">
                             Full Name *

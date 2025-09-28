@@ -49,7 +49,7 @@ export default function HousingFiltersForm({
     >([]);
 
     useEffect(() => {
-        (async function fetchData() {
+        void (async function fetchData() {
             try {
                 setTypes(await fetchHousingTypes());
                 setOffertTypes(await fetchHousingOfferTypes());
