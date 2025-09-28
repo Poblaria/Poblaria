@@ -1,7 +1,15 @@
 export const rules = {
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/no-inferrable-types": "error",
-    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+    "@typescript-eslint/no-unused-vars": ["error", { varsIgnorePattern: "^_", argsIgnorePattern: "^_" }],
+    // Naming convention configuration, based on AdonisJS with enforcement of stricts and allow leading underscores for unused vars
+    "@typescript-eslint/naming-convention": [
+        "error",
+        { selector: "variable", format: ["strictCamelCase", "UPPER_CASE", "StrictPascalCase"], leadingUnderscore: "allow" },
+        { selector: "typeLike", format: ["StrictPascalCase"] },
+        { selector: "class", format: ["StrictPascalCase"] },
+        { selector: "interface", format: ["StrictPascalCase"], custom: { regex: "^I[A-Z]", match: false } },
+    ],
     "prefer-const": ["error", { destructuring: "all" }],
     "camelcase": "error",
     "no-var": "error",

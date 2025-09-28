@@ -1,4 +1,5 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import tseslint from "typescript-eslint";
 import { rules as baseRules } from "../eslint.base.js";
 
 const compat = new FlatCompat({
@@ -20,6 +21,15 @@ const eslintConfig = [
             "build/**",
             "next-env.d.ts"
         ]
+    },
+    ...tseslint.configs.recommendedTypeChecked,
+    {
+        languageOptions: {
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname
+            }
+        }
     },
     {
         rules: {
