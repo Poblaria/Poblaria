@@ -1,10 +1,10 @@
 // poblaria/next/app/api/submit-form/route.ts
 import { NextResponse } from "next/server";
 
-export async function POST(/*request: Request*/) {
+export async function POST(request: Request) {
     try {
         // TODO: save to a database or send an email
-        // const body = await request.json();
+        /*const body =*/ await request.json();
 
         return NextResponse.json({
             success: true,
