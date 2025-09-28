@@ -241,7 +241,7 @@ export default function Explore() {
 
 import { useState } from 'react';
 import MapWrapper from './MapWrapper';
-import FormComponent from './FormComponent';
+import FormComponent from './components/FormComponent';
 
 export default function Explore() {
   const [showForm, setShowForm] = useState(false);
