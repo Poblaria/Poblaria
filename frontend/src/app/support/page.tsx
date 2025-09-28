@@ -69,7 +69,7 @@ export default function Support() {
                         fontWeight="bold"
                         sx={{ mb: 3, color: "black" }}
                     >
-                        Support Pobalria
+                        Support Poblaria
                     </Typography>
                     <Typography
                         variant="h4"

@@ -193,7 +193,7 @@ export default function Home() {
                                 stress-free
                             </Typography>
                             <Link
-                                href="/Eplore"
+                                href="/explore"
                                 className="font-medium hover:underline"
                                 style={{ color: "#5E7749" }}
                             >

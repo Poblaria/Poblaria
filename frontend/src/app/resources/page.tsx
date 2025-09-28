@@ -130,11 +130,11 @@ export default function Resources() {
                                 color="text.secondary"
                                 mb={4}
                             >
-                                Personal expriences based on their journey of
+                                Personal experiences based on their journey of
                                 relocating to the countryside
                             </Typography>
                             <Link
-                                href="/Eplore"
+                                href="/explore"
                                 className="font-medium hover:underline"
                                 style={{ color: "#5E7749" }}
                             >
@@ -161,7 +161,7 @@ export default function Resources() {
                                 to the countryside
                             </Typography>
                             <Link
-                                href="/Eplore"
+                                href="/explore"
                                 className="font-medium hover:underline"
                                 style={{ color: "#5E7749" }}
                             >
