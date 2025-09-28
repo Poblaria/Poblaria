@@ -66,7 +66,7 @@ export default function Home() {
                             Discover a New Way of Living
                         </Typography>
                         <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
-                            Make theCountrysideYour Home
+                            Make the Countryside Your Home
                         </Typography>
                     </Box>
                 </Card>
