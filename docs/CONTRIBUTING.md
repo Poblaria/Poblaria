@@ -76,7 +76,16 @@ Follow the [Conventional Commits](https://conventionalcommits.org) format for cl
 
 1. Write messages in the imperative mood (e.g., "add" instead of "added").
 2. Separate the description from the body (and the body from the footer(s)) with an empty line.
-3. Use kebab-case (lowercase letters and hyphens (`-`) to separate words) for the scope (if any).
+3. The optional scope. It is an additional identifier to specify the area of the codebase affected by the branch.\
+  As its name suggests, it is optional, but it is highly recommended to use it when possible and as often as possible.\
+  It should be formatted following these rules:
+   - Use kebab-case: lowercase letters and hyphens (`-`) to separate words.
+   - Start with the broader part of the codebase and go to the more specific one.
+   - It should be formatted as is: `<part>-<subsection>-<subsubsection>...`
+       - Where `<part>` is either `backend` or `frontend` (or nothing: if the commit concerns both parts, prefix can be omitted (concerns should be separated into different commits if possible, so this should be rare)).
+       - `<subsection>`, `<subsubsection>`, etc. are more specific areas of the codebase. For example, it can be a specific folder, module, or feature.
+       - There is no limit to the number of subsection, but keep it reasonable.
+   - Examples: `backend`, `frontend-ui`, `backend-database`, `frontend-api`, `backend-auth-service`, `backend-models`, etc.
 
 ## Pull Request Conventions/Rules
 
