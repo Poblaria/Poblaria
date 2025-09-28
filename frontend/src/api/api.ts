@@ -10,7 +10,7 @@ import type {
 } from "./data";
 
 // POST /register
-export async function registerUser(userData: UserData): Promise<UserData> {
+export async function registerUser(userData: UserData) {
     const response = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -19,13 +19,11 @@ export async function registerUser(userData: UserData): Promise<UserData> {
     if (!response.ok) {
         throw new Error("Registration failed");
     }
-    return response.json();
+    return (await response.json()) as UserData;
 }
 
 // POST /login
-export async function loginUser(
-    credentials: LoginData
-): Promise<unknown /*FIXME*/> {
+export async function loginUser(credentials: LoginData) {
     const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -34,11 +32,11 @@ export async function loginUser(
     if (!response.ok) {
         throw new Error("Login failed");
     }
-    return response.json();
+    return (await response.json()) as unknown /*FIXME*/;
 }
 
 // POST /logout
-export async function logoutUser(): Promise<{ message: string }> {
+export async function logoutUser() {
     const response = await fetch(`${API_BASE_URL}/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }
@@ -46,7 +44,7 @@ export async function logoutUser(): Promise<{ message: string }> {
     if (!response.ok) {
         throw new Error("Logout failed");
     }
-    return response.json();
+    return (await response.json()) as { message: string };
 }
 
 // GET /housings
@@ -60,7 +58,7 @@ export async function fetchHousings(): Promise<HousingDataWithImage[]> {
         throw new Error("Failed to fetch housings");
     }
 
-    const housings = await response.json();
+    const housings = (await response.json()) as HousingData[];
 
     // Fetch images for each house
     return Promise.all(
@@ -88,9 +86,7 @@ export async function fetchHousings(): Promise<HousingDataWithImage[]> {
 }
 
 // GET /housings/:id
-export async function fetchHousingById(
-    id: number | string
-): Promise<HousingData> {
+export async function fetchHousingById(id: number | string) {
     const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -98,13 +94,11 @@ export async function fetchHousingById(
     if (!response.ok) {
         throw new Error(`Failed to fetch housing with id: ${id}`);
     }
-    return response.json();
+    return (await response.json()) as HousingData;
 }
 
 // POST /housings
-export async function createHousing(
-    housingData: HousingDataWithImage
-): Promise<HousingData> {
+export async function createHousing(housingData: HousingDataWithImage) {
     const response = await fetch(`${API_BASE_URL}/housings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -113,14 +107,14 @@ export async function createHousing(
     if (!response.ok) {
         throw new Error("Failed to create housing");
     }
-    return response.json();
+    return (await response.json()) as HousingData;
 }
 
 // PUT /housings/:id and PATCH /housings/:id
 export async function updateHousing(
     id: number | string,
     housingData: Required<HousingData> // Required with PUT, Partial with PATCH
-): Promise<HousingData> {
+) {
     const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
         method: "PUT", // or "PATCH"
         headers: { "Content-Type": "application/json" },
@@ -129,7 +123,7 @@ export async function updateHousing(
     if (!response.ok) {
         throw new Error(`Failed to update housing with id: ${id}`);
     }
-    return response.json();
+    return (await response.json()) as HousingData;
 }
 
 // DELETE /housings/:id
@@ -143,10 +137,7 @@ export async function deleteHousing(id: number | string) {
     }
 }
 
-export async function uploadHousingImage(
-    id: number | string,
-    imageFile: File
-): Promise<HousingImageData> {
+export async function uploadHousingImage(id: number | string, imageFile: File) {
     const formData = new FormData();
     formData.append("image", imageFile);
 
@@ -159,11 +150,11 @@ export async function uploadHousingImage(
         throw new Error(`Failed to upload image for housing with id: ${id}`);
     }
 
-    return response.json();
+    return (await response.json()) as HousingImageData;
 }
 
 // GET /jobs
-export async function fetchJobs(): Promise<JobData[]> {
+export async function fetchJobs() {
     const response = await fetch(`${API_BASE_URL}/jobs`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -171,11 +162,11 @@ export async function fetchJobs(): Promise<JobData[]> {
     if (!response.ok) {
         throw new Error("Failed to fetch jobs");
     }
-    return response.json();
+    return (await response.json()) as JobData[];
 }
 
 // GET /jobs/:id
-export async function fetchJobById(id: number | string): Promise<JobData> {
+export async function fetchJobById(id: number | string) {
     const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -183,11 +174,11 @@ export async function fetchJobById(id: number | string): Promise<JobData> {
     if (!response.ok) {
         throw new Error(`Failed to fetch job with id: ${id}`);
     }
-    return response.json();
+    return (await response.json()) as JobData;
 }
 
 // POST /jobs
-export async function createJob(jobData: JobData): Promise<JobData> {
+export async function createJob(jobData: JobData) {
     const response = await fetch(`${API_BASE_URL}/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -196,14 +187,14 @@ export async function createJob(jobData: JobData): Promise<JobData> {
     if (!response.ok) {
         throw new Error("Failed to create job");
     }
-    return response.json();
+    return (await response.json()) as JobData;
 }
 
 // PUT /jobs/:id and PATCH /jobs/:id
 export async function updateJob(
     id: number | string,
     jobData: Required<JobData> // Required with PUT, Partial with PATCH
-): Promise<JobData> {
+) {
     const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
         method: "PUT", // or "PATCH"
         headers: { "Content-Type": "application/json" },
@@ -212,7 +203,7 @@ export async function updateJob(
     if (!response.ok) {
         throw new Error(`Failed to update job with id: ${id}`);
     }
-    return response.json();
+    return (await response.json()) as JobData;
 }
 
 // DELETE /jobs/:id
@@ -227,50 +218,42 @@ export async function deleteJob(id: number | string) {
 }
 
 // GET /housing-conditions
-export async function fetchHousingConditions(): Promise<
-    { id: number; name: string }[]
-> {
+export async function fetchHousingConditions() {
     const response = await fetch(`${API_BASE_URL}/housing-conditions`);
     if (!response.ok) {
         throw new Error("Failed to fetch housing conditions");
     }
-    return response.json();
+    return (await response.json()) as { id: number; name: string }[];
 }
 
 // GET /housing-offer-types
-export async function fetchHousingOfferTypes(): Promise<
-    { id: number; name: string }[]
-> {
+export async function fetchHousingOfferTypes() {
     const response = await fetch(`${API_BASE_URL}/housing-offer-types`);
     if (!response.ok) {
         throw new Error("Failed to fetch housing offer types");
     }
-    return response.json();
+    return (await response.json()) as { id: number; name: string }[];
 }
 
 // GET /housing-types
-export async function fetchHousingTypes(): Promise<
-    { id: number; name: string }[]
-> {
+export async function fetchHousingTypes() {
     const response = await fetch(`${API_BASE_URL}/housing-types`);
     if (!response.ok) {
         throw new Error("Failed to fetch housing types");
     }
-    return response.json();
+    return (await response.json()) as { id: number; name: string }[];
 }
 
 // GET /job-types
-export async function fetchJobTypes(): Promise<{ id: number; name: string }[]> {
+export async function fetchJobTypes() {
     const response = await fetch(`${API_BASE_URL}/job-types`);
     if (!response.ok) throw new Error("Failed to fetch job types");
-    return response.json();
+    return (await response.json()) as { id: number; name: string }[];
 }
 
 // GET /job-industries
-export async function fetchJobIndustries(): Promise<
-    { id: number; name: string }[]
-> {
+export async function fetchJobIndustries() {
     const response = await fetch(`${API_BASE_URL}/job-industries`);
     if (!response.ok) throw new Error("Failed to fetch job industries");
-    return response.json();
+    return (await response.json()) as { id: number; name: string }[];
 }
