@@ -6,7 +6,8 @@ export default class HousingImage extends BaseModel {
     @column({ isPrimary: true })
     declare id: number;
 
-    @column()
+    // TODO: serialized as string by default?
+    @column({ serialize: (image) => image.toString() })
     declare image: Buffer;
 
     @hasOne(() => Housing)
