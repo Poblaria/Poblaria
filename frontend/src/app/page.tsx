@@ -1,5 +1,4 @@
 "use client";
-import { Suspense, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -18,9 +17,7 @@ import {
 } from "@mui/icons-material";
 
 export default function Home() {
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const path = usePathname();
-    console.log(path);
 
     return (
         <div>

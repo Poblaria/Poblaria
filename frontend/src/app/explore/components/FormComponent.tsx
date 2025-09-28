@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 
 export default function FormComponent({ onClose }: { onClose?: () => void }) {
     const [formData, setFormData] = useState({
@@ -12,7 +12,7 @@ export default function FormComponent({ onClose }: { onClose?: () => void }) {
 
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
         try {
@@ -34,8 +34,8 @@ export default function FormComponent({ onClose }: { onClose?: () => void }) {
                 });
                 setTimeout(() => setSubmitted(false), 3000);
             }
-        } catch (error) {
-            console.error("Submission error:", error);
+        } catch {
+            // TODO: handle error
         }
     };
 

@@ -1,4 +1,5 @@
 export type UserData = {
+    id: number;
     fullName: string | null;
     email: string;
     password: string;
@@ -9,36 +10,48 @@ export type LoginData = {
     password: string;
 };
 
-export type HousingData = {
+type HousingDataBase = {
+    id: number;
     title: string;
     description?: string | null;
-    image?: string; // base64
     price: number;
-    type_id: number;
-    offer_type_id: number;
+    typeId: number;
+    offerTypeId: number;
+    conditionId: number;
     rooms: number;
     bathrooms: number;
     area: number;
-    land_area?: number | null;
+    landArea?: number | null;
     address: string;
     latitude: number;
     longitude: number;
-    is_available?: boolean;
+    isAvailable?: boolean;
+};
+
+export type HousingData = HousingDataBase & {
+    imageId?: number;
+};
+
+export type HousingDataWithImage = HousingDataBase & {
+    image?: string; // base64
 };
 
 export type HousingImageData = {
+    id: number;
     image: string; // base64
 };
 
 export type JobData = {
+    id: number;
     title: string;
     description?: string | null;
     company: string;
     address?: string | null;
     salary?: number | null;
-    type_id: number;
-    is_remote?: boolean;
+    typeId: number;
+    industryId: number;
+    isRemote?: boolean;
     latitude?: number | null;
     longitude?: number | null;
-    is_available?: boolean;
+    isAvailable?: boolean;
 };

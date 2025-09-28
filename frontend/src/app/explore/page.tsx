@@ -1,11 +1,12 @@
 "use client";
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
 import FilterBar, { DataType } from "./components/FilterBar";
 import { fetchHousings, fetchJobs } from "@/api/api";
+import { HousingDataWithImage, JobData } from "@/api/data";
 
 const MapComponent = dynamic(() => import("./components/MapComponent"), {
     ssr: false,
@@ -23,20 +24,19 @@ const ListView = dynamic(() => import("./components/ListingComponent"), {
 
 export default function Explore() {
     const [viewMode, setViewMode] = useState<"map" | "list">("map");
-    const [allHousings, setAllHousings] = useState<any[]>([]);
-    const [housings, setHousings] = useState<any[] | null>(null);
-    const [allJobs, setAllJobs] = useState<any[]>([]);
-    const [jobs, setJobs] = useState<any[] | null>(null);
+    const [allHousings, setAllHousings] = useState<HousingDataWithImage[]>([]);
+    const [housings, setHousings] = useState<HousingDataWithImage[] | null>(
+        null
+    );
+    const [allJobs, setAllJobs] = useState<JobData[]>([]);
+    const [jobs, setJobs] = useState<JobData[] | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleViewMode = (
-        event: React.MouseEvent<HTMLElement>,
+        _event: MouseEvent<HTMLElement>,
         newMode: "map" | "list" | null
     ) => {
-        if (newMode !== null) {
-            console.log("newMode:", newMode);
-            setViewMode(newMode);
-        }
+        if (newMode !== null) setViewMode(newMode);
     };
 
     ////////////
@@ -121,17 +121,23 @@ export default function Explore() {
             try {
                 if (dataType === "houses") {
                     const housings = await fetchHousings();
-                    console.log("Fetched Houses:", housings);
                     setAllHousings(housings);
                     setHousings(housings);
                 } else {
                     const jobs = await fetchJobs();
-                    console.log("Fetched Jobs:", jobs);
                     setAllJobs(jobs);
                     setJobs(jobs);
                 }
-            } catch (err: any) {
-                setError(err.message);
+            } catch (error) {
+                setError(
+                    // TODO: abstract
+                    error &&
+                        typeof error === "object" &&
+                        "message" in error &&
+                        typeof error.message === "string"
+                        ? error.message
+                        : "An unknown error has occurred."
+                );
             }
         })();
     }, [dataType]);

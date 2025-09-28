@@ -10,13 +10,14 @@ import {
     Box
 } from "@mui/material";
 import { HOUSES, JOBS } from "../data/Data";
-import { DataType } from "./FilterBar";
+import type { DataType } from "./FilterBar";
+import type { HousingDataWithImage, JobData } from "@/api/data";
 
 type ListViewProps = {
     dataType: DataType;
     showFilters: boolean;
-    housings: any[] | null;
-    jobs: any[] | null;
+    housings: HousingDataWithImage[] | null;
+    jobs: JobData[] | null;
     error: string | null;
 };
 
@@ -177,13 +178,6 @@ export default function ListView({
                                             {house.rooms} rooms ·{" "}
                                             {house.bathrooms} bathrooms ·{" "}
                                             {house.area}m²
-                                        </Typography>
-
-                                        <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                        >
-                                            {house.details}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>

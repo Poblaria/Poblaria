@@ -1,9 +1,16 @@
 export const API_BASE_URL =
     process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3333";
-import { UserData, LoginData, HousingData, JobData } from "./data";
+import type {
+    UserData,
+    LoginData,
+    HousingData,
+    JobData,
+    HousingDataWithImage,
+    HousingImageData
+} from "./data";
 
 // POST /register
-export async function registerUser(userData: UserData): Promise<any> {
+export async function registerUser(userData: UserData): Promise<UserData> {
     const response = await fetch(`${API_BASE_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -16,7 +23,9 @@ export async function registerUser(userData: UserData): Promise<any> {
 }
 
 // POST /login
-export async function loginUser(credentials: LoginData): Promise<any> {
+export async function loginUser(
+    credentials: LoginData
+): Promise<unknown /*FIXME*/> {
     const response = await fetch(`${API_BASE_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,7 +38,7 @@ export async function loginUser(credentials: LoginData): Promise<any> {
 }
 
 // POST /logout
-export async function logoutUser(): Promise<any> {
+export async function logoutUser(): Promise<{ message: string }> {
     const response = await fetch(`${API_BASE_URL}/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }
@@ -41,7 +50,7 @@ export async function logoutUser(): Promise<any> {
 }
 
 // GET /housings
-export async function fetchHousings(): Promise<any> {
+export async function fetchHousings(): Promise<HousingDataWithImage[]> {
     const response = await fetch(`${API_BASE_URL}/housings`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -54,29 +63,20 @@ export async function fetchHousings(): Promise<any> {
     const housings = await response.json();
 
     // Fetch images for each house
-    const housingsWithImages = await Promise.all(
-        housings.map(async (house: any) => {
+    return Promise.all(
+        housings.map(async (house: HousingData) => {
             if (house.imageId) {
                 try {
                     const imageResponse = await fetch(
-                        `${API_BASE_URL}/housing-images/${house.image_id}`
+                        `${API_BASE_URL}/housing-images/${house.imageId}`
                     );
-                    if (imageResponse.ok) {
-                        const imageData = await imageResponse.json();
-                        console.log(
-                            `Image for house ${house.id}:`,
-                            imageData.image
-                        );
+                    if (imageResponse.ok)
                         return {
                             ...house,
-                            image: `data:image/jpeg;base64,${imageData.image}`
+                            image: `data:image/jpeg;base64,${await imageResponse.json()}`
                         };
-                    }
-                } catch (error) {
-                    console.error(
-                        `Failed to fetch image for house ${house.id}:`,
-                        error
-                    );
+                } catch {
+                    // TODO: handle error
                 }
             }
             return {
@@ -85,12 +85,12 @@ export async function fetchHousings(): Promise<any> {
             };
         })
     );
-
-    return housingsWithImages;
 }
 
 // GET /housings/:id
-export async function fetchHousingById(id: number | string): Promise<any> {
+export async function fetchHousingById(
+    id: number | string
+): Promise<HousingData> {
     const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -102,7 +102,9 @@ export async function fetchHousingById(id: number | string): Promise<any> {
 }
 
 // POST /housings
-export async function createHousing(housingData: HousingData): Promise<any> {
+export async function createHousing(
+    housingData: HousingDataWithImage
+): Promise<HousingData> {
     const response = await fetch(`${API_BASE_URL}/housings`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -118,7 +120,7 @@ export async function createHousing(housingData: HousingData): Promise<any> {
 export async function updateHousing(
     id: number | string,
     housingData: Required<HousingData> // Required with PUT, Partial with PATCH
-): Promise<any> {
+): Promise<HousingData> {
     const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
         method: "PUT", // or "PATCH"
         headers: { "Content-Type": "application/json" },
@@ -131,7 +133,7 @@ export async function updateHousing(
 }
 
 // DELETE /housings/:id
-export async function deleteHousing(id: number | string): Promise<any> {
+export async function deleteHousing(id: number | string) {
     const response = await fetch(`${API_BASE_URL}/housings/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
@@ -139,13 +141,12 @@ export async function deleteHousing(id: number | string): Promise<any> {
     if (!response.ok) {
         throw new Error(`Failed to delete housing with id: ${id}`);
     }
-    return response.json();
 }
 
 export async function uploadHousingImage(
     id: number | string,
     imageFile: File
-): Promise<any> {
+): Promise<HousingImageData> {
     const formData = new FormData();
     formData.append("image", imageFile);
 
@@ -162,7 +163,7 @@ export async function uploadHousingImage(
 }
 
 // GET /jobs
-export async function fetchJobs(): Promise<any> {
+export async function fetchJobs(): Promise<JobData[]> {
     const response = await fetch(`${API_BASE_URL}/jobs`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -174,7 +175,7 @@ export async function fetchJobs(): Promise<any> {
 }
 
 // GET /jobs/:id
-export async function fetchJobById(id: number | string): Promise<any> {
+export async function fetchJobById(id: number | string): Promise<JobData> {
     const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" }
@@ -186,7 +187,7 @@ export async function fetchJobById(id: number | string): Promise<any> {
 }
 
 // POST /jobs
-export async function createJob(jobData: JobData): Promise<any> {
+export async function createJob(jobData: JobData): Promise<JobData> {
     const response = await fetch(`${API_BASE_URL}/jobs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -202,7 +203,7 @@ export async function createJob(jobData: JobData): Promise<any> {
 export async function updateJob(
     id: number | string,
     jobData: Required<JobData> // Required with PUT, Partial with PATCH
-): Promise<any> {
+): Promise<JobData> {
     const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
         method: "PUT", // or "PATCH"
         headers: { "Content-Type": "application/json" },
@@ -215,7 +216,7 @@ export async function updateJob(
 }
 
 // DELETE /jobs/:id
-export async function deleteJob(id: number | string): Promise<any> {
+export async function deleteJob(id: number | string) {
     const response = await fetch(`${API_BASE_URL}/jobs/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" }
@@ -223,7 +224,6 @@ export async function deleteJob(id: number | string): Promise<any> {
     if (!response.ok) {
         throw new Error(`Failed to delete job with id: ${id}`);
     }
-    return response.json();
 }
 
 // GET /housing-conditions

@@ -1,11 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Box, Button, Typography } from "@mui/material";
-import { DataType } from "./FilterBar";
+import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
+import type { HousingDataWithImage, JobData } from "@/api/data";
 
 const HomeLeafletIcon = L.icon({
     iconUrl: "/images/home-icon1.png",
@@ -27,8 +29,8 @@ const CenterLeafletIcon = L.icon({
 
 type MapComponentProps = {
     dataType: DataType;
-    housings: any[] | null;
-    jobs: any[] | null;
+    housings: HousingDataWithImage[] | null;
+    jobs: JobData[] | null;
     error: string | null;
 };
 
@@ -98,24 +100,12 @@ export default function MapComponent({
                 {/* Markers for Jobs */}
                 {dataType === "jobs" /* currentZoom >= 17 && */ &&
                     [...JOBS, ...(jobs || [])].map((job) => {
-                        const position =
-                            job.coordinates ||
-                            (job.latitude && job.longitude
-                                ? [job.latitude, job.longitude]
-                                : null);
-
-                        if (!position || position.length !== 2) {
-                            console.warn(
-                                "Skipping job due to missing coordinates:",
-                                job
-                            );
-                            return null;
-                        }
+                        if (!job.latitude || !job.longitude) return null;
 
                         return (
                             <Marker
                                 key={`job-${job.id}`}
-                                position={position as [number, number]}
+                                position={[job.latitude, job.longitude]}
                                 icon={JobLeafletIcon}
                             >
                                 <Popup>
@@ -153,70 +143,54 @@ export default function MapComponent({
 
                 {/* Markers for Houses */}
                 {dataType === "houses" /* currentZoom >= 17 && */ &&
-                    [...HOUSES, ...(housings || [])].map((house) => {
-                        const position =
-                            house.coordinates ||
-                            (house.latitude && house.longitude
-                                ? [house.latitude, house.longitude]
-                                : null);
-
-                        if (!position || position.length !== 2) {
-                            console.warn(
-                                "Skipping house due to missing coordinates:",
-                                house
-                            );
-                            return null;
-                        }
-
-                        return (
-                            <Marker
-                                key={`house-${house.id}`}
-                                position={position as [number, number]}
-                                icon={HomeLeafletIcon}
-                            >
-                                <Popup>
-                                    <Box sx={{ minWidth: 250 }}>
-                                        {house.image && (
-                                            <img
-                                                src={house.image}
-                                                alt={house.title}
-                                                style={{
-                                                    width: "100%",
-                                                    height: "auto",
-                                                    borderRadius: 6
-                                                }}
-                                            />
-                                        )}
-                                        <Typography
-                                            variant="h6"
-                                            sx={{ fontWeight: "bold" }}
-                                        >
-                                            {house.title}{" "}
-                                        </Typography>
-                                        <Typography variant="body1">
-                                            {house.address}{" "}
-                                        </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                            sx={{ fontWeight: "bold" }}
-                                        >
-                                            {house.price} €
-                                        </Typography>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                mt: 2,
-                                                backgroundColor: "#5E7749"
+                    [...HOUSES, ...(housings || [])].map((house) => (
+                        <Marker
+                            key={`house-${house.id}`}
+                            position={[house.latitude, house.longitude]}
+                            icon={HomeLeafletIcon}
+                        >
+                            <Popup>
+                                <Box sx={{ minWidth: 250 }}>
+                                    {house.image && (
+                                        <Image
+                                            src={house.image}
+                                            alt={house.title}
+                                            style={{
+                                                width: "100%",
+                                                height: "auto",
+                                                borderRadius: 6
                                             }}
-                                        >
-                                            View Details
-                                        </Button>
-                                    </Box>
-                                </Popup>
-                            </Marker>
-                        );
-                    })}
+                                        />
+                                    )}
+                                    <Typography
+                                        variant="h6"
+                                        sx={{ fontWeight: "bold" }}
+                                    >
+                                        {house.title}{" "}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {house.address}{" "}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        color="textSecondary"
+                                        sx={{ fontWeight: "bold" }}
+                                    >
+                                        {house.price} €
+                                    </Typography>
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            mt: 2,
+                                            backgroundColor: "#5E7749"
+                                        }}
+                                    >
+                                        View Details
+                                    </Button>
+                                </Box>
+                            </Popup>
+                        </Marker>
+                    ))}
             </MapContainer>
         </Box>
     );

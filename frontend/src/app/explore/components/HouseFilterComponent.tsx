@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     DialogTitle,
     DialogContent,
@@ -54,8 +54,8 @@ export default function HousingFiltersForm({
                 setTypes(await fetchHousingTypes());
                 setOffertTypes(await fetchHousingOfferTypes());
                 setConditions(await fetchHousingConditions());
-            } catch (error) {
-                console.error("Error fetching filter options:", error);
+            } catch {
+                // TODO: handle error
             }
         })();
     }, []);

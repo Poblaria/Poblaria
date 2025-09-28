@@ -12,7 +12,6 @@ import {
 
 export default function Support() {
     const path = usePathname();
-    console.log(path);
 
     return (
         <div>

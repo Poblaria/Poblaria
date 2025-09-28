@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { NavBar } from "@/components/NavBar";
 import "./globals.css";
-import { Nunito } from "next/font/google";
-import { NavBar } from "../components/NavBar";
-
-const font = Nunito({
-    subsets: ["latin"]
-});
 
 export const metadata: Metadata = {
     title: "Poplaria",
@@ -16,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
     children
 }: Readonly<{
-    children: React.ReactNode;
+    children: ReactNode;
 }>) {
     return (
         <html lang="en">
