@@ -43,13 +43,13 @@ export default class HousingController {
         return housing.save();
     }
 
-    async destroy({ params, response }: HttpContext) {
+    async destroy({ params }: HttpContext) {
         const housing = await Housing.findOrFail(params.id);
         const image = await HousingImage.find(housing.imageId);
 
         if (image) await image.delete();
         await housing.delete();
 
-        return response.ok({ message: "Housing successfully deleted" });
+        return { message: "Housing successfully deleted" };
     }
 }

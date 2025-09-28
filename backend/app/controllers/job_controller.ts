@@ -31,11 +31,11 @@ export default class JobController {
         return job.save();
     }
 
-    async destroy({ params, response }: HttpContext) {
+    async destroy({ params }: HttpContext) {
         const job = await Job.findOrFail(params.id);
 
         await job.delete();
 
-        return response.ok({ message: "Job successfully deleted" });
+        return { message: "Job successfully deleted" };
     }
 }

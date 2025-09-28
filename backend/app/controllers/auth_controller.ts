@@ -7,18 +7,17 @@ export default class AuthController {
         return response.created(await User.create(await request.validateUsing(registerValidator)));
     }
 
-    async login({ request, response }: HttpContext) {
+    async login({ request }: HttpContext) {
         const { email, password } = await request.validateUsing(loginValidator);
-        const user = await User.verifyCredentials(email, password);
 
-        return response.ok(await User.accessTokens.create(user));
+        return User.accessTokens.create(await User.verifyCredentials(email, password));
     }
 
-    async logout({ auth, response }: HttpContext) {
+    async logout({ auth }: HttpContext) {
         const user = auth.getUserOrFail();
         const token = user.currentAccessToken.identifier;
 
         await User.accessTokens.delete(user, token);
-        return response.ok({ message: "User successfully logged out" });
+        return { message: "User successfully logged out" };
     }
 }
