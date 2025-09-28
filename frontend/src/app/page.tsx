@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import {
     Box,
     Container,
@@ -17,8 +16,6 @@ import {
 } from "@mui/icons-material";
 
 export default function Home() {
-    const path = usePathname();
-
     return (
         <div>
             <Box
@@ -219,20 +216,21 @@ export default function Home() {
                             discovering a new way of living.
                         </Typography>
                         <Box className="flex flex-col md:flex-row gap-4 justify-center">
-                            <Button
-                                variant="contained"
-                                onClick={() => path === "/contact"}
-                                sx={{
-                                    "height": "40px",
-                                    "backgroundColor": "#5E7749",
-                                    "color": "white",
-                                    "&:hover": {
-                                        backgroundColor: "#83A16C"
-                                    }
-                                }}
-                            >
-                                Contact Our Team
-                            </Button>
+                            <Link href="/contact">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        "height": "40px",
+                                        "backgroundColor": "#5E7749",
+                                        "color": "white",
+                                        "&:hover": {
+                                            backgroundColor: "#83A16C"
+                                        }
+                                    }}
+                                >
+                                    Contact Our Team
+                                </Button>
+                            </Link>
                         </Box>
                     </Box>
                 </Box>

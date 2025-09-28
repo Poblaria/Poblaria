@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 import { Box, Button } from "@mui/material";
 
 export const NavBar = () => {
-    const path = usePathname();
+    const pathname = usePathname();
 
+    // TODO: add a /profile page
     return (
         <nav
             style={{
@@ -31,8 +32,8 @@ export const NavBar = () => {
                 <Button
                     variant="text"
                     sx={{
-                        "backgroundColor": path === "/" ? "#5E7749" : "",
-                        "color": path === "/" ? "white" : "black",
+                        "backgroundColor": pathname === "/" ? "#5E7749" : "",
+                        "color": pathname === "/" ? "white" : "black",
                         "&:hover": {
                             backgroundColor: "#83A16C",
                             color: "white"
@@ -44,8 +45,9 @@ export const NavBar = () => {
                 <Button
                     variant="text"
                     sx={{
-                        "backgroundColor": path === "/explore" ? "#5E7749" : "",
-                        "color": path === "/explore" ? "white" : "black",
+                        "backgroundColor":
+                            pathname === "/explore" ? "#5E7749" : "",
+                        "color": pathname === "/explore" ? "white" : "black",
                         "&:hover": {
                             backgroundColor: "#83A16C",
                             color: "white"
@@ -58,8 +60,8 @@ export const NavBar = () => {
                     variant="text"
                     sx={{
                         "backgroundColor":
-                            path === "/resources" ? "#5E7749" : "",
-                        "color": path === "/resources" ? "white" : "black",
+                            pathname === "/resources" ? "#5E7749" : "",
+                        "color": pathname === "/resources" ? "white" : "black",
                         "&:hover": {
                             backgroundColor: "#83A16C",
                             color: "white"
@@ -71,8 +73,9 @@ export const NavBar = () => {
                 <Button
                     variant="text"
                     sx={{
-                        "backgroundColor": path === "/support" ? "#5E7749" : "",
-                        "color": path === "/support" ? "white" : "black",
+                        "backgroundColor":
+                            pathname === "/support" ? "#5E7749" : "",
+                        "color": pathname === "/support" ? "white" : "black",
                         "&:hover": {
                             backgroundColor: "#83A16C",
                             color: "white"
@@ -81,19 +84,23 @@ export const NavBar = () => {
                 >
                     <Link href="/support">Support</Link>
                 </Button>
-                <Button
-                    variant="text"
-                    sx={{
-                        "backgroundColor": path === "/profile" ? "#5E7749" : "",
-                        "color": path === "/profile" ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: "#83A16C",
-                            color: "white"
-                        }
-                    }}
-                >
-                    Profile
-                </Button>
+                <Link href="/profile">
+                    <Button
+                        variant="text"
+                        sx={{
+                            "backgroundColor":
+                                pathname === "/profile" ? "#5E7749" : "",
+                            "color":
+                                pathname === "/profile" ? "white" : "black",
+                            "&:hover": {
+                                backgroundColor: "#83A16C",
+                                color: "white"
+                            }
+                        }}
+                    >
+                        Profile
+                    </Button>
+                </Link>
             </Box>
         </nav>
     );

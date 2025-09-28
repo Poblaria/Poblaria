@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import {
     Box,
     Container,
@@ -9,10 +8,10 @@ import {
     Card,
     CardMedia
 } from "@mui/material";
+import Link from "next/link";
 
 export default function Support() {
-    const path = usePathname();
-
+    // TODO: add a /contact page
     return (
         <div>
             <Box
@@ -97,20 +96,21 @@ export default function Support() {
                                 Help us expand and connect more families to
                                 rural opportunities
                             </Typography>
-                            <Button
-                                variant="contained"
-                                onClick={() => path === "/contact"}
-                                sx={{
-                                    "height": "40px",
-                                    "backgroundColor": "#5E7749",
-                                    "color": "white",
-                                    "&:hover": {
-                                        backgroundColor: "#83A16C"
-                                    }
-                                }}
-                            >
-                                Donate Now
-                            </Button>
+                            <Link href="/contact">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        "height": "40px",
+                                        "backgroundColor": "#5E7749",
+                                        "color": "white",
+                                        "&:hover": {
+                                            backgroundColor: "#83A16C"
+                                        }
+                                    }}
+                                >
+                                    Donate Now
+                                </Button>
+                            </Link>
                         </Box>
 
                         <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
@@ -125,20 +125,21 @@ export default function Support() {
                                 Partner, volunteer, or share your expertise to
                                 support rural communities
                             </Typography>
-                            <Button
-                                variant="contained"
-                                onClick={() => path === "/contact"}
-                                sx={{
-                                    "height": "40px",
-                                    "backgroundColor": "#5E7749",
-                                    "color": "white",
-                                    "&:hover": {
-                                        backgroundColor: "#83A16C"
-                                    }
-                                }}
-                            >
-                                Get Involved
-                            </Button>
+                            <Link href="/contact">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        "height": "40px",
+                                        "backgroundColor": "#5E7749",
+                                        "color": "white",
+                                        "&:hover": {
+                                            backgroundColor: "#83A16C"
+                                        }
+                                    }}
+                                >
+                                    Get Involved
+                                </Button>
+                            </Link>
                         </Box>
 
                         <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
@@ -153,20 +154,21 @@ export default function Support() {
                                 Work with us to drive sustainable rural
                                 development. - For Associations & Governments
                             </Typography>
-                            <Button
-                                variant="contained"
-                                onClick={() => path === "/contact"}
-                                sx={{
-                                    "height": "40px",
-                                    "backgroundColor": "#5E7749",
-                                    "color": "white",
-                                    "&:hover": {
-                                        backgroundColor: "#83A16C"
-                                    }
-                                }}
-                            >
-                                Become a Partner
-                            </Button>
+                            <Link href="/contact">
+                                <Button
+                                    variant="contained"
+                                    sx={{
+                                        "height": "40px",
+                                        "backgroundColor": "#5E7749",
+                                        "color": "white",
+                                        "&:hover": {
+                                            backgroundColor: "#83A16C"
+                                        }
+                                    }}
+                                >
+                                    Become a Partner
+                                </Button>
+                            </Link>
                         </Box>
                     </Box>
                 </Box>
