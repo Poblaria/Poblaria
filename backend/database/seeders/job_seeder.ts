@@ -40,16 +40,20 @@ export default class extends BaseSeeder {
         await Job.updateOrCreateMany(
             "title",
             jobs.map((job) => ({
-                title: job.job_title,
+                title: job.jobTitle,
                 description: job.description,
                 company: job.company,
-                address: job.long_location,
-                salary: job.avg_annual_salary_usd,
-                typeId: getJobTypeId(job.employment_statuses[0]),
-                industryId: getJobIndustryId(job.company_object.industry),
+                address: job.longLocation,
+                salary: job.avgAnnualSalaryUsd,
+                typeId: getJobTypeId(job.employmentStatuses[0]),
+                industryId: getJobIndustryId(job.companyObject.industry),
                 isRemote: job.remote,
-                latitude: job.latitude ?? locations[job.location || ""]?.latitude ?? null,
-                longitude: job.longitude ?? locations[job.location || ""]?.longitude ?? null
+                latitude:
+                    job.latitude ??
+                    locations.find((location) => location.location === job.location)?.latitude,
+                longitude:
+                    job.longitude ??
+                    locations.find((location) => location.location === job.location)?.longitude
             }))
         );
     }
