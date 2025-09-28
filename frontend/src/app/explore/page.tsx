@@ -74,10 +74,10 @@ export default function Explore() {
             allJobs.filter((job) =>
                 [
                     jobFilters.jobType.length
-                        ? jobFilters.jobType.includes(job.type_id)
+                        ? jobFilters.jobType.includes(job.typeId)
                         : true,
                     jobFilters.jobIndustry.length
-                        ? jobFilters.jobIndustry.includes(job.industry_id)
+                        ? jobFilters.jobIndustry.includes(job.industryId)
                         : true
                 ].every(Boolean)
             )
@@ -102,17 +102,13 @@ export default function Explore() {
             allHousings.filter((housing) =>
                 [
                     housingFilters.type.length
-                        ? housingFilters.type.includes(housing.type_id)
+                        ? housingFilters.type.includes(housing.typeId)
                         : true,
                     housingFilters.offerType.length
-                        ? housingFilters.offerType.includes(
-                              housing.offer_type_id
-                          )
+                        ? housingFilters.offerType.includes(housing.offerTypeId)
                         : true,
                     housingFilters.condition.length
-                        ? housingFilters.condition.includes(
-                              housing.condition_id
-                          )
+                        ? housingFilters.condition.includes(housing.conditionId)
                         : true
                 ].every(Boolean)
             )

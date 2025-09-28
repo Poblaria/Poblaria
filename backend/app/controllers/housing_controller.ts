@@ -5,14 +5,11 @@ import {
     putHousingValidator,
     patchHousingValidator
 } from "#validators/housing";
-import snakecaseKeys from "snakecase-keys";
 import HousingImage from "#models/housing_image";
 
 export default class HousingController {
-    async index({ response }: HttpContext) {
-        const housings = await Housing.all();
-
-        return response.ok(housings.map((housing) => snakecaseKeys(housing.serialize())));
+    async index() {
+        return Housing.all();
     }
 
     async store({ request, response }: HttpContext) {
@@ -23,15 +20,11 @@ export default class HousingController {
 
         delete data.image;
 
-        const housing = await Housing.create({ ...data, imageId: image?.id });
-
-        return response.created(snakecaseKeys(housing.serialize()));
+        return response.created(await Housing.create({ ...data, imageId: image?.id }));
     }
 
-    async show({ params, response }: HttpContext) {
-        const housing = await Housing.findOrFail(params.id);
-
-        return response.ok(snakecaseKeys(housing.serialize()));
+    async show({ params }: HttpContext) {
+        return Housing.findOrFail(params.id);
     }
 
     async update({ params, request, response }: HttpContext) {
@@ -47,9 +40,7 @@ export default class HousingController {
             default:
                 return response.badRequest({ message: "Invalid method" });
         }
-        await housing.save();
-
-        return response.ok(snakecaseKeys(housing.serialize()));
+        return housing.save();
     }
 
     async destroy({ params, response }: HttpContext) {

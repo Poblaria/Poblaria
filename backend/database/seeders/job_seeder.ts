@@ -45,9 +45,9 @@ export default class extends BaseSeeder {
                 company: job.company,
                 address: job.long_location,
                 salary: job.avg_annual_salary_usd,
-                type_id: getJobTypeId(job.employment_statuses[0]),
-                industry_id: getJobIndustryId(job.company_object.industry),
-                is_remote: job.remote,
+                typeId: getJobTypeId(job.employment_statuses[0]),
+                industryId: getJobIndustryId(job.company_object.industry),
+                isRemote: job.remote,
                 latitude: job.latitude ?? locations[job.location || ""]?.latitude ?? null,
                 longitude: job.longitude ?? locations[job.location || ""]?.longitude ?? null
             }))

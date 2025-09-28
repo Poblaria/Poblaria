@@ -1,14 +1,10 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import { loginValidator, registerValidator } from "#validators/auth";
 import User from "#models/user";
-import snakecaseKeys from "snakecase-keys";
 
 export default class AuthController {
     async register({ request, response }: HttpContext) {
-        const data = await request.validateUsing(registerValidator);
-        const user = await User.create(data);
-
-        return response.created(snakecaseKeys(user.serialize()));
+        return response.created(await User.create(await request.validateUsing(registerValidator)));
     }
 
     async login({ request, response }: HttpContext) {

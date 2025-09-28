@@ -56,7 +56,7 @@ export async function fetchHousings(): Promise<any> {
     // Fetch images for each house
     const housingsWithImages = await Promise.all(
         housings.map(async (house: any) => {
-            if (house.image_id) {
+            if (house.imageId) {
                 try {
                     const imageResponse = await fetch(
                         `${API_BASE_URL}/housing-images/${house.image_id}`
