@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import React from "react";
-import Button from "@mui/material/Button";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { usePathname } from "next/navigation";
-import Box from "@mui/material/Box";
+import { Box, Button } from "@mui/material";
 
 export const NavBar = () => {
   const path = usePathname();

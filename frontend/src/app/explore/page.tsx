@@ -1,8 +1,7 @@
 "use client";
-import Box from "@mui/material/Box";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
 import FilterBar, { DataType } from "./components/FilterBar";

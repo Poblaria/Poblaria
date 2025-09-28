@@ -31,9 +31,9 @@ export default function ListView({ dataType, showFilters, housings, jobs, error 
     <Box height={"100%"} sx={{ display: "flex", flexDirection: "column" }}>
       {dataType === "jobs" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
-          <Grid container spacing={3}>
+          <Grid container sx={{ width: '100%' }} spacing={3}>
             {[...JOBS, ...(jobs || [])].map((job) => (
-              <Grid key={job.id} item xs={12} sm={6} md={6}>
+              <Grid key={job.id} size={{ xs: 12, sm: 6, md: 6 }}>
                 <Card
                   sx={{
                     height: 320,
@@ -95,9 +95,9 @@ export default function ListView({ dataType, showFilters, housings, jobs, error 
 
       {dataType === "houses" && (
         <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
-          <Grid container spacing={3}>
+          <Grid container sx={{ width: '100%' }} spacing={3}>
             {[...HOUSES, ...(housings || [])].map((house) => (
-              <Grid key={house.id} item xs={12} sm={6} md={6}>
+              <Grid key={house.id} size={{ xs: 12, sm: 6, md: 6 }}>
                 <Card sx={{ backgroundColor: "#F5F5F5" }}>
                   {house.image && (
                     <CardMedia
