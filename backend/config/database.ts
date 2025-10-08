@@ -16,6 +16,9 @@ const dbConfig = defineConfig({
             migrations: {
                 naturalSort: true,
                 paths: ["database/migrations"]
+            },
+            seeders: {
+                paths: ["database/seeders/main"]
             }
         }
     }

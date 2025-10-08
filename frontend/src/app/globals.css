@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
 
 :root {
     --background: #ffffff;
@@ -20,7 +21,52 @@
 }
 
 body {
-    background: var(--background);
-    color: var(--foreground);
+    /* background: var(--background);
+    color: var(--foreground); */
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.leaflet-container {
+    z-index: 0;
+    height: 600px;
+    width: 100%;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+}
+
+input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 45%;
+    width: 4px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+input[type="checkbox"].house:checked {
+    background-color: #ef4444;
+    border-color: #ef4444;
+}
+
+input[type="checkbox"].job:checked {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
 }
