@@ -1,0 +1,20 @@
+---
+name: Setup workflow job
+
+inputs:
+    working-directory:
+        description: "The working directory where the Node project is located"
+        required: true
+
+runs:
+    using: "composite"
+    steps:
+        -   name: Setup Node
+            uses: actions/setup-node@v4
+            with:
+                node-version: lts/*
+
+        -   name: Install dependencies
+            working-directory: ${{ inputs.working-directory }}
+            run: npm ci
+            shell: bash

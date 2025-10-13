@@ -29,17 +29,12 @@ Deployment instructions using Docker Compose are available in [`backend/README.m
 
 ## CI/CD Pipeline
 
-1. We are in the process of setting up a GitHub Actions pipeline to automatically:
+1. We are in the process of setting up a GitHub Actions pipeline to, automatically:
+   - Build the frontend and backend
+   - Run automated tests
+   - Deploy the application to the chosen hosting platforms
 
-- Build the frontend and backend
-- Run automated tests
-- Deploy the application to the chosen hosting platforms
-
-This pipeline will be triggered on:
-- Pushes to `main` and `develop`
-- Pull requests targeting `main` and `develop`
-
-2. Once ready, the CI/CD workflow file will be located at `.github/workflows/ci-cd.yml`.
+2. Once ready, the CI/CD workflow files will be located at `.github/workflows/`.
 
 ### Triggers
 
