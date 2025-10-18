@@ -1,7 +1,10 @@
 {
   "navbar": {
     "home": "Home",
+    "explore": "Explore",
     "housing": "Housing",
+    "resources": "Resources",
+    "support": "Support",
     "jobs": "Jobs",
     "contact": "Contact",
     "profile": "Profile",
