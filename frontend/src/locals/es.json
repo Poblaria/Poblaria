@@ -1,0 +1,22 @@
+{
+  "navbar": {
+    "home": "Inicio",
+    "housing": "Vivienda",
+    "jobs": "Empleo",
+    "contact": "Contacto",
+    "profile": "Perfil",
+    "language": "Idioma"
+  },
+  "home": {
+    "heroTitle": "Poblaria — Revivir pueblos, conectar vidas",
+    "heroSubtitle": "Encuentra vivienda asequible, trabajos locales/remotos y recursos comunitarios en zonas rurales.",
+    "ctaHousing": "Explorar Vivienda",
+    "ctaJobs": "Buscar Empleo",
+    "learnMore": "Saber más"
+  },
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "back": "Atrás"
+  }
+}

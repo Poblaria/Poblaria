@@ -1,0 +1,22 @@
+{
+  "navbar": {
+    "home": "Home",
+    "housing": "Housing",
+    "jobs": "Jobs",
+    "contact": "Contact",
+    "profile": "Profile",
+    "language": "Language"
+  },
+  "home": {
+    "heroTitle": "Poblaria — Revive villages, connect lives",
+    "heroSubtitle": "Find affordable housing, local/remote jobs, and community resources in rural areas.",
+    "ctaHousing": "Explore Housing",
+    "ctaJobs": "Find Jobs",
+    "learnMore": "Learn more"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back"
+  }
+}
