@@ -87,6 +87,12 @@ export default function MapComponent({
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
 
+                <TileLayer
+                attribution='&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                subdomains={["a", "b", "c", "d"]}
+                />
+
                 {/* Central Marker - visible when zoom <= 16 */}
                 {currentZoom <= 16 && (
                     <Marker
