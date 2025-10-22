@@ -62,7 +62,7 @@ export const NavBar = () => {
           <Link href="/profile">{t("navbar.profile")}</Link>
         </Button>
 
-        <IconButton onClick={switchLanguage} title={t("navbar.language")}>
+        <IconButton onClick={() => { void switchLanguage(); }} title={t("navbar.language")}>
           <LanguageIcon />
           <span style={{ fontSize: "14px", marginLeft: "6px" }}>
             {lang.toUpperCase()}
