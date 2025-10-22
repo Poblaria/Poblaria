@@ -13,9 +13,9 @@ export const NavBar = () => {
   const { t, i18n } = useTranslation();
   const [lang, setLang] = useState(i18n.language || "en");
 
-  const switchLanguage = () => {
+  const switchLanguage = async () => {
     const newLang = lang === "en" ? "es" : "en";
-    i18n.changeLanguage(newLang);
+    await i18n.changeLanguage(newLang);
     setLang(newLang);
   };
 
