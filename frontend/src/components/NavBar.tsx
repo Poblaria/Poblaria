@@ -3,12 +3,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Box, Button } from "@mui/material";
+import { Box, Button, IconButton } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import LanguageIcon from "@mui/icons-material/Language";
+import React, { useState } from "react";
 
 export const NavBar = () => {
     const pathname = usePathname();
+    const { t, i18n } = useTranslation();
+    const [lang, setLang] = useState(i18n.language || "en");
 
-    // TODO: add a /profile page
+    const switchLanguage = async () => {
+        const newLang = lang === "en" ? "es" : "en";
+        await i18n.changeLanguage(newLang);
+        setLang(newLang);
+    };
+
+    const buttonStyle = (path: string) => ({
+        "backgroundColor": pathname === path ? "#5E7749" : "",
+        "color": pathname === path ? "white" : "black",
+        "&:hover": { backgroundColor: "#83A16C", color: "white" }
+    });
+
     return (
         <nav
             style={{
@@ -28,79 +44,42 @@ export const NavBar = () => {
                     height={100}
                 />
             </Box>
-            <Box style={{ marginLeft: "auto", display: "flex", gap: "16px" }}>
-                <Button
-                    variant="text"
-                    sx={{
-                        "backgroundColor": pathname === "/" ? "#5E7749" : "",
-                        "color": pathname === "/" ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: "#83A16C",
-                            color: "white"
-                        }
-                    }}
-                >
-                    <Link href="/">Home</Link>
+
+            <Box
+                sx={{
+                    marginLeft: "auto",
+                    display: "flex",
+                    gap: "16px",
+                    alignItems: "center"
+                }}
+            >
+                <Button variant="text" sx={buttonStyle("/")}>
+                    <Link href="/">{t("navbar.home")}</Link>
                 </Button>
-                <Button
-                    variant="text"
-                    sx={{
-                        "backgroundColor":
-                            pathname === "/explore" ? "#5E7749" : "",
-                        "color": pathname === "/explore" ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: "#83A16C",
-                            color: "white"
-                        }
-                    }}
-                >
-                    <Link href="/explore">Explore</Link>
+                <Button variant="text" sx={buttonStyle("/explore")}>
+                    <Link href="/explore">{t("navbar.explore")}</Link>
                 </Button>
-                <Button
-                    variant="text"
-                    sx={{
-                        "backgroundColor":
-                            pathname === "/resources" ? "#5E7749" : "",
-                        "color": pathname === "/resources" ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: "#83A16C",
-                            color: "white"
-                        }
-                    }}
-                >
-                    <Link href="/resources">Resources</Link>
+                <Button variant="text" sx={buttonStyle("/resources")}>
+                    <Link href="/resources">{t("navbar.resources")}</Link>
                 </Button>
-                <Button
-                    variant="text"
-                    sx={{
-                        "backgroundColor":
-                            pathname === "/support" ? "#5E7749" : "",
-                        "color": pathname === "/support" ? "white" : "black",
-                        "&:hover": {
-                            backgroundColor: "#83A16C",
-                            color: "white"
-                        }
-                    }}
-                >
-                    <Link href="/support">Support</Link>
+                <Button variant="text" sx={buttonStyle("/support")}>
+                    <Link href="/support">{t("navbar.support")}</Link>
                 </Button>
-                <Link href="/profile">
-                    <Button
-                        variant="text"
-                        sx={{
-                            "backgroundColor":
-                                pathname === "/profile" ? "#5E7749" : "",
-                            "color":
-                                pathname === "/profile" ? "white" : "black",
-                            "&:hover": {
-                                backgroundColor: "#83A16C",
-                                color: "white"
-                            }
-                        }}
-                    >
-                        Profile
-                    </Button>
-                </Link>
+                <Button variant="text" sx={buttonStyle("/profile")}>
+                    <Link href="/profile">{t("navbar.profile")}</Link>
+                </Button>
+
+                <IconButton
+                    onClick={() => {
+                        void switchLanguage();
+                    }}
+                    title={t("navbar.language")}
+                >
+                    <LanguageIcon />
+                    <span style={{ fontSize: "14px", marginLeft: "6px" }}>
+                        {lang.toUpperCase()}
+                    </span>
+                </IconButton>
             </Box>
         </nav>
     );
