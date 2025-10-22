@@ -1,52 +1,51 @@
 {
-  "navbar": {
-    "home": "Inicio",
-    "housing": "Vivienda",
-    "jobs": "Empleo",
-    "explore": "Explorar",
-    "resources": "Recursos",
-    "support": "Soporte",
-    "contact": "Contacto",
-    "profile": "Perfil",
-    "language": "Idioma"
-  },
-  "common": {
-    "save": "Guardar",
-    "cancel": "Cancelar",
-    "back": "Atrás"
-  },
-  "home": {
-    "hero": {
-      "imgAlt": "Vida en el campo",
-      "title": "Descubre una nueva forma de vivir",
-      "subtitle": "Haz del campo tu hogar"
+    "navbar": {
+        "home": "Inicio",
+        "housing": "Vivienda",
+        "jobs": "Empleo",
+        "explore": "Explorar",
+        "resources": "Recursos",
+        "support": "Soporte",
+        "contact": "Contacto",
+        "profile": "Perfil",
+        "language": "Idioma"
     },
-    "search": {
-      "title": "Descubre tu escapada rural perfecta",
-      "placeholder": "Busca pueblos, empleos, vivienda..."
+    "common": {
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "back": "Atrás"
     },
-    "features": {
-      "housing": {
-        "title": "Encuentra tu hogar",
-        "desc": "Explora casas de piedra tradicionales, pisos modernos y opciones de vivienda con apoyo comunitario",
-        "cta": "Explorar vivienda →"
-      },
-      "jobs": {
-        "title": "Empleo local",
-        "desc": "Descubre oportunidades en agricultura, turismo y oficios tradicionales",
-        "cta": "Ver empleos →"
-      },
-      "support": {
-        "title": "Soporte",
-        "desc": "Accede a recursos y guías para que tu transición a la vida rural sea fluida y sin estrés",
-        "cta": "Ver recursos →"
-      }
-    },
-    "cta": {
-      "title": "¿Lista para un nuevo comienzo?",
-      "subtitle": "Únete hoy y da el primer paso para descubrir una nueva forma de vivir.",
-      "button": "Contacta con nuestro equipo"
+    "home": {
+        "hero": {
+            "imgAlt": "Vida en el campo",
+            "title": "Descubre una nueva forma de vivir",
+            "subtitle": "Haz del campo tu hogar"
+        },
+        "search": {
+            "title": "Descubre tu escapada rural perfecta",
+            "placeholder": "Busca pueblos, empleos, vivienda..."
+        },
+        "features": {
+            "housing": {
+                "title": "Encuentra tu hogar",
+                "desc": "Explora casas de piedra tradicionales, pisos modernos y opciones de vivienda con apoyo comunitario",
+                "cta": "Explorar vivienda →"
+            },
+            "jobs": {
+                "title": "Empleo local",
+                "desc": "Descubre oportunidades en agricultura, turismo y oficios tradicionales",
+                "cta": "Ver empleos →"
+            },
+            "support": {
+                "title": "Soporte",
+                "desc": "Accede a recursos y guías para que tu transición a la vida rural sea fluida y sin estrés",
+                "cta": "Ver recursos →"
+            }
+        },
+        "cta": {
+            "title": "¿Lista para un nuevo comienzo?",
+            "subtitle": "Únete hoy y da el primer paso para descubrir una nueva forma de vivir.",
+            "button": "Contacta con nuestro equipo"
+        }
     }
-  }
 }
-
