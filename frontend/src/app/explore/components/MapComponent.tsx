@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import Supercluster from "supercluster";
 import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
