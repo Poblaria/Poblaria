@@ -1,0 +1,52 @@
+{
+    "navbar": {
+        "home": "Home",
+        "explore": "Explore",
+        "housing": "Housing",
+        "resources": "Resources",
+        "support": "Support",
+        "jobs": "Jobs",
+        "contact": "Contact",
+        "profile": "Profile",
+        "language": "Language"
+    },
+    "common": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "back": "Back"
+    },
+
+    "home": {
+        "hero": {
+            "imgAlt": "Countryside Living",
+            "title": "Discover a New Way of Living",
+            "subtitle": "Make the Countryside Your Home"
+        },
+        "search": {
+            "title": "Discover Your Perfect Rural Escape",
+            "placeholder": "Search villages, jobs, housing..."
+        },
+        "features": {
+            "housing": {
+                "title": "Find Your Home",
+                "desc": "Browse traditional stone houses, modern apartments, and community-supported housing options",
+                "cta": "Explore Housing →"
+            },
+            "jobs": {
+                "title": "Local Employment",
+                "desc": "Discover opportunities in agriculture, tourism, and traditional crafts",
+                "cta": "Browse Jobs →"
+            },
+            "support": {
+                "title": "Support",
+                "desc": "Access resources and guides to make your transition to rural life seamless and stress-free",
+                "cta": "Check the resources →"
+            }
+        },
+        "cta": {
+            "title": "Ready for Your New Beginning?",
+            "subtitle": "Join us today and take the first step towards discovering a new way of living.",
+            "button": "Contact Our Team"
+        }
+    }
+}
