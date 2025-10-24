@@ -82,7 +82,7 @@ export default function MapComponent({
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
             {/* Map Container */}
             <MapContainer
-                center={[41.820, 1.867]}
+                center={[41.82, 1.867]}
                 zoom={8}
                 scrollWheelZoom
                 style={{ height: "calc(100vh - 120px)", width: "100%" }}
