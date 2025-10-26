@@ -1,0 +1,4 @@
+{
+    "foo": "Este es un mensaje de foo bar.",
+    "bar": "La documentación está disponible en https://docs.adonisjs.com/guides/digging-deeper/i18n."
+}
