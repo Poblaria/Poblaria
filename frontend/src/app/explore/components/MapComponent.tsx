@@ -2,12 +2,12 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
 import type { HousingDataWithImage, JobData } from "@/api/data";
+import roundIcon from "../utils/roundIcon";
 
 type MapComponentProps = {
     dataType: DataType;
@@ -41,21 +41,6 @@ function ZoomListener({
 }
 
 const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
-
-function roundIcon(color: string, size: number): L.DivIcon {
-    const style = `
-    width:${size}px;height:${size}px;border-radius:50%;
-    background:${color};
-    border:2px solid #fff;
-    box-shadow:0 0 0 1px rgba(0,0,0,.25);
-  `;
-    return L.divIcon({
-        className: "poblaria-dot",
-        html: `<div style="${style}"></div>`,
-        iconSize: [size, size],
-        iconAnchor: [size / 2, size / 2]
-    });
-}
 
 export default function MapComponent({
     dataType,
