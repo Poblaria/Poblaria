@@ -2,30 +2,12 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
 import type { HousingDataWithImage, JobData } from "@/api/data";
-
-const HomeLeafletIcon = L.icon({
-    iconUrl: "/images/home-icon1.png",
-    iconSize: [35, 35],
-    iconAnchor: [17, 35]
-});
-
-const JobLeafletIcon = L.icon({
-    iconUrl: "/images/job-icon.png",
-    iconSize: [35, 35],
-    iconAnchor: [17, 35]
-});
-
-const CenterLeafletIcon = L.icon({
-    iconUrl: "/images/marker-icon-2x.png",
-    iconSize: [40, 40],
-    iconAnchor: [17, 35]
-});
+import roundIcon from "../utils/roundIcon";
 
 type MapComponentProps = {
     dataType: DataType;
@@ -58,6 +40,8 @@ function ZoomListener({
     return null;
 }
 
+const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
+
 export default function MapComponent({
     dataType,
     housings,
@@ -72,31 +56,28 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
+    const COLORS = {
+        job: "#D22B2B",
+        house: "#1434A4"
+    } as const;
+
+    const dotSize = sizeForZoom(currentZoom);
+
     return (
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
             {/* Map Container */}
             <MapContainer
-                center={[42.4436, 1.1344]}
-                zoom={16}
+                center={[41.82, 1.867]}
+                zoom={8}
                 scrollWheelZoom
                 style={{ height: "calc(100vh - 120px)", width: "100%" }}
             >
                 <ZoomListener onZoomChange={setCurrentZoom} />
                 <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution='&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                    url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+                    subdomains={["a", "b", "c", "d"]}
                 />
-
-                {/* Central Marker - visible when zoom <= 16 */}
-                {currentZoom <= 16 && (
-                    <Marker
-                        position={[42.4436, 1.1344]}
-                        icon={CenterLeafletIcon}
-                    >
-                        <Popup>Rialp Village</Popup>
-                    </Marker>
-                )}
-
                 {/* Markers for Jobs */}
                 {dataType === "jobs" /* currentZoom >= 17 && */ &&
                     [...JOBS, ...(jobs || [])].map((job) => {
@@ -106,7 +87,7 @@ export default function MapComponent({
                             <Marker
                                 key={`job-${job.id}`}
                                 position={[job.latitude, job.longitude]}
-                                icon={JobLeafletIcon}
+                                icon={roundIcon(COLORS.job, dotSize)}
                             >
                                 <Popup>
                                     <Box sx={{ minWidth: 250 }}>
@@ -147,7 +128,7 @@ export default function MapComponent({
                         <Marker
                             key={`house-${house.id}`}
                             position={[house.latitude, house.longitude]}
-                            icon={HomeLeafletIcon}
+                            icon={roundIcon(COLORS.house, dotSize)}
                         >
                             <Popup>
                                 <Box sx={{ minWidth: 250 }}>
@@ -155,6 +136,8 @@ export default function MapComponent({
                                         <Image
                                             src={house.image}
                                             alt={house.title}
+                                            width={250}
+                                            height={150}
                                             style={{
                                                 width: "100%",
                                                 height: "auto",
