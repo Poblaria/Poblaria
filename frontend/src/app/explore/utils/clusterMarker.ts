@@ -4,7 +4,7 @@ export const createClusterIcon = (cluster: any) => {
     const count = cluster.getChildCount() as number;
 
     const size = count < 10 ? 36 : count < 50 ? 44 : 52;
-    const bg = count < 10 ? "#1434A4" : count < 50 ? "#F39C12" : "#D22B2B";
+    const bg = count < 10 ? "#4C763B" : count < 50 ? "#97B067" : "#5E7749";
 
     return L.divIcon({
         html: `
