@@ -14,8 +14,20 @@ import {
     Home as HomeIcon,
     Work as WorkIcon
 } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
+import React from "react";
 
 export default function Home() {
+    const { t } = useTranslation();
+
+    const buttonSx = (extra?: object) => ({
+        "height": "40px",
+        "backgroundColor": "#5E7749",
+        "color": "white",
+        "&:hover": { backgroundColor: "#83A16C" },
+        ...extra
+    });
+
     return (
         <div>
             <Box
@@ -35,11 +47,11 @@ export default function Home() {
                     <CardMedia>
                         <Image
                             src="/images/happy-family-pictures.jpg"
-                            alt="Countryside Living"
+                            alt={t("home.hero.imgAlt")}
                             layout="fill"
                             objectFit="cover"
                             quality={90}
-                        ></Image>
+                        />
                     </CardMedia>
                     <Box
                         sx={{
@@ -63,10 +75,10 @@ export default function Home() {
                         }}
                     >
                         <Typography variant="h3" fontWeight={700}>
-                            Discover a New Way of Living
+                            {t("home.hero.title")}
                         </Typography>
                         <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
-                            Make the Countryside Your Home
+                            {t("home.hero.subtitle")}
                         </Typography>
                     </Box>
                 </Card>
@@ -79,7 +91,7 @@ export default function Home() {
                         fontWeight="bold"
                         sx={{ mb: 3, color: "grey.900" }}
                     >
-                        Discover Your Perfect Rural Escape
+                        {t("home.search.title")}
                     </Typography>
                     <Box
                         sx={{
@@ -102,7 +114,7 @@ export default function Home() {
                         >
                             <input
                                 type="text"
-                                placeholder="Search villages, jobs, housing..."
+                                placeholder={t("home.search.placeholder")}
                                 className="flex-1 px-3 py-2 border-0 focus:outline-none w-full"
                                 style={{ borderRadius: "4px" }}
                             />
@@ -115,6 +127,7 @@ export default function Home() {
             <section className="py-16 bg-gray-100">
                 <Box className="container mx-auto px-4">
                     <Box className="grid md:grid-cols-3 gap-8 mb-16">
+                        {/* Housing */}
                         <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
                             <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
                                 <HomeIcon
@@ -123,26 +136,25 @@ export default function Home() {
                                 />
                             </Box>
                             <Typography variant="h5" fontWeight={700} mb={3}>
-                                Find Your Home
+                                {t("home.features.housing.title")}
                             </Typography>
                             <Typography
                                 variant="body1"
                                 color="text.secondary"
                                 mb={4}
                             >
-                                Browse traditional stone houses, modern
-                                apartments, and community-supported housing
-                                options
+                                {t("home.features.housing.desc")}
                             </Typography>
                             <Link
                                 href="/explore"
                                 className="font-medium hover:underline"
                                 style={{ color: "#5E7749" }}
                             >
-                                Explore Housing →
+                                {t("home.features.housing.cta")}
                             </Link>
                         </Box>
 
+                        {/* Jobs */}
                         <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
                             <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
                                 <WorkIcon
@@ -151,25 +163,25 @@ export default function Home() {
                                 />
                             </Box>
                             <Typography variant="h5" fontWeight={700} mb={3}>
-                                Local Employment
+                                {t("home.features.jobs.title")}
                             </Typography>
                             <Typography
                                 variant="body1"
                                 color="text.secondary"
                                 mb={4}
                             >
-                                Discover opportunities in agriculture, tourism,
-                                and traditional crafts
+                                {t("home.features.jobs.desc")}
                             </Typography>
                             <Link
                                 href="/explore"
                                 className="font-medium hover:underline"
                                 style={{ color: "#5E7749" }}
                             >
-                                Browse Jobs →
+                                {t("home.features.jobs.cta")}
                             </Link>
                         </Box>
 
+                        {/* Support/Resources */}
                         <Box className="bg-white p-8 rounded-2xl shadow-lg border border-green-50">
                             <Box className="bg-[#BECCB4] w-fit p-4 rounded-xl mb-4">
                                 <ContactSupportIcon
@@ -178,23 +190,21 @@ export default function Home() {
                                 />
                             </Box>
                             <Typography variant="h5" fontWeight={700} mb={3}>
-                                Support
+                                {t("home.features.support.title")}
                             </Typography>
                             <Typography
                                 variant="body1"
                                 color="text.secondary"
                                 mb={4}
                             >
-                                Access resources and guides to make your
-                                transition to rural life seamless and
-                                stress-free
+                                {t("home.features.support.desc")}
                             </Typography>
                             <Link
                                 href="/explore"
                                 className="font-medium hover:underline"
                                 style={{ color: "#5E7749" }}
                             >
-                                Check the resources →
+                                {t("home.features.support.cta")}
                             </Link>
                         </Box>
                     </Box>
@@ -205,30 +215,19 @@ export default function Home() {
                 <Box className="container mx-auto px-4 text-center">
                     <Box className="max-w-2xl mx-auto">
                         <Typography variant="h5" fontWeight={700} mb={3}>
-                            Ready for Your New Beginning?
+                            {t("home.cta.title")}
                         </Typography>
                         <Typography
                             variant="body1"
                             color="text.secondary"
                             mb={4}
                         >
-                            Join us today and take the first step towards
-                            discovering a new way of living.
+                            {t("home.cta.subtitle")}
                         </Typography>
                         <Box className="flex flex-col md:flex-row gap-4 justify-center">
                             <Link href="/contact">
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        "height": "40px",
-                                        "backgroundColor": "#5E7749",
-                                        "color": "white",
-                                        "&:hover": {
-                                            backgroundColor: "#83A16C"
-                                        }
-                                    }}
-                                >
-                                    Contact Our Team
+                                <Button variant="contained" sx={buttonSx()}>
+                                    {t("home.cta.button")}
                                 </Button>
                             </Link>
                         </Box>
