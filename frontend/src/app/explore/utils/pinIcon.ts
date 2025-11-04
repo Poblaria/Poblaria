@@ -18,12 +18,14 @@ type ExtraColor =
 
 export function pinIcon({
     icon,
+    size,
     prefix = "fa",
     color = "blue",
     shape = "circle",
     iconColor = "white"
 }: {
     icon: string;
+    size: number;
     prefix?: "fa" | "ion";
     color?: ExtraColor;
     shape?: "circle" | "square" | "penta";
@@ -31,6 +33,7 @@ export function pinIcon({
 }) {
     return (L as any).ExtraMarkers.icon({
         icon,
+        size,
         prefix,
         markerColor: color,
         shape,

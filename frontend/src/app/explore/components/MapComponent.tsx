@@ -51,7 +51,7 @@ export default function MapComponent({
     jobs,
     error
 }: MapComponentProps) {
-    const [currentZoom, setCurrentZoom] = useState(16);
+    const [currentZoom, setCurrentZoom] = useState(8);
 
     if (error) return <div>Error: {error}</div>;
     if (dataType === "houses" && !housings && !HOUSES.length)
@@ -59,16 +59,23 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
+    const dotSize = sizeForZoom(currentZoom);
+
     return (
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
             {/* Map Container */}
             <MapContainer
                 center={[41.82, 1.867]}
-                zoom={8}
+                zoom={currentZoom}
                 scrollWheelZoom
                 style={{ height: "calc(100vh - 120px)", width: "100%" }}
             >
-                <ZoomListener onZoomChange={setCurrentZoom} />
+                <ZoomListener
+                    onZoomChange={(value) => {
+                        console.log("Current Zoom:", value);
+                        setCurrentZoom(value);
+                    }}
+                />
                 <TileLayer
                     attribution='&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                     url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -90,7 +97,13 @@ export default function MapComponent({
                                 <Marker
                                     key={`job-${job.id}`}
                                     position={[job.latitude, job.longitude]}
-                                    icon={pinIcon({ icon: 'fa-briefcase', prefix: 'fa', color: 'red', iconColor: 'white' })}
+                                    icon={pinIcon({
+                                        icon: "fa-briefcase",
+                                        prefix: "fa",
+                                        color: "red",
+                                        iconColor: "white",
+                                        size: dotSize
+                                    })}
                                 >
                                     <Popup>
                                         <Box sx={{ minWidth: 250 }}>
@@ -131,7 +144,13 @@ export default function MapComponent({
                             <Marker
                                 key={`house-${house.id}`}
                                 position={[house.latitude, house.longitude]}
-                                icon={pinIcon({ icon: 'fa-home', prefix: 'fa', color: 'darkblue', iconColor: 'white' })}
+                                icon={pinIcon({
+                                    icon: "fa-home",
+                                    prefix: "fa",
+                                    color: "darkblue",
+                                    iconColor: "white",
+                                    size: dotSize
+                                })}
                             >
                                 <Popup>
                                     <Box sx={{ minWidth: 250 }}>
