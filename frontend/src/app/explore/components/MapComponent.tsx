@@ -7,9 +7,10 @@ import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
 import type { HousingDataWithImage, JobData } from "@/api/data";
-import roundIcon from "../utils/roundIcon";
+import { pinIcon } from "../utils/roundIcon";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import {createClusterIcon} from "../utils/clusterMarker";
+import { createClusterIcon } from "../utils/clusterMarker";
+import "leaflet-extra-markers";
 
 type MapComponentProps = {
     dataType: DataType;
@@ -43,7 +44,6 @@ function ZoomListener({
 }
 
 const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
-
 
 export default function MapComponent({
     dataType,
@@ -83,7 +83,7 @@ export default function MapComponent({
                 />
                 <MarkerClusterGroup
                     chunkedLoading
-                    maxClusterRadius={40}
+                    maxClusterRadius={45}
                     spiderfyOnEveryZoom={false}
                     showCoverageOnHover={false}
                     iconCreateFunction={createClusterIcon}
@@ -97,7 +97,7 @@ export default function MapComponent({
                                 <Marker
                                     key={`job-${job.id}`}
                                     position={[job.latitude, job.longitude]}
-                                    icon={roundIcon(COLORS.job, dotSize)}
+                                    icon={pinIcon({ icon: 'fa-briefcase', prefix: 'fa', color: 'red', iconColor: 'white' })}
                                 >
                                     <Popup>
                                         <Box sx={{ minWidth: 250 }}>
@@ -138,7 +138,7 @@ export default function MapComponent({
                             <Marker
                                 key={`house-${house.id}`}
                                 position={[house.latitude, house.longitude]}
-                                icon={roundIcon(COLORS.house, dotSize)}
+                                icon={pinIcon({ icon: 'fa-home', prefix: 'fa', color: 'darkblue', iconColor: 'white' })}
                             >
                                 <Popup>
                                     <Box sx={{ minWidth: 250 }}>
