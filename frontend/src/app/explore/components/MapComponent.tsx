@@ -57,7 +57,6 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
-
     return (
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
             {/* Map Container */}

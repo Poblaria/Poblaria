@@ -87,13 +87,13 @@ input[type="checkbox"].job:checked {
 
 /* Custom styles for cluster icons */
 .cluster-small {
-    background-color: #4C763B;
+    background-color: #4c763b;
 }
 
 .cluster-medium {
-    background-color: #97B067;
+    background-color: #97b067;
 }
 
 .cluster-large {
-    background-color: #5E7749;
+    background-color: #5e7749;
 }
