@@ -7,7 +7,7 @@ import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
 import type { HousingDataWithImage, JobData } from "@/api/data";
-import { pinIcon } from "../utils/roundIcon";
+import { pinIcon } from "../utils/pinIcon";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { createClusterIcon } from "../utils/clusterMarker";
 import "leaflet-extra-markers";
@@ -58,8 +58,6 @@ export default function MapComponent({
         return <div>Loading houses...</div>;
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
-
-    const dotSize = sizeForZoom(currentZoom);
 
     return (
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
