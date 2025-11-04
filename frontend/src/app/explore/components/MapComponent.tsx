@@ -43,7 +43,7 @@ function ZoomListener({
     return null;
 }
 
-const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
+//const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
 
 export default function MapComponent({
     dataType,
@@ -59,7 +59,7 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
-    const dotSize = sizeForZoom(currentZoom);
+    //const dotSize = sizeForZoom(currentZoom);
 
     return (
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
@@ -100,8 +100,7 @@ export default function MapComponent({
                                         icon: "fa-briefcase",
                                         prefix: "fa",
                                         color: "red",
-                                        iconColor: "white",
-                                        size: dotSize
+                                        iconColor: "white"
                                     })}
                                 >
                                     <Popup>
@@ -146,9 +145,8 @@ export default function MapComponent({
                                 icon={pinIcon({
                                     icon: "fa-home",
                                     prefix: "fa",
-                                    color: "darkblue",
+                                    color: "blue-dark",
                                     iconColor: "white",
-                                    size: dotSize
                                 })}
                             >
                                 <Popup>

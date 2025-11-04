@@ -9,31 +9,31 @@ type ExtraColor =
     | "purple"
     | "violet"
     | "green"
-    | "darkred"
-    | "darkblue"
-    | "darkgreen"
-    | "darkpurple"
-    | "cadetblue"
-    | "black";
+    | "black"
+    | "white"
+    | "orange-dark"
+    | "blue-dark"
+    | "pink"
+    | "green-dark"
+    | "green-light"
+    | `#${string}`
+    | undefined;
 
 export function pinIcon({
     icon,
-    size,
     prefix = "fa",
     color = "blue",
     shape = "circle",
     iconColor = "white"
 }: {
     icon: string;
-    size: number;
     prefix?: "fa" | "ion";
     color?: ExtraColor;
     shape?: "circle" | "square" | "penta";
     iconColor?: string;
 }) {
-    return (L as any).ExtraMarkers.icon({
+    return L.ExtraMarkers.icon({
         icon,
-        size,
         prefix,
         markerColor: color,
         shape,
