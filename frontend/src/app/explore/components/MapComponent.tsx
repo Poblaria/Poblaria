@@ -72,7 +72,6 @@ export default function MapComponent({
             >
                 <ZoomListener
                     onZoomChange={(value) => {
-                        console.log("Current Zoom:", value);
                         setCurrentZoom(value);
                     }}
                 />
