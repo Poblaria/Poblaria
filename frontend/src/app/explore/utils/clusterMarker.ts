@@ -1,5 +1,4 @@
-import L from "leaflet";
-import type { MarkerCluster } from "leaflet";
+import L, { type MarkerCluster } from "leaflet";
 
 export const createClusterIcon = (cluster: MarkerCluster) => {
     const count = cluster.getChildCount() as number;
