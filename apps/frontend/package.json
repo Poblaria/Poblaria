@@ -13,25 +13,27 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@poblaria/backend": "*",
         "@emotion/react": "^11.14.0",
+        "@emotion/styled": "^11.14.1",
         "@googlemaps/markerclusterer": "^2.6.2",
         "@heroicons/react": "^2.2.0",
         "@maptiler/leaflet-maptilersdk": "^4.1.1",
-        "@react-google-maps/api": "^2.20.7",
-        "@types/leaflet": "^1.9.16",
-        "@vis.gl/react-google-maps": "^1.5.5",
-        "@emotion/styled": "^11.14.1",
         "@mui/icons-material": "^7.3.4",
         "@mui/material": "^7.3.4",
+        "@react-google-maps/api": "^2.20.7",
+        "@tuyau/client": "^0.2.10",
+        "@types/leaflet": "^1.9.16",
+        "@vis.gl/react-google-maps": "^1.5.5",
         "i18next": "^25.6.0",
         "leaflet": "^1.9.4",
         "maplibre-gl": "^5.9.0",
         "next": "15.5.4",
         "react": "19.1.0",
         "react-dom": "19.1.0",
+        "react-i18next": "^16.0.1",
         "react-leaflet": "^5.0.0",
-        "supercluster": "^8.0.1",
-        "react-i18next": "^16.0.1"
+        "supercluster": "^8.0.1"
     },
     "devDependencies": {
         "@poblaria/shared": "*",
