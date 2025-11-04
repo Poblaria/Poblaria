@@ -146,7 +146,7 @@ export default function MapComponent({
                                     icon: "fa-home",
                                     prefix: "fa",
                                     color: "blue-dark",
-                                    iconColor: "white",
+                                    iconColor: "white"
                                 })}
                             >
                                 <Popup>
