@@ -59,11 +59,6 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
-    const COLORS = {
-        job: "#D22B2B",
-        house: "#1434A4"
-    } as const;
-
     const dotSize = sizeForZoom(currentZoom);
 
     return (
