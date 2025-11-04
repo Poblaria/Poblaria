@@ -43,8 +43,6 @@ function ZoomListener({
     return null;
 }
 
-//const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
-
 export default function MapComponent({
     dataType,
     housings,
@@ -59,7 +57,6 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
-    //const dotSize = sizeForZoom(currentZoom);
 
     return (
         <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>

@@ -16,8 +16,7 @@ type ExtraColor =
     | "pink"
     | "green-dark"
     | "green-light"
-    | `#${string}`
-    | undefined;
+    | `#${string}`;
 
 export function pinIcon({
     icon,
@@ -39,5 +38,5 @@ export function pinIcon({
         shape,
         iconColor,
         svg: true
-    }) as L.Icon;
+    });
 }
