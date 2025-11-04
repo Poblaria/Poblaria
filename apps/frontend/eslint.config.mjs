@@ -1,6 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
-import { rules as baseRules } from "../eslint.base.js";
+import { rules as baseRules } from "@poblaria/shared/eslint.base.js";
 
 const compat = new FlatCompat({
     baseDirectory: import.meta.dirname
