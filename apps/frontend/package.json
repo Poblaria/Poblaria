@@ -1,5 +1,5 @@
 {
-    "name": "poblaria-frontend",
+    "name": "@poblaria/frontend",
     "version": "0.1.0",
     "private": true,
     "scripts": {
