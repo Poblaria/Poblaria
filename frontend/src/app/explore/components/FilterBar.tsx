@@ -59,8 +59,8 @@ export default function FilterBar(props: FilterBarProps) {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                marginLeft: 10,
-                marginRight: 10
+                marginLeft: { xs: 2, sm: 4, md: 10 },
+                marginRight: { xs: 2, sm: 4, md: 10 }
             }}
         >
             <Button

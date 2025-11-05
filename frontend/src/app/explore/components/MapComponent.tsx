@@ -58,7 +58,14 @@ export default function MapComponent({
         return <div>Loading jobs...</div>;
 
     return (
-        <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
+        <Box
+            height="100%"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: "60px"
+            }}
+        >
             {/* Map Container */}
             <MapContainer
                 center={[41.82, 1.867]}
@@ -146,7 +153,9 @@ export default function MapComponent({
                                 })}
                             >
                                 <Popup>
-                                    <Box sx={{ minWidth: 250 }}>
+                                    <Box
+                                        sx={{ minWidth: 250, maxWidth: "100%" }}
+                                    >
                                         {house.image && (
                                             <Image
                                                 src={house.image}
@@ -156,7 +165,8 @@ export default function MapComponent({
                                                 style={{
                                                     width: "100%",
                                                     height: "auto",
-                                                    borderRadius: 6
+                                                    borderRadius: 6,
+                                                    maxWidth: "100%" // Ensure image scales properly on smaller screens
                                                 }}
                                             />
                                         )}
