@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 if [ -n "$DB_MIGRATE" ]; then
   echo "Running migrations and seeding database..."
