@@ -5,8 +5,10 @@ import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
 import FilterBar, { DataType } from "./components/FilterBar";
-import { fetchHousings, fetchJobs } from "@/api/api";
-import { HousingDataWithImage, JobData } from "@/api/data";
+import getHousings, {
+    type HousingsResponse
+} from "@actions/housings/getHousings";
+import getJobs, { type JobsResponse } from "@actions/jobs/getJobs";
 
 const MapComponent = dynamic(() => import("./components/MapComponent"), {
     ssr: false,
@@ -24,12 +26,10 @@ const ListView = dynamic(() => import("./components/ListingComponent"), {
 
 export default function Explore() {
     const [viewMode, setViewMode] = useState<"map" | "list">("map");
-    const [allHousings, setAllHousings] = useState<HousingDataWithImage[]>([]);
-    const [housings, setHousings] = useState<HousingDataWithImage[] | null>(
-        null
-    );
-    const [allJobs, setAllJobs] = useState<JobData[]>([]);
-    const [jobs, setJobs] = useState<JobData[] | null>(null);
+    const [allHousings, setAllHousings] = useState<HousingsResponse>([]);
+    const [housings, setHousings] = useState<HousingsResponse | null>(null);
+    const [allJobs, setAllJobs] = useState<JobsResponse>([]);
+    const [jobs, setJobs] = useState<JobsResponse | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const handleViewMode = (
@@ -118,13 +118,17 @@ export default function Explore() {
         void (async () => {
             try {
                 if (dataType === "houses") {
-                    const housings = await fetchHousings();
-                    setAllHousings(housings);
-                    setHousings(housings);
+                    const { data: housings } = await getHousings();
+                    if (housings) {
+                        setAllHousings(housings);
+                        setHousings(housings);
+                    }
                 } else {
-                    const jobs = await fetchJobs();
-                    setAllJobs(jobs);
-                    setJobs(jobs);
+                    const { data: jobs } = await getJobs();
+                    if (jobs) {
+                        setAllJobs(jobs);
+                        setJobs(jobs);
+                    }
                 }
             } catch (error) {
                 setError(

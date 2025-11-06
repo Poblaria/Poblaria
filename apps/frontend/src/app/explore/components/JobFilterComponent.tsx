@@ -14,7 +14,12 @@ import {
     IconButton
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { fetchJobTypes, fetchJobIndustries } from "@/api/api";
+import getJobTypes, {
+    type JobTypesResponse
+} from "@actions/jobs/properties/getJobTypes";
+import getJobIndustries, {
+    type JobIndustriesResponse
+} from "@actions/jobs/properties/getJobIndustries";
 
 type JobsFiltersFormProps = {
     onClose: () => unknown;
@@ -35,17 +40,18 @@ export default function JobFiltersForm({
     jobFilters,
     onFilterChange
 }: JobsFiltersFormProps) {
-    const [jobTypes, setJobTypes] = useState<{ id: number; name: string }[]>(
-        []
-    );
-    const [jobIndustries, setJobIndustries] = useState<
-        { id: number; name: string }[]
-    >([]);
+    const [types, setTypes] = useState<JobTypesResponse>([]);
+    const [industries, setIndustries] = useState<JobIndustriesResponse>([]);
 
     useEffect(() => {
         void (async () => {
-            setJobTypes(await fetchJobTypes());
-            setJobIndustries(await fetchJobIndustries());
+            // TODO: Add error handling
+
+            const { data: types } = await getJobTypes();
+            if (types) setTypes(types);
+
+            const { data: industries } = await getJobIndustries();
+            if (industries) setIndustries(industries);
         })();
     }, []);
 
@@ -83,7 +89,7 @@ export default function JobFiltersForm({
                             Job Type
                         </Typography>
                         <FormGroup>
-                            {jobTypes.map((option) => (
+                            {types.map((option) => (
                                 <FormControlLabel
                                     key={option.id}
                                     control={
@@ -123,7 +129,7 @@ export default function JobFiltersForm({
                             Job Industry
                         </Typography>
                         <FormGroup>
-                            {jobIndustries.map((option) => (
+                            {industries.map((option) => (
                                 <FormControlLabel
                                     key={option.id}
                                     control={

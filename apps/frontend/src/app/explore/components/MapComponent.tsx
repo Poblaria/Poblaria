@@ -6,13 +6,14 @@ import "leaflet/dist/leaflet.css";
 import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
-import type { HousingDataWithImage, JobData } from "@/api/data";
 import roundIcon from "../utils/roundIcon";
+import type { HousingsResponse } from "@actions/housings/getHousings";
+import type { JobsResponse } from "@actions/jobs/getJobs";
 
 type MapComponentProps = {
     dataType: DataType;
-    housings: HousingDataWithImage[] | null;
-    jobs: JobData[] | null;
+    housings: HousingsResponse | null;
+    jobs: JobsResponse | null;
     error: string | null;
 };
 

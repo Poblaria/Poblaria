@@ -11,13 +11,14 @@ import {
 } from "@mui/material";
 import { HOUSES, JOBS } from "../data/Data";
 import type { DataType } from "./FilterBar";
-import type { HousingDataWithImage, JobData } from "@/api/data";
+import type { HousingsResponse } from "@actions/housings/getHousings";
+import type { JobsResponse } from "@actions/jobs/getJobs";
 
 type ListViewProps = {
     dataType: DataType;
     showFilters: boolean;
-    housings: HousingDataWithImage[] | null;
-    jobs: JobData[] | null;
+    housings: HousingsResponse | null;
+    jobs: JobsResponse | null;
     error: string | null;
 };
 
@@ -122,17 +123,17 @@ export default function ListView({
             {dataType === "houses" && (
                 <Box sx={{ p: 2 }} marginLeft={6} marginRight={6}>
                     <Grid container sx={{ width: "100%" }} spacing={3}>
-                        {[...HOUSES, ...(housings || [])].map((house) => (
+                        {[...HOUSES, ...(housings || [])].map((housing) => (
                             <Grid
-                                key={house.id}
+                                key={housing.id}
                                 size={{ xs: 12, sm: 6, md: 6 }}
                             >
                                 <Card sx={{ backgroundColor: "#F5F5F5" }}>
-                                    {house.image && (
+                                    {housing.image && (
                                         <CardMedia
                                             component="img"
-                                            image={house.image}
-                                            alt={house.title}
+                                            image={housing.image}
+                                            alt={housing.title}
                                             sx={{
                                                 height: 140,
                                                 objectFit: "cover"
@@ -144,7 +145,7 @@ export default function ListView({
                                             variant="h6"
                                             sx={{ fontWeight: "bold" }}
                                         >
-                                            {house.title}
+                                            {housing.title}
                                         </Typography>
                                         <Typography
                                             variant="body1"
@@ -153,14 +154,14 @@ export default function ListView({
                                                 fontWeight: "bold"
                                             }}
                                         >
-                                            {house.address}
+                                            {housing.address}
                                         </Typography>
 
                                         <Typography
                                             variant="body2"
                                             sx={{ marginBottom: 3 }}
                                         >
-                                            {house.description}
+                                            {housing.description}
                                         </Typography>
 
                                         <Typography
@@ -168,16 +169,16 @@ export default function ListView({
                                             color="textSecondary"
                                             sx={{ fontWeight: "bold" }}
                                         >
-                                            {house.price} €
+                                            {housing.price} €
                                         </Typography>
 
                                         <Typography
                                             variant="body2"
                                             color="textSecondary"
                                         >
-                                            {house.rooms} rooms ·{" "}
-                                            {house.bathrooms} bathrooms ·{" "}
-                                            {house.area}m²
+                                            {housing.rooms} rooms ·{" "}
+                                            {housing.bathrooms} bathrooms ·{" "}
+                                            {housing.area}m²
                                         </Typography>
                                     </CardContent>
                                     <CardActions>

@@ -1,5 +1,5 @@
 "use server";
-import type { InferRequestType } from "@tuyau/client";
+import type { InferRequestType, InferResponseType } from "@tuyau/client";
 import { tuyau } from "@lib/tuyau";
 
 export default async function register(
@@ -9,4 +9,4 @@ export default async function register(
     return { data, error: error?.value };
 }
 
-export type RegisterResponseData = Awaited<ReturnType<typeof register>>["data"];
+export type RegisterResponse = InferResponseType<typeof tuyau.register.$post>;

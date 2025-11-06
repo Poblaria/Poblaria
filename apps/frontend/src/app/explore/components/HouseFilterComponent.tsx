@@ -14,11 +14,15 @@ import {
     IconButton
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {
-    fetchHousingConditions,
-    fetchHousingOfferTypes,
-    fetchHousingTypes
-} from "@/api/api";
+import getHousingTypes, {
+    type HousingTypesResponse
+} from "@actions/housings/properties/getHousingTypes";
+import getHousingOfferTypes, {
+    type HousingOfferTypesResponse
+} from "@actions/housings/properties/getHousingOfferTypes";
+import getHousingConditions, {
+    type HousingConditionsResponse
+} from "@actions/housings/properties/getHousingConditions";
 
 type HousingFiltersFormProps = {
     onClose: () => unknown;
@@ -40,23 +44,22 @@ export default function HousingFiltersForm({
     housingFilters,
     onFilterChange
 }: HousingFiltersFormProps) {
-    const [types, setTypes] = useState<{ id: number; name: string }[]>([]);
-    const [offertTypes, setOffertTypes] = useState<
-        { id: number; name: string }[]
-    >([]);
-    const [conditions, setConditions] = useState<
-        { id: number; name: string }[]
-    >([]);
+    const [types, setTypes] = useState<HousingTypesResponse>([]);
+    const [offerTypes, setOfferTypes] = useState<HousingOfferTypesResponse>([]);
+    const [conditions, setConditions] = useState<HousingConditionsResponse>([]);
 
     useEffect(() => {
         void (async function fetchData() {
-            try {
-                setTypes(await fetchHousingTypes());
-                setOffertTypes(await fetchHousingOfferTypes());
-                setConditions(await fetchHousingConditions());
-            } catch {
-                // TODO: handle error
-            }
+            // TODO: Add error handling
+
+            const { data: types } = await getHousingTypes();
+            if (types) setTypes(types);
+
+            const { data: offerTypes } = await getHousingOfferTypes();
+            if (offerTypes) setOfferTypes(offerTypes);
+
+            const { data: conditions } = await getHousingConditions();
+            if (conditions) setConditions(conditions);
         })();
     }, []);
 
@@ -130,7 +133,7 @@ export default function HousingFiltersForm({
                             Housing Options
                         </Typography>
                         <FormGroup>
-                            {offertTypes.map((offerType) => (
+                            {offerTypes.map((offerType) => (
                                 <FormControlLabel
                                     key={offerType.id}
                                     control={
