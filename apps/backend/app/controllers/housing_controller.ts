@@ -6,10 +6,12 @@ import {
     patchHousingValidator
 } from "#validators/housing";
 import HousingImage from "#models/housing_image";
+import HousingDto from "#dto/housing";
 
 export default class HousingController {
     async index() {
-        return Housing.all();
+        const housings = await Housing.all();
+        return housings.map((housing) => new HousingDto(housing).toJson());
     }
 
     async store({ request, response }: HttpContext) {
@@ -20,11 +22,13 @@ export default class HousingController {
 
         const { image: _image, ...housing } = data;
 
-        return response.created(await Housing.create({ ...housing, imageId: image?.id }));
+        return response.created(
+            new HousingDto(await Housing.create({ ...housing, imageId: image?.id })).toJson()
+        );
     }
 
     async show({ params }: HttpContext) {
-        return Housing.findOrFail(params.id);
+        return new HousingDto(await Housing.findOrFail(params.id)).toJson();
     }
 
     async update({ params, request, response }: HttpContext) {
@@ -40,16 +44,16 @@ export default class HousingController {
             default:
                 return response.badRequest({ message: "Invalid method" });
         }
-        return housing.save();
+        return new HousingDto(await housing.save()).toJson();
     }
 
-    async destroy({ params }: HttpContext) {
+    async destroy({ params, response }: HttpContext) {
         const housing = await Housing.findOrFail(params.id);
         const image = await HousingImage.find(housing.imageId);
 
         if (image) await image.delete();
         await housing.delete();
 
-        return { message: "Housing successfully deleted" };
+        return response.noContent();
     }
 }
