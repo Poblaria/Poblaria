@@ -21,14 +21,14 @@ jobs:
             - name: Setup
               uses: ./.github/workflows/setup
               with:
-                  working-directory: ${{ matrix.project }}
+                  working-directory: apps/${{ matrix.project }}
 
             - name: Lint
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run lint
 
             - name: Check files format
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run format:check
 
     typecheck:
@@ -46,10 +46,10 @@ jobs:
             - name: Setup
               uses: ./.github/workflows/setup
               with:
-                  working-directory: ${{ matrix.project }}
+                  working-directory: apps/${{ matrix.project }}
 
             - name: Check types
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run typecheck
 
     test:
@@ -93,8 +93,8 @@ jobs:
             - name: Setup
               uses: ./.github/workflows/setup
               with:
-                  working-directory: ${{ matrix.project }}
+                  working-directory: apps/${{ matrix.project }}
 
             - name: Build project
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run build
