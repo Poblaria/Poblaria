@@ -1,8 +1,10 @@
 import { createTuyau } from "@tuyau/client";
 import { api } from "@poblaria/backend/api";
-import { API_BASE_URL } from "@/lib/env";
+
+if (!process.env.API_BASE_URL || typeof process.env.API_BASE_URL !== "string")
+    throw new TypeError("Invalid or missing API_BASE_URL environment variable");
 
 export const tuyau = createTuyau({
     api,
-    baseUrl: API_BASE_URL
+    baseUrl: process.env.API_BASE_URL
 });
