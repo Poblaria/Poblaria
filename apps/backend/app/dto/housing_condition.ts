@@ -6,7 +6,7 @@ export default class HousingConditionDto {
     toJson() {
         return {
             id: this.model.id,
-            name: this.model.name.toString()
+            name: this.model.name
         };
     }
 }

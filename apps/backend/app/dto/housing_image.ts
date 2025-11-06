@@ -6,7 +6,7 @@ export default class HousingImageDto {
     toJson() {
         return {
             id: this.model.id,
-            image: this.model.image
+            image: this.model.image.toString()
         };
     }
 }
