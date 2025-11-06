@@ -25,7 +25,9 @@ jobs:
 
             - name: Generate Tuyau
               working-directory: apps/backend
-              run: node ace tuyau:generate
+              run: |
+                cp .env.example .env
+                node ace tuyau:generate
 
             - name: Lint
               working-directory: apps/${{ matrix.project }}
@@ -54,7 +56,9 @@ jobs:
 
             - name: Generate Tuyau
               working-directory: apps/backend
-              run: node ace tuyau:generate
+              run: |
+                cp .env.example .env
+                node ace tuyau:generate
 
             - name: Check types
               working-directory: apps/${{ matrix.project }}
@@ -105,7 +109,9 @@ jobs:
 
             - name: Generate Tuyau
               working-directory: apps/backend
-              run: node ace tuyau:generate
+              run: |
+                cp .env.example .env
+                node ace tuyau:generate
 
             - name: Build project
               working-directory: apps/${{ matrix.project }}
