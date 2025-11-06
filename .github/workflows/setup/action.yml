@@ -18,3 +18,9 @@ runs:
             working-directory: ${{ inputs.working-directory }}
             run: npm ci
             shell: bash
+
+        - name: Initialize environment
+          if: ${{ inputs.working-directory == 'apps/backend' }}
+          run: |
+            cp .env.example .env
+            node ace generate:key
