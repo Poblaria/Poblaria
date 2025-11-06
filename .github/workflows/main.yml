@@ -16,12 +16,16 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
               uses: ./.github/workflows/setup
               with:
                   working-directory: apps/${{ matrix.project }}
+
+            - name: Generate Tuyau
+              working-directory: apps/backend
+              run: node ace tuyau:generate
 
             - name: Lint
               working-directory: apps/${{ matrix.project }}
@@ -41,12 +45,16 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
               uses: ./.github/workflows/setup
               with:
                   working-directory: apps/${{ matrix.project }}
+
+            - name: Generate Tuyau
+              working-directory: apps/backend
+              run: node ace tuyau:generate
 
             - name: Check types
               working-directory: apps/${{ matrix.project }}
@@ -58,16 +66,16 @@ jobs:
         needs: [lint, typecheck]
         defaults:
             run:
-                working-directory: backend
+                working-directory: apps/backend
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
               uses: ./.github/workflows/setup
               with:
-                  working-directory: backend
+                  working-directory: apps/backend
 
             - name: Initialize environment
               run: |
@@ -88,12 +96,16 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
               uses: ./.github/workflows/setup
               with:
                   working-directory: apps/${{ matrix.project }}
+
+            - name: Generate Tuyau
+              working-directory: apps/backend
+              run: node ace tuyau:generate
 
             - name: Build project
               working-directory: apps/${{ matrix.project }}

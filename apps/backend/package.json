@@ -9,7 +9,6 @@
         "build": "node ace build",
         "dev": "node ace serve --hmr",
         "test": "node ace test",
-        "tuyau:generate": "node ace tuyau:generate",
         "lint": "eslint --max-warnings=0 .",
         "lint:fix": "eslint --max-warnings=0 --fix .",
         "format": "prettier --write .",
