@@ -21,6 +21,7 @@ runs:
 
         - name: Initialize environment
           if: ${{ inputs.working-directory == 'apps/backend' }}
+          working-directory: ${{ inputs.working-directory }}
           shell: bash
           run: |
             cp .env.example .env
