@@ -1,3 +1,4 @@
+"use server";
 import { tuyau } from "@lib/tuyau";
 import { InferResponseType } from "@tuyau/client";
 
