@@ -6,7 +6,10 @@ import "leaflet/dist/leaflet.css";
 import { Box, Button, Typography } from "@mui/material";
 import type { DataType } from "./FilterBar";
 import { HOUSES, JOBS } from "../data/Data";
-import roundIcon from "../utils/roundIcon";
+import { pinIcon } from "../utils/pinIcon";
+import MarkerClusterGroup from "react-leaflet-markercluster";
+import { createClusterIcon } from "../utils/clusterMarker";
+import "leaflet-extra-markers";
 import type { HousingsResponse } from "@actions/housings/getHousings";
 import type { JobsResponse } from "@actions/jobs/getJobs";
 
@@ -41,15 +44,13 @@ function ZoomListener({
     return null;
 }
 
-const sizeForZoom = (z: number) => (z >= 18 ? 28 : z >= 16 ? 22 : 18);
-
 export default function MapComponent({
     dataType,
     housings,
     jobs,
     error
 }: MapComponentProps) {
-    const [currentZoom, setCurrentZoom] = useState(16);
+    const [currentZoom, setCurrentZoom] = useState(8);
 
     if (error) return <div>Error: {error}</div>;
     if (dataType === "houses" && !housings && !HOUSES.length)
@@ -57,56 +58,134 @@ export default function MapComponent({
     if (dataType === "jobs" && !jobs && !JOBS.length)
         return <div>Loading jobs...</div>;
 
-    const COLORS = {
-        job: "#D22B2B",
-        house: "#1434A4"
-    } as const;
-
-    const dotSize = sizeForZoom(currentZoom);
-
     return (
-        <Box height="100%" sx={{ display: "flex", flexDirection: "column" }}>
+        <Box
+            height="100%"
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+                paddingBottom: "60px"
+            }}
+        >
             {/* Map Container */}
             <MapContainer
                 center={[41.82, 1.867]}
-                zoom={8}
+                zoom={currentZoom}
                 scrollWheelZoom
                 style={{ height: "calc(100vh - 120px)", width: "100%" }}
             >
-                <ZoomListener onZoomChange={setCurrentZoom} />
+                <ZoomListener
+                    onZoomChange={(value) => {
+                        setCurrentZoom(value);
+                    }}
+                />
                 <TileLayer
                     attribution='&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                     url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                     subdomains={["a", "b", "c", "d"]}
                 />
-                {/* Markers for Jobs */}
-                {dataType === "jobs" /* currentZoom >= 17 && */ &&
-                    [...JOBS, ...(jobs || [])].map((job) => {
-                        if (!job.latitude || !job.longitude) return null;
+                <MarkerClusterGroup
+                    chunkedLoading
+                    maxClusterRadius={45}
+                    spiderfyOnEveryZoom={false}
+                    showCoverageOnHover={false}
+                    iconCreateFunction={createClusterIcon}
+                >
+                    {/* Markers for Jobs */}
+                    {dataType === "jobs" &&
+                        [...JOBS, ...(jobs || [])].map((job) => {
+                            if (!job.latitude || !job.longitude) return null;
 
-                        return (
+                            return (
+                                <Marker
+                                    key={`job-${job.id}`}
+                                    position={[job.latitude, job.longitude]}
+                                    icon={pinIcon({
+                                        icon: "fa-briefcase",
+                                        prefix: "fa",
+                                        color: "red",
+                                        iconColor: "white"
+                                    })}
+                                >
+                                    <Popup>
+                                        <Box sx={{ minWidth: 250 }}>
+                                            <Typography
+                                                variant="h6"
+                                                sx={{ fontWeight: "bold" }}
+                                            >
+                                                {job.title}
+                                            </Typography>
+                                            <Typography variant="body1">
+                                                {job.address}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                color="text.secondary"
+                                                sx={{ fontWeight: "bold" }}
+                                            >
+                                                {job.salary} €
+                                            </Typography>
+                                            <Button
+                                                variant="contained"
+                                                sx={{
+                                                    mt: 2,
+                                                    backgroundColor: "#5E7749"
+                                                }}
+                                            >
+                                                View Details
+                                            </Button>
+                                        </Box>
+                                    </Popup>
+                                </Marker>
+                            );
+                        })}
+
+                    {/* Markers for Houses */}
+                    {dataType === "houses" /* currentZoom >= 17 && */ &&
+                        [...HOUSES, ...(housings || [])].map((house) => (
                             <Marker
-                                key={`job-${job.id}`}
-                                position={[job.latitude, job.longitude]}
-                                icon={roundIcon(COLORS.job, dotSize)}
+                                key={`house-${house.id}`}
+                                position={[house.latitude, house.longitude]}
+                                icon={pinIcon({
+                                    icon: "fa-home",
+                                    prefix: "fa",
+                                    color: "blue-dark",
+                                    iconColor: "white"
+                                })}
                             >
                                 <Popup>
-                                    <Box sx={{ minWidth: 250 }}>
+                                    <Box
+                                        sx={{ minWidth: 250, maxWidth: "100%" }}
+                                    >
+                                        {house.image && (
+                                            <Image
+                                                src={house.image}
+                                                alt={house.title}
+                                                width={250}
+                                                height={150}
+                                                style={{
+                                                    width: "100%",
+                                                    height: "auto",
+                                                    borderRadius: 6,
+                                                    maxWidth: "100%" // Ensure image scales properly on smaller screens
+                                                }}
+                                            />
+                                        )}
                                         <Typography
                                             variant="h6"
                                             sx={{ fontWeight: "bold" }}
                                         >
-                                            {job.title}
+                                            {house.title}{" "}
                                         </Typography>
                                         <Typography variant="body1">
-                                            {job.address}
+                                            {house.address}{" "}
                                         </Typography>
                                         <Typography
                                             variant="body2"
-                                            color="text.secondary"
+                                            color="textSecondary"
                                             sx={{ fontWeight: "bold" }}
                                         >
-                                            {job.salary} €
+                                            {house.price} €
                                         </Typography>
                                         <Button
                                             variant="contained"
@@ -120,61 +199,8 @@ export default function MapComponent({
                                     </Box>
                                 </Popup>
                             </Marker>
-                        );
-                    })}
-
-                {/* Markers for Houses */}
-                {dataType === "houses" /* currentZoom >= 17 && */ &&
-                    [...HOUSES, ...(housings || [])].map((house) => (
-                        <Marker
-                            key={`house-${house.id}`}
-                            position={[house.latitude, house.longitude]}
-                            icon={roundIcon(COLORS.house, dotSize)}
-                        >
-                            <Popup>
-                                <Box sx={{ minWidth: 250 }}>
-                                    {house.image && (
-                                        <Image
-                                            src={house.image}
-                                            alt={house.title}
-                                            width={250}
-                                            height={150}
-                                            style={{
-                                                width: "100%",
-                                                height: "auto",
-                                                borderRadius: 6
-                                            }}
-                                        />
-                                    )}
-                                    <Typography
-                                        variant="h6"
-                                        sx={{ fontWeight: "bold" }}
-                                    >
-                                        {house.title}{" "}
-                                    </Typography>
-                                    <Typography variant="body1">
-                                        {house.address}{" "}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        sx={{ fontWeight: "bold" }}
-                                    >
-                                        {house.price} €
-                                    </Typography>
-                                    <Button
-                                        variant="contained"
-                                        sx={{
-                                            mt: 2,
-                                            backgroundColor: "#5E7749"
-                                        }}
-                                    >
-                                        View Details
-                                    </Button>
-                                </Box>
-                            </Popup>
-                        </Marker>
-                    ))}
+                        ))}
+                </MarkerClusterGroup>
             </MapContainer>
         </Box>
     );
