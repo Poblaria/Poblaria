@@ -20,12 +20,6 @@ jobs:
 
             - name: Setup
               uses: ./.github/workflows/setup
-              with:
-                  working-directory: apps/${{ matrix.project }}
-
-            - name: Generate Tuyau
-              working-directory: apps/backend
-              run: node ace tuyau:generate
 
             - name: Lint
               working-directory: apps/${{ matrix.project }}
@@ -49,12 +43,6 @@ jobs:
 
             - name: Setup
               uses: ./.github/workflows/setup
-              with:
-                  working-directory: apps/${{ matrix.project }}
-
-            - name: Generate Tuyau
-              working-directory: apps/backend
-              run: node ace tuyau:generate
 
             - name: Check types
               working-directory: apps/${{ matrix.project }}
@@ -74,8 +62,6 @@ jobs:
 
             - name: Setup
               uses: ./.github/workflows/setup
-              with:
-                  working-directory: apps/backend
 
             - name: Run tests
               run: npm test
@@ -95,12 +81,6 @@ jobs:
 
             - name: Setup
               uses: ./.github/workflows/setup
-              with:
-                  working-directory: apps/${{ matrix.project }}
-
-            - name: Generate Tuyau
-              working-directory: apps/backend
-              run: node ace tuyau:generate
 
             - name: Build project
               working-directory: apps/${{ matrix.project }}

@@ -1,27 +1,25 @@
 ---
 name: Setup workflow job
 
-inputs:
-    working-directory:
-        description: "The working directory where the Node project is located"
-        required: true
-
 runs:
     using: "composite"
     steps:
-        -   name: Setup Node
-            uses: actions/setup-node@v6
-            with:
-                node-version: lts/jod
+        - name: Setup Node
+          uses: actions/setup-node@v6
+          with:
+              node-version: lts/jod
 
-        -   name: Install dependencies
-            working-directory: ${{ inputs.working-directory }}
-            run: npm ci
-            shell: bash
+        - name: Install dependencies
+          shell: bash
+          run: npm ci
 
-        - name: Initialize environment
+        - name: Initialize backend environment
           working-directory: apps/backend
           shell: bash
           run: |
             cp .env.example .env
             node ace generate:key
+
+        - name: Generate Tuyau
+          working-directory: apps/backend
+          run: node ace tuyau:generate
