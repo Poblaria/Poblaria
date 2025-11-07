@@ -22,4 +22,5 @@ runs:
 
         - name: Generate Tuyau
           working-directory: apps/backend
+          shell: bash
           run: node ace tuyau:generate
