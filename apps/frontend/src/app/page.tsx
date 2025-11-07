@@ -15,7 +15,6 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import React from "react";
 
 export default function Home() {
     const { t } = useTranslation();
