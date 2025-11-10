@@ -7,6 +7,7 @@ import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
 import FilterBar, { DataType } from "./components/FilterBar";
 import { fetchHousings, fetchJobs } from "@/api/api";
 import { HousingDataWithImage, JobData } from "@/api/data";
+import FloatingViewToggle from "./components/FloatingViewToggle";
 
 const MapComponent = dynamic(() => import("./components/MapComponent"), {
     ssr: false,
@@ -31,6 +32,8 @@ export default function Explore() {
     const [allJobs, setAllJobs] = useState<JobData[]>([]);
     const [jobs, setJobs] = useState<JobData[] | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [dataType, setDataType] = useState<DataType>("jobs");
+    const [showFilters, setShowFilters] = useState(false);
 
     const handleViewMode = (
         _event: MouseEvent<HTMLElement>,
@@ -38,9 +41,6 @@ export default function Explore() {
     ) => {
         if (newMode !== null) setViewMode(newMode);
     };
-
-    const [dataType, setDataType] = useState<DataType>("jobs");
-    const [showFilters, setShowFilters] = useState(false);
 
     const [jobFilters, setJobFilters] = useState({
         jobIndustry: [] as number[],
@@ -184,50 +184,10 @@ export default function Explore() {
                             error={error}
                         />
                     )}
-
-                    <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 bg-white">
-                        <ToggleButtonGroup
-                            value={viewMode}
-                            exclusive
-                            onChange={handleViewMode}
-                            aria-label="map or list"
-                        >
-                            <ToggleButton
-                                value="map"
-                                aria-label="map view"
-                                sx={{
-                                    "&.Mui-selected": {
-                                        "backgroundColor": "#83A16C",
-                                        "color": "white",
-                                        "&hover": {
-                                            backgroundColor: "#83A16C"
-                                        }
-                                    },
-                                    "color": "black"
-                                }}
-                            >
-                                <MapIcon fontSize="small" />
-                                &nbsp;Map
-                            </ToggleButton>
-                            <ToggleButton
-                                value="list"
-                                aria-label="list view"
-                                sx={{
-                                    "&.Mui-selected": {
-                                        "backgroundColor": "#83A16C",
-                                        "color": "white",
-                                        "&hover": {
-                                            backgroundColor: "#83A16C"
-                                        }
-                                    },
-                                    "color": "black"
-                                }}
-                            >
-                                <ListIcon fontSize="small" />
-                                &nbsp;List
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
+                    <FloatingViewToggle 
+                        viewMode={viewMode}
+                        onToogle={() => setViewMode((m) => (m === "map" ? "list" : "map"))}
+                    />
                 </Box>
             </Box>
         </main>
