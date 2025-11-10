@@ -1,6 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useState, type MouseEvent } from "react";
+import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
 
 import FilterBar, { DataType } from "./components/FilterBar";
