@@ -1,9 +1,8 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useEffect, useState, type MouseEvent } from "react";
-import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Box } from "@mui/material";
 
-import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
 import FilterBar, { DataType } from "./components/FilterBar";
 import { fetchHousings, fetchJobs } from "@/api/api";
 import { HousingDataWithImage, JobData } from "@/api/data";
@@ -34,13 +33,6 @@ export default function Explore() {
     const [error, setError] = useState<string | null>(null);
     const [dataType, setDataType] = useState<DataType>("jobs");
     const [showFilters, setShowFilters] = useState(false);
-
-    const handleViewMode = (
-        _event: MouseEvent<HTMLElement>,
-        newMode: "map" | "list" | null
-    ) => {
-        if (newMode !== null) setViewMode(newMode);
-    };
 
     const [jobFilters, setJobFilters] = useState({
         jobIndustry: [] as number[],
@@ -184,9 +176,11 @@ export default function Explore() {
                             error={error}
                         />
                     )}
-                    <FloatingViewToggle 
+                    <FloatingViewToggle
                         viewMode={viewMode}
-                        onToogle={() => setViewMode((m) => (m === "map" ? "list" : "map"))}
+                        onToogle={() =>
+                            setViewMode((m) => (m === "map" ? "list" : "map"))
+                        }
                     />
                 </Box>
             </Box>
