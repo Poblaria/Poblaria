@@ -1,10 +1,9 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useState, type MouseEvent } from "react";
-import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
-
-import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
+import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
 import FilterBar, { DataType } from "./components/FilterBar";
+import FloatingViewToggle from "./components/FloatingViewToggle";
 import getHousings, {
     type HousingsResponse
 } from "@actions/housings/getHousings";
@@ -31,14 +30,6 @@ export default function Explore() {
     const [allJobs, setAllJobs] = useState<JobsResponse>([]);
     const [jobs, setJobs] = useState<JobsResponse | null>(null);
     const [error, setError] = useState<string | null>(null);
-
-    const handleViewMode = (
-        _event: MouseEvent<HTMLElement>,
-        newMode: "map" | "list" | null
-    ) => {
-        if (newMode !== null) setViewMode(newMode);
-    };
-
     const [dataType, setDataType] = useState<DataType>("jobs");
     const [showFilters, setShowFilters] = useState(false);
 
@@ -188,50 +179,12 @@ export default function Explore() {
                             error={error}
                         />
                     )}
-
-                    <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 bg-white">
-                        <ToggleButtonGroup
-                            value={viewMode}
-                            exclusive
-                            onChange={handleViewMode}
-                            aria-label="map or list"
-                        >
-                            <ToggleButton
-                                value="map"
-                                aria-label="map view"
-                                sx={{
-                                    "&.Mui-selected": {
-                                        "backgroundColor": "#83A16C",
-                                        "color": "white",
-                                        "&hover": {
-                                            backgroundColor: "#83A16C"
-                                        }
-                                    },
-                                    "color": "black"
-                                }}
-                            >
-                                <MapIcon fontSize="small" />
-                                &nbsp;Map
-                            </ToggleButton>
-                            <ToggleButton
-                                value="list"
-                                aria-label="list view"
-                                sx={{
-                                    "&.Mui-selected": {
-                                        "backgroundColor": "#83A16C",
-                                        "color": "white",
-                                        "&hover": {
-                                            backgroundColor: "#83A16C"
-                                        }
-                                    },
-                                    "color": "black"
-                                }}
-                            >
-                                <ListIcon fontSize="small" />
-                                &nbsp;List
-                            </ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
+                    <FloatingViewToggle
+                        viewMode={viewMode}
+                        onToogle={() =>
+                            setViewMode((m) => (m === "map" ? "list" : "map"))
+                        }
+                    />
                 </Box>
             </Box>
         </main>
