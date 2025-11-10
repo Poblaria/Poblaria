@@ -17,7 +17,6 @@ type MapComponentProps = {
     housings: HousingDataWithImage[] | null;
     jobs: JobData[] | null;
     error: string | null;
-    
 };
 
 function ZoomListener({

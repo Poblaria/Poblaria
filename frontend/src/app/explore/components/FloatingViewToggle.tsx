@@ -17,19 +17,19 @@ export default function FloatingViewToggle({ viewMode, onToogle }: Props) {
                     aria-label={isMap ? "show list" : "show map"}
                     onClick={onToogle}
                     sx={{
-                        width: 56,
-                        height: 56,
-                        bgcolor: "white",
-                        border: "2px solid #83A16C",
-                        boxShadow: "0 6px 18px rgba(0,0,0,0.18)",
+                        "width": 56,
+                        "height": 56,
+                        "bgcolor": "white",
+                        "border": "2px solid #83A16C",
+                        "boxShadow": "0 6px 18px rgba(0,0,0,0.18)",
                         "&:hover": { bgcolor: "#f7f7f7" }
                     }}
-                    >
-                        {isMap ? (
-                            <ListItemIcon sx={{ color: "#83A16C" }} />
-                        ) : (
-                            <MapIcon sx={{ color: "#83A16C" }} />
-                        )}
+                >
+                    {isMap ? (
+                        <ListItemIcon sx={{ color: "#83A16C" }} />
+                    ) : (
+                        <MapIcon sx={{ color: "#83A16C" }} />
+                    )}
                 </IconButton>
             </Tooltip>
         </div>
