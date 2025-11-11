@@ -1,13 +1,19 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useState, type MouseEvent } from "react";
-import { Box, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { useEffect, useState } from "react";
+import { Box, IconButton } from "@mui/material";
+import {
+    Map as MapIcon,
+    List as ListIcon,
+    ChevronLeft,
+    ChevronRight
+} from "@mui/icons-material";
 
-import { Map as MapIcon, List as ListIcon } from "@mui/icons-material";
 import FilterBar, { DataType } from "./components/FilterBar";
 import { fetchHousings, fetchJobs } from "@/api/api";
 import { HousingDataWithImage, JobData } from "@/api/data";
 import FloatingViewToggle from "./components/FloatingViewToggle";
+import SplitMapToggle from "./components/SplitMapToggle";
 
 const MapComponent = dynamic(() => import("./components/MapComponent"), {
     ssr: false,
@@ -15,7 +21,6 @@ const MapComponent = dynamic(() => import("./components/MapComponent"), {
         <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
     )
 });
-
 const ListView = dynamic(() => import("./components/ListingComponent"), {
     ssr: false,
     loading: () => (
@@ -25,6 +30,8 @@ const ListView = dynamic(() => import("./components/ListingComponent"), {
 
 export default function Explore() {
     const [viewMode, setViewMode] = useState<"map" | "list">("map");
+    const [splitMap, setSplitMap] = useState(false);
+
     const [allHousings, setAllHousings] = useState<HousingDataWithImage[]>([]);
     const [housings, setHousings] = useState<HousingDataWithImage[] | null>(
         null
@@ -39,7 +46,6 @@ export default function Explore() {
         jobIndustry: [] as number[],
         jobType: [] as number[]
     });
-
     const [housingFilters, setHousingFilters] = useState({
         type: [] as number[],
         offerType: [] as number[],
@@ -59,7 +65,6 @@ export default function Explore() {
                 : [...prev[category], value]
         }));
     };
-
     const handleJobFilter = () => {
         setJobs(
             allJobs.filter((job) =>
@@ -87,7 +92,6 @@ export default function Explore() {
                 : [...prev[category], value]
         }));
     };
-
     const handleHousingFilter = () => {
         setHousings(
             allHousings.filter((housing) =>
@@ -111,22 +115,21 @@ export default function Explore() {
         void (async () => {
             try {
                 if (dataType === "houses") {
-                    const housings = await fetchHousings();
-                    setAllHousings(housings);
-                    setHousings(housings);
+                    const hs = await fetchHousings();
+                    setAllHousings(hs);
+                    setHousings(hs);
                 } else {
-                    const jobs = await fetchJobs();
-                    setAllJobs(jobs);
-                    setJobs(jobs);
+                    const js = await fetchJobs();
+                    setAllJobs(js);
+                    setJobs(js);
                 }
             } catch (error) {
                 setError(
-                    // TODO: abstract
                     error &&
                         typeof error === "object" &&
                         "message" in error &&
-                        typeof error.message === "string"
-                        ? error.message
+                        typeof (error as any).message === "string"
+                        ? (error as any).message
                         : "An unknown error has occurred."
                 );
             }
@@ -145,21 +148,17 @@ export default function Explore() {
                     onOptionChange={setDataType}
                     showFilters={showFilters}
                     toggleShowFilters={toggleShowFilters}
-                    onFilter={() => {
-                        switch (dataType) {
-                            case "jobs":
-                                handleJobFilter();
-                                break;
-                            case "houses":
-                                handleHousingFilter();
-                                break;
-                        }
-                    }}
+                    onFilter={() =>
+                        dataType === "jobs"
+                            ? handleJobFilter()
+                            : handleHousingFilter()
+                    }
                     jobFilters={jobFilters}
                     housingFilters={housingFilters}
                     handleJobFilterChange={handleJobFilterChange}
                     handleHousingFilterChange={handleHousingFilterChange}
                 />
+
                 <Box className="w-full h-full relative">
                     {viewMode === "map" ? (
                         <MapComponent
@@ -173,15 +172,18 @@ export default function Explore() {
                             sx={{
                                 height: "calc(100vh - 160px)",
                                 display: "grid",
-                                gridTemplateColumns: {
-                                    xs: "1fr",
-                                    md: "1fr 1fr"
-                                },
+                                gridTemplateColumns: splitMap
+                                    ? { xs: "1fr", md: "1fr 1fr" }
+                                    : "1fr",
+                                gridTemplateRows: splitMap
+                                    ? { xs: "1fr 1fr", md: "1fr" }
+                                    : "1fr",
                                 gap: 0,
                                 borderRadius: 1,
                                 overflow: "hidden"
                             }}
                         >
+                            {/* list */}
                             <Box
                                 sx={{
                                     overflow: "auto",
@@ -197,16 +199,56 @@ export default function Explore() {
                                     error={error}
                                 />
                             </Box>
-                            <Box sx={{ position: "relative", minHeight: 300 }}>
-                                <MapComponent
-                                    dataType={dataType}
-                                    housings={housings}
-                                    jobs={jobs}
-                                    error={error}
-                                />
-                            </Box>
+
+                            {/* Map (only when splitMap is true) */}
+                            {splitMap && (
+                                <Box
+                                    sx={{
+                                        position: "relative",
+                                        minHeight: 300
+                                    }}
+                                >
+                                    {/* Little arrow button in the top-right to close/open the map */}
+                                    <IconButton
+                                        aria-label="Hide map"
+                                        onClick={() => setSplitMap(false)}
+                                        sx={{
+                                            "position": "absolute",
+                                            "top": 8,
+                                            "right": 8,
+                                            "zIndex": (t) =>
+                                                t.zIndex.tooltip + 1,
+                                            "bgcolor": "rgba(255,255,255,0.9)",
+                                            "border": "1px solid #DCDCDC",
+                                            "boxShadow":
+                                                "0 4px 10px rgba(0,0,0,0.12)",
+                                            "&:hover": { bgcolor: "white" }
+                                        }}
+                                    >
+                                        <ChevronRight />{" "}
+                                        {/* points toward list when closing */}
+                                    </IconButton>
+
+                                    <MapComponent
+                                        dataType={dataType}
+                                        housings={housings}
+                                        jobs={jobs}
+                                        error={error}
+                                    />
+                                </Box>
+                            )}
                         </Box>
                     )}
+
+                    {/* When map is hidden in list view, shows a tiny arrow in the top-right to open it */}
+                    {viewMode === "list" && !splitMap && (
+                        <SplitMapToggle
+                            splitMap={splitMap}
+                            onToggle={() => setSplitMap((prev) => !prev)}
+                        />
+                    )}
+
+                    {/* Bottom-right switch (map <-> list) */}
                     <FloatingViewToggle
                         viewMode={viewMode}
                         onToogle={() =>
