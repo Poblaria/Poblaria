@@ -64,14 +64,14 @@ export default function Explore() {
     const handleJobFilter = () => {
         setJobs(
             allJobs.filter((job: { typeId: number; industryId: number }) =>
-            [
-                jobFilters.jobType.length
-                ? jobFilters.jobType.includes(job.typeId)
-                : true,
-                jobFilters.jobIndustry.length
-                ? jobFilters.jobIndustry.includes(job.industryId)
-                : true
-            ].every(Boolean)
+                [
+                    jobFilters.jobType.length
+                        ? jobFilters.jobType.includes(job.typeId)
+                        : true,
+                    jobFilters.jobIndustry.length
+                        ? jobFilters.jobIndustry.includes(job.industryId)
+                        : true
+                ].every(Boolean)
             )
         );
         setShowFilters(false);
