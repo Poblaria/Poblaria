@@ -11,7 +11,7 @@ export default function FloatingViewToggle({ viewMode, onToogle }: Props) {
     const isMap = viewMode === "map";
 
     return (
-        <div className="fixed bottom-5 right-5 md:bottom-7 md:right-7 z-[9999]">
+        <div className="fixed bottom-5 right-5 md:bottom-7 md:right-7 z-9999">
             <Tooltip title={isMap ? "Show list" : "Show map"} placement="right">
                 <IconButton
                     aria-label={isMap ? "show list" : "show map"}
