@@ -35,13 +35,6 @@ export default function Explore() {
     const [dataType, setDataType] = useState<DataType>("jobs");
     const [showFilters, setShowFilters] = useState(false);
 
-    const handleViewMode = (
-        _event: MouseEvent<HTMLElement>,
-        newMode: "map" | "list" | null
-    ) => {
-        if (newMode !== null) setViewMode(newMode);
-    };
-
     const [jobFilters, setJobFilters] = useState({
         jobIndustry: [] as number[],
         jobType: [] as number[]
@@ -176,17 +169,49 @@ export default function Explore() {
                             error={error}
                         />
                     ) : (
-                        <ListView
-                            dataType={dataType}
-                            showFilters={showFilters}
-                            housings={housings}
-                            jobs={jobs}
-                            error={error}
-                        />
+                        <Box
+                            sx={{
+                                height: "calc(100vh - 160px)",
+                                display: "grid",
+                                gridTemplateColumns: {
+                                    xs: "1fr",
+                                    md: "1fr 1fr"
+                                },
+                                gap: 0,
+                                borderRadius: 1,
+                                overflow: "hidden"
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    overflow: "auto",
+                                    px: { xs: 2, md: 3 },
+                                    py: 2
+                                }}
+                            >
+                                <ListView
+                                    dataType={dataType}
+                                    showFilters={showFilters}
+                                    housings={housings}
+                                    jobs={jobs}
+                                    error={error}
+                                />
+                            </Box>
+                            <Box sx={{ position: "relative", minHeight: 300 }}>
+                                <MapComponent
+                                    dataType={dataType}
+                                    housings={housings}
+                                    jobs={jobs}
+                                    error={error}
+                                />
+                            </Box>
+                        </Box>
                     )}
-                    <FloatingViewToggle 
+                    <FloatingViewToggle
                         viewMode={viewMode}
-                        onToogle={() => setViewMode((m) => (m === "map" ? "list" : "map"))}
+                        onToogle={() =>
+                            setViewMode((m) => (m === "map" ? "list" : "map"))
+                        }
                     />
                 </Box>
             </Box>

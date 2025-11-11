@@ -59,11 +59,11 @@ export default function MapComponent({
 
     return (
         <Box
-            height="100%"
             sx={{
                 display: "flex",
                 flexDirection: "column",
-                paddingBottom: "60px"
+                paddingBottom: "60px",
+                minHeight: 0
             }}
         >
             {/* Map Container */}
