@@ -1,0 +1,26 @@
+---
+name: Setup workflow job
+
+runs:
+    using: "composite"
+    steps:
+        - name: Setup Node
+          uses: actions/setup-node@v6
+          with:
+              node-version: lts/jod
+
+        - name: Install dependencies
+          shell: bash
+          run: npm ci
+
+        - name: Initialize backend environment
+          working-directory: apps/backend
+          shell: bash
+          run: |
+            cp .env.example .env
+            node ace generate:key
+
+        - name: Generate Tuyau
+          working-directory: apps/backend
+          shell: bash
+          run: node ace tuyau:generate

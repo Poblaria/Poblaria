@@ -16,19 +16,17 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: ${{ matrix.project }}
+              uses: ./.github/actions/setup
 
             - name: Lint
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run lint
 
             - name: Check files format
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run format:check
 
     typecheck:
@@ -41,15 +39,13 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: ${{ matrix.project }}
+              uses: ./.github/actions/setup
 
             - name: Check types
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run typecheck
 
     test:
@@ -58,21 +54,14 @@ jobs:
         needs: [lint, typecheck]
         defaults:
             run:
-                working-directory: backend
+                working-directory: apps/backend
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: backend
-
-            - name: Initialize environment
-              run: |
-                cp .env.example .env
-                node ace generate:key
+              uses: ./.github/actions/setup
 
             - name: Run tests
               run: npm test
@@ -88,13 +77,11 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: actions/checkout@v5
 
             - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: ${{ matrix.project }}
+              uses: ./.github/actions/setup
 
             - name: Build project
-              working-directory: ${{ matrix.project }}
+              working-directory: apps/${{ matrix.project }}
               run: npm run build
