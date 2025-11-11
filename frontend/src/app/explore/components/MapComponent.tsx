@@ -59,7 +59,6 @@ export default function MapComponent({
 
     return (
         <Box
-
             sx={{
                 display: "flex",
                 flexDirection: "column",

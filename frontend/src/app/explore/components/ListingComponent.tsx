@@ -122,7 +122,8 @@ export default function ListView({
                                                 "&:hover": {
                                                     backgroundColor: "#83A16C",
                                                     borderColor: "#83A16C",
-                                                    boxShadow: "0px 5px 12px rgba(0, 0, 0, 0.18)"
+                                                    boxShadow:
+                                                        "0px 5px 12px rgba(0, 0, 0, 0.18)"
                                                 }
                                             }}
                                         >
