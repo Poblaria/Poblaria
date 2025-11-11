@@ -3,8 +3,5 @@
     "type": "module",
     "workspaces": [
         "apps/*"
-    ],
-    "dependencies": {
-        "@poblaria/backend": "^0.0.0"
-    }
+    ]
 }
