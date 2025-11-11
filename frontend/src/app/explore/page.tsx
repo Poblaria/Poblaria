@@ -2,12 +2,7 @@
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import { Box, IconButton } from "@mui/material";
-import {
-    Map as MapIcon,
-    List as ListIcon,
-    ChevronLeft,
-    ChevronRight
-} from "@mui/icons-material";
+import ChevronRight from "@mui/icons-material/ChevronRight";
 
 import FilterBar, { DataType } from "./components/FilterBar";
 import { fetchHousings, fetchJobs } from "@/api/api";
@@ -123,15 +118,12 @@ export default function Explore() {
                     setAllJobs(js);
                     setJobs(js);
                 }
-            } catch (error) {
-                setError(
-                    error &&
-                        typeof error === "object" &&
-                        "message" in error &&
-                        typeof (error as any).message === "string"
-                        ? (error as any).message
-                        : "An unknown error has occurred."
-                );
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error
+                        ? err.message
+                        : "An unknown error has occurred.";
+                setError(errorMessage);
             }
         })();
     }, [dataType]);

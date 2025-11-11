@@ -1,5 +1,5 @@
 "use client";
-import { IconButton, List, Tooltip } from "@mui/material";
+import { IconButton, Tooltip } from "@mui/material";
 import { Map as MapIcon, List as ListItemIcon } from "@mui/icons-material";
 
 type Props = {
