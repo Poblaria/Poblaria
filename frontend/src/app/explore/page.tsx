@@ -197,6 +197,7 @@ export default function Explore() {
                                     housings={housings}
                                     jobs={jobs}
                                     error={error}
+                                    splitView={true}
                                 />
                             </Box>
 
