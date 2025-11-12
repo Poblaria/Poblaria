@@ -99,9 +99,7 @@ However, it's recommended to do that to avoid exposing sensitive information abo
 
 ## 🐳 Docker
 
-There's a `docker-compose.yml` file available in the root of the monorepo. It allows to run the backend, the related database<sup>1</sup> (**PostgreSQL**) and the frontend using Docker services.
-
-> <sup>1</sup> In the future, the frontend will also be added to the **Docker** setup.
+There's a `docker-compose.yml` file available in the root of the monorepo. It allows to run the backend, the related database (**PostgreSQL**) and the frontend using Docker services.
 
 ### 🛠️ Usage
 
