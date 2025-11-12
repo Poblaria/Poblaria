@@ -21,20 +21,14 @@ Moreover, it allows to manage dependencies and scripts in a centralized way, and
 
 ## 🔌 API Communication
 
-To communicate between the frontend (**Next.js**) and the backend (**AdonisJS**), we use **Tuyau**, an **AdonisJS** plugin that provides a type-safe API client, automatically generated<sup>1</sup> from the backend routes and types.
+To communicate between the frontend (**Next.js**) and the backend (**AdonisJS**), we use **Tuyau**, an **AdonisJS** plugin that provides a type-safe API client, automatically generated from the backend routes and types.
 
 In the frontend, there's a file containing the **Tuyau** configuration: `apps/frontend/src/lib/tuyau.ts`.\
 It exports a pre-configured **Tuyau** client that can be used throughout the frontend application to make API requests to the backend.\
 This `tuyau` client can be used to call the API with routes auto-completed and type-checked, and it automatically adds the authentication token to the requests when available and calls the API with the URL defined in the environment variables.\
-However, when making API calls in the frontend, it's better to use server actions (`apps/frontend/src/app/actions/`) to handle the requests on the server side, instead of calling the API directly from React components<sup>2</sup> (normally, there's an action for each API endpoint pre-written by the backend developers).
+However, when making API calls in the frontend, it's better to use server actions (`apps/frontend/src/app/actions/`) to handle the requests on the server side, instead of calling the API directly from React components<sup>1</sup> (normally, there's an action for each API endpoint pre-written by the backend developers).
 
-> <sup>1</sup> To generate the **Tuyau** files in the backend, run the following command in the `apps/backend` folder:
-> ```bash
-> node ace tuyau:generate
-> ```
-> This will create/update the necessary files in `apps/backend/.adonisjs/`, and the frontend will automatically use the updated files thanks to the monorepo structure.
-
-> <sup>2</sup> Given that the cookie used for authentication is HTTP-only, it's not accessible from the browser JavaScript, so API calls requiring authentication must be made from the server side. And in general, even for non-authenticated requests, it's better to handle them on the server side to avoid exposing sensitive logic in the frontend and to have a consistent way of handling API calls.
+> <sup>1</sup> Given that the cookie used for authentication is HTTP-only, it's not accessible from the browser JavaScript, so API calls requiring authentication must be made from the server side. And in general, even for non-authenticated requests, it's better to handle them on the server side to avoid exposing sensitive logic in the frontend and to have a consistent way of handling API calls.
 
 ### ℹ️ Example
 

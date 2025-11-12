@@ -19,8 +19,3 @@ runs:
           run: |
             cp .env.example .env
             node ace generate:key
-
-        - name: Generate Tuyau
-          working-directory: apps/backend
-          shell: bash
-          run: node ace tuyau:generate

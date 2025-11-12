@@ -12,33 +12,12 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 COPY apps/frontend/package.json ./apps/frontend/
 COPY apps/backend/package.json ./apps/backend/
-RUN npm ci --workspace=apps/frontend --workspace=apps/backend
+COPY apps/backend/.adonisjs ./apps/backend/
+RUN npm ci --workspace=apps/frontend
 
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
-
-#region For Tuyau files generation
-ARG NODE_ENV
-ARG PORT
-ARG APP_KEY
-ARG HOST
-ARG LOG_LEVEL
-ARG DB_HOST
-ARG DB_PORT
-ARG DB_USER
-ARG DB_DATABASE
-
-ENV NODE_ENV=${NODE_ENV}
-ENV PORT=${PORT}
-ENV APP_KEY=${APP_KEY}
-ENV HOST=${HOST}
-ENV LOG_LEVEL=${LOG_LEVEL}
-ENV DB_HOST=${DB_HOST}
-ENV DB_PORT=${DB_PORT}
-ENV DB_USER=${DB_USER}
-ENV DB_DATABASE=${DB_DATABASE}
-#endregion
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json package-lock.json ./
@@ -49,12 +28,6 @@ COPY apps/frontend ./apps/frontend
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED=1
-
-WORKDIR /app/apps/backend
-
-RUN node ace tuyau:generate
-
-WORKDIR /app
 
 RUN npm run build --workspace=apps/frontend
 

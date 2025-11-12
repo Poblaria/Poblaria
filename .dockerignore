@@ -11,7 +11,6 @@
 **/docker-compose*
 **/.dockerignore
 **/node_modules
-**/.adonisjs
 **/.next
 **/build
 **/*.tsbuildinfo
