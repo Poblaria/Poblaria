@@ -99,43 +99,51 @@ However, it's recommended to do that to avoid exposing sensitive information abo
 
 ## 🐳 Docker
 
-There's a `docker-compose.yml` file available in the root of the monorepo. It allows to run the backend and the related database<sup>1</sup> (**PostgreSQL**) using Docker services.
+There's a `docker-compose.yml` file available in the root of the monorepo. It allows to run the backend, the related database<sup>1</sup> (**PostgreSQL**) and the frontend using Docker services.
 
 > <sup>1</sup> In the future, the frontend will also be added to the **Docker** setup.
 
 ### 🛠️ Usage
 
-To use it, you first need to have a `.env` file at the root of the monorepo. You can copy the `.env.example` and edit it if necessary - this `.env.example` is pretty similar to the one in the `apps/backend` folder - except for the `FRONTEND_PORT` variable -, but given that **Docker Compose** cannot use a `.env` file inside a subfolder, it's placed at the root of the monorepo.
+To use it, you first need to have a `.env` file at the root of the monorepo. You can copy the `.env.example` and edit it if necessary<sup>1</sup> - this `.env.example` is pretty similar to the one in the `apps/backend` folder - except for the `FRONTEND_PORT` variable -, but given that **Docker Compose** cannot use a `.env` file inside a subfolder, it's placed at the root of the monorepo.
+
+> <sup>1</sup> WARNING! In the `.env.example`, the `APP_KEY` variable is empty. To generate one, you can run the following command in the `apps/backend` folder:
+> ```bash
+> node ace generate:key --show
+> ```
+> and then, copy the generated key to the `APP_KEY` variable in the root `.env` file.
+>
+> WARNING!² Default variables in the `.env.example` are very insecure and should never be used in production. Moreover, it's recommended to not use variables from the `.env.example`, given that they aren't really secret.
 
 #### 🚀 Starting the Services
 
-To start the backend with the database, run the following command from the root of the monorepo:
+To start the backend with the database, and the frontend, run the following command from the root of the monorepo:
 
 ```bash
-DB_MIGRATE=1 docker compose up --build
+DB_MIGRATE=true docker compose up --build
 ```
 
 Let's split the command:
 
-- `DB_MIGRATE=1` tells the backend to run the migrations and seed the database before starting the server.
+- `DB_MIGRATE=true` tells the backend to run the migrations and seed the database before starting the server (can also be set in the `.env` file).
 - `docker compose up` starts the services.
 - `--build` rebuilds the images.
 
-You can also start the backend without running the migrations and/or rebuilding the images:
+You can also start the services without running the migrations and/or rebuilding the images:
 
-- Start the backend without running the migrations and without rebuilding the images:
+- Start the services without running the migrations and without rebuilding the images:
 
 ```bash
 docker compose up
 ```
 
-- Start the backend running the migrations but without rebuilding the images:
+- Start the services running the migrations but without rebuilding the images:
 
 ```bash
-DB_MIGRATE=1 docker compose up
+DB_MIGRATE=true docker compose up
 ```
 
-- Start the backend without running the migrations but rebuilding the images:
+- Start the services without running the migrations but rebuilding the images:
 
 ```bash
 docker compose up --build
@@ -152,10 +160,10 @@ docker compose up db
 You may use this setup during the development of the backend to avoid installing **PostgreSQL** locally on your machine.\
 To do so, run these commands:
 
-- Start all the services a first time (with migrations and building the images). Even the backend is started so the database is properly initialized, otherwise the `DB_MIGRATE` variable would have no effect:
+- Start the backend and the database a first time (with migrations and building the images). Even the backend is started so the database is properly initialized, otherwise the `DB_MIGRATE` variable would have no effect (given that the backend service needs the database, only specifying the backend service is enough):
 
 ```bash
-DB_MIGRATE=1 docker compose up --build
+DB_MIGRATE=true docker compose up --build api
 ```
 
 - Stop the services (_Ctrl + C_ if you are not in detached mode and `docker compose down`. ⚠️ No `-v` flag, otherwise the database and its initial data would be deleted).
