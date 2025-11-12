@@ -111,7 +111,7 @@ There's a `docker-compose.yml` file available in the root of the monorepo. It al
 
 ### 🛠️ Usage
 
-To use it, you first need to have a `.env` file at the root of the monorepo. You can copy the `.env.example` and edit it if necessary - this `.env.example` is pretty similar to the one in the `apps/backend` folder, but given that **Docker Compose** cannot use a `.env` file inside a subfolder, it's placed at the root of the monorepo.
+To use it, you first need to have a `.env` file at the root of the monorepo. You can copy the `.env.example` and edit it if necessary - this `.env.example` is pretty similar to the one in the `apps/backend` folder - except for the `FRONTEND_PORT` variable -, but given that **Docker Compose** cannot use a `.env` file inside a subfolder, it's placed at the root of the monorepo.
 
 #### 🚀 Starting the Services
 
