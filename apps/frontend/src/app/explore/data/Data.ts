@@ -6,6 +6,12 @@ export const HOUSES = [
         title: "Traditional Stone House",
         price: "€350,000",
         image: "/images/villa_for_rent_in_spain_026-1.png",
+        images: [
+            "/images/Toilet1.webp",
+            "/images/Kitchen2.jpg",
+            "/images/RoomBig1.jpg",
+            "/images/roomSmall1.avif"
+        ],
         address: "Carrer Major, 15, 25597 Rialp, Lleida",
         description:
             "Charming stone house in the heart of Rialp with modern amenities and a cozy fireplace.",
