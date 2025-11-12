@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
             ".cjs": [".cts", ".cjs"]
         };
         return config;
-    }
+    },
+    output: "standalone"
 };
 
 export default nextConfig;
