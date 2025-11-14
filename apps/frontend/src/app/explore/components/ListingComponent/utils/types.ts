@@ -1,4 +1,4 @@
-import type { DataType } from "../FilterBar";
+import type { DataType } from "../../FilterBar";
 import type { HousingsResponse } from "@actions/housings/getHousings";
 import type { JobsResponse } from "@actions/jobs/getJobs";
 
