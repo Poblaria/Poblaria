@@ -18,12 +18,15 @@ const MapComponent = dynamic(() => import("./components/MapComponent"), {
         <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
     )
 });
-const ListView = dynamic(() => import("./components/ListingComponent"), {
-    ssr: false,
-    loading: () => (
-        <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
-    )
-});
+const ListView = dynamic(
+    () => import("./components/ListingComponent/ListingComponent"),
+    {
+        ssr: false,
+        loading: () => (
+            <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
+        )
+    }
+);
 
 export default function Explore() {
     const [splitMap, setSplitMap] = useState(false);

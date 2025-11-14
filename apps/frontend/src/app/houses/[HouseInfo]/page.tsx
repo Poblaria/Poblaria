@@ -10,6 +10,7 @@ import {
     Tooltip,
     IconButton
 } from "@mui/material";
+import Link from "next/link";
 
 import { getHousingById } from "@/app/explore/data/getHousingById";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -24,13 +25,11 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import KayakingIcon from "@mui/icons-material/Kayaking";
 import HikingIcon from "@mui/icons-material/Hiking";
 import ForestIcon from "@mui/icons-material/Forest";
-import { useRouter } from "next/navigation";
-
+import { generateExploreRoutes } from "../../explore/utils/routes";
 
 type Params = { HouseInfo: string };
 
 export default function Page({ params }: { params: Promise<Params> }) {
-    const router = useRouter();
     const { HouseInfo } = React.use(params);
     const house = getHousingById(HouseInfo);
 
@@ -50,7 +49,12 @@ export default function Page({ params }: { params: Promise<Params> }) {
                 sx={{ mb: 2 }}
             >
                 <Grid item>
-                    <IconButton onClick={() => router.back()} aria-label="Back">
+                    <IconButton
+                        component={Link}
+                        href={generateExploreRoutes("houses", "list")}
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label="Back"
+                    >
                         <ArrowBackIcon />
                     </IconButton>
                 </Grid>
@@ -69,17 +73,19 @@ export default function Page({ params }: { params: Promise<Params> }) {
                     </Stack>
                 </Grid>
             </Grid>
-            <Typography variant="h4" sx={{ fontWeight: 800, mb: 0.5 }}>
-                {house.title}
-            </Typography>
-            <Typography
-                variant="subtitle1"
-                sx={{ mb: 2 }}
-                color="text.secondary"
-            >
-                {house.address}
-            </Typography>
-            <Box sx={{ px: { xs: 2, md: 4 }, py: 3 }}>
+            <Box sx={{ px: 4 }}>
+                <Typography variant="h4" sx={{ fontWeight: 800, mb: 0.5 }}>
+                    {house.title}
+                </Typography>
+                <Typography
+                    variant="subtitle1"
+                    sx={{ mb: 2 }}
+                    color="text.secondary"
+                >
+                    {house.address}
+                </Typography>
+            </Box>
+            <Box sx={{ px: { xs: 2, md: 4 } }}>
                 {house.image && house.images?.length > 0 && (
                     <Box
                         sx={{
@@ -119,27 +125,29 @@ export default function Page({ params }: { params: Promise<Params> }) {
                                 gap: 1.5
                             }}
                         >
-                            {(house.images ?? []).slice(0, 4).map((img, index) => (
-                                <Card
-                                    key={index}
-                                    sx={{
-                                        borderRadius: 2,
-                                        overflow: "hidden",
-                                        height: { xs: 120, md: 240 }
-                                    }}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        image={img}
-                                        alt={`Image ${index + 1}`}
+                            {(house.images ?? [])
+                                .slice(0, 4)
+                                .map((img, index) => (
+                                    <Card
+                                        key={index}
                                         sx={{
-                                            width: "100%",
-                                            height: "100%",
-                                            objectFit: "cover"
+                                            borderRadius: 2,
+                                            overflow: "hidden",
+                                            height: { xs: 120, md: 240 }
                                         }}
-                                    />
-                                </Card>
-                            ))}
+                                    >
+                                        <CardMedia
+                                            component="img"
+                                            image={img}
+                                            alt={`Image ${index + 1}`}
+                                            sx={{
+                                                width: "100%",
+                                                height: "100%",
+                                                objectFit: "cover"
+                                            }}
+                                        />
+                                    </Card>
+                                ))}
                         </Box>
                     </Box>
                 )}
@@ -153,14 +161,14 @@ export default function Page({ params }: { params: Promise<Params> }) {
                 >
                     {/* Left Side: Price and Details */}
                     <Box sx={{ flex: 1 }}>
-                        <Card sx={{ p: 2, mb: 3 }}>
+                        <Box sx={{ pt: 2, pb: 3 }}>
                             <Typography variant="h5" sx={{ fontWeight: 900 }}>
                                 {house.price}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 SALE
                             </Typography>
-                        </Card>
+                        </Box>
 
                         <Grid container spacing={2}>
                             {[
@@ -207,11 +215,8 @@ export default function Page({ params }: { params: Promise<Params> }) {
                     </Box>
 
                     {/* Right Side: Description and Landscapes */}
-                    <Box sx={{ flex: 2 }}>
-                        <Typography
-                            variant="h6"
-                            sx={{ fontWeight: 800, mb: 1 }}
-                        >
+                    <Box sx={{ flex: 2, pt: 2 }}>
+                        <Typography variant="h6" sx={{ fontWeight: 800 }}>
                             Description
                         </Typography>
                         <Card sx={{ p: 2, mb: 3 }}>
@@ -224,7 +229,7 @@ export default function Page({ params }: { params: Promise<Params> }) {
                             variant="h6"
                             sx={{ fontWeight: 800, mb: 1 }}
                         >
-                            Landscapes
+                            Interests
                         </Typography>
                         <Card
                             sx={{
