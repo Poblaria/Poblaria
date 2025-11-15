@@ -112,7 +112,7 @@ export default function Explore() {
         void (async () => {
             try {
                 if (dataType === "houses") {
-                    const { data: housings } = await getHousings();
+                    const { data: housings } = await getHousings(true);
                     if (housings) {
                         setAllHousings(housings);
                         setHousings(housings);
