@@ -52327,7 +52327,7 @@ export default [
         companyObject: {
             name: "WORKOUT EVENTS",
             domain: "workout-events.com",
-            industry: "Events Services",
+            industry: "events_services",
             country: "Spain",
             countryCode: "ES",
             employeeCount: 350,
