@@ -1,0 +1,69 @@
+{
+    "housing_conditions": {
+        "needs_renovation": "Necesita renovación",
+        "new": "Nuevo",
+        "ready_to_move_in": "Listo para mudarse"
+    },
+    "housing_types": {
+        "apartment": "Apartamento",
+        "house": "Casa",
+        "studio": "Estudio"
+    },
+    "housing_offer_types": {
+        "rent": "Alquiler",
+        "sale": "Venta",
+        "share": "Compartir"
+    },
+    "job_types": {
+        "apprenticeship": "Aprendizaje",
+        "contract": "Contrato",
+        "freelance": "Freelance",
+        "full_time": "Tiempo completo",
+        "interim": "Temporal",
+        "internship": "Prácticas",
+        "part_time": "Tiempo parcial",
+        "seasonal": "De temporada",
+        "temporary": "Temporal",
+        "other": "Otro"
+    },
+    "job_industries": {
+        "advertising_services": "Servicios publicitarios",
+        "agriculture_farming": "Agricultura y ganadería",
+        "airlines_aviation": "Aerolíneas y aviación",
+        "automation_machinery_manufacturing": "Fabricación de maquinaria de automatización",
+        "business_consulting_services": "Consultoría y servicios empresariales",
+        "construction": "Construcción",
+        "cultural_preservation": "Preservación cultural",
+        "environmental_services": "Servicios ambientales",
+        "events_services": "Servicios de eventos",
+        "financial_services": "Servicios financieros",
+        "food_beverage_services": "Servicios de alimentos y bebidas",
+        "hospitality": "Hostelería",
+        "hospitals_health_care": "Hospitales y atención médica",
+        "human_resources_services": "Servicios de recursos humanos",
+        "it_services_consulting": "Servicios y consultoría informática",
+        "insurance": "Seguros",
+        "manufacturing": "Fabricación",
+        "medical_equipment_manufacturing": "Fabricación de equipos médicos",
+        "motor_vehicle_manufacturing": "Fabricación de vehículos a motor",
+        "movies_sound_recording": "Cine y grabación de sonido",
+        "oil_gas": "Petróleo y gas",
+        "outsourcing_offshoring_consulting": "Externalización y deslocalización",
+        "pharmaceutical_manufacturing": "Fabricación farmacéutica",
+        "professional_services": "Servicios profesionales",
+        "retail": "Venta al por menor",
+        "retail_apparel_fashion": "Moda y confección",
+        "skilled_trades_craftsmanship": "Oficios y artesanía",
+        "software_development": "Desarrollo de software",
+        "staffing_recruiting": "Selección de personal",
+        "technology_information_internet": "Tecnología, información e internet",
+        "telecommunications": "Telecomunicaciones",
+        "tourism_hospitality": "Turismo y hostelería",
+        "transportation_logistics": "Transporte, logística y almacenamiento",
+        "travel_arrangements": "Organización de viajes",
+        "truck_transportation": "Transporte por carretera",
+        "utilities": "Servicios públicos",
+        "venture_capital_private_equity": "Capital riesgo y capital privado",
+        "other": "Otro"
+    }
+}

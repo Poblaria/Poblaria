@@ -1,3 +1,8 @@
+/**
+ * Temporary seeder for jobs data.
+ */
+
+import logger from "@adonisjs/core/services/logger";
 import { BaseSeeder } from "@adonisjs/lucid/seeders";
 import Job from "#models/job";
 import JobType from "#models/job_type";
@@ -6,32 +11,33 @@ import jobs from "#data/jobs";
 import locations from "#data/locations";
 
 const jobTypes = await JobType.all();
-const JOB_TYPES = jobTypes.map((jobType) => ({
-    id: jobType.id,
-    name: jobType.name.toLowerCase()
-}));
-
 const jobIndustries = await JobIndustry.all();
-const JOB_INDUSTRIES = jobIndustries.map((jobType) => ({
-    id: jobType.id,
-    name: jobType.name.toLowerCase()
-}));
 
-function getJobTypeId(name?: string | null) {
-    if (!name) name = "Other";
+function getJobTypeId(key?: string | null): number {
+    if (!key) key = "other";
 
-    const jobType = JOB_TYPES.find((type) => type.name === name.toLowerCase());
+    const jobType = jobTypes.find((type) => type.name === key);
 
-    if (!jobType) throw new Error(`Job type "${name}" not found`);
+    if (!jobType) {
+        logger.warn(`Job type "${key}" not found, using "other"`);
+        const fallback = jobTypes.find((type) => type.name === "other");
+        if (!fallback) throw new Error('Fallback job type "other" not found');
+        return fallback.id;
+    }
     return jobType.id;
 }
 
-function getJobIndustryId(name?: string | null) {
-    if (!name) name = "Other";
+function getJobIndustryId(key?: string | null): number {
+    if (!key) key = "other";
 
-    const jobIndustry = JOB_INDUSTRIES.find((industry) => industry.name === name.toLowerCase());
+    const jobIndustry = jobIndustries.find((industry) => industry.name === key);
 
-    if (!jobIndustry) throw new Error(`Job industry "${name}" not found`);
+    if (!jobIndustry) {
+        logger.warn(`Job industry "${key}" not found, using "other"`);
+        const fallback = jobIndustries.find((industry) => industry.name === "other");
+        if (!fallback) throw new Error('Fallback job industry "other" not found');
+        return fallback.id;
+    }
     return jobIndustry.id;
 }
 
