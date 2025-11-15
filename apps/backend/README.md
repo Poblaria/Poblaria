@@ -1,5 +1,14 @@
 # Poblaria - Backend
 
+## 🔌 API Communication
+
+In order to the frontend to be able to communicate with the API, **Tuyau** files must be generated.\
+Everytime a new route/controller is added to the project or a `request.validateUsing` is added in a controller method, this command must be run to update the generated files used by the frontend:
+
+```bash
+node ace tuyau:generate
+```
+
 ## Ace
 
 Ace is a command line framework used by AdonisJS to create and run console commands.

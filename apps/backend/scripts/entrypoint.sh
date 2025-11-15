@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-if [ -n "$DB_MIGRATE" ]; then
+if [ "$DB_MIGRATE" = "true" ]; then
   echo "Running migrations and seeding database..."
   node ace migration:run --force
   node ace db:seed

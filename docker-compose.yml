@@ -1,5 +1,6 @@
 services:
     db:
+        container_name: poblaria-db
         image: postgres:17-alpine
         restart: always
         shm_size: 128mb
@@ -10,14 +11,15 @@ services:
         volumes:
             - db_volume:/var/lib/postgresql/data
         ports:
-            - 5432:${DB_PORT}
+            - ${DB_PORT}:5432
         healthcheck:
-            test: ["CMD", "pg_isready", "-U", "${DB_USER}"]
+            test: ["CMD", "pg_isready", "-d", "${DB_DATABASE}", "-U", "${DB_USER}"]
             interval: 5s
             retries: 5
             timeout: 3s
 
-    server:
+    api:
+        container_name: poblaria-api
         build:
             context: .
             dockerfile: apps/backend/Dockerfile
@@ -25,14 +27,34 @@ services:
             db:
                 condition: service_healthy
         ports:
-            - ${PORT}:${PORT}
+            - ${PORT}:8080
         env_file:
             - .env
         environment:
+            PORT: 8080
             HOST: 0.0.0.0
             NODE_ENV: production
             DB_HOST: db
+            DB_PORT: 5432
             DB_MIGRATE: ${DB_MIGRATE}
+        healthcheck:
+          test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080"]
+          interval: 5s
+          retries: 5
+          timeout: 3s
+
+    frontend:
+        container_name: poblaria-frontend
+        build:
+            context: .
+            dockerfile: apps/frontend/Dockerfile
+        depends_on:
+            api:
+                condition: service_healthy
+        ports:
+            - ${FRONTEND_PORT}:3000
+        environment:
+            API_BASE_URL: http://api:8080
 
 volumes:
     db_volume:

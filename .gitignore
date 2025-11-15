@@ -84,9 +84,6 @@ next-env.d.ts
 .temp
 tmp
 
-# Tuyau generated files
-apps/backend/.adonisjs
-
 # Next.js build output
 .next
 out
