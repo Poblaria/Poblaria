@@ -50,7 +50,7 @@ export default function Page({ params }: { params: Promise<Params> }) {
                 justifyContent="space-between"
                 sx={{ mb: 2 }}
             >
-                <Grid item>
+                <Grid>
                     <IconButton
                         component={Link}
                         href={generateExploreRoutes("houses", "list")}
@@ -66,7 +66,7 @@ export default function Page({ params }: { params: Promise<Params> }) {
                         <ArrowBackIcon />
                     </IconButton>
                 </Grid>
-                <Grid item>
+                <Grid>
                     <Stack direction="row" spacing={1}>
                         <Tooltip title="Like">
                             <IconButton
@@ -226,9 +226,7 @@ export default function Page({ params }: { params: Promise<Params> }) {
                                     }
                                 ].map((item, index) => (
                                     <Grid
-                                        item
-                                        xs={6}
-                                        md={3}
+                                        size={{ xs: 6, md: 3 }}
                                         key={index}
                                         sx={{
                                             display: "flex",
