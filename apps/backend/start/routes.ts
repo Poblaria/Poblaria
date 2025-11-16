@@ -16,13 +16,10 @@ const HousingImageController = () => import("#controllers/housing_image_controll
 const JobController = () => import("#controllers/job_controller");
 const OfferPropertyController = () => import("#controllers/offer_properties_controller");
 
-router.get("/", async () => ({
-    name: "Poblaria API",
-    version: "0.0.1",
-    description:
-        "Welcome to Poblaria API. Use the provided endpoints to interact with the service.",
-    endpoints: router.toJSON()["root"].map((route) => `${route.methods[0]} ${route.pattern}`)
-}));
+/**
+ * Health check route
+ */
+router.get("/", async ({ response }) => response.noContent());
 
 router
     .group(() => {
