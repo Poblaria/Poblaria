@@ -4,9 +4,9 @@ import HousingOfferType from "#models/housing_offer_type";
 export default class extends BaseSeeder {
     async run() {
         await HousingOfferType.updateOrCreateMany("name", [
-            { name: "Rent" },
-            { name: "Sale" },
-            { name: "Share" }
+            { name: "rent" },
+            { name: "sale" },
+            { name: "share" }
         ]);
     }
 }

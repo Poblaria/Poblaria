@@ -1,0 +1,40 @@
+{
+    "shared": {
+        "fields": {
+            "address": "dirección",
+            "area": "área",
+            "bathrooms": "baños",
+            "company": "empresa",
+            "conditionId": "estado",
+            "description": "descripción",
+            "email": "correo electrónico",
+            "fullName": "nombre completo",
+            "image": "imagen",
+            "industryId": "sector",
+            "isAvailable": "disponible",
+            "isRemote": "teletrabajo",
+            "landArea": "superficie del terreno",
+            "latitude": "latitud",
+            "longitude": "longitud",
+            "offerTypeId": "tipo de oferta",
+            "password": "contraseña",
+            "price": "precio",
+            "rooms": "habitaciones",
+            "salary": "salario",
+            "title": "título",
+            "typeId": "tipo"
+        },
+        "messages": {
+            "boolean": "El valor debe ser un booleano",
+            "email": "El campo {field} debe ser una dirección de correo electrónico válida",
+            "database.unique": "El campo {field} ya ha sido utilizado",
+            "maxLength": "El campo {field} no debe superar {max} caracteres",
+            "minLength": "El campo {field} debe contener al menos {min} caracteres",
+            "number": "El campo {field} debe ser un número",
+            "positive": "El campo {field} debe ser positivo",
+            "regex": "El formato del campo {field} es inválido",
+            "required": "El campo {field} debe estar definido",
+            "string": "El campo {field} debe ser una cadena de caracteres"
+        }
+    }
+}

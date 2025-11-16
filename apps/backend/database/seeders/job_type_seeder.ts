@@ -4,16 +4,16 @@ import JobType from "#models/job_type";
 export default class extends BaseSeeder {
     async run() {
         await JobType.updateOrCreateMany("name", [
-            { name: "Apprenticeship" },
-            { name: "Contract" },
-            { name: "Freelance" },
-            { name: "Full-Time" },
-            { name: "Interim" },
-            { name: "Internship" },
-            { name: "Part-Time" },
-            { name: "Seasonal" },
-            { name: "Temporary" },
-            { name: "Other" }
+            { name: "apprenticeship" },
+            { name: "contract" },
+            { name: "freelance" },
+            { name: "full_time" },
+            { name: "interim" },
+            { name: "internship" },
+            { name: "part_time" },
+            { name: "seasonal" },
+            { name: "temporary" },
+            { name: "other" }
         ]);
     }
 }

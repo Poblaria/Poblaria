@@ -30,7 +30,7 @@ export default class JobController {
                 job.merge(await request.validateUsing(patchJobValidator));
                 break;
             default:
-                return response.badRequest({ message: "Invalid method" });
+                return response.methodNotAllowed();
         }
         return new JobDto(await job.save()).toJson();
     }

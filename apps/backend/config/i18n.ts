@@ -3,9 +3,6 @@ import { defineConfig, formatters, loaders } from "@adonisjs/i18n";
 
 const i18nConfig = defineConfig({
     defaultLocale: "en",
-    fallbackLocales: {
-        ca: "es" // show Spanish content when a user speaks Catalan
-    },
     supportedLocales: ["en", "es", "fr"],
     formatter: formatters.icu(),
 

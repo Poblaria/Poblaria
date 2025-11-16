@@ -1,0 +1,69 @@
+{
+    "housing_conditions": {
+        "needs_renovation": "À rénover",
+        "new": "Neuf",
+        "ready_to_move_in": "Prêt à emménager"
+    },
+    "housing_types": {
+        "apartment": "Appartement",
+        "house": "Maison",
+        "studio": "Studio"
+    },
+    "housing_offer_types": {
+        "rent": "Location",
+        "sale": "Vente",
+        "share": "Colocation"
+    },
+    "job_types": {
+        "apprenticeship": "Apprentissage",
+        "contract": "Contrat",
+        "freelance": "Freelance",
+        "full_time": "Temps plein",
+        "interim": "Intérim",
+        "internship": "Stage",
+        "part_time": "Temps partiel",
+        "seasonal": "Saisonnier",
+        "temporary": "Temporaire",
+        "other": "Autre"
+    },
+    "job_industries": {
+        "advertising_services": "Services publicitaires",
+        "agriculture_farming": "Agriculture et élevage",
+        "airlines_aviation": "Compagnies aériennes et aviation",
+        "automation_machinery_manufacturing": "Fabrication de machines d'automatisation",
+        "business_consulting_services": "Conseil et services aux entreprises",
+        "construction": "Construction",
+        "cultural_preservation": "Préservation culturelle",
+        "environmental_services": "Services environnementaux",
+        "events_services": "Services d'événements",
+        "financial_services": "Services financiers",
+        "food_beverage_services": "Services de restauration",
+        "hospitality": "Hôtellerie",
+        "hospitals_health_care": "Hôpitaux et soins de santé",
+        "human_resources_services": "Services de ressources humaines",
+        "it_services_consulting": "Services et conseil informatiques",
+        "insurance": "Assurance",
+        "manufacturing": "Fabrication",
+        "medical_equipment_manufacturing": "Fabrication d'équipements médicaux",
+        "motor_vehicle_manufacturing": "Fabrication de véhicules automobiles",
+        "movies_sound_recording": "Cinéma et enregistrement sonore",
+        "oil_gas": "Pétrole et gaz",
+        "outsourcing_offshoring_consulting": "Externalisation et délocalisation",
+        "pharmaceutical_manufacturing": "Fabrication pharmaceutique",
+        "professional_services": "Services professionnels",
+        "retail": "Commerce de détail",
+        "retail_apparel_fashion": "Mode et habillement",
+        "skilled_trades_craftsmanship": "Métiers et artisanat",
+        "software_development": "Développement de logiciels",
+        "staffing_recruiting": "Recrutement et placement",
+        "technology_information_internet": "Technologie, information et internet",
+        "telecommunications": "Télécommunications",
+        "tourism_hospitality": "Tourisme et hôtellerie",
+        "transportation_logistics": "Transport, logistique et entreposage",
+        "travel_arrangements": "Organisation de voyages",
+        "truck_transportation": "Transport routier",
+        "utilities": "Services publics",
+        "venture_capital_private_equity": "Capital-risque et capital-investissement",
+        "other": "Autre"
+    }
+}
