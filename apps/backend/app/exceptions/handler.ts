@@ -20,8 +20,15 @@ export default class HttpExceptionHandler extends ExceptionHandler {
             typeof error.message === "string" &&
             "identifier" in error &&
             typeof error.identifier === "string"
-        )
-            error.message = ctx.i18n.t(error.identifier, undefined, error.message);
+        ) {
+            const message = ctx.i18n.t(error.identifier, undefined, error.message);
+            const newError = new Error(message);
+
+            Object.assign(newError, error);
+            newError.message = message;
+
+            return super.handle(newError, ctx);
+        }
 
         return super.handle(error, ctx);
     }
