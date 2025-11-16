@@ -19,7 +19,7 @@ const MapComponent = dynamic(() => import("./components/MapComponent"), {
     )
 });
 const ListView = dynamic(
-    () => import("./components/listingComponent/ListingComponent"),
+    () => import("./components/listing/ListingComponent"),
     {
         ssr: false,
         loading: () => (
