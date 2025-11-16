@@ -20,7 +20,7 @@ export default function HousesList({
     return (
         <Box sx={{ p: 0 }}>
             <Grid container sx={{ width: "100%" }} spacing={2}>
-            {/* <div className="w-full"> */}
+                {/* <div className="w-full"> */}
                 {[...HOUSES, ...(housings || [])].map((house) => (
                     <Grid
                         key={house.id}
@@ -178,7 +178,7 @@ export default function HousesList({
                         </Card>
                     </Grid>
                 ))}
-            {/* </div> */}
+                {/* </div> */}
             </Grid>
         </Box>
     );
