@@ -142,14 +142,14 @@ export default function Explore() {
     }, [dataType]);
 
     // TODO: change name
-    const handleOptionChage = (newOption: DataType) => {
+    /*const handleOptionChage = (newOption: DataType) => {
         setDataType(newOption);
         // When changing data type, also change it on the query params
 
 
         
     }
-    // Do the same thing for other options like houses
+    // Do the same thing for other options like houses*/
 
     return (
         <main className="w-full h-full">

@@ -17,7 +17,6 @@ export default function HousesList({
     housings,
     splitView = false
 }: HousesListProps) {
-    console.log(splitView);
     return (
         <Box sx={{ p: 0 }}>
             <Grid container sx={{ width: "100%" }} spacing={2}>
