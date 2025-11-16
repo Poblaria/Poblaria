@@ -113,7 +113,7 @@ export default function Page({ params }: { params: Promise<Params> }) {
                 </Typography>
             </Box>
             <Box sx={{ px: { xs: 2, md: 4 } }}>
-                {house.image && house.images?.length > 0 && (
+                {house.images && house.images.length > 0 && (
                     <Box
                         sx={{
                             display: "flex",
