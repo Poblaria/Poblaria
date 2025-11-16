@@ -1,5 +1,11 @@
 /**
  * Temporary seeder for jobs data.
+ *
+ * This seeder is intended to populate the jobs table with sample data* for development and testing purposes only.
+ * It should be removed once the production data import process is finalized.
+ * Long-term, this file will be removed entirely.
+ * Removal criteria: Delete this file once the production data pipeline is in place.
+ * *The sample data comes from a real dataset, but has been initialized long ago and moreover is hardcoded which is not the intended final state.
  */
 
 import logger from "@adonisjs/core/services/logger";
