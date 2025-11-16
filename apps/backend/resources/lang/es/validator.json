@@ -2,7 +2,7 @@
     "shared": {
         "fields": {
             "address": "dirección",
-            "area": "superficie",
+            "area": "área",
             "bathrooms": "baños",
             "company": "empresa",
             "conditionId": "estado",
