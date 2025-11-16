@@ -13,6 +13,16 @@ export default class HttpExceptionHandler extends ExceptionHandler {
      * response to the client
      */
     async handle(error: unknown, ctx: HttpContext) {
+        if (
+            error &&
+            typeof error === "object" &&
+            "message" in error &&
+            typeof error.message === "string" &&
+            "identifier" in error &&
+            typeof error.identifier === "string"
+        )
+            error.message = ctx.i18n.t(error.identifier, undefined, error.message);
+
         return super.handle(error, ctx);
     }
 
