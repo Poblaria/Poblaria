@@ -12,6 +12,7 @@ import { createClusterIcon } from "../utils/clusterMarker";
 import "leaflet-extra-markers";
 import type { HousingsResponse } from "@actions/housings/getHousings";
 import type { JobsResponse } from "@actions/jobs/getJobs";
+import Link from "next/link";
 
 type MapComponentProps = {
     dataType: DataType;
@@ -193,6 +194,8 @@ export default function MapComponent({
                                                 mt: 2,
                                                 backgroundColor: "#5E7749"
                                             }}
+                                            component={Link}
+                                            href={`/houses/${house.id}`}
                                         >
                                             View Details
                                         </Button>

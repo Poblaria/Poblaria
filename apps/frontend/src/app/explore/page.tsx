@@ -18,12 +18,15 @@ const MapComponent = dynamic(() => import("./components/MapComponent"), {
         <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
     )
 });
-const ListView = dynamic(() => import("./components/ListingComponent"), {
-    ssr: false,
-    loading: () => (
-        <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
-    )
-});
+const ListView = dynamic(
+    () => import("./components/listing/ListingComponent"),
+    {
+        ssr: false,
+        loading: () => (
+            <div className="h-full animate-pulse bg-gray-200 rounded-lg" />
+        )
+    }
+);
 
 export default function Explore() {
     const [splitMap, setSplitMap] = useState(false);
@@ -138,6 +141,16 @@ export default function Explore() {
         })();
     }, [dataType]);
 
+    // TODO: change name
+    /*const handleOptionChage = (newOption: DataType) => {
+        setDataType(newOption);
+        // When changing data type, also change it on the query params
+
+
+        
+    }
+    // Do the same thing for other options like houses*/
+
     return (
         <main className="w-full h-full">
             <Box
@@ -199,7 +212,7 @@ export default function Explore() {
                                     housings={housings}
                                     jobs={jobs}
                                     error={error}
-                                    splitView={true}
+                                    splitView={splitMap}
                                 />
                             </Box>
 
