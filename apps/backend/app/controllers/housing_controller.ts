@@ -42,7 +42,7 @@ export default class HousingController {
                 housing.merge(await request.validateUsing(patchHousingValidator));
                 break;
             default:
-                return response.badRequest({ message: "Invalid method" });
+                return response.methodNotAllowed();
         }
         return new HousingDto(await housing.save()).toJson();
     }

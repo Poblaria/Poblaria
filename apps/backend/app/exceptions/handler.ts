@@ -1,5 +1,6 @@
 import app from "@adonisjs/core/services/app";
 import { HttpContext, ExceptionHandler } from "@adonisjs/core/http";
+import TranslatableException from "#exceptions/localizable_exception";
 
 export default class HttpExceptionHandler extends ExceptionHandler {
     /**
@@ -13,6 +14,16 @@ export default class HttpExceptionHandler extends ExceptionHandler {
      * response to the client
      */
     async handle(error: unknown, ctx: HttpContext) {
+        if (error instanceof TranslatableException) {
+            const message = ctx.i18n.t(error.identifier, undefined, error.message);
+            const newError = new TranslatableException(error.identifier, message);
+
+            Object.assign(newError, error);
+            newError.message = message;
+
+            return super.handle(newError, ctx);
+        }
+
         return super.handle(error, ctx);
     }
 
