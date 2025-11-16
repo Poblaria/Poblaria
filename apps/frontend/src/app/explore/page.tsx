@@ -19,7 +19,7 @@ const MapComponent = dynamic(() => import("./components/MapComponent"), {
     )
 });
 const ListView = dynamic(
-    () => import("./components/ListingComponent/ListingComponent"),
+    () => import("./components/listingComponent/ListingComponent"),
     {
         ssr: false,
         loading: () => (
@@ -141,6 +141,16 @@ export default function Explore() {
         })();
     }, [dataType]);
 
+    // TODO: change name
+    const handleOptionChage = (newOption: DataType) => {
+        setDataType(newOption);
+        // When changing data type, also change it on the query params
+
+
+        
+    }
+    // Do the same thing for other options like houses
+
     return (
         <main className="w-full h-full">
             <Box
@@ -202,7 +212,7 @@ export default function Explore() {
                                     housings={housings}
                                     jobs={jobs}
                                     error={error}
-                                    splitView={true}
+                                    splitView={splitMap}
                                 />
                             </Box>
 

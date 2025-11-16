@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
     Card,
     CardMedia,
@@ -25,12 +25,14 @@ import LandscapeIcon from "@mui/icons-material/Landscape";
 import KayakingIcon from "@mui/icons-material/Kayaking";
 import HikingIcon from "@mui/icons-material/Hiking";
 import ForestIcon from "@mui/icons-material/Forest";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { generateExploreRoutes } from "../../explore/utils/routes";
 
 type Params = { HouseInfo: string };
 
 export default function Page({ params }: { params: Promise<Params> }) {
     const { HouseInfo } = React.use(params);
+    const [liked, setLiked] = useState(false);
     const house = getHousingById(HouseInfo);
 
     if (!house)
@@ -54,6 +56,12 @@ export default function Page({ params }: { params: Promise<Params> }) {
                         href={generateExploreRoutes("houses", "list")}
                         onClick={(e) => e.stopPropagation()}
                         aria-label="Back"
+                        sx={{
+                            "color": "grey",
+                            "&:hover": {
+                                color: "#83A16C"
+                            }
+                        }}
                     >
                         <ArrowBackIcon />
                     </IconButton>
@@ -61,12 +69,31 @@ export default function Page({ params }: { params: Promise<Params> }) {
                 <Grid item>
                     <Stack direction="row" spacing={1}>
                         <Tooltip title="Like">
-                            <IconButton>
-                                <FavoriteBorderIcon></FavoriteBorderIcon>
+                            <IconButton
+                                onClick={() => setLiked(!liked)}
+                                sx={{
+                                    "color": liked ? "red" : "grey",
+                                    "&:hover": {
+                                        color: liked ? "darkred" : "#83A16C"
+                                    }
+                                }}
+                            >
+                                {liked ? (
+                                    <FavoriteIcon />
+                                ) : (
+                                    <FavoriteBorderIcon />
+                                )}
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Share">
-                            <IconButton>
+                            <IconButton
+                                sx={{
+                                    "color": "grey",
+                                    "&:hover": {
+                                        color: "#83A16C"
+                                    }
+                                }}
+                            >
                                 <ShareIcon />
                             </IconButton>
                         </Tooltip>
@@ -165,53 +192,66 @@ export default function Page({ params }: { params: Promise<Params> }) {
                             <Typography variant="h5" sx={{ fontWeight: 900 }}>
                                 {house.price}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                SALE
+                            <Typography variant="body2" color="#4caf50">
+                                {house.condition}
                             </Typography>
                         </Box>
-
-                        <Grid container spacing={2}>
-                            {[
-                                { icon: <HouseIcon />, label: "House" },
-                                {
-                                    icon: <BedIcon />,
-                                    label: `${house.rooms} beds`
-                                },
-                                {
-                                    icon: <BathtubIcon />,
-                                    label: `${house.bathrooms} baths`
-                                },
-                                {
-                                    icon: <StraightenIcon />,
-                                    label: `${house.area} m²`
-                                }
-                            ].map((item, index) => (
-                                <Grid
-                                    item
-                                    xs={6}
-                                    md={3}
-                                    key={index}
-                                    sx={{
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        alignItems: "center",
-                                        borderRight:
-                                            index !== 3
-                                                ? "1px solid #e0e0e0"
-                                                : "none",
-                                        p: 1
-                                    }}
-                                >
-                                    <Box sx={{ mb: 0.5 }}>{item.icon}</Box>
-                                    <Typography
-                                        variant="subtitle1"
-                                        fontWeight={600}
+                        <Typography variant="h6" sx={{ fontWeight: 800 }}>
+                            Home Details
+                        </Typography>
+                        <Card
+                            sx={{
+                                p: 3,
+                                mb: 3,
+                                borderRadius: 2,
+                                boxShadow: 1,
+                                border: "1px solid",
+                                borderColor: "divider"
+                            }}
+                        >
+                            <Grid container spacing={2}>
+                                {[
+                                    { icon: <HouseIcon />, label: "House" },
+                                    {
+                                        icon: <BedIcon />,
+                                        label: `${house.rooms} beds`
+                                    },
+                                    {
+                                        icon: <BathtubIcon />,
+                                        label: `${house.bathrooms} baths`
+                                    },
+                                    {
+                                        icon: <StraightenIcon />,
+                                        label: `${house.area} m²`
+                                    }
+                                ].map((item, index) => (
+                                    <Grid
+                                        item
+                                        xs={6}
+                                        md={3}
+                                        key={index}
+                                        sx={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            borderRight:
+                                                index !== 3
+                                                    ? "1px solid #e0e0e0"
+                                                    : "none",
+                                            p: 1
+                                        }}
                                     >
-                                        {item.label}
-                                    </Typography>
-                                </Grid>
-                            ))}
-                        </Grid>
+                                        <Box sx={{ mb: 0.5 }}>{item.icon}</Box>
+                                        <Typography
+                                            variant="subtitle1"
+                                            fontWeight={600}
+                                        >
+                                            {item.label}
+                                        </Typography>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Card>
                     </Box>
 
                     {/* Right Side: Description and Landscapes */}
@@ -219,7 +259,16 @@ export default function Page({ params }: { params: Promise<Params> }) {
                         <Typography variant="h6" sx={{ fontWeight: 800 }}>
                             Description
                         </Typography>
-                        <Card sx={{ p: 2, mb: 3 }}>
+                        <Card
+                            sx={{
+                                p: 3,
+                                mb: 3,
+                                borderRadius: 2,
+                                boxShadow: 1,
+                                border: "1px solid",
+                                borderColor: "divider"
+                            }}
+                        >
                             <Typography variant="body1">
                                 {house.description}
                             </Typography>
@@ -234,8 +283,8 @@ export default function Page({ params }: { params: Promise<Params> }) {
                         <Card
                             sx={{
                                 p: 3,
-                                borderRadius: 3,
-                                boxShadow: 3,
+                                borderRadius: 2,
+                                boxShadow: 1,
                                 border: "1px solid",
                                 borderColor: "divider"
                             }}

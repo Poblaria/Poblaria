@@ -17,9 +17,11 @@ export default function HousesList({
     housings,
     splitView = false
 }: HousesListProps) {
+    console.log(splitView);
     return (
         <Box sx={{ p: 0 }}>
-            <Grid container sx={{ width: "100%" }} spacing={3}>
+            <Grid container sx={{ width: "100%" }} spacing={2}>
+            {/* <div className="w-full"> */}
                 {[...HOUSES, ...(housings || [])].map((house) => (
                     <Grid
                         key={house.id}
@@ -36,14 +38,14 @@ export default function HousesList({
                                 position: "relative",
                                 display: {
                                     xs: "block",
-                                    md: splitView ? "flex" : "block"
+                                    md: "flex"
                                 },
                                 flexDirection: { md: "row" },
                                 alignItems: "stretch",
                                 borderRadius: 2,
                                 boxShadow: "0px 2px 6px rgba(0,0,0,0.08)",
                                 height: {
-                                    md: splitView ? 220 : "auto"
+                                    md: 220
                                 },
                                 cursor: "default"
                             }}
@@ -101,16 +103,16 @@ export default function HousesList({
                                         objectFit: "cover",
                                         width: {
                                             xs: "100%",
-                                            md: splitView ? 320 : "100%"
+                                            md: 320
                                         },
                                         height: {
                                             xs: 220,
-                                            md: splitView ? "100%" : 140
+                                            md: "100%"
                                         },
                                         flexShrink: 0,
                                         borderTopLeftRadius: 8,
                                         borderBottomLeftRadius: {
-                                            md: splitView ? 8 : 0
+                                            md: 8
                                         }
                                     }}
                                 />
@@ -148,9 +150,7 @@ export default function HousesList({
                                             mb: 2,
                                             color: "#555",
                                             display: "-webkit-box",
-                                            WebkitLineClamp: splitView
-                                                ? 2
-                                                : "unset",
+                                            WebkitLineClamp: 2,
                                             WebkitBoxOrient: "vertical",
                                             overflow: "hidden"
                                         }}
@@ -179,6 +179,7 @@ export default function HousesList({
                         </Card>
                     </Grid>
                 ))}
+            {/* </div> */}
             </Grid>
         </Box>
     );

@@ -5,6 +5,7 @@ export const HOUSES = [
         longitude: 1.1344,
         title: "Traditional Stone House",
         price: "€350,000",
+        condition: "SALE",
         image: "/images/villa_for_rent_in_spain_026-1.png",
         images: [
             "/images/Toilet1.webp",
@@ -14,10 +15,11 @@ export const HOUSES = [
         ],
         address: "Carrer Major, 15, 25597 Rialp, Lleida",
         description:
-            "Charming stone house in the heart of Rialp with modern amenities and a cozy fireplace.",
+            "Located on Carrer Major, 15 in the picturesque village of Rialp (Lleida), this beautifully restored 180 m² stone house blends rustic Catalan character with modern comfort. The home features three spacious bedrooms and two fully equipped bathrooms, making it ideal for families, couples, or anyone seeking a peaceful retreat surrounded by nature. Inside, you’ll find warm wooden details, exposed stone walls, and a cozy fireplace that creates an inviting atmosphere during winter months. Despite its traditional charm, the house includes modern amenities and thoughtful updates that ensure maximum comfort throughout the year. Perfectly situated for outdoor enthusiasts, the property offers immediate access to some of the region’s best hiking trails, ski slopes (close to Port Ainé and Espot), canoeing routes along the Noguera Pallaresa River, and breathtaking natural landscapes. Whether you’re looking for a serene mountain getaway or a base for year-round adventures, this charming Rialp home delivers the perfect balance of authenticity, comfort, and location.",
         rooms: 3,
         bathrooms: 2,
-        area: 180
+        area: 180,
+        Interests: ["hiking", "skiing", "nature", "canoe"]
     },
     {
         id: "fake-6",
@@ -25,13 +27,15 @@ export const HOUSES = [
         longitude: 1.135,
         title: "Mountain View Villa",
         price: "€550,000",
+        condition: "SALE",
         image: "/images/Torre-Caballe-Catalonia-Olivers-Travels1.jpg",
         address: "Carrer de la Font, 8, 25597 Rialp, Lleida",
         description:
             "Spacious villa offering stunning mountain views, a large garden, and a private pool.",
         rooms: 4,
         bathrooms: 3,
-        area: 250
+        area: 250,
+        Interests: ["hiking", "skiing", "nature"]
     }
 ];
 
