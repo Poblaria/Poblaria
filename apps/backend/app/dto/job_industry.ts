@@ -10,7 +10,11 @@ export default class JobIndustryDto {
     toJson() {
         return {
             id: this.model.id,
-            name: this.i18n.t(`seeders.job_industries.${this.model.name}`)
+            name: this.i18n.t(
+                `seeders.job_industries.${this.model.name}`,
+                undefined,
+                this.model.name
+            )
         };
     }
 }

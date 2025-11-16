@@ -10,7 +10,11 @@ export default class HousingTypeDto {
     toJson() {
         return {
             id: this.model.id,
-            name: this.i18n.t(`seeders.housing_types.${this.model.name}`)
+            name: this.i18n.t(
+                `seeders.housing_types.${this.model.name}`,
+                undefined,
+                this.model.name
+            )
         };
     }
 }

@@ -10,7 +10,7 @@ export default class JobTypeDto {
     toJson() {
         return {
             id: this.model.id,
-            name: this.i18n.t(`seeders.job_types.${this.model.name}`)
+            name: this.i18n.t(`seeders.job_types.${this.model.name}`, undefined, this.model.name)
         };
     }
 }
