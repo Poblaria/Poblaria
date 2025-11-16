@@ -2,8 +2,8 @@
 
 ## 🔌 API Communication
 
-In order to the frontend to be able to communicate with the API, **Tuyau** files must be generated.\
-Everytime a new route/controller is added to the project or a `request.validateUsing` is added in a controller method, this command must be run to update the generated files used by the frontend:
+In order for the frontend to be able to communicate with the API, **Tuyau** files must be generated.\
+Every time a new route/controller is added to the project or a `request.validateUsing` is added in a controller method, this command must be run to update the generated files used by the frontend:
 
 ```bash
 node ace tuyau:generate
