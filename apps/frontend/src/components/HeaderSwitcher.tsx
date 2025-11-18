@@ -5,20 +5,20 @@ import { NavBar } from "@/components/NavBar";
 import { NavBarHome } from "@/components/NavBarHomePage";
 
 export const HeaderSwitcher = () => {
-  const pathname = usePathname();
+    const pathname = usePathname();
 
-  const useHomeHeader = pathname === "/";
+    const useHomeHeader = pathname === "/";
 
-  if (useHomeHeader) {
+    if (useHomeHeader) {
+        return (
+            <>
+                <NavBarHome />
+            </>
+        );
+    }
     return (
-      <>
-        <NavBarHome />
-      </>
+        <>
+            <NavBar />
+        </>
     );
-  }
-  return (
-    <>
-      <NavBar />
-    </>
-  );
 };

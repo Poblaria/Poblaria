@@ -21,15 +21,15 @@ export const NavBar = () => {
     };
 
     const navItemStyle = (path: string) => ({
-        backgroundColor: pathname === path ? "#83A16C" : "",
-        color: pathname === path ? "white" : "black",
-        borderRadius: "8px",
-        padding: "8px 10px",
-        minWidth: "50px",     
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "6px",            
+        "backgroundColor": pathname === path ? "#83A16C" : "",
+        "color": pathname === path ? "white" : "black",
+        "borderRadius": "8px",
+        "padding": "8px 10px",
+        "minWidth": "50px",
+        "display": "flex",
+        "alignItems": "center",
+        "justifyContent": "center",
+        "gap": "6px",
         "&:hover": {
             backgroundColor: "#c9e0bbff",
             color: "white"

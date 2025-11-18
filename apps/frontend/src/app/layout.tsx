@@ -5,18 +5,18 @@ import { HeaderSwitcher } from "@/components/HeaderSwitcher";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Poblaria",
-  description: "Poblaria — revive villages, connect lives",
+    title: "Poblaria",
+    description: "Poblaria — revive villages, connect lives"
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en">
-      <body>
-        <I18nInit />
-        <HeaderSwitcher />
-        {children}
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body>
+                <I18nInit />
+                <HeaderSwitcher />
+                {children}
+            </body>
+        </html>
+    );
 }
