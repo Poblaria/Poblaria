@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { NavBarHome } from "@/components/NavBarHome";
+import { NavBarHome } from "@/components/NavBarHomePage";
 import I18nInit from "@/components/I18nInit";
 import "./globals.css";
 
