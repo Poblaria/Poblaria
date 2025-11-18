@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Box, Button, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 
 export const NavBarHome = () => {
@@ -19,11 +20,22 @@ export const NavBarHome = () => {
         setLang(newLang);
     };
 
-    const buttonStyle = (path: string) => ({
-        "backgroundColor": pathname === path ? "#5E7749" : "",
-        "color": pathname === path ? "white" : "black",
-        "&:hover": { backgroundColor: "#83A16C", color: "white" }
+    const navItemStyle = (path: string) => ({
+        backgroundColor: pathname === path ? "#83A16C" : "",
+        color: pathname === path ? "white" : "black",
+        borderRadius: "8px",
+        padding: "8px 10px",
+        minWidth: "50px",     
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "6px",            
+        "&:hover": {
+            backgroundColor: "#c9e0bbff",
+            color: "white"
+        }
     });
+
 
     return (
         <nav
@@ -53,24 +65,31 @@ export const NavBarHome = () => {
                     alignItems: "center"
                 }}
             >
-                <Button variant="text" sx={buttonStyle("/")}>
-                    <Link href="/">{t("navbar.home")}</Link>
-                </Button>
-                <Button variant="text" sx={buttonStyle("/explore")}>
-                    <Link href="/explore">{t("navbar.explore")}</Link>
-                </Button>
-                <Button variant="text" sx={buttonStyle("/profile")}>
-                    <Link href="/profile">{t("navbar.profile")}</Link>
+                {/* Home */}
+                <Button
+                    component={Link}
+                    href="/"
+                    variant="text"
+                    sx={navItemStyle("/")}
+                >
+                    {t("navbar.home")}
                 </Button>
 
                 <IconButton
-                    onClick={() => {
-                        void switchLanguage();
-                    }}
-                    title={t("navbar.language")}
+                    component={Link}
+                    href="/profile"
+                    sx={navItemStyle("/profile")}
                 >
-                    <LanguageIcon />
-                    <span style={{ fontSize: "14px", marginLeft: "6px" }}>
+                    <AccountCircleIcon sx={{ fontSize: 30 }} />
+                </IconButton>
+
+                <IconButton
+                    onClick={() => void switchLanguage()}
+                    title={t("navbar.language")}
+                    sx={navItemStyle("lang")}
+                >
+                    <LanguageIcon sx={{ fontSize: 28 }} />
+                    <span style={{ fontSize: "16px", marginLeft: "4px" }}>
                         {lang.toUpperCase()}
                     </span>
                 </IconButton>

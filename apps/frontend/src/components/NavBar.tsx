@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Box, Button, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 
 export const NavBar = () => {
@@ -19,10 +20,20 @@ export const NavBar = () => {
         setLang(newLang);
     };
 
-    const buttonStyle = (path: string) => ({
-        "backgroundColor": pathname === path ? "#5E7749" : "",
-        "color": pathname === path ? "white" : "black",
-        "&:hover": { backgroundColor: "#83A16C", color: "white" }
+    const navItemStyle = (path: string) => ({
+        backgroundColor: pathname === path ? "#83A16C" : "",
+        color: pathname === path ? "white" : "black",
+        borderRadius: "8px",
+        padding: "8px 10px",
+        minWidth: "50px",     
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "6px",            
+        "&:hover": {
+            backgroundColor: "#c9e0bbff",
+            color: "white"
+        }
     });
 
     return (
@@ -53,23 +64,42 @@ export const NavBar = () => {
                     alignItems: "center"
                 }}
             >
-                <Button variant="text" sx={buttonStyle("/")}>
-                    <Link href="/">{t("navbar.home")}</Link>
-                </Button>
-                <Button variant="text" sx={buttonStyle("/explore")}>
-                    <Link href="/explore">{t("navbar.explore")}</Link>
-                </Button>
-                <Button variant="text" sx={buttonStyle("/profile")}>
-                    <Link href="/profile">{t("navbar.profile")}</Link>
+                {/* Home */}
+                <Button
+                    component={Link}
+                    href="/"
+                    variant="text"
+                    sx={navItemStyle("/")}
+                >
+                    {t("navbar.home")}
                 </Button>
 
-                <IconButton
-                    onClick={() => {
-                        void switchLanguage();
-                    }}
-                    title={t("navbar.language")}
+                {/* Explore */}
+                <Button
+                    component={Link}
+                    href="/explore"
+                    variant="text"
+                    sx={navItemStyle("/explore")}
                 >
-                    <LanguageIcon />
+                    {t("navbar.explore")}
+                </Button>
+
+                {/* Profile icon */}
+                <IconButton
+                    component={Link}
+                    href="/profile"
+                    sx={navItemStyle("/profile")}
+                >
+                    <AccountCircleIcon sx={{ fontSize: 28 }} />
+                </IconButton>
+
+                {/* Language icon + code, me të njëjtin hover style */}
+                <IconButton
+                    onClick={() => void switchLanguage()}
+                    title={t("navbar.language")}
+                    sx={navItemStyle("lang")}
+                >
+                    <LanguageIcon sx={{ fontSize: 24 }} />
                     <span style={{ fontSize: "14px", marginLeft: "6px" }}>
                         {lang.toUpperCase()}
                     </span>
