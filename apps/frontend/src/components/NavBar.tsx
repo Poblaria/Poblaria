@@ -59,12 +59,6 @@ export const NavBar = () => {
                 <Button variant="text" sx={buttonStyle("/explore")}>
                     <Link href="/explore">{t("navbar.explore")}</Link>
                 </Button>
-                <Button variant="text" sx={buttonStyle("/resources")}>
-                    <Link href="/resources">{t("navbar.resources")}</Link>
-                </Button>
-                <Button variant="text" sx={buttonStyle("/supportt")}>
-                    <Link href="/support">{t("navbar.support")}</Link>
-                </Button>
                 <Button variant="text" sx={buttonStyle("/profile")}>
                     <Link href="/profile">{t("navbar.profile")}</Link>
                 </Button>
