@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Box, Button, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+//import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useState } from "react";
 
 export const NavBarHome = () => {
