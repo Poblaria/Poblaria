@@ -10,13 +10,3 @@
 | name.
 |
 */
-
-import { Bouncer } from "@adonisjs/bouncer";
-
-/**
- * Delete the following ability to start from
- * scratch
- *
- * @deprecated Don't use me, remove me!
- */
-export const editUser = Bouncer.ability(() => true);
