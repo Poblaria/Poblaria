@@ -10,7 +10,7 @@ export default class HousingPolicy extends BasePolicy {
     }
 
     create(): AuthorizerResponse {
-        return false;
+        return true;
     }
 
     edit(user: User, housing: Housing): AuthorizerResponse {
