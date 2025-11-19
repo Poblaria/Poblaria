@@ -1,9 +1,17 @@
 import { policies } from "#policies/main";
 import * as abilities from "#abilities/main";
 
-import { Bouncer } from "@adonisjs/bouncer";
+import { AuthorizationResponse, Bouncer } from "@adonisjs/bouncer";
 import type { HttpContext } from "@adonisjs/core/http";
 import type { NextFn } from "@adonisjs/core/types/http";
+
+Bouncer.responseBuilder = (response: boolean | AuthorizationResponse) => {
+    if (response instanceof AuthorizationResponse) return response;
+
+    if (response) return AuthorizationResponse.allow();
+
+    return AuthorizationResponse.deny("Resource not found", 404).t("errors.E_NOT_FOUND");
+};
 
 /**
  * Init bouncer middleware is used to create a bouncer instance
