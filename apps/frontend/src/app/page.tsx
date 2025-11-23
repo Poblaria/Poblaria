@@ -224,7 +224,7 @@ export default function Home() {
                             {t("home.cta.subtitle")}
                         </Typography>
                         <Box className="flex flex-col md:flex-row gap-4 justify-center">
-                            <Link href="/contact">
+                            <Link href="/login">
                                 <Button variant="contained" sx={buttonSx()}>
                                     {t("home.cta.button")}
                                 </Button>

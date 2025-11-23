@@ -8,7 +8,7 @@
         "jobs": "Jobs",
         "contact": "Contact",
         "profile": "Profile",
-        "language": "Language"
+        "language": "Change Language"
     },
     "common": {
         "save": "Save",
@@ -46,7 +46,7 @@
         "cta": {
             "title": "Ready for Your New Beginning?",
             "subtitle": "Join us today and take the first step towards discovering a new way of living.",
-            "button": "Contact Our Team"
+            "button": "Get Started"
         }
     }
 }

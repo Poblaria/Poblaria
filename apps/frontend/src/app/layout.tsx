@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { NavBar } from "@/components/NavBar";
 import I18nInit from "@/components/I18nInit";
+import { HeaderSwitcher } from "@/components/HeaderSwitcher";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="en">
             <body>
                 <I18nInit />
-                <NavBar />
+                <HeaderSwitcher />
                 {children}
             </body>
         </html>
