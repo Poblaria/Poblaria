@@ -1,0 +1,53 @@
+{
+    "navbar": {
+        "home": "Accueil",
+        "explore": "Explorer",
+        "housing": "Logement",
+        "resources": "Ressources",
+        "support": "Support",
+        "jobs": "Emplois",
+        "contact": "Contact",
+        "profile": "Profil",
+        "language": "Changer de langue"
+    },
+
+    "common": {
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "back": "Retour"
+    },
+
+    "home": {
+        "hero": {
+            "imgAlt": "Vie à la campagne",
+            "title": "Découvrez une nouvelle façon de vivre",
+            "subtitle": "Faites de la campagne votre chez-vous"
+        },
+        "search": {
+            "title": "Découvrez votre escapade rurale idéale",
+            "placeholder": "Rechercher des villages, emplois, logements..."
+        },
+        "features": {
+            "housing": {
+                "title": "Trouvez votre logement",
+                "desc": "Parcourez des maisons en pierre traditionnelles, des appartements modernes et des options de logement soutenues par la communauté",
+                "cta": "Explorer le logement →"
+            },
+            "jobs": {
+                "title": "Emploi local",
+                "desc": "Découvrez des opportunités dans l’agriculture, le tourisme et les métiers artisanaux traditionnels",
+                "cta": "Voir les offres d’emploi →"
+            },
+            "support": {
+                "title": "Support",
+                "desc": "Accédez à des ressources et des guides pour rendre votre transition vers la vie rurale simple et sans stress",
+                "cta": "Consulter les ressources →"
+            }
+        },
+        "cta": {
+            "title": "Prêt pour un nouveau départ ?",
+            "subtitle": "Rejoignez-nous dès aujourd’hui et faites le premier pas vers une nouvelle façon de vivre.",
+            "button": "Commencer"
+        }
+    }
+}
