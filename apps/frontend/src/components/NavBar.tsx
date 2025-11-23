@@ -8,44 +8,39 @@ import {
   Button,
   IconButton,
   Menu,
-  MenuItem,
-  Typography
+  MenuItem
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { MouseEvent, useMemo, useState } from "react";
 
 export const NavBar = () => {
   const pathname = usePathname();
   const { t, i18n } = useTranslation();
 
-  const supportedLanguages = useMemo(() => {
-    const opts: any = i18n.options;
+  const supportedLanguages = useMemo<string[]>(() => {
+    const { supportedLngs, resources } = i18n.options;
+
     let langs: string[] = [];
 
-    const sup = opts?.supportedLngs;
-    if (Array.isArray(sup)) {
-      langs = sup;
-    } else if (typeof sup === "string") {
-      langs = [sup];
+    if (Array.isArray(supportedLngs)) {
+      langs = supportedLngs.filter(
+        (lng): lng is string => typeof lng === "string"
+      );
+    } else if (typeof supportedLngs === "string") {
+      langs = [supportedLngs];
     }
 
-    if (!langs.length) {
-      const res =
-        opts?.resources ??
-        (i18n as any).store?.data;
-
-      if (res) {
-        langs = Object.keys(res);
-      }
+    if (!langs.length && resources && typeof resources === "object") {
+      langs = Object.keys(resources as Record<string, unknown>);
     }
 
     return langs.filter((lng) => lng && lng !== "cimode" && lng !== "dev");
-  }, [i18n]);
+  }, [i18n.options]);
 
-  const getLanguageLabel = (code: string) => {
-    return t(`languages.${code}`, code.toUpperCase());
-  };
+  const getLanguageLabel = (code: string) =>
+    t(`languages.${code}`, code.toUpperCase());
 
   const initialLang =
     (supportedLanguages.includes(i18n.language) && i18n.language) ||
@@ -53,7 +48,6 @@ export const NavBar = () => {
     "en";
 
   const [lang, setLang] = useState<string>(initialLang);
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -61,9 +55,7 @@ export const NavBar = () => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleCloseLanguageMenu = () => {
-    setAnchorEl(null);
-  };
+  const handleCloseLanguageMenu = () => setAnchorEl(null);
 
   const handleSelectLanguage = async (code: string) => {
     await i18n.changeLanguage(code);
@@ -72,19 +64,16 @@ export const NavBar = () => {
   };
 
   const buttonStyle = (path: string) => ({
-        backgroundColor: pathname === path ? "#83A16C" : "",
-        color: pathname === path ? "white" : "black",
-        borderRadius: "8px",
-        padding: "8px 10px",
-        minWidth: "50px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "6px",
-        "&:hover": {
-            backgroundColor: "#c9e0bbff",
-            color: "white"
-        }
+    backgroundColor: pathname === path ? "#83A16C" : "",
+    color: pathname === path ? "white" : "black",
+    borderRadius: "8px",
+    padding: "8px 10px",
+    minWidth: "50px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "6px",
+    "&:hover": { backgroundColor: "#c9e0bbff", color: "white" }
   });
 
   return (
@@ -118,12 +107,18 @@ export const NavBar = () => {
         <Button variant="text" sx={buttonStyle("/")}>
           <Link href="/">{t("navbar.home")}</Link>
         </Button>
+
         <Button variant="text" sx={buttonStyle("/explore")}>
           <Link href="/explore">{t("navbar.explore")}</Link>
         </Button>
-        <Button variant="text" sx={buttonStyle("/profile")}>
-          <Link href="/profile">{t("navbar.profile")}</Link>
-        </Button>
+
+        <IconButton
+          component={Link}
+          href="/profile"
+          sx={buttonStyle("/profile")}
+        >
+          <AccountCircleIcon sx={{ fontSize: 28 }} />
+        </IconButton>
 
         <IconButton
           onClick={handleOpenLanguageMenu}
