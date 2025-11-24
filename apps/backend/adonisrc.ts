@@ -29,7 +29,8 @@ export default defineConfig({
         () => import("@adonisjs/core/commands"),
         () => import("@adonisjs/lucid/commands"),
         () => import("@tuyau/core/commands"),
-        () => import("@tuyau/openapi/commands")
+        () => import("@tuyau/openapi/commands"),
+        () => import("@adonisjs/bouncer/commands")
     ],
 
     /*
@@ -54,7 +55,8 @@ export default defineConfig({
         () => import("@adonisjs/auth/auth_provider"),
         () => import("@adonisjs/i18n/i18n_provider"),
         () => import("@tuyau/core/tuyau_provider"),
-        () => import("@tuyau/openapi/openapi_provider")
+        () => import("@tuyau/openapi/openapi_provider"),
+        () => import("@adonisjs/bouncer/bouncer_provider")
     ],
 
     /*

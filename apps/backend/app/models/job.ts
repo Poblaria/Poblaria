@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import type { BelongsTo } from "@adonisjs/lucid/types/relations";
 import JobType from "#models/job_type";
 import JobIndustry from "#models/job_industry";
+import User from "#models/user";
 
 export default class Job extends BaseModel {
     @column({ isPrimary: true })
@@ -52,4 +53,10 @@ export default class Job extends BaseModel {
 
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     declare updatedAt: DateTime;
+
+    @column({ serializeAs: null })
+    declare userId: number | null;
+
+    @belongsTo(() => User)
+    declare user: BelongsTo<typeof User> | null;
 }
