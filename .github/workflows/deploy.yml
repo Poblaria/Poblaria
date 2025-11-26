@@ -12,6 +12,7 @@ on:
 env:
   DEPLOY_PATH: ~/apps/poblaria
   GITHUB_TOKEN_PATH: /tmp/github_token.txt
+  OPENPGP_PASSPHRASE_PATH: /tmp/openpgp_passphrase.txt
 
 jobs:
   build-push-image:
@@ -57,26 +58,31 @@ jobs:
       - name: Add remote server to known_hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT || 22 }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Copy GITHUB_TOKEN to remote server
+      - name: Copy GITHUB_TOKEN and OpenPGP secret key passphrase to remote server
         run: |
           echo -n "${{ secrets.GITHUB_TOKEN }}" > ${{ env.GITHUB_TOKEN_PATH }}
+          echo -n "${{ secrets.OPENPGP_PASSPHRASE }}" > ${{ env.OPENPGP_PASSPHRASE_PATH }}
           scp -i ~/.ssh/deploy_key -P ${{ secrets.SSH_PORT || 22 }} ${{ env.GITHUB_TOKEN_PATH }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ env.GITHUB_TOKEN_PATH }}
-          rm ${{ env.GITHUB_TOKEN_PATH }}
+          scp -i ~/.ssh/deploy_key -P ${{ secrets.SSH_PORT || 22 }} ${{ env.OPENPGP_PASSPHRASE_PATH }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ env.OPENPGP_PASSPHRASE_PATH }}
+          rm -f ${{ env.GITHUB_TOKEN_PATH }}
+          rm -f ${{ env.OPENPGP_PASSPHRASE_PATH }}
 
-#      - name: Deploy to server
-#        run: |
-#          ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT || 22 }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-#            set -euo pipefail
-#            cat ${{ env.GITHUB_TOKEN_PATH }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-#            rm ${{ env.GITHUB_TOKEN_PATH }}
-#            cd ${{ env.DEPLOY_PATH }}
-#            if [ -f .env ] && grep -q '^DOCKER_TAG=' .env 2>/dev/null; then
-#              sed -i 's/^DOCKER_TAG=.*/DOCKER_TAG=${{ github.sha }}/' .env
-#            else
-#              echo 'DOCKER_TAG=${{ github.sha }}' >> .env
-#            fi
-#            docker compose up -d
-#          EOF
+      - name: Deploy to server
+        run: |
+          ssh -i ~/.ssh/deploy_key -p ${{ secrets.SSH_PORT || 22 }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            set -euo pipefail
+            gpg --decrypt ~/.password-store/docker-credential-helpers/*/${{ github.actor }}.gpg
+            cat ${{ env.GITHUB_TOKEN_PATH }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            rm -f ${{ env.GITHUB_TOKEN_PATH }}
+            cd ${{ env.DEPLOY_PATH }}
+            if [ -f .env ] && grep -q '^DOCKER_TAG=' .env 2>/dev/null; then
+              sed -i 's/^DOCKER_TAG=.*/DOCKER_TAG=${{ github.sha }}/' .env
+            else
+              echo 'DOCKER_TAG=${{ github.sha }}' >> .env
+            fi
+            docker compose up -d
+            rm -f ${{ env.OPENPGP_PASSPHRASE_PATH }}
+          EOF
 
       - name: Cleanup SSH
         if: always()
