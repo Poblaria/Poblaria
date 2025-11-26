@@ -66,7 +66,7 @@ jobs:
             set -euo pipefail
             cat ${{ env.GITHUB_TOKEN_PATH }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             rm ${{ env.GITHUB_TOKEN_PATH }}
-            cd "${{ env.DEPLOY_PATH }}"
+            cd ${{ env.DEPLOY_PATH }}
             if [ -f .env ] && grep -q '^DOCKER_TAG=' .env 2>/dev/null; then
               sed -i 's/^DOCKER_TAG=.*/DOCKER_TAG=${{ github.sha }}/' .env
             else
