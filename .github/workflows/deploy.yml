@@ -73,7 +73,7 @@ jobs:
             set -euo pipefail
             trap 'rm -f ${{ env.GITHUB_TOKEN_PATH }} ; rm -f ${{ env.OPENPGP_PASSPHRASE_PATH }}' EXIT
             export GPG_TTY=$(tty)
-            gpg --decrypt ~/.password-store/docker-credential-helpers/*/${{ github.actor }}.gpg
+            gpg --passphrase-file ${{ env.OPENPGP_PASSPHRASE_PATH }} --decrypt ~/.password-store/docker-credential-helpers/*/${{ github.actor }}.gpg
             cat ${{ env.GITHUB_TOKEN_PATH }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             rm -f ${{ env.GITHUB_TOKEN_PATH }}
             cd ${{ env.DEPLOY_PATH }}
