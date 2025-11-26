@@ -1,6 +1,6 @@
 ---
-name: Poblaria Deployment
-run-name: "[Deploy] ${{ github.event.head_commit.message || github.ref_name }}"
+name: Poblaria Build
+run-name: "[Build] ${{ github.event.head_commit.message || github.ref_name }}"
 
 on:
   push:
@@ -8,9 +8,6 @@ on:
 #      - main
 #    tags:
 #      - 'v*'
-
-env:
-  DEPLOY_PATH: ~/apps/poblaria
 
 jobs:
   build-push-image:
