@@ -28,9 +28,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Build the Docker image
-        run: docker build . --file apps/${{ matrix.project }}/Dockerfile  --tag ghcr.io/poblaria/${{ matrix.project }}:${{ github.sha }}
-
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
@@ -38,15 +35,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Push the Docker image to the GitHub registry
-        run: docker push ghcr.io/poblaria/${{ matrix.project }}:${{ github.sha }}
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/${{ matrix.project }}/Dockerfile
+          push: true
+          tags: ghcr.io/poblaria/${{ matrix.project }}:${{ github.sha }}
 
   deploy:
     runs-on: ubuntu-latest
     needs: build-push-image
-    permissions:
-      contents: read
-      packages: read
 
     steps:
       - name: Setup SSH
@@ -64,8 +63,6 @@ jobs:
           echo -n "${{ secrets.OPENPGP_PASSPHRASE }}" > ${{ env.OPENPGP_PASSPHRASE_PATH }}
           scp -i ~/.ssh/deploy_key -P ${{ secrets.SSH_PORT || 22 }} ${{ env.GITHUB_TOKEN_PATH }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ env.GITHUB_TOKEN_PATH }}
           scp -i ~/.ssh/deploy_key -P ${{ secrets.SSH_PORT || 22 }} ${{ env.OPENPGP_PASSPHRASE_PATH }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ env.OPENPGP_PASSPHRASE_PATH }}
-          rm -f ${{ env.GITHUB_TOKEN_PATH }}
-          rm -f ${{ env.OPENPGP_PASSPHRASE_PATH }}
 
       - name: Deploy to server
         run: |
@@ -87,6 +84,9 @@ jobs:
             rm -f ${{ env.OPENPGP_PASSPHRASE_PATH }}
           EOF
 
-      - name: Cleanup SSH
+      - name: Cleanup
         if: always()
-        run: rm -f ~/.ssh/deploy_key
+        run: |
+          rm -f ~/.ssh/deploy_key
+          rm -f ${{ env.GITHUB_TOKEN_PATH }}
+          rm -f ${{ env.OPENPGP_PASSPHRASE_PATH }}
