@@ -7,7 +7,8 @@ import {
     Typography,
     Button,
     Card,
-    CardMedia
+    CardMedia,
+    Paper
 } from "@mui/material";
 import {
     ContactSupport as ContactSupportIcon,
@@ -15,6 +16,7 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Home() {
     const { t } = useTranslation();
@@ -209,6 +211,35 @@ export default function Home() {
                     </Box>
                 </Box>
             </section>
+
+            {/* Newsletter Section */}
+            <Box sx={{ py: 12, bgcolor: "#5E7749", textAlign: "center" }}>
+                <Paper
+                    elevation={3}
+                    sx={{
+                        maxWidth: 600, // Increase the width
+                        mx: "auto",
+                        p: 4, // Reduce padding to make it less tall
+                        borderRadius: 4,
+                        textAlign: "center",
+                        backgroundColor: "white"
+                    }}
+                >
+                    <Typography
+                        variant="h5"
+                        fontWeight={700}
+                        mb={2}
+                        sx={{ color: "#4A7741" }}
+                    >
+                        Subscribe to our Newsletter
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" mb={3}>
+                        Get the latest updates about our villages, jobs, and
+                        events.
+                    </Typography>
+                    <NewsletterForm />
+                </Paper>
+            </Box>
 
             <section className="py-16 bg-white text-black">
                 <Box className="container mx-auto px-4 text-center">
