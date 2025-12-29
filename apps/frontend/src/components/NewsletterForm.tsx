@@ -43,9 +43,6 @@ export default function NewsletterForm() {
 
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
-            <Typography sx={{ mt: 0.5, mb: 3, color: "#2E3A28", opacity: 0.9 }}>
-                Subscribe to receive updated of this amazing journey!
-            </Typography>
 
             {/* Row inputs*/}
             <Box

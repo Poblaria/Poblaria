@@ -5,8 +5,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import NewsletterForm from "@/components/NewsletterForm";
 
 export default function Footer() {
-    const bg = "#EEF1EA"; // light green-ish
-    const accent = "#5E7749"; // poblaria green
+    const bg = "#EEF1EA";
+    const accent = "#5E7749";
     const text = "#2E3A28";
 
     return (
@@ -16,15 +16,15 @@ export default function Footer() {
                     maxWidth: 1200,
                     mx: "auto",
                     px: { xs: 3, md: 6 },
-                    display: "grid",
-                    gridTemplateColumns: { xs: "1fr", md: "1.2fr 0.8fr" },
+                    display: "flex",
+                    flexDirection: { xs: "column", md: "row" },
                     gap: { xs: 6, md: 10 },
-                    alignItems: "start"
+                    alignItems: "center",
+                    justifyContent: "space-between"
                 }}
             >
                 {/* LEFT: Brand + newsletter */}
-                <Box>
-                    {/* “Logo” placeholder */}
+                <Box sx={{ flex: 1 }}>
                     <Typography
                         sx={{
                             fontSize: 42,
@@ -37,14 +37,19 @@ export default function Footer() {
                     >
                         NEWSLETTER
                     </Typography>
-
+                    <Typography
+                        sx={{ mt: 0.5, mb: 3, color: "#2E3A28", opacity: 0.9 }}
+                    >
+                        Subscribe to receive updated of this amazing journey!
+                    </Typography>
                     <NewsletterForm />
                 </Box>
 
-                {/* Social + links */}
-                <Box sx={{ textAlign: { xs: "left", md: "right" } }}>
+                {/* RIGHT: Instagram and links */}
+                <Box sx={{ flex: 1, textAlign: { xs: "left", md: "right" } }}>
                     <Stack
                         spacing={2}
+                        direction="row"
                         justifyContent={{ xs: "flex-start", md: "flex-end" }}
                         sx={{
                             "flexWrap": "wrap",
@@ -62,12 +67,13 @@ export default function Footer() {
                         <Link href="/faq">FAQ</Link>
                         <Link href="/About us">About us</Link>
                         <Link href="/contact">Contact</Link>
+                        <Link href="/admin/upload">Administrator</Link>
                     </Stack>
                     <Stack
                         direction="row"
                         spacing={3}
                         justifyContent={{ xs: "flex-start", md: "flex-end" }}
-                        sx={{ mb: 5, color: accent, mt: 4}}
+                        sx={{ mb: 5, color: accent, mt: 4 }}
                     >
                         <Link href="#" color="inherit" aria-label="Instagram">
                             <InstagramIcon fontSize="large" />
