@@ -1,84 +1,139 @@
 "use client";
+
 import { useState } from "react";
-import { TextField, Button, Alert, Box, Typography } from "@mui/material";
+import {
+    Box,
+    TextField,
+    IconButton,
+    Typography,
+    FormControlLabel,
+    Checkbox,
+    Alert
+} from "@mui/material";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
 export default function NewsletterForm() {
-  const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "success" | "error" | "loading">("idle");
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [accepted, setAccepted] = useState(false);
+    const [status, setStatus] = useState<
+        "idle" | "success" | "error" | "loading"
+    >("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("loading");
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus("loading");
 
-    // For now it's just a mockup of the submission process
-    setTimeout(() => {
-      if (email.includes("@")) {
-        setStatus("success");
-        setEmail("");
-      } else {
-        setStatus("error");
-      }
-    }, 1000);
-  };
+        // Mockup, change after backend is ready
+        setTimeout(() => {
+            if (email.includes("@") && accepted) {
+                setStatus("success");
+                setName("");
+                setEmail("");
+                setAccepted(false);
+            } else {
+                setStatus("error");
+            }
+        }, 800);
+    };
 
-  return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit}
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-        width: "100%",
-        maxWidth: 400,
-        mx: "auto",
-        p: 2,
-        borderRadius: 2,
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-        backgroundColor: "#F0F5F0",
-      }}
-    >
-      <TextField
-        label="Your email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        fullWidth
-        sx={{
-          "& .MuiInputBase-root": {
-            borderRadius: 1,
-          },
-        }}
-      />
-      <Button
-        variant="contained"
-        type="submit"
-        disabled={status === "loading"}
-        fullWidth
-        sx={{
-          backgroundColor: "#5E7749",
-          "&:hover": {
-            backgroundColor: "#4A7741",
-          },
-          "&:disabled": {
-            backgroundColor: "#A9B8A0",
-          },
-        }}
-      >
-        {status === "loading" ? "Subscribing..." : "Subscribe"}
-      </Button>
+    const borderColor = "#E6EAE4";
+    const accent = "#5E7749";
+    const bg = "#F6F7F4";
 
-      {status === "success" && (
-        <Alert severity="success" sx={{ mt: 2, backgroundColor: "#E8F5E9", color: "#4CAF50" }}>
-          Subscribed successfully!
-        </Alert>
-      )}
-      {status === "error" && (
-        <Alert severity="error" sx={{ mt: 2, backgroundColor: "#FDECEA", color: "#D32F2F" }}>
-          Invalid email. Try again.
-        </Alert>
-      )}
-    </Box>
-  );
+    return (
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+            <Typography sx={{ mt: 0.5, mb: 3, color: "#2E3A28", opacity: 0.9 }}>
+                Subscribe to receive updated of this amazing journey!
+            </Typography>
+
+            {/* Row inputs*/}
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: { xs: "1fr", md: "1fr 1fr auto" },
+                    gap: 2,
+                    alignItems: "center"
+                }}
+            >
+                <TextField
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    fullWidth
+                    sx={{
+                        "& .MuiInputBase-root": {
+                            borderRadius: 2,
+                            backgroundColor: bg
+                        },
+                        "& fieldset": { borderColor }
+                    }}
+                />
+
+                <TextField
+                    placeholder="Email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    fullWidth
+                    sx={{
+                        "& .MuiInputBase-root": {
+                            borderRadius: 2,
+                            backgroundColor: bg
+                        },
+                        "& fieldset": { borderColor }
+                    }}
+                />
+
+                {/* Round arrow button */}
+                <IconButton
+                    type="submit"
+                    disabled={status === "loading" || !accepted}
+                    aria-label="subscribe"
+                    sx={{
+                        "width": 48,
+                        "height": 48,
+                        "borderRadius": "999px",
+                        "backgroundColor": accent,
+                        "color": "white",
+                        "&:hover": { backgroundColor: "#83A16C" },
+                        "&.Mui-disabled": {
+                            backgroundColor: "#A9B8A0",
+                            color: "#ffffff"
+                        }
+                    }}
+                >
+                    <ArrowForwardRoundedIcon />
+                </IconButton>
+            </Box>
+
+            {/* Checkbox line */}
+            <FormControlLabel
+                sx={{ mt: 2, color: "#2E3A28" }}
+                control={
+                    <Checkbox
+                        checked={accepted}
+                        onChange={(e) => setAccepted(e.target.checked)}
+                        sx={{
+                            "color": accent,
+                            "&.Mui-checked": { color: accent }
+                        }}
+                    />
+                }
+                label="I have read and accept the terms and conditions of the website."
+            />
+
+            {status === "success" && (
+                <Alert severity="success" sx={{ mt: 2 }}>
+                    Subscribed successfully!
+                </Alert>
+            )}
+            {status === "error" && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                    Check your email and accept the conditions.
+                </Alert>
+            )}
+        </Box>
+    );
 }
