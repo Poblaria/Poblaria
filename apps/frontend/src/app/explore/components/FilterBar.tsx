@@ -10,7 +10,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import WorkIcon from "@mui/icons-material/Work";
 import HomeIcon from "@mui/icons-material/Home";
 import JobFiltersForm from "./JobFilterComponent";
-import HousingFiltersForm from "./HouseFilterComponent";
+import HousingFilterWizard from "./housing-filter/HousingFilterWizard";
 
 export type DataType = "jobs" | "houses";
 
@@ -147,11 +147,18 @@ export default function FilterBar(props: FilterBarProps) {
                         onFilterChange={handleJobFilterChange}
                     />
                 ) : (
-                    <HousingFiltersForm
-                        onClose={toggleShowFilters}
-                        onFilter={onFilter}
-                        housingFilters={housingFilters}
-                        onFilterChange={handleHousingFilterChange}
+                    <HousingFilterWizard
+                        onShowResults={(filters) => {
+                            console.log("FINAL HOUSE FILTERS:", filters);
+
+                            // këtu:
+                            // - API call
+                            // - ose update search params
+                            // - ose state global
+
+                            onFilter();
+                            toggleShowFilters();
+                        }}
                     />
                 )}
             </Dialog>
