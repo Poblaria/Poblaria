@@ -5,46 +5,68 @@ import {
     Box,
     TextField,
     IconButton,
-    Typography,
     FormControlLabel,
     Checkbox,
     Alert
 } from "@mui/material";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
+import { subscribeNewsletter } from "@/app/actions/newsletter/newsletter";
 
 export default function NewsletterForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [accepted, setAccepted] = useState(false);
-    const [status, setStatus] = useState<
-        "idle" | "success" | "error" | "loading"
-    >("idle");
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setStatus("loading");
-
-        // Mockup, change after backend is ready
-        setTimeout(() => {
-            if (email.includes("@") && accepted) {
-                setStatus("success");
-                setName("");
-                setEmail("");
-                setAccepted(false);
-            } else {
-                setStatus("error");
-            }
-        }, 800);
-    };
+    const [status, setStatus] = useState<"idle" | "success" | "error" | "loading">("idle");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const borderColor = "#E6EAE4";
     const accent = "#5E7749";
     const bg = "#F6F7F4";
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Frontend validation
+        if (!accepted) {
+            setErrorMessage("You must accept the terms and conditions.");
+            setStatus("error");
+            return;
+        }
+        if (!email.includes("@")) {
+            setErrorMessage("Please enter a valid email address.");
+            setStatus("error");
+            return;
+        }
+
+        setStatus("loading");
+
+        try {
+            const res = await fetch("/api/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, first_name: name })
+            });
+
+            if (!res.ok) {
+                const data = await res.json();
+                throw new Error(data.message || "Failed to subscribe");
+            }
+
+            setStatus("success");
+            setErrorMessage("");
+            setName("");
+            setEmail("");
+            setAccepted(false);
+        } catch (err: any) {
+            setStatus("error");
+            setErrorMessage(err.message || "Check your email and accept the conditions.");
+        }
+    };
+
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
 
-            {/* Row inputs*/}
+            {/* Row inputs */}
             <Box
                 sx={{
                     display: "grid",
@@ -89,11 +111,11 @@ export default function NewsletterForm() {
                     disabled={status === "loading" || !accepted}
                     aria-label="subscribe"
                     sx={{
-                        "width": 48,
-                        "height": 48,
-                        "borderRadius": "999px",
-                        "backgroundColor": accent,
-                        "color": "white",
+                        width: 48,
+                        height: 48,
+                        borderRadius: "999px",
+                        backgroundColor: accent,
+                        color: "white",
                         "&:hover": { backgroundColor: "#83A16C" },
                         "&.Mui-disabled": {
                             backgroundColor: "#A9B8A0",
@@ -113,7 +135,7 @@ export default function NewsletterForm() {
                         checked={accepted}
                         onChange={(e) => setAccepted(e.target.checked)}
                         sx={{
-                            "color": accent,
+                            color: accent,
                             "&.Mui-checked": { color: accent }
                         }}
                     />
@@ -128,7 +150,7 @@ export default function NewsletterForm() {
             )}
             {status === "error" && (
                 <Alert severity="error" sx={{ mt: 2 }}>
-                    Check your email and accept the conditions.
+                    {errorMessage || "Check your email and accept the conditions."}
                 </Alert>
             )}
         </Box>
