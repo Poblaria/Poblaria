@@ -13,5 +13,6 @@
 
 export const policies = {
     HousingPolicy: () => import("#policies/housing_policy"),
-    JobPolicy: () => import("#policies/job_policy")
+    JobPolicy: () => import("#policies/job_policy"),
+    NewsletterPolicy: () => import("#policies/newsletter_policy")
 };

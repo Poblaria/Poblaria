@@ -87,6 +87,18 @@ type JobTypesGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/offer_properties_controller.ts').default['jobTypes'], false>
 }
+type NewsletterSubscribePost = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/newsletter.ts')['newsletterValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['subscribe'], true>
+}
+type NewsletterUnsubscribeIdPost = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['unsubscribe'], false>
+}
+type NewsletterSendPost = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['send'], false>
+}
 export interface ApiDefinition {
   'register': {
     '$url': {
@@ -174,6 +186,25 @@ export interface ApiDefinition {
     };
     '$get': JobTypesGetHead;
     '$head': JobTypesGetHead;
+  };
+  'newsletter': {
+    'subscribe': {
+      '$url': {
+      };
+      '$post': NewsletterSubscribePost;
+    };
+    'unsubscribe': {
+      ':id': {
+        '$url': {
+        };
+        '$post': NewsletterUnsubscribeIdPost;
+      };
+    };
+    'send': {
+      '$url': {
+      };
+      '$post': NewsletterSendPost;
+    };
   };
 }
 const routes = [
@@ -316,6 +347,27 @@ const routes = [
     path: '/job-types',
     method: ["GET","HEAD"],
     types: {} as JobTypesGetHead,
+  },
+  {
+    params: [],
+    name: 'newsletter.subscribe',
+    path: '/newsletter/subscribe',
+    method: ["POST"],
+    types: {} as NewsletterSubscribePost,
+  },
+  {
+    params: ["id"],
+    name: 'newsletter.unsubscribe',
+    path: '/newsletter/unsubscribe/:id',
+    method: ["POST"],
+    types: {} as NewsletterUnsubscribeIdPost,
+  },
+  {
+    params: [],
+    name: 'newsletter.send',
+    path: '/newsletter/send',
+    method: ["POST"],
+    types: {} as NewsletterSendPost,
   },
 ] as const;
 export const api = {
