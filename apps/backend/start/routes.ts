@@ -15,6 +15,7 @@ const HousingController = () => import("#controllers/housing_controller");
 const HousingImageController = () => import("#controllers/housing_image_controller");
 const JobController = () => import("#controllers/job_controller");
 const OfferPropertyController = () => import("#controllers/offer_properties_controller");
+const NewsletterController = () => import("#controllers/newsletter_controller");
 
 /**
  * Health check route
@@ -54,3 +55,15 @@ router
         router.get("job-types", [OfferPropertyController, "jobTypes"]).as("job-types");
     })
     .as("offer-properties");
+
+router
+    .group(() => {
+        router.post("subscribe", [NewsletterController, "subscribe"]).as("subscribe");
+        router
+            .post("unsubscribe/:id", [NewsletterController, "unsubscribe"])
+            .where("id", router.matchers.number())
+            .as("unsubscribe");
+        router.post("send", [NewsletterController, "send"]).use(middleware.auth()).as("send");
+    })
+    .prefix("newsletter")
+    .as("newsletter");
