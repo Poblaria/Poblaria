@@ -1,11 +1,26 @@
 "use client";
 
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Box, IconButton, Paper, TextField, Typography, Chip, Stack, Slider,Popover, MenuItem, ListItemIcon, Checkbox, Divider } from "@mui/material";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Box,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+  Chip,
+  Stack,
+  Slider,
+  Popover,
+  MenuItem,
+  ListItemIcon,
+  Checkbox,
+  Divider,
+} from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
 import getHousingTypes, { type HousingTypesResponse } from "@actions/housings/properties/getHousingTypes";
 import type { HousingWizardFilters } from "./HousingFilterWizard";
 
@@ -52,19 +67,18 @@ export default function Step1WhatLookingFor({
     return safe.includes(item) ? safe.filter((x) => x !== item) : [...safe, item];
   };
 
-// popover anchors
-const [rentAnchor, setRentAnchor] = useState<HTMLElement | null>(null);
-const [restAnchor, setRestAnchor] = useState<HTMLElement | null>(null);
+  // Popover anchors (no any)
+  const [rentAnchor, setRentAnchor] = useState<HTMLElement | null>(null);
+  const [restAnchor, setRestAnchor] = useState<HTMLElement | null>(null);
 
-const rentOpen = Boolean(rentAnchor);
-const restOpen = Boolean(restAnchor);
+  const rentOpen = Boolean(rentAnchor);
+  const restOpen = Boolean(restAnchor);
 
-const openRentPopover = (e: React.MouseEvent<HTMLElement>) => setRentAnchor(e.currentTarget);
-const closeRentPopover = () => setRentAnchor(null);
+  const openRentPopover = (e: React.MouseEvent<HTMLButtonElement>) => setRentAnchor(e.currentTarget);
+  const closeRentPopover = () => setRentAnchor(null);
 
-const openRestPopover = (e: React.MouseEvent<HTMLElement>) => setRestAnchor(e.currentTarget);
-const closeRestPopover = () => setRestAnchor(null);
-
+  const openRestPopover = (e: React.MouseEvent<HTMLButtonElement>) => setRestAnchor(e.currentTarget);
+  const closeRestPopover = () => setRestAnchor(null);
 
   return (
     <Paper
@@ -134,6 +148,7 @@ const closeRestPopover = () => setRestAnchor(null);
         step={1000}
       />
 
+      {/* Purpose */}
       <Typography sx={{ fontWeight: 700, mb: 1, mt: 3 }}>Purpose</Typography>
 
       <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 3 }}>
@@ -146,28 +161,52 @@ const closeRestPopover = () => setRestAnchor(null);
           sx={{
             borderRadius: "12px",
             borderColor: "#D8D8D8",
-            ...(filters.purposeMain === "BUY" && { backgroundColor: "#E9F2E4", borderColor: "#83A16C", fontWeight: 700 }),
+            ...(filters.purposeMain === "BUY" && {
+              backgroundColor: "#E9F2E4",
+              borderColor: "#83A16C",
+              fontWeight: 700,
+            }),
           }}
         />
 
-        {/* RENT (me shigjet + popover) */}
+        {/* RENT chip (arrow opens popover) */}
         <Chip
-          label="Rent"
           clickable
           onClick={() =>
-            setFilters((prev) => ({
-              ...prev,
-              purposeMain: prev.purposeMain === "RENT" ? null : "RENT",
-            }))
+            setFilters((prev) => {
+              const next = prev.purposeMain === "RENT" ? null : "RENT";
+              return {
+                ...prev,
+                purposeMain: next,
+                ...(next !== "RENT" ? { rentSub: [] } : {}),
+              };
+            })
           }
-          onDelete={(e) => openRentPopover(e as any)} 
-          deleteIcon={<ExpandMoreIcon />}
+          label={
+            <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
+              <span>Rent</span>
+              <IconButton
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openRentPopover(e);
+                }}
+                sx={{ p: 0.25 }}
+                aria-label="Open rent options"
+              >
+                <ExpandMoreIcon fontSize="small" />
+              </IconButton>
+            </Box>
+          }
           variant={filters.purposeMain === "RENT" ? "filled" : "outlined"}
           sx={{
             borderRadius: "12px",
             borderColor: "#D8D8D8",
-            ...(filters.purposeMain === "RENT" && { backgroundColor: "#E9F2E4", borderColor: "#83A16C", fontWeight: 700 }),
-            "& .MuiChip-deleteIcon": { marginRight: 0.5 },
+            ...(filters.purposeMain === "RENT" && {
+              backgroundColor: "#E9F2E4",
+              borderColor: "#83A16C",
+              fontWeight: 700,
+            }),
           }}
         />
 
@@ -176,7 +215,10 @@ const closeRestPopover = () => setRestAnchor(null);
           label="Co-living"
           clickable
           onClick={() =>
-            setFilters((prev) => ({ ...prev, purposeMain: prev.purposeMain === "CO_LIVING" ? null : "CO_LIVING" }))
+            setFilters((prev) => ({
+              ...prev,
+              purposeMain: prev.purposeMain === "CO_LIVING" ? null : "CO_LIVING",
+            }))
           }
           variant={filters.purposeMain === "CO_LIVING" ? "filled" : "outlined"}
           sx={{
@@ -211,17 +253,36 @@ const closeRestPopover = () => setRestAnchor(null);
             }),
           }}
         />
+
+        {/* RESTORATION chip (arrow opens popover) */}
         <Chip
-          label="Restoration project"
           clickable
           onClick={() =>
-            setFilters((prev) => ({
-              ...prev,
-              purposeMain: prev.purposeMain === "RESTORATION_PROJECT" ? null : "RESTORATION_PROJECT",
-            }))
+            setFilters((prev) => {
+              const next = prev.purposeMain === "RESTORATION_PROJECT" ? null : "RESTORATION_PROJECT";
+              return {
+                ...prev,
+                purposeMain: next,
+                ...(next !== "RESTORATION_PROJECT" ? { restorationSub: [] } : {}),
+              };
+            })
           }
-          onDelete={(e) => openRestPopover(e as any)}
-          deleteIcon={<ExpandMoreIcon />}
+          label={
+            <Box sx={{ display: "inline-flex", alignItems: "center", gap: 0.5 }}>
+              <span>Restoration project</span>
+              <IconButton
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  openRestPopover(e);
+                }}
+                sx={{ p: 0.25 }}
+                aria-label="Open renovation options"
+              >
+                <ExpandMoreIcon fontSize="small" />
+              </IconButton>
+            </Box>
+          }
           variant={filters.purposeMain === "RESTORATION_PROJECT" ? "filled" : "outlined"}
           sx={{
             borderRadius: "12px",
@@ -231,7 +292,6 @@ const closeRestPopover = () => setRestAnchor(null);
               borderColor: "#83A16C",
               fontWeight: 700,
             }),
-            "& .MuiChip-deleteIcon": { marginRight: 0.5 },
           }}
         />
       </Stack>
@@ -273,7 +333,7 @@ const closeRestPopover = () => setRestAnchor(null);
         anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         transformOrigin={{ vertical: "top", horizontal: "left" }}
       >
-        <Box sx={{ p: 1, minWidth: 260 }}>
+        <Box sx={{ p: 1, minWidth: 280 }}>
           <Typography sx={{ fontWeight: 800, fontSize: 13, px: 1, py: 0.5 }}>Renovation options</Typography>
           <Divider />
           {restorationOptions.map((opt) => {
