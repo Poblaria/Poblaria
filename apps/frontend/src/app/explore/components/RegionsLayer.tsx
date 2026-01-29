@@ -1,4 +1,5 @@
-"use client";
+{/*
+    "use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { GeoJSON } from "react-leaflet";
@@ -238,3 +239,4 @@ export default function RegionsLayer({
         </>
     );
 }
+*/}
