@@ -24,26 +24,29 @@ type MapComponentProps = {
     error: string | null;
 };
 
-function ZoomListener({ onZoomChange }: { onZoomChange: (zoom: number) => void }) {
-  const map = useMap();
+function ZoomListener({
+    onZoomChange
+}: {
+    onZoomChange: (zoom: number) => void;
+}) {
+    const map = useMap();
 
-  useEffect(() => {
-    const handleZoom = () => {
-      onZoomChange(map.getZoom());
-    };
+    useEffect(() => {
+        const handleZoom = () => {
+            onZoomChange(map.getZoom());
+        };
 
-    handleZoom();
+        handleZoom();
 
-    map.on("zoomend", handleZoom);
+        map.on("zoomend", handleZoom);
 
-    return () => {
-      void map.off("zoomend", handleZoom);
-    };
-  }, [map, onZoomChange]);
+        return () => {
+            void map.off("zoomend", handleZoom);
+        };
+    }, [map, onZoomChange]);
 
-  return null;
+    return null;
 }
-
 
 function MapViewController({
     center,
