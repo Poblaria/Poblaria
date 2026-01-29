@@ -38,11 +38,11 @@ export default function Home() {
             >
                 <Card
                     sx={{
-                    height: "90%",
-                    position: "relative",
-                    borderRadius: 3,
-                    overflow: "hidden"
-                }}
+                        height: "90%",
+                        position: "relative",
+                        borderRadius: 3,
+                        overflow: "hidden"
+                    }}
                 >
                     <CardMedia>
                         <Image
@@ -51,7 +51,6 @@ export default function Home() {
                             layout="fill"
                             objectFit="cover"
                             quality={100}
-                            
                         />
                     </CardMedia>
 
@@ -63,11 +62,11 @@ export default function Home() {
                             transform: "translateX(-50%)",
                             textAlign: "center",
                             color: "white",
-                            zIndex: 2, 
+                            zIndex: 2,
                             borderRadius: 15
                         }}
                     >
-                        { /*<Typography variant="h3" fontWeight={700}>
+                        {/*<Typography variant="h3" fontWeight={700}>
                             {t("home.hero.title")}
                         </Typography>
                         <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
