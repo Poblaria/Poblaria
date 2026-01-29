@@ -63,13 +63,13 @@ export default function HousingFilterWizard({
                 <Step1WhatLookingFor
                     filters={filters}
                     setFilters={setFilters}
-                    onNext={() => setStep(2)} // ✅ shigjeta jeshile
+                    onNext={() => setStep(2)}
                 />
             ) : (
                 <Step2KeepSearching
                     filters={filters}
                     setFilters={setFilters}
-                    onBack={() => setStep(1)} // ✅ shigjeta mbrapa
+                    onBack={() => setStep(1)}
                     onReset={resetAll}
                     onShowResults={() => onShowResults(filters)}
                 />

@@ -18,6 +18,14 @@
     },
 
     "home": {
+        "regionSelector": {
+            "label": "Sélectionnez votre pays",
+            "placeholder": "Choisissez un pays",
+            "france": "France",
+            "spain": "Espagne",
+            "reset": "Réinitialiser la sélection",
+            "selected": "Pays sélectionné :"
+        },
         "hero": {
             "imgAlt": "Vie à la campagne",
             "title": "Découvrez une nouvelle façon de vivre",

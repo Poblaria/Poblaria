@@ -17,6 +17,15 @@
     },
 
     "home": {
+        "regionSelector": {
+            "label": "Select Your Country",
+            "placeholder": "Choose a country",
+            "france": "France",
+            "spain": "Spain",
+            "reset": "Reset Selection",
+            "selected": "Selected Country:"
+        
+        },
         "hero": {
             "imgAlt": "Countryside Living",
             "title": "Discover a New Way of Living",

@@ -16,6 +16,14 @@
         "back": "Atrás"
     },
     "home": {
+        "regionSelector": {
+            "label": "Selecciona tu país",
+            "placeholder": "Elige un país",
+            "france": "Francia",
+            "spain": "España",
+            "reset": "Restablecer selección",
+            "selected": "País seleccionado:"
+        },
         "hero": {
             "imgAlt": "Vida en el campo",
             "title": "Descubre una nueva forma de vivir",
