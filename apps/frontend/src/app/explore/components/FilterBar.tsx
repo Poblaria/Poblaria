@@ -146,8 +146,7 @@ export default function FilterBar(props: FilterBarProps) {
                     />
                 ) : (
                     <HousingFilterWizard
-                        onShowResults={(filters) => {
-                            console.log("FINAL HOUSE FILTERS:", filters);
+                        onShowResults={() => {
                             onFilter();
                             toggleShowFilters();
                         }}
