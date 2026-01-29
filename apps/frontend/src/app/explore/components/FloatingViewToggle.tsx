@@ -4,10 +4,10 @@ import { Map as MapIcon, List as ListItemIcon } from "@mui/icons-material";
 
 type Props = {
     viewMode: "map" | "list";
-    onToogle: () => void;
+    onToggle: () => void;
 };
 
-export default function FloatingViewToggle({ viewMode, onToogle }: Props) {
+export default function FloatingViewToggle({ viewMode, onToggle }: Props) {
     const isMap = viewMode === "map";
 
     return (
@@ -15,7 +15,7 @@ export default function FloatingViewToggle({ viewMode, onToogle }: Props) {
             <Tooltip title={isMap ? "Show list" : "Show map"} placement="right">
                 <IconButton
                     aria-label={isMap ? "show list" : "show map"}
-                    onClick={onToogle}
+                    onClick={onToggle}
                     sx={{
                         "width": 56,
                         "height": 56,

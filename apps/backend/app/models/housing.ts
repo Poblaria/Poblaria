@@ -5,6 +5,7 @@ import HousingImage from "#models/housing_image";
 import HousingType from "#models/housing_type";
 import HousingOfferType from "#models/housing_offer_type";
 import HousingCondition from "#models/housing_condition";
+import User from "#models/user";
 
 export default class Housing extends BaseModel {
     @column({ isPrimary: true })
@@ -72,4 +73,10 @@ export default class Housing extends BaseModel {
 
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     declare updatedAt: DateTime;
+
+    @column({ serializeAs: null })
+    declare userId: number | null;
+
+    @belongsTo(() => User)
+    declare user: BelongsTo<typeof User> | null;
 }

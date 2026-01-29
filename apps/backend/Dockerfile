@@ -29,5 +29,9 @@ WORKDIR /app
 COPY --from=production-deps /app/node_modules /app/node_modules
 COPY --from=build /app/apps/backend/build /app
 COPY apps/backend/scripts/entrypoint.sh ./
+RUN addgroup -S nodeapp && adduser -S nodeapp -G nodeapp \
+  && chown -R nodeapp:nodeapp /app \
+  && chmod +x /app/entrypoint.sh
+USER nodeapp
 EXPOSE 8080
 ENTRYPOINT ["./entrypoint.sh"]
