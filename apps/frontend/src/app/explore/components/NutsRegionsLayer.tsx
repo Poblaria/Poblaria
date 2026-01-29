@@ -54,7 +54,7 @@ type NutsProps = GeoJsonProperties & {
 };
 
 type NutsFeature = Feature<Geometry, NutsProps>;
-type NutsFC = FeatureCollection<Geometry, NutsProps>;
+type NutsFeatureCollection = FeatureCollection<Geometry, NutsProps>;
 
 function regionStyle(stroke: string, isSelected: boolean): PathOptions {
     return {
@@ -66,10 +66,7 @@ function regionStyle(stroke: string, isSelected: boolean): PathOptions {
 }
 
 function hoverStyle(): PathOptions {
-    return {
-        weight: 4,
-        fillOpacity: 0.3
-    };
+    return { weight: 4, fillOpacity: 0.3 };
 }
 
 function setLayerStyle(layer: Layer, style: PathOptions) {
@@ -90,19 +87,23 @@ export default function NutsRegionsLayer({
     selectedName: string | null;
     onSelectName: (name: string) => void;
 }) {
-    const [fc, setFc] = useState<NutsFC | null>(null);
+    const [fc, setFc] = useState<NutsFeatureCollection | null>(null);
 
     useEffect(() => {
-        (async () => {
+        void (async () => {
             const res = await fetch(NUTS_PATH);
             if (!res.ok) return;
+
             const json = (await res.json()) as GeoJsonObject;
             if (json.type !== "FeatureCollection") return;
-            setFc(json as NutsFC);
-        })();
+
+            setFc(json as NutsFeatureCollection);
+        })().catch(() => {
+            return;
+        });
     }, []);
 
-    const filtered: NutsFC | null = useMemo(() => {
+    const filtered: NutsFeatureCollection | null = useMemo(() => {
         if (!fc) return null;
 
         const allowedNames = country === "ES" ? SPAIN : FRANCE;
