@@ -2,11 +2,24 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { GeoJSON } from "react-leaflet";
-import type { FeatureCollection, Geometry, Feature } from "geojson";
+import type {
+    Feature,
+    FeatureCollection,
+    GeoJsonObject,
+    GeoJsonProperties,
+    Geometry
+} from "geojson";
+import type {
+    LeafletEvent,
+    Layer,
+    LeafletMouseEvent,
+    PathOptions
+} from "leaflet";
 
 export type Country = "ES" | "FR";
 
 const NUTS_PATH = "/geo/nuts/NUTS_RG_01M_2024_4326_LEVL_2.geojson";
+
 const SPAIN = new Set([
     "Andalucía",
     "Cataluña",
@@ -32,6 +45,42 @@ const FRANCE = new Set([
     "Provence-Alpes-Côte d'Azur"
 ]);
 
+type NutsProps = GeoJsonProperties & {
+    CNTR_CODE: Country;
+    LEVL_CODE: number;
+    NAME_LATN: string;
+    NUTS_ID?: string;
+    NUTS_NAME?: string;
+};
+
+type NutsFeature = Feature<Geometry, NutsProps>;
+type NutsFC = FeatureCollection<Geometry, NutsProps>;
+
+function regionStyle(stroke: string, isSelected: boolean): PathOptions {
+    return {
+        color: stroke,
+        weight: isSelected ? 4 : 2,
+        fillColor: stroke,
+        fillOpacity: isSelected ? 0.35 : 0.18
+    };
+}
+
+function hoverStyle(): PathOptions {
+    return {
+        weight: 4,
+        fillOpacity: 0.3
+    };
+}
+
+function setLayerStyle(layer: Layer, style: PathOptions) {
+    const maybePath = layer as unknown as {
+        setStyle?: (s: PathOptions) => void;
+    };
+    if (typeof maybePath.setStyle === "function") {
+        maybePath.setStyle(style);
+    }
+}
+
 export default function NutsRegionsLayer({
     country,
     selectedName,
@@ -41,24 +90,25 @@ export default function NutsRegionsLayer({
     selectedName: string | null;
     onSelectName: (name: string) => void;
 }) {
-    const [fc, setFc] = useState<FeatureCollection<Geometry> | null>(null);
+    const [fc, setFc] = useState<NutsFC | null>(null);
 
     useEffect(() => {
         (async () => {
             const res = await fetch(NUTS_PATH);
-            if (!res.ok) throw new Error(`Failed to load ${NUTS_PATH}`);
-            const json = (await res.json()) as FeatureCollection<Geometry>;
-            setFc(json);
-        })().catch(console.error);
+            if (!res.ok) return;
+            const json = (await res.json()) as GeoJsonObject;
+            if (json.type !== "FeatureCollection") return;
+            setFc(json as NutsFC);
+        })();
     }, []);
 
-    const filtered = useMemo(() => {
+    const filtered: NutsFC | null = useMemo(() => {
         if (!fc) return null;
 
         const allowedNames = country === "ES" ? SPAIN : FRANCE;
 
-        const features = (fc.features as any[]).filter((f) => {
-            const p = f.properties || {};
+        const features = (fc.features as NutsFeature[]).filter((f) => {
+            const p = f.properties;
             return (
                 p.LEVL_CODE === 2 &&
                 p.CNTR_CODE === country &&
@@ -66,7 +116,7 @@ export default function NutsRegionsLayer({
             );
         });
 
-        return { ...fc, features } as FeatureCollection<Geometry>;
+        return { ...fc, features };
     }, [fc, country]);
 
     if (!filtered) return null;
@@ -76,33 +126,47 @@ export default function NutsRegionsLayer({
     return (
         <GeoJSON
             key={`${country}-${selectedName ?? "none"}`}
-            data={filtered as any}
-            style={(feature: any) => {
-                const name = feature?.properties?.NAME_LATN as string;
-                const isSelected = selectedName === name;
-
-                return {
-                    color: stroke,
-                    weight: isSelected ? 4 : 2,
-                    fillColor: stroke,
-                    fillOpacity: isSelected ? 0.35 : 0.18
-                };
+            data={filtered}
+            style={(feature?: NutsFeature) => {
+                const name = feature?.properties.NAME_LATN;
+                const isSelected = !!name && selectedName === name;
+                return regionStyle(stroke, isSelected);
             }}
-            onEachFeature={(feature: Feature, layer) => {
-                const props: any = (feature as any).properties || {};
-                const name = props.NAME_LATN as string;
+            onEachFeature={(feature: NutsFeature, layer: Layer) => {
+                const name = feature.properties.NAME_LATN;
 
-                layer.bindTooltip(name, { sticky: true });
+                const maybeTooltip = layer as unknown as {
+                    bindTooltip?: (
+                        content: string,
+                        options?: { sticky?: boolean }
+                    ) => void;
+                };
+                if (typeof maybeTooltip.bindTooltip === "function") {
+                    maybeTooltip.bindTooltip(name, { sticky: true });
+                }
 
-                layer.on({
-                    mouseover: (e: any) =>
-                        e.target.setStyle({ weight: 4, fillOpacity: 0.3 }),
-                    mouseout: (e: any) => {
+                const maybeOn = layer as unknown as {
+                    on?: (
+                        handlers: Record<string, (e: LeafletEvent) => void>
+                    ) => void;
+                };
+                if (typeof maybeOn.on !== "function") return;
+
+                maybeOn.on({
+                    mouseover: (e: LeafletEvent) => {
+                        const evt = e as LeafletMouseEvent;
+                        setLayerStyle(
+                            evt.target as unknown as Layer,
+                            hoverStyle()
+                        );
+                    },
+                    mouseout: (e: LeafletEvent) => {
+                        const evt = e as LeafletMouseEvent;
                         const isSelected = selectedName === name;
-                        e.target.setStyle({
-                            weight: isSelected ? 4 : 2,
-                            fillOpacity: isSelected ? 0.35 : 0.18
-                        });
+                        setLayerStyle(
+                            evt.target as unknown as Layer,
+                            regionStyle(stroke, isSelected)
+                        );
                     },
                     click: () => onSelectName(name)
                 });
