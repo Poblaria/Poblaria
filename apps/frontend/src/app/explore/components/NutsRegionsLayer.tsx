@@ -91,16 +91,15 @@ export default function NutsRegionsLayer({
 
     useEffect(() => {
         void (async () => {
-            const res = await fetch(NUTS_PATH);
-            if (!res.ok) return;
+        const res = await fetch(NUTS_PATH);
+        if (!res.ok) return;
 
-            const json = (await res.json()) as GeoJsonObject;
-            if (json.type !== "FeatureCollection") return;
+        const json = (await res.json()) as GeoJsonObject;
+        if (json.type !== "FeatureCollection") return;
 
-            setFc(json as NutsFeatureCollection);
-        })().catch(() => {
-            return;
-        });
+        setFc(json as NutsFeatureCollection);
+        })().catch(() => undefined);
+
     }, []);
 
     const filtered: NutsFeatureCollection | null = useMemo(() => {
