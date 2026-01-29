@@ -6,20 +6,24 @@ import Step1WhatLookingFor from "./HouseFilterComponent1";
 import Step2KeepSearching from "./HouseFilterComponent2";
 
 export type HousingWizardFilters = {
-  // Step 1
   location: string;
   typeIds: number[];
   purposeMain: "BUY" | "RENT" | "CO_LIVING" | "VOLUNTEER_STAY" | "RESTORATION_PROJECT" | null;
+
   rentMode: "ANY" | "MONTHLY" | "WEEKLY" | "DAILY";
   restorationMode: "ANY" | "LIGHT" | "FULL";
+
+  rentSub: ("SHORT_TERM" | "LONG_TERM" | "FURNISHED" | "UNFURNISHED")[];
+  restorationSub: ("ELIGIBLE_FOR_GRANT" | "NEEDS_STRUCTURAL_RENOVATION")[];
+
   budget: [number, number];
   bedrooms: number;
 
-  // Step 2
-  lifestyle: string[]; // p.sh. ["Mountain view", "Pet friendly"]
+  lifestyle: string[];
   condition: "MOVE_IN_READY" | "NEEDS_RENOVATION" | null;
-  nearbyServices: string[]; // p.sh. ["Schools", "Health Center"]
+  nearbyServices: string[];
 };
+
 
 const DEFAULT_FILTERS: HousingWizardFilters = {
   location: "",
@@ -27,6 +31,8 @@ const DEFAULT_FILTERS: HousingWizardFilters = {
   purposeMain: null,
   rentMode: "ANY",
   restorationMode: "ANY",
+  rentSub: [],
+  restorationSub: [],
   budget: [0, 600000],
   bedrooms: 2,
 

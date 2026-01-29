@@ -1,11 +1,11 @@
 "use client";
 
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Box, IconButton, Paper, TextField, Typography, Chip, Stack, Slider } from "@mui/material";
+import { Box, IconButton, Paper, TextField, Typography, Chip, Stack, Slider,Popover, MenuItem, ListItemIcon, Checkbox, Divider } from "@mui/material";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import getHousingTypes, { type HousingTypesResponse } from "@actions/housings/properties/getHousingTypes";
 import type { HousingWizardFilters } from "./HousingFilterWizard";
 
@@ -33,6 +33,38 @@ export default function Step1WhatLookingFor({
       typeIds: prev.typeIds.includes(id) ? prev.typeIds.filter((x) => x !== id) : [...prev.typeIds, id],
     }));
   };
+
+  // ---- Purpose subsections (multi-select) ----
+  const rentOptions = [
+    { value: "SHORT_TERM", label: "Short-term" },
+    { value: "LONG_TERM", label: "Long-term" },
+    { value: "FURNISHED", label: "Furnished" },
+    { value: "UNFURNISHED", label: "Unfurnished" },
+  ] as const;
+
+  const restorationOptions = [
+    { value: "ELIGIBLE_FOR_GRANT", label: "Eligible for grant" },
+    { value: "NEEDS_STRUCTURAL_RENOVATION", label: "Needs structural renovation" },
+  ] as const;
+
+  const toggleInArray = <T,>(arr: T[] | undefined, item: T) => {
+    const safe = arr ?? [];
+    return safe.includes(item) ? safe.filter((x) => x !== item) : [...safe, item];
+  };
+
+// popover anchors
+const [rentAnchor, setRentAnchor] = useState<HTMLElement | null>(null);
+const [restAnchor, setRestAnchor] = useState<HTMLElement | null>(null);
+
+const rentOpen = Boolean(rentAnchor);
+const restOpen = Boolean(restAnchor);
+
+const openRentPopover = (e: React.MouseEvent<HTMLElement>) => setRentAnchor(e.currentTarget);
+const closeRentPopover = () => setRentAnchor(null);
+
+const openRestPopover = (e: React.MouseEvent<HTMLElement>) => setRestAnchor(e.currentTarget);
+const closeRestPopover = () => setRestAnchor(null);
+
 
   return (
     <Paper
@@ -102,73 +134,195 @@ export default function Step1WhatLookingFor({
         step={1000}
       />
 
-      {/* Purpose */}
-<Typography sx={{ fontWeight: 700, mb: 1, mt: 3 }}>Purpose</Typography>
+      <Typography sx={{ fontWeight: 700, mb: 1, mt: 3 }}>Purpose</Typography>
 
-<Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 3 }}>
-  {(["BUY", "RENT", "CO_LIVING", "VOLUNTEER_STAY", "RESTORATION_PROJECT"] as const).map((p) => {
-    const selected = filters.purposeMain === p;
-    const labelMap: Record<typeof p, string> = {
-      BUY: "Buy",
-      RENT: "Rent",
-      CO_LIVING: "Co-living",
-      VOLUNTEER_STAY: "Volunteer stay",
-      RESTORATION_PROJECT: "Restoration project",
-    };
+      <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" sx={{ mb: 3 }}>
+        {/* BUY */}
+        <Chip
+          label="Buy"
+          clickable
+          onClick={() => setFilters((prev) => ({ ...prev, purposeMain: prev.purposeMain === "BUY" ? null : "BUY" }))}
+          variant={filters.purposeMain === "BUY" ? "filled" : "outlined"}
+          sx={{
+            borderRadius: "12px",
+            borderColor: "#D8D8D8",
+            ...(filters.purposeMain === "BUY" && { backgroundColor: "#E9F2E4", borderColor: "#83A16C", fontWeight: 700 }),
+          }}
+        />
 
-    return (
-      <Chip
-        key={p}
-        label={labelMap[p]}
-        clickable
-        onClick={() => setFilters((prev) => ({ ...prev, purposeMain: prev.purposeMain === p ? null : p }))}
-        variant={selected ? "filled" : "outlined"}
-        sx={{
-          borderRadius: "12px",
-          borderColor: "#D8D8D8",
-          ...(selected && { backgroundColor: "#E9F2E4", borderColor: "#83A16C", fontWeight: 700 }),
-        }}
-      />
-    );
-  })}
-</Stack>
+        {/* RENT (me shigjet + popover) */}
+        <Chip
+          label="Rent"
+          clickable
+          onClick={() =>
+            setFilters((prev) => ({
+              ...prev,
+              purposeMain: prev.purposeMain === "RENT" ? null : "RENT",
+            }))
+          }
+          onDelete={(e) => openRentPopover(e as any)} 
+          deleteIcon={<ExpandMoreIcon />}
+          variant={filters.purposeMain === "RENT" ? "filled" : "outlined"}
+          sx={{
+            borderRadius: "12px",
+            borderColor: "#D8D8D8",
+            ...(filters.purposeMain === "RENT" && { backgroundColor: "#E9F2E4", borderColor: "#83A16C", fontWeight: 700 }),
+            "& .MuiChip-deleteIcon": { marginRight: 0.5 },
+          }}
+        />
 
-{/* Bedrooms */}
-<Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
-  <Typography sx={{ fontWeight: 700 }}>Bedrooms</Typography>
+        {/* CO-LIVING */}
+        <Chip
+          label="Co-living"
+          clickable
+          onClick={() =>
+            setFilters((prev) => ({ ...prev, purposeMain: prev.purposeMain === "CO_LIVING" ? null : "CO_LIVING" }))
+          }
+          variant={filters.purposeMain === "CO_LIVING" ? "filled" : "outlined"}
+          sx={{
+            borderRadius: "12px",
+            borderColor: "#D8D8D8",
+            ...(filters.purposeMain === "CO_LIVING" && {
+              backgroundColor: "#E9F2E4",
+              borderColor: "#83A16C",
+              fontWeight: 700,
+            }),
+          }}
+        />
 
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      gap: 1,
-      border: "1px solid #E0E0E0",
-      borderRadius: "12px",
-      px: 1,
-      py: 0.5,
-      backgroundColor: "#FFF",
-    }}
-  >
-    <IconButton
-      size="small"
-      onClick={() => setFilters((p) => ({ ...p, bedrooms: Math.max(0, p.bedrooms - 1) }))}
-    >
-      <RemoveIcon fontSize="small" />
-    </IconButton>
+        {/* VOLUNTEER */}
+        <Chip
+          label="Volunteer stay"
+          clickable
+          onClick={() =>
+            setFilters((prev) => ({
+              ...prev,
+              purposeMain: prev.purposeMain === "VOLUNTEER_STAY" ? null : "VOLUNTEER_STAY",
+            }))
+          }
+          variant={filters.purposeMain === "VOLUNTEER_STAY" ? "filled" : "outlined"}
+          sx={{
+            borderRadius: "12px",
+            borderColor: "#D8D8D8",
+            ...(filters.purposeMain === "VOLUNTEER_STAY" && {
+              backgroundColor: "#E9F2E4",
+              borderColor: "#83A16C",
+              fontWeight: 700,
+            }),
+          }}
+        />
+        <Chip
+          label="Restoration project"
+          clickable
+          onClick={() =>
+            setFilters((prev) => ({
+              ...prev,
+              purposeMain: prev.purposeMain === "RESTORATION_PROJECT" ? null : "RESTORATION_PROJECT",
+            }))
+          }
+          onDelete={(e) => openRestPopover(e as any)}
+          deleteIcon={<ExpandMoreIcon />}
+          variant={filters.purposeMain === "RESTORATION_PROJECT" ? "filled" : "outlined"}
+          sx={{
+            borderRadius: "12px",
+            borderColor: "#D8D8D8",
+            ...(filters.purposeMain === "RESTORATION_PROJECT" && {
+              backgroundColor: "#E9F2E4",
+              borderColor: "#83A16C",
+              fontWeight: 700,
+            }),
+            "& .MuiChip-deleteIcon": { marginRight: 0.5 },
+          }}
+        />
+      </Stack>
 
-    <Typography sx={{ minWidth: 18, textAlign: "center", fontWeight: 800 }}>
-      {filters.bedrooms}
-    </Typography>
+      {/* RENT popover */}
+      <Popover
+        open={rentOpen}
+        anchorEl={rentAnchor}
+        onClose={closeRentPopover}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Box sx={{ p: 1, minWidth: 220 }}>
+          <Typography sx={{ fontWeight: 800, fontSize: 13, px: 1, py: 0.5 }}>Rent options</Typography>
+          <Divider />
+          {rentOptions.map((opt) => {
+            const checked = (filters.rentSub ?? []).includes(opt.value);
+            return (
+              <MenuItem
+                key={opt.value}
+                onClick={() => setFilters((prev) => ({ ...prev, rentSub: toggleInArray(prev.rentSub, opt.value) }))}
+                dense
+              >
+                <ListItemIcon>
+                  <Checkbox edge="start" checked={checked} tabIndex={-1} disableRipple size="small" />
+                </ListItemIcon>
+                {opt.label}
+              </MenuItem>
+            );
+          })}
+        </Box>
+      </Popover>
 
-    <IconButton
-      size="small"
-      onClick={() => setFilters((p) => ({ ...p, bedrooms: Math.min(20, p.bedrooms + 1) }))}
-    >
-      <AddIcon fontSize="small" />
-    </IconButton>
-  </Box>
-</Box>
+      {/* RESTORATION popover */}
+      <Popover
+        open={restOpen}
+        anchorEl={restAnchor}
+        onClose={closeRestPopover}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        transformOrigin={{ vertical: "top", horizontal: "left" }}
+      >
+        <Box sx={{ p: 1, minWidth: 260 }}>
+          <Typography sx={{ fontWeight: 800, fontSize: 13, px: 1, py: 0.5 }}>Renovation options</Typography>
+          <Divider />
+          {restorationOptions.map((opt) => {
+            const checked = (filters.restorationSub ?? []).includes(opt.value);
+            return (
+              <MenuItem
+                key={opt.value}
+                onClick={() =>
+                  setFilters((prev) => ({ ...prev, restorationSub: toggleInArray(prev.restorationSub, opt.value) }))
+                }
+                dense
+              >
+                <ListItemIcon>
+                  <Checkbox edge="start" checked={checked} tabIndex={-1} disableRipple size="small" />
+                </ListItemIcon>
+                {opt.label}
+              </MenuItem>
+            );
+          })}
+        </Box>
+      </Popover>
 
+      {/* Bedrooms */}
+      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mt: 1 }}>
+        <Typography sx={{ fontWeight: 700 }}>Bedrooms</Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            border: "1px solid #E0E0E0",
+            borderRadius: "12px",
+            px: 1,
+            py: 0.5,
+            backgroundColor: "#FFF",
+          }}
+        >
+          <IconButton size="small" onClick={() => setFilters((p) => ({ ...p, bedrooms: Math.max(0, p.bedrooms - 1) }))}>
+            <RemoveIcon fontSize="small" />
+          </IconButton>
+
+          <Typography sx={{ minWidth: 18, textAlign: "center", fontWeight: 800 }}>{filters.bedrooms}</Typography>
+
+          <IconButton size="small" onClick={() => setFilters((p) => ({ ...p, bedrooms: Math.min(20, p.bedrooms + 1) }))}>
+            <AddIcon fontSize="small" />
+          </IconButton>
+        </Box>
+      </Box>
     </Paper>
   );
 }
