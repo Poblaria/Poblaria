@@ -47,9 +47,7 @@ export default function FilterBar(props: FilterBarProps) {
         toggleShowFilters,
         onFilter,
         jobFilters,
-        housingFilters,
         handleJobFilterChange,
-        handleHousingFilterChange
     } = props;
 
     return (
@@ -150,12 +148,6 @@ export default function FilterBar(props: FilterBarProps) {
                     <HousingFilterWizard
                         onShowResults={(filters) => {
                             console.log("FINAL HOUSE FILTERS:", filters);
-
-                            // këtu:
-                            // - API call
-                            // - ose update search params
-                            // - ose state global
-
                             onFilter();
                             toggleShowFilters();
                         }}
