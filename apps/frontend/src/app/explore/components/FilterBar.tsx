@@ -47,7 +47,7 @@ export default function FilterBar(props: FilterBarProps) {
         toggleShowFilters,
         onFilter,
         jobFilters,
-        handleJobFilterChange,
+        handleJobFilterChange
     } = props;
 
     return (

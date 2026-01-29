@@ -7,6 +7,7 @@ The project is hosted under the `Poblaria` GitHub organization and follows a sta
 ### Branch Strategy
 
 We follow a simplified Git Flow strategy:
+
 - `main`: Stable production code.
 - `develop`: Ongoing integration of features.
 - `feature/*`: New functionalities branched from `develop`.
@@ -20,9 +21,11 @@ We follow a simplified Git Flow strategy:
 - **Deploy**: Deployment instructions are located in their respective modules.
 
 ### Frontend
+
 Deployment details and commands are documented in [`frontend/README.md`](../frontend/README.md).
 
 ### Backend
+
 Deployment instructions using Docker Compose are available in [`backend/README.md`](../backend/README.md).
 
 ---

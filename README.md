@@ -6,7 +6,7 @@
 
 ## 🏗️ Monorepo Structure
 
-This project uses a monorepo architecture with *npm workspaces*, including:
+This project uses a monorepo architecture with _npm workspaces_, including:
 
 ```
 poblaria/
@@ -42,38 +42,38 @@ import login from "@actions/auth/login";
 import logout from "@actions/auth/logout";
 
 export default function User() {
-    const [user, setUser] = useState<RegisterResponse | null>(null);
+  const [user, setUser] = useState<RegisterResponse | null>(null);
 
-    useEffect(() => {
-        void register({
-            fullName: null,
-            email: "mail@example.xyz",
-            password: "password"
-        }).then(({ data, error }) => {
-            if (error) console.error(error.errors[0].message);
-            else setUser(data);
-        });
-        void login({ email: "mail@example.xyz", password: "password" }).then(
-            ({ error }) => {
-                if (error) console.error(error.errors[0].message);
-                else console.log("Logged in successfully");
-            }
-        );
-        void logout().then(({ error }) => {
-            if (error) console.error(error.errors[0].message);
-            else console.log("Logged out successfully");
-        });
-    }, []);
-
-    return (
-        <div>
-            {user ? (
-                <p>Registered user: {user.fullName ?? "No name"}</p>
-            ) : (
-                <p>No user registered</p>
-            )}
-        </div>
+  useEffect(() => {
+    void register({
+      fullName: null,
+      email: "mail@example.xyz",
+      password: "password",
+    }).then(({ data, error }) => {
+      if (error) console.error(error.errors[0].message);
+      else setUser(data);
+    });
+    void login({ email: "mail@example.xyz", password: "password" }).then(
+      ({ error }) => {
+        if (error) console.error(error.errors[0].message);
+        else console.log("Logged in successfully");
+      },
     );
+    void logout().then(({ error }) => {
+      if (error) console.error(error.errors[0].message);
+      else console.log("Logged out successfully");
+    });
+  }, []);
+
+  return (
+    <div>
+      {user ? (
+        <p>Registered user: {user.fullName ?? "No name"}</p>
+      ) : (
+        <p>No user registered</p>
+      )}
+    </div>
+  );
 }
 ```
 
@@ -86,12 +86,15 @@ You can also access the raw **OpenAPI** specification in JSON format at `http://
 
 ⚠️ Warning: in production mode, the documentation is not available by default.\
 The `http://localhost:3333/docs` will display nothing, and to make the raw specification available, you first need to generate it running the following command in the `apps/backend` folder:
+
 ```bash
 node ace tuyau:generate:openapi
 ```
+
 However, it's recommended to do that to avoid exposing sensitive information about the API in production.
 
 > Notes about **Tuyau**:
+>
 > - It doesn't detect errors handled through middleware. So for example, 401 Unauthorized errors will be detected as errors but there will be no auto-completion for status 401.
 > - When serialized, an **AdonisJS** model is always of type `ModelObject`, which is pretty similar to `any`. So when a route returns a model instance, **Tuyau** cannot infer the actual type of the model and will use `ModelObject` instead. To solve this, we use DTOs (Data Transfer Objects) to define the exact shape of the data returned by the API.
 >
@@ -106,9 +109,11 @@ There's a `docker-compose.yml` file available in the root of the monorepo. It al
 To use it, you first need to have a `.env` file at the root of the monorepo. You can copy the `.env.example` and edit it if necessary<sup>1</sup> - this `.env.example` is pretty similar to the one in the `apps/backend` folder - except for the `FRONTEND_PORT` variable -, but given that **Docker Compose** cannot use a `.env` file inside a subfolder, it's placed at the root of the monorepo.
 
 > <sup>1</sup> WARNING! In the `.env.example`, the `APP_KEY` variable is empty. To generate one, you can run the following command in the `apps/backend` folder:
+>
 > ```bash
 > node ace generate:key --show
 > ```
+>
 > and then, copy the generated key to the `APP_KEY` variable in the root `.env` file.
 >
 > WARNING!² Default variables in the `.env.example` are very insecure and should never be used in production. Moreover, it's recommended to not use variables from the `.env.example`, given that they aren't really secret.
