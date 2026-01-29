@@ -144,7 +144,7 @@ export default function MapComponent({
                             country === "FR"
                                 ? {
                                       "bgcolor": "#2D5B8A",
-                                      "&:hover": { bgcolor: "#3C73AD" }
+                                      "&:hover": { bgcolor: "#38689c" }
                                   }
                                 : {}
                         }
