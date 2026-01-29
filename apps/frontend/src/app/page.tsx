@@ -38,30 +38,23 @@ export default function Home() {
             >
                 <Card
                     sx={{
-                        height: "100%",
-                        overflow: "hidden",
-                        position: "relative"
-                    }}
+                    height: "90%",
+                    position: "relative",
+                    borderRadius: 3,
+                    overflow: "hidden"
+                }}
                 >
                     <CardMedia>
                         <Image
-                            src="/images/happy-family-pictures.jpg"
+                            src="/images/sven-V7WkmXntA8M-unsplash.jpg"
                             alt={t("home.hero.imgAlt")}
                             layout="fill"
                             objectFit="cover"
-                            quality={90}
+                            quality={100}
+                            
                         />
                     </CardMedia>
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "rgba(0, 0, 0, 0.2)"
-                        }}
-                    />
+
                     <Box
                         sx={{
                             position: "absolute",
@@ -70,15 +63,16 @@ export default function Home() {
                             transform: "translateX(-50%)",
                             textAlign: "center",
                             color: "white",
-                            zIndex: 2
+                            zIndex: 2, 
+                            borderRadius: 15
                         }}
                     >
-                        <Typography variant="h3" fontWeight={700}>
+                        { /*<Typography variant="h3" fontWeight={700}>
                             {t("home.hero.title")}
                         </Typography>
                         <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
                             {t("home.hero.subtitle")}
-                        </Typography>
+                        </Typography> */}
                     </Box>
                 </Card>
             </Box>
