@@ -147,7 +147,7 @@ export default function Explore() {
         // When changing data type, also change it on the query params
 
 
-        
+
     }
     // Do the same thing for other options like houses*/
 
@@ -267,7 +267,7 @@ export default function Explore() {
                     {/* Bottom-right switch (map <-> list) */}
                     <FloatingViewToggle
                         viewMode={viewMode}
-                        onToogle={() =>
+                        onToggle={() =>
                             setViewMode((m) => (m === "map" ? "list" : "map"))
                         }
                     />
