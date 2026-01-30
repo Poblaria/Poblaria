@@ -24,7 +24,8 @@
             "france": "France",
             "spain": "Espagne",
             "reset": "Réinitialiser la sélection",
-            "selected": "Pays sélectionné :"
+            "selected": "Pays sélectionné :",
+            "title": "Sélectionnez votre région"
         },
         "hero": {
             "imgAlt": "Vie à la campagne",

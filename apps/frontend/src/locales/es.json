@@ -22,7 +22,8 @@
             "france": "Francia",
             "spain": "España",
             "reset": "Restablecer selección",
-            "selected": "País seleccionado:"
+            "selected": "País seleccionado:",
+            "title": "Selecciona tu región"
         },
         "hero": {
             "imgAlt": "Vida en el campo",

@@ -23,7 +23,8 @@
             "france": "France",
             "spain": "Spain",
             "reset": "Reset Selection",
-            "selected": "Selected Country:"
+            "selected": "Selected Country:",
+            "title": "Select Your Region"
         },
         "hero": {
             "imgAlt": "Countryside Living",
