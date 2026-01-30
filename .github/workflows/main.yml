@@ -1,100 +1,89 @@
 ---
 name: Poblaria
 run-name: "[Poblaria] ${{ github.event.head_commit.message }}"
+permissions:
+  contents: read
 
 on:
-    push:
+  push:
 
 jobs:
-    lint:
-        name: Lint and check files format
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                project: [backend, frontend]
+  lint:
+    name: Lint and check files format
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [ backend, frontend ]
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-            - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: ${{ matrix.project }}
+      - name: Setup
+        uses: ./.github/actions/setup
 
-            - name: Lint
-              working-directory: ${{ matrix.project }}
-              run: npm run lint
+      - name: Lint
+        working-directory: apps/${{ matrix.project }}
+        run: npm run lint
 
-            - name: Check files format
-              working-directory: ${{ matrix.project }}
-              run: npm run format:check
+      - name: Check files format
+        working-directory: apps/${{ matrix.project }}
+        run: npm run format:check
 
-    typecheck:
-        name: Check types
-        runs-on: ubuntu-latest
-        strategy:
-            fail-fast: false
-            matrix:
-                project: [backend, frontend]
+  typecheck:
+    name: Check types
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [ backend, frontend ]
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-            - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: ${{ matrix.project }}
+      - name: Setup
+        uses: ./.github/actions/setup
 
-            - name: Check types
-              working-directory: ${{ matrix.project }}
-              run: npm run typecheck
+      - name: Check types
+        working-directory: apps/${{ matrix.project }}
+        run: npm run typecheck
 
-    test:
-        name: Run tests
-        runs-on: ubuntu-latest
-        needs: [lint, typecheck]
-        defaults:
-            run:
-                working-directory: backend
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    needs: [ lint, typecheck ]
+    defaults:
+      run:
+        working-directory: apps/backend
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-            - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: backend
+      - name: Setup
+        uses: ./.github/actions/setup
 
-            - name: Initialize environment
-              run: |
-                cp .env.example .env
-                node ace generate:key
+      - name: Run tests
+        run: npm test
 
-            - name: Run tests
-              run: npm test
+  build:
+    name: Build projects
+    runs-on: ubuntu-latest
+    needs: [ lint, typecheck ]
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [ backend, frontend ]
 
-    build:
-        name: Build projects
-        runs-on: ubuntu-latest
-        needs: [lint, typecheck]
-        strategy:
-            fail-fast: false
-            matrix:
-                project: [backend, frontend]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
 
-            - name: Setup
-              uses: ./.github/workflows/setup
-              with:
-                  working-directory: ${{ matrix.project }}
-
-            - name: Build project
-              working-directory: ${{ matrix.project }}
-              run: npm run build
+      - name: Build project
+        working-directory: apps/${{ matrix.project }}
+        run: npm run build

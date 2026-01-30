@@ -1,0 +1,5 @@
+{
+    "E_UNAUTHORIZED_ACCESS": "Acceso no autorizado",
+    "E_AUTHORIZATION_FAILURE": "Acceso denegado",
+    "E_NOT_FOUND": "Recurso no encontrado"
+}
