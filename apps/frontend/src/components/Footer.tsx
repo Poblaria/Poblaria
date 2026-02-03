@@ -67,7 +67,7 @@ export default function Footer() {
                         <Link href="/faq">FAQ</Link>
                         <Link href="/About us">About us</Link>
                         <Link href="/contact">Contact</Link>
-                        <Link href="/admin/upload">Administrator</Link>
+                        <Link href="/admin">Administrator</Link>
                     </Stack>
                     <Stack
                         direction="row"
