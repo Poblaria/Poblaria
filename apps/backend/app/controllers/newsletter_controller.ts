@@ -13,17 +13,23 @@ export default class NewsletterController {
             await request.validateUsing(newsletterValidator)
         );
 
-        const i18n = i18nManager.locale(subscriber.language);
-        await mail.send((message) => {
-            message
-                .to(subscriber.email)
-                .from(env.get("MAIL_FROM_ADDRESS"), "Poblaria")
-                .subject(i18n.t("newsletter.subscribe.subject"))
-                .htmlView("emails/newsletter_subscribed", {
-                    i18n,
-                    unsubscribeUrl: this.unsubscribeUrl(request.host(), subscriber.id)
-                });
-        });
+        /**
+         * Only send confirmation email if the feature is enabled.
+         * This feature can be disabled to avoid using email credits for non-essential emails.
+         */
+        if (env.get("NEWSLETTER_SUBSCRIPTION_CONFIRMATION_EMAIL")) {
+            const i18n = i18nManager.locale(subscriber.language);
+            await mail.send((message) => {
+                message
+                    .to(subscriber.email)
+                    .from(env.get("MAIL_FROM_ADDRESS"), "Poblaria")
+                    .subject(i18n.t("newsletter.subscribe.subject"))
+                    .htmlView("emails/newsletter_subscribed", {
+                        i18n,
+                        unsubscribeUrl: this.unsubscribeUrl(request.host(), subscriber.id)
+                    });
+            });
+        }
 
         return response.noContent();
     }

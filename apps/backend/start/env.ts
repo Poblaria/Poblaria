@@ -35,5 +35,6 @@ export default await Env.create(new URL("../", import.meta.url), {
     |----------------------------------------------------------
     */
     BREVO_API_KEY: Env.schema.string(),
-    MAIL_FROM_ADDRESS: Env.schema.string()
+    MAIL_FROM_ADDRESS: Env.schema.string(),
+    NEWSLETTER_SUBSCRIPTION_CONFIRMATION_EMAIL: Env.schema.boolean()
 });
