@@ -30,7 +30,8 @@ export default defineConfig({
         () => import("@adonisjs/lucid/commands"),
         () => import("@tuyau/core/commands"),
         () => import("@tuyau/openapi/commands"),
-        () => import("@adonisjs/bouncer/commands")
+        () => import("@adonisjs/bouncer/commands"),
+        () => import("@adonisjs/mail/commands")
     ],
 
     /*
@@ -56,7 +57,9 @@ export default defineConfig({
         () => import("@adonisjs/i18n/i18n_provider"),
         () => import("@tuyau/core/tuyau_provider"),
         () => import("@tuyau/openapi/openapi_provider"),
-        () => import("@adonisjs/bouncer/bouncer_provider")
+        () => import("@adonisjs/bouncer/bouncer_provider"),
+        () => import("@adonisjs/mail/mail_provider"),
+        () => import("@adonisjs/core/providers/edge_provider")
     ],
 
     /*
@@ -96,6 +99,10 @@ export default defineConfig({
     metaFiles: [
         {
             pattern: "resources/lang/**/*.{json,yaml,yml}",
+            reloadServer: false
+        },
+        {
+            pattern: "resources/views/**/*.edge",
             reloadServer: false
         }
     ]

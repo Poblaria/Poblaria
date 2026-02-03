@@ -1,0 +1,28 @@
+{
+    "subscribe": {
+        "subject": "¡Bienvenido al Boletín de Poblaria! 🎉",
+        "greeting": "¡Hola!",
+        "welcome": "Bienvenido al Boletín de Poblaria",
+        "thanksMessage": "¡Gracias por suscribirte a nuestro boletín! Estamos encantados de tenerte como parte de nuestra comunidad.",
+        "whatToExpect": "Qué esperar:",
+        "updates": "Actualizaciones regulares sobre nuevas oportunidades de vivienda en áreas rurales",
+        "jobAlerts": "Alertas de empleo que coincidan con tus intereses",
+        "resources": "Recursos útiles para mudarse al campo",
+        "tips": "Consejos y sugerencias para la vida rural",
+        "unsubscribeInfo": "Puedes darte de baja en cualquier momento haciendo clic en el enlace a continuación.",
+        "unsubscribeLink": "Cancelar suscripción al boletín",
+        "footer": "Este correo fue enviado porque te suscribiste al boletín de Poblaria.",
+        "regards": "Saludos cordiales,",
+        "team": "El equipo de Poblaria"
+    },
+    "unsubscribe": {
+        "pageTitle": "Baja Completada - Boletín de Poblaria",
+        "title": "Baja Completada Exitosamente",
+        "subtitle": "Ya no recibirás correos de nuestra parte",
+        "message": "Tu dirección de correo electrónico ha sido eliminada exitosamente de nuestra lista de distribución.",
+        "whatHappensTitle": "¿Qué sucede ahora?",
+        "whatHappensText": "No recibirás más boletines de Poblaria. Sin embargo, siempre puedes volver a suscribirte en cualquier momento si cambias de opinión.",
+        "changeOfMind": "Lamentamos verte partir, pero lo entendemos. ¡Gracias por ser parte de nuestra comunidad!",
+        "footer": "Gracias por visitar Poblaria"
+    }
+}

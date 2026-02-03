@@ -1,0 +1,28 @@
+{
+    "subscribe": {
+        "subject": "Welcome to Poblaria Newsletter! 🎉",
+        "greeting": "Hello!",
+        "welcome": "Welcome to Poblaria Newsletter",
+        "thanksMessage": "Thank you for subscribing to our newsletter! We're excited to have you as part of our community.",
+        "whatToExpect": "What to expect:",
+        "updates": "Regular updates about new housing opportunities in rural areas",
+        "jobAlerts": "Job alerts matching your interests",
+        "resources": "Useful resources for relocating to the countryside",
+        "tips": "Tips and advice for rural living",
+        "unsubscribeInfo": "You can unsubscribe at any time by clicking the link below.",
+        "unsubscribeLink": "Unsubscribe from newsletter",
+        "footer": "This email was sent because you subscribed to Poblaria's newsletter.",
+        "regards": "Best regards,",
+        "team": "The Poblaria Team"
+    },
+    "unsubscribe": {
+        "pageTitle": "Unsubscribed - Poblaria Newsletter",
+        "title": "Successfully Unsubscribed",
+        "subtitle": "You will no longer receive emails from us",
+        "message": "Your email address has been successfully removed from our newsletter mailing list.",
+        "whatHappensTitle": "What happens now?",
+        "whatHappensText": "You won't receive any more newsletters from Poblaria. However, you can always resubscribe at any time if you change your mind.",
+        "changeOfMind": "We're sad to see you go, but we understand. Thank you for being part of our community!",
+        "footer": "Thank you for visiting Poblaria"
+    }
+}

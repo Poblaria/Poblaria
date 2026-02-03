@@ -60,7 +60,7 @@ router
     .group(() => {
         router.post("subscribe", [NewsletterController, "subscribe"]).as("subscribe");
         router
-            .post("unsubscribe/:id", [NewsletterController, "unsubscribe"])
+            .get("unsubscribe/:id", [NewsletterController, "unsubscribe"])
             .where("id", router.matchers.number())
             .as("unsubscribe");
         router.post("send", [NewsletterController, "send"]).use(middleware.auth()).as("send");
