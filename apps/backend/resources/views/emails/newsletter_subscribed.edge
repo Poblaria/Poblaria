@@ -45,25 +45,6 @@
             margin-bottom: 30px;
             color: #555;
         }
-        .benefits {
-            background-color: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 30px 0;
-        }
-        .benefits h3 {
-            margin-top: 0;
-            color: #667eea;
-            font-size: 18px;
-        }
-        .benefits ul {
-            margin: 10px 0;
-            padding-left: 20px;
-        }
-        .benefits li {
-            margin: 10px 0;
-            color: #555;
-        }
         .unsubscribe {
             margin-top: 40px;
             padding-top: 30px;
@@ -93,38 +74,29 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🏡 {{ i18n.t('newsletter.subscribe.welcome') }}</h1>
+<div class="container">
+    <div class="header">
+        <h1>🏡 {{ i18n.t('newsletter.subscribe.welcome') }}</h1>
+    </div>
+    <div class="content">
+        <div class="greeting">
+            {{ i18n.t('newsletter.subscribe.greeting') }}
         </div>
-        <div class="content">
-            <div class="greeting">
-                {{ i18n.t('newsletter.subscribe.greeting') }}
-            </div>
-            <div class="message">
-                {{ i18n.t('newsletter.subscribe.thanksMessage') }}
-            </div>
-            <div class="benefits">
-                <h3>{{ i18n.t('newsletter.subscribe.whatToExpect') }}</h3>
-                <ul>
-                    <li>📊 {{ i18n.t('newsletter.subscribe.updates') }}</li>
-                    <li>💼 {{ i18n.t('newsletter.subscribe.jobAlerts') }}</li>
-                    <li>📚 {{ i18n.t('newsletter.subscribe.resources') }}</li>
-                    <li>💡 {{ i18n.t('newsletter.subscribe.tips') }}</li>
-                </ul>
-            </div>
-            <div class="signature">
-                {{ i18n.t('newsletter.regards') }}<br>
-                <strong>{{ i18n.t('newsletter.team') }}</strong>
-            </div>
-            <div class="unsubscribe">
-                <p>{{ i18n.t('newsletter.unsubscribeInfo') }}</p>
-                <p><a href="{{ unsubscribeUrl }}">{{ i18n.t('newsletter.unsubscribeLink') }}</a></p>
-            </div>
+        <div class="message">
+            {{ i18n.t('newsletter.subscribe.thanksMessage') }}
         </div>
-        <div class="footer">
-            {{ i18n.t('newsletter.footer') }}
+        <div class="signature">
+            {{ i18n.t('newsletter.regards') }}<br>
+            <strong>{{ i18n.t('newsletter.team') }}</strong>
+        </div>
+        <div class="unsubscribe">
+            <p>{{ i18n.t('newsletter.unsubscribeInfo') }}</p>
+            <p><a href="{{ unsubscribeUrl }}">{{ i18n.t('newsletter.unsubscribeLink') }}</a></p>
         </div>
     </div>
+    <div class="footer">
+        {{ i18n.t('newsletter.footer') }}
+    </div>
+</div>
 </body>
 </html>

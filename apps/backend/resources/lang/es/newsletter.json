@@ -3,12 +3,7 @@
         "subject": "¡Bienvenido al Boletín de Poblaria! 🎉",
         "greeting": "¡Hola!",
         "welcome": "Bienvenido al Boletín de Poblaria",
-        "thanksMessage": "¡Gracias por suscribirte a nuestro boletín! Estamos encantados de tenerte como parte de nuestra comunidad.",
-        "whatToExpect": "Qué esperar:",
-        "updates": "Actualizaciones regulares sobre nuevas oportunidades de vivienda en áreas rurales",
-        "jobAlerts": "Alertas de empleo que coincidan con tus intereses",
-        "resources": "Recursos útiles para mudarse al campo",
-        "tips": "Consejos y sugerencias para la vida rural"
+        "thanksMessage": "¡Gracias por suscribirte a nuestro boletín! Estamos encantados de tenerte como parte de nuestra comunidad."
     },
     "unsubscribe": {
         "pageTitle": "Baja Completada - Boletín de Poblaria",

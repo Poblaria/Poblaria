@@ -3,12 +3,7 @@
         "subject": "Welcome to Poblaria Newsletter! 🎉",
         "greeting": "Hello!",
         "welcome": "Welcome to Poblaria Newsletter",
-        "thanksMessage": "Thank you for subscribing to our newsletter! We're excited to have you as part of our community.",
-        "whatToExpect": "What to expect:",
-        "updates": "Regular updates about new housing opportunities in rural areas",
-        "jobAlerts": "Job alerts matching your interests",
-        "resources": "Useful resources for relocating to the countryside",
-        "tips": "Tips and advice for rural living"
+        "thanksMessage": "Thank you for subscribing to our newsletter! We're excited to have you as part of our community."
     },
     "unsubscribe": {
         "pageTitle": "Unsubscribed - Poblaria Newsletter",
