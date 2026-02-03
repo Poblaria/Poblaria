@@ -1,10 +1,12 @@
 import type { HttpContext } from "@adonisjs/core/http";
 import HousingCondition from "#models/housing_condition";
+import HousingLifestyle from "#models/housing_lifestyle";
 import HousingOfferType from "#models/housing_offer_type";
 import HousingType from "#models/housing_type";
 import JobIndustry from "#models/job_industry";
 import JobType from "#models/job_type";
 import HousingConditionDto from "#dto/housing_condition";
+import HousingLifestyleDto from "#dto/housing_lifestyle";
 import HousingOfferTypeDto from "#dto/housing_offer_type";
 import HousingTypeDto from "#dto/housing_type";
 import JobIndustryDto from "#dto/job_industry";
@@ -15,6 +17,13 @@ export default class OfferPropertiesController {
         const housingConditions = await HousingCondition.query().orderBy("id", "asc");
         return housingConditions.map((housingCondition) =>
             new HousingConditionDto(housingCondition, i18n).toJson()
+        );
+    }
+
+    async housingLifestyles({ i18n }: HttpContext) {
+        const housingLifestyle = await HousingLifestyle.query().orderBy("id", "asc");
+        return housingLifestyle.map((housingLifestyle) =>
+            new HousingLifestyleDto(housingLifestyle, i18n).toJson()
         );
     }
 

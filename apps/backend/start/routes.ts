@@ -45,6 +45,9 @@ router
             .get("housing-conditions", [OfferPropertyController, "housingConditions"])
             .as("housing-conditions");
         router
+            .get("housing-lifestyles", [OfferPropertyController, "housingLifestyles"])
+            .as("housing-lifestyles");
+        router
             .get("housing-offer-types", [OfferPropertyController, "housingOfferTypes"])
             .as("housing-offer-types");
         router.get("housing-types", [OfferPropertyController, "housingTypes"]).as("housing-types");

@@ -9,6 +9,7 @@ export default class MainSeeder extends BaseSeeder {
         await this.seed(await import("#database/seeders/housing_type_seeder"));
         await this.seed(await import("#database/seeders/housing_offer_type_seeder"));
         await this.seed(await import("#database/seeders/housing_condition_seeder"));
+        await this.seed(await import("#database/seeders/housing_lifestyle_seeder"));
 
         /**
          * Job seeders

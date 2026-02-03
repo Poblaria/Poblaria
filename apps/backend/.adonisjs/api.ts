@@ -71,6 +71,10 @@ type HousingConditionsGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/offer_properties_controller.ts').default['housingConditions'], false>
 }
+type HousingLifestyleGetHead = {
+    request: unknown
+    response: MakeTuyauResponse<import('../app/controllers/offer_properties_controller.ts').default['housingLifestyles'], false>
+}
 type HousingOfferTypesGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/offer_properties_controller.ts').default['housingOfferTypes'], false>
@@ -151,6 +155,12 @@ export interface ApiDefinition {
     '$get': HousingConditionsGetHead;
     '$head': HousingConditionsGetHead;
   };
+    'housing-lifestyles': {
+        '$url': {
+        };
+        '$get': HousingLifestyleGetHead;
+        '$head': HousingLifestyleGetHead;
+    };
   'housing-offer-types': {
     '$url': {
     };
