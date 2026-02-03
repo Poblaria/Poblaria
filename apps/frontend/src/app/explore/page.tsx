@@ -47,7 +47,8 @@ export default function Explore() {
     const [housingFilters, setHousingFilters] = useState({
         type: [] as number[],
         offerType: [] as number[],
-        condition: [] as number[]
+        condition: [] as number[],
+        lifestyle: [] as number[]
     });
 
     const toggleShowFilters = () => setShowFilters((prev) => !prev);
@@ -81,7 +82,7 @@ export default function Explore() {
     };
 
     const handleHousingFilterChange = (
-        category: "type" | "offerType" | "condition",
+        category: "type" | "offerType" | "condition" | "lifestyle",
         value: number
     ) => {
         setHousingFilters((prev) => ({

@@ -23,6 +23,9 @@ import getHousingOfferTypes, {
 import getHousingConditions, {
     type HousingConditionsResponse
 } from "@actions/housings/properties/getHousingConditions";
+import getHousingLifestyle, {
+    type HousingLifestyleResponse
+} from "@actions/housings/properties/getHousingLifestyle";
 
 type HousingFiltersFormProps = {
     onClose: () => unknown;
@@ -31,9 +34,10 @@ type HousingFiltersFormProps = {
         type: number[];
         offerType: number[];
         condition: number[];
+        lifestyle: number[];
     };
     onFilterChange: (
-        category: "type" | "offerType" | "condition",
+        category: "type" | "offerType" | "condition" | "lifestyle",
         value: number
     ) => unknown;
 };
@@ -47,6 +51,7 @@ export default function HousingFiltersForm({
     const [types, setTypes] = useState<HousingTypesResponse>([]);
     const [offerTypes, setOfferTypes] = useState<HousingOfferTypesResponse>([]);
     const [conditions, setConditions] = useState<HousingConditionsResponse>([]);
+    const [lifestyle, setLifestyle] = useState<HousingLifestyleResponse>([]);
     const [step, setStep] = useState(1);
     const [bedrooms, setBedrooms] = useState(2);
 
@@ -58,6 +63,8 @@ export default function HousingFiltersForm({
             if (offerTypes) setOfferTypes(offerTypes);
             const { data: conditions } = await getHousingConditions();
             if (conditions) setConditions(conditions);
+            const { data: lifestyle } = await getHousingLifestyle();
+            if (lifestyle) setLifestyle(lifestyle);
         })();
     }, []);
 
@@ -181,6 +188,21 @@ export default function HousingFiltersForm({
                     ) : (
                         <>
                             <Box>
+                                <Typography sx={{ fontWeight: "bold", mb: 1.5 }}>Lifestyle</Typography>
+                                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                                    {lifestyle.map((lifestyle: { id: number; name: any; }) => (
+                                        <Button
+                                            key={lifestyle.id}
+                                            variant="outlined"
+                                            onClick={() => onFilterChange("lifestyle", lifestyle.id)}
+                                            sx={getTagStyle(housingFilters.lifestyle.includes(lifestyle.id))}
+                                        >
+                                            {lifestyle.name}
+                                        </Button>
+                                    ))}
+                                </Box>
+                            </Box>
+                            <Box>
                                 <Typography sx={{ fontWeight: "bold", mb: 1.5 }}>Condition</Typography>
                                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                                     {conditions.map((condition: { id: number; name: any; }) => (
@@ -195,33 +217,32 @@ export default function HousingFiltersForm({
                                     ))}
                                 </Box>
                             </Box>
+                            <DialogActions sx={{ p: 3, justifyContent: "space-between", borderTop: "1px solid #EEE" }}>
+                                <Button
+                                    onClick={onClose}
+                                    sx={{ color: "#666", textTransform: "none", textDecoration: "underline" }}
+                                >
+                                    Reset all
+                                </Button>
+                                <Button
+                                    onClick={onFilter}
+                                    variant="contained"
+                                    sx={{
+                                        "backgroundColor": "#83A16C",
+                                        "borderRadius": "12px",
+                                        "textTransform": "none",
+                                        "px": 4,
+                                        "fontWeight": "bold",
+                                        "&:hover": { backgroundColor: "#5E7749" }
+                                    }}
+                                >
+                                    Show results
+                                </Button>
+                            </DialogActions>
                         </>
                     )}
                 </Box>
             </DialogContent>
-
-            <DialogActions sx={{ p: 3, justifyContent: "space-between", borderTop: "1px solid #EEE" }}>
-                <Button
-                    onClick={onClose}
-                    sx={{ color: "#666", textTransform: "none", textDecoration: "underline" }}
-                >
-                    Reset all
-                </Button>
-                <Button
-                    onClick={onFilter}
-                    variant="contained"
-                    sx={{
-                        "backgroundColor": "#83A16C",
-                        "borderRadius": "12px",
-                        "textTransform": "none",
-                        "px": 4,
-                        "fontWeight": "bold",
-                        "&:hover": { backgroundColor: "#5E7749" }
-                    }}
-                >
-                    Show results (24)
-                </Button>
-            </DialogActions>
         </Box>
     );
 }

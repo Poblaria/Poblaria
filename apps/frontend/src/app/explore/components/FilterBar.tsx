@@ -28,13 +28,14 @@ type FilterBarProps = {
         type: number[];
         offerType: number[];
         condition: number[];
+        lifestyle: number[];
     };
     handleJobFilterChange: (
         category: "jobIndustry" | "jobType",
         value: number
     ) => void;
     handleHousingFilterChange: (
-        category: "type" | "offerType" | "condition",
+        category: "type" | "offerType" | "condition" | "lifestyle",
         value: number
     ) => unknown;
 };
