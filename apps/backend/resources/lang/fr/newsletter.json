@@ -8,12 +8,7 @@
         "updates": "Des mises à jour régulières sur les nouvelles opportunités de logement en zone rurale",
         "jobAlerts": "Des alertes d'emploi correspondant à vos intérêts",
         "resources": "Des ressources utiles pour déménager à la campagne",
-        "tips": "Des conseils et astuces pour la vie rurale",
-        "unsubscribeInfo": "Vous pouvez vous désabonner à tout moment en cliquant sur le lien ci-dessous.",
-        "unsubscribeLink": "Se désabonner de la newsletter",
-        "footer": "Cet email a été envoyé car vous vous êtes abonné(e) à la newsletter de Poblaria.",
-        "regards": "Cordialement,",
-        "team": "L'équipe Poblaria"
+        "tips": "Des conseils et astuces pour la vie rurale"
     },
     "unsubscribe": {
         "pageTitle": "Désinscription - Newsletter Poblaria",
@@ -24,5 +19,13 @@
         "whatHappensText": "Vous ne recevrez plus de newsletters de Poblaria. Cependant, vous pouvez toujours vous réabonner à tout moment si vous changez d'avis.",
         "changeOfMind": "Nous sommes tristes de vous voir partir, mais nous comprenons. Merci d'avoir fait partie de notre communauté !",
         "footer": "Merci d'avoir visité Poblaria"
-    }
+    },
+    "send": {
+        "success": "Newsletter envoyée avec succès à {count} abonnés"
+    },
+    "regards": "Cordialement,",
+    "team": "L'équipe Poblaria",
+    "unsubscribeInfo": "Vous pouvez vous désabonner à tout moment en cliquant sur le lien ci-dessous.",
+    "unsubscribeLink": "Se désabonner de la newsletter",
+    "footer": "Vous recevez cet email car vous vous êtes abonné(e) à la newsletter de Poblaria."
 }

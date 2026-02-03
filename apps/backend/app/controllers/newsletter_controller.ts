@@ -4,7 +4,7 @@ import mail from "@adonisjs/mail/services/main";
 import i18nManager from "@adonisjs/i18n/services/main";
 import env from "#start/env";
 import NewsletterSubscriber from "#models/newsletter_subscriber";
-import { newsletterValidator } from "#validators/newsletter";
+import { newsletterValidator, sendNewsletterValidator } from "#validators/newsletter";
 import NewsletterPolicy from "#policies/newsletter_policy";
 
 export default class NewsletterController {
@@ -44,14 +44,48 @@ export default class NewsletterController {
         return view.render("newsletter_unsubscribed", { i18n });
     }
 
-    async send({ bouncer, response }: HttpContext) {
+    async send({ bouncer, logger, request, response }: HttpContext) {
         if (await bouncer.with(NewsletterPolicy).denies("send")) return response.forbidden();
 
-        // TODO
+        const data = await request.validateUsing(sendNewsletterValidator);
 
-        // router.builder().params({ id: sub.id }).makeSigned("newsletter.unsubscribe")
+        const subscribers = await NewsletterSubscriber.all();
+        if (subscribers.length === 0) return response.noContent();
 
-        return response.notImplemented();
+        let errors = 0;
+        const emailPromises = subscribers.map(async (subscriber) => {
+            const i18n = i18nManager.locale(subscriber.language);
+
+            try {
+                await mail.send((message) => {
+                    message
+                        .to(subscriber.email)
+                        .from(env.get("MAIL_FROM_ADDRESS"), "Poblaria")
+                        .subject(data.subject[subscriber.language])
+                        .htmlView("emails/newsletter", {
+                            subject: data.subject[subscriber.language],
+                            content: data.content[subscriber.language],
+                            i18n,
+                            unsubscribeUrl: this.unsubscribeUrl(request.host(), subscriber.id)
+                        });
+                });
+            } catch (error) {
+                logger.error(`Failed to send newsletter to ${subscriber.email}:`, error);
+                ++errors;
+            }
+        });
+
+        await Promise.all(emailPromises);
+
+        const i18n = i18nManager.locale(request.languages()[0] || i18nManager.defaultLocale);
+        return response.ok({
+            message: i18n.formatMessage("newsletter.send.success", {
+                count: subscribers.length - errors,
+                total: subscribers.length
+            }),
+            sentTo: subscribers.length - errors,
+            total: subscribers.length
+        });
     }
 
     private unsubscribeUrl(host: string | null, id: number) {
