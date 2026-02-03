@@ -1,182 +1,193 @@
 <!DOCTYPE html>
 <html lang="{{ i18n.locale }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ i18n.t('newsletter.unsubscribe.pageTitle') }}</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            width: 100%;
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            animation: slideIn 0.5s ease-out;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {{ i18n.t('newsletter.unsubscribe.pageTitle') }}
+        </title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
             }
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 50px 30px;
-            text-align: center;
-        }
-
-        .icon {
-            font-size: 64px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            margin: 0;
-            font-size: 18px;
-            opacity: 0.9;
-        }
-
-        .content {
-            padding: 50px 40px;
-            text-align: center;
-        }
-
-        .message {
-            font-size: 18px;
-            color: #555;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-
-        .info-box {
-            background-color: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin: 30px 0;
-            text-align: left;
-        }
-
-        .info-box p {
-            margin: 10px 0;
-            color: #666;
-            font-size: 16px;
-        }
-
-        .info-box strong {
-            color: #333;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 14px 32px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-            margin-top: 20px;
-        }
-
-        .button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .footer {
-            padding: 30px;
-            background-color: #f8f9fa;
-            text-align: center;
-            color: #777;
-            font-size: 14px;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .footer a {
-            color: #667eea;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            .content {
-                padding: 30px 20px;
+            
+            .container {
+                max-width: 600px;
+                width: 100%;
+                background-color: #ffffff;
+                border-radius: 16px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+                overflow: hidden;
+                animation: slideIn 0.5s ease-out;
             }
-
-            .header h1 {
-                font-size: 26px;
+            
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+            
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
             }
-
+            
+            .header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 50px 30px;
+                text-align: center;
+            }
+            
             .icon {
-                font-size: 48px;
+                font-size: 64px;
+                margin-bottom: 20px;
+                display: block;
             }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <span class="icon">✅</span>
-            <h1>{{ i18n.t('newsletter.unsubscribe.title') }}</h1>
-            <p>{{ i18n.t('newsletter.unsubscribe.subtitle') }}</p>
-        </div>
-
-        <div class="content">
-            <div class="message">
-                {{ i18n.t('newsletter.unsubscribe.message') }}
+            
+            .header h1 {
+                margin: 0;
+                font-size: 32px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            
+            .header p {
+                margin: 0;
+                font-size: 18px;
+                opacity: 0.9;
+            }
+            
+            .content {
+                padding: 50px 40px;
+                text-align: center;
+            }
+            
+            .message {
+                font-size: 18px;
+                color: #555;
+                margin-bottom: 30px;
+                line-height: 1.8;
+            }
+            
+            .info-box {
+                background-color: #f8f9fa;
+                border-left: 4px solid #667eea;
+                padding: 20px;
+                margin: 30px 0;
+                text-align: left;
+            }
+            
+            .info-box p {
+                margin: 10px 0;
+                color: #666;
+                font-size: 16px;
+            }
+            
+            .info-box strong {
+                color: #333;
+            }
+            
+            .button {
+                display: inline-block;
+                padding: 14px 32px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                text-decoration: none;
+                border-radius: 8px;
+                font-size: 16px;
+                font-weight: 600;
+                transition: transform 0.2s, box-shadow 0.2s;
+                margin-top: 20px;
+            }
+            
+            .button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            }
+            
+            .footer {
+                padding: 30px;
+                background-color: #f8f9fa;
+                text-align: center;
+                color: #777;
+                font-size: 14px;
+                border-top: 1px solid #e0e0e0;
+            }
+            
+            .footer a {
+                color: #667eea;
+                text-decoration: none;
+            }
+            
+            .footer a:hover {
+                text-decoration: underline;
+            }
+            
+            @media (max-width: 600px) {
+                .content {
+                    padding: 30px 20px;
+                }
+            
+                .header h1 {
+                    font-size: 26px;
+                }
+            
+                .icon {
+                    font-size: 48px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <span class="icon">✅</span>
+                <h1>
+                    {{ i18n.t('newsletter.unsubscribe.title') }}
+                </h1>
+                <p>
+                    {{ i18n.t('newsletter.unsubscribe.subtitle') }}
+                </p>
             </div>
 
-            <div class="info-box">
-                <p><strong>{{ i18n.t('newsletter.unsubscribe.whatHappensTitle') }}</strong></p>
-                <p>{{ i18n.t('newsletter.unsubscribe.whatHappensText') }}</p>
+            <div class="content">
+                <div class="message">
+                    {{ i18n.t('newsletter.unsubscribe.message') }}
+                </div>
+
+                <div class="info-box">
+                    <p>
+                        <strong>{{ i18n.t('newsletter.unsubscribe.whatHappensTitle') }}</strong>
+                    </p>
+                    <p>
+                        {{ i18n.t('newsletter.unsubscribe.whatHappensText') }}
+                    </p>
+                </div>
+
+                <div class="message">
+                    {{ i18n.t('newsletter.unsubscribe.changeOfMind') }}
+                </div>
             </div>
 
-            <div class="message">
-                {{ i18n.t('newsletter.unsubscribe.changeOfMind') }}
+            <div class="footer">
+                {{ i18n.t('newsletter.unsubscribe.footer') }}
             </div>
         </div>
-
-        <div class="footer">
-            {{ i18n.t('newsletter.unsubscribe.footer') }}
-        </div>
-    </div>
-</body>
+    </body>
 </html>
