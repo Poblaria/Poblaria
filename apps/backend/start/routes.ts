@@ -8,6 +8,7 @@
 */
 
 import router from "@adonisjs/core/services/router";
+import i18nManager from "@adonisjs/i18n/services/main";
 import { middleware } from "#start/kernel";
 
 const AuthController = () => import("#controllers/auth_controller");
@@ -21,6 +22,11 @@ const NewsletterController = () => import("#controllers/newsletter_controller");
  * Health check route
  */
 router.get("/", async ({ response }) => response.noContent());
+
+/**
+ * Languages list route
+ */
+router.get("languages", async () => i18nManager.supportedLocales());
 
 router
     .group(() => {
