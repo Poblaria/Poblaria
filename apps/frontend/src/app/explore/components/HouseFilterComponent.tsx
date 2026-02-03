@@ -48,6 +48,7 @@ export default function HousingFiltersForm({
     const [offerTypes, setOfferTypes] = useState<HousingOfferTypesResponse>([]);
     const [conditions, setConditions] = useState<HousingConditionsResponse>([]);
     const [step, setStep] = useState(1);
+    const [bedrooms, setBedrooms] = useState(2);
 
     useEffect(() => {
         void (async function fetchData() {
@@ -61,7 +62,7 @@ export default function HousingFiltersForm({
     }, []);
 
     const getTagStyle = (isSelected: boolean) => ({
-        "borderRadius": "12px",
+        "borderRadius": "20px",
         "textTransform": "none",
         "padding": "6px 16px",
         "border": "1px solid",
@@ -76,7 +77,12 @@ export default function HousingFiltersForm({
     });
 
     return (
-        <Box sx={{ width: { xs: '100%', sm: 550 }, minHeight: 500, borderRadius: 12 }}>
+        <Box sx={{
+            width: { xs: '100%', sm: 550 },
+            backgroundColor: "white",
+            borderRadius: "32px",
+            overflow: "hidden"
+        }}>
             <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pt: 3 }}>
                 <Stack direction="row" alignItems="center" gap={1}>
                     {step === 2 && (
@@ -146,6 +152,29 @@ export default function HousingFiltersForm({
                                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                                     <Typography variant="caption">€0</Typography>
                                     <Typography variant="caption">€600,000</Typography>
+                                </Box>
+                            </Box>
+                            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                                <Typography sx={{ fontWeight: "bold" }}>Bedrooms</Typography>
+                                <Box sx={{
+                                    display: "flex", alignItems: "center", gap: 2,
+                                    border: "1px solid #E0E0E0", borderRadius: "10px", px: 1, py: 0.5
+                                }}>
+                                    <Button
+                                        onClick={() => setBedrooms(Math.max(0, bedrooms - 1))}
+                                        sx={{ minWidth: 30, color: "black", fontSize: "1.2rem", p: 0 }}
+                                    >
+                                        -
+                                    </Button>
+                                    <Typography sx={{ fontWeight: "bold", minWidth: 20, textAlign: "center" }}>
+                                        {bedrooms}
+                                    </Typography>
+                                    <Button
+                                        onClick={() => setBedrooms(bedrooms + 1)}
+                                        sx={{ minWidth: 30, color: "black", fontSize: "1.2rem", p: 0 }}
+                                    >
+                                        +
+                                    </Button>
                                 </Box>
                             </Box>
                         </>
