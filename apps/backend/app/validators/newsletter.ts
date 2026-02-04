@@ -1,4 +1,5 @@
 import vine, { type VineString } from "@vinejs/vine";
+import type { OptionalModifier } from "@vinejs/vine/schema/base/literal";
 import i18nManager from "@adonisjs/i18n/services/main";
 
 export const newsletterValidator = vine.compile(
@@ -15,16 +16,17 @@ export const newsletterValidator = vine.compile(
 );
 
 function createNewsletterSendSchema() {
-    const supportedLocales = i18nManager.supportedLocales();
+    const subjectSchema: Record<string, VineString | OptionalModifier<VineString>> = {};
+    const contentSchema: Record<string, VineString | OptionalModifier<VineString>> = {};
 
-    const subjectSchema: Record<string, VineString> = {};
-    supportedLocales.forEach((locale) => {
-        subjectSchema[locale] = vine.string().minLength(3).maxLength(200);
-    });
-
-    const contentSchema: Record<string, VineString> = {};
-    supportedLocales.forEach((locale) => {
-        contentSchema[locale] = vine.string().minLength(10);
+    i18nManager.supportedLocales().forEach((locale) => {
+        if (locale === i18nManager.defaultLocale) {
+            subjectSchema[locale] = vine.string().minLength(3).maxLength(200);
+            contentSchema[locale] = vine.string().minLength(10);
+        } else {
+            subjectSchema[locale] = vine.string().minLength(3).maxLength(200).optional();
+            contentSchema[locale] = vine.string().minLength(10).optional();
+        }
     });
 
     return vine.object({

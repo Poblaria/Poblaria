@@ -48,6 +48,7 @@ export default class NewsletterController {
         if (await bouncer.with(NewsletterPolicy).denies("send")) return response.forbidden();
 
         const data = await request.validateUsing(sendNewsletterValidator);
+        const defaultLocale = i18nManager.defaultLocale;
 
         const subscribers = await NewsletterSubscriber.all();
         if (subscribers.length === 0) return response.noContent();
@@ -56,15 +57,21 @@ export default class NewsletterController {
         const emailPromises = subscribers.map(async (subscriber) => {
             const i18n = i18nManager.locale(subscriber.language);
 
+            /**
+             * Default locale subject and content are required in the validator, so they can't be undefined here.
+             */
+            const subject = data.subject[subscriber.language] || data.subject[defaultLocale]!;
+            const content = data.content[subscriber.language] || data.content[defaultLocale]!;
+
             try {
                 await mail.send((message) => {
                     message
                         .to(subscriber.email)
                         .from(env.get("MAIL_FROM_ADDRESS"), "Poblaria")
-                        .subject(data.subject[subscriber.language])
+                        .subject(subject)
                         .htmlView("emails/newsletter", {
-                            subject: data.subject[subscriber.language],
-                            content: data.content[subscriber.language],
+                            subject,
+                            content,
                             i18n,
                             unsubscribeUrl: this.unsubscribeUrl(request.host(), subscriber.id)
                         });
