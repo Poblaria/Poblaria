@@ -26,7 +26,10 @@ router.get("/", async ({ response }) => response.noContent());
 /**
  * Languages list route
  */
-router.get("languages", async () => i18nManager.supportedLocales());
+router.get("languages", async () => ({
+    default: i18nManager.defaultLocale,
+    supported: i18nManager.supportedLocales()
+}));
 
 router
     .group(() => {
