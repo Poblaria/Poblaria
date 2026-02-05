@@ -14,7 +14,7 @@ export default class HousingController {
         return housings.map((housing) => new HousingDto(housing).toJson());
     }
 
-    async store({ request, response }: HttpContext) {
+    async store({ auth, request, response }: HttpContext) {
         const data = await request.validateUsing(postHousingValidator);
 
         let image;
@@ -23,7 +23,9 @@ export default class HousingController {
         const { image: _image, ...housing } = data;
 
         return response.created(
-            new HousingDto(await Housing.create({ ...housing, imageId: image?.id })).toJson()
+            new HousingDto(
+                await Housing.create({ ...housing, imageId: image?.id, userId: auth.user?.id })
+            ).toJson()
         );
     }
 

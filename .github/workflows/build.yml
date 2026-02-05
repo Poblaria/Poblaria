@@ -1,0 +1,41 @@
+---
+name: Poblaria Build
+run-name: "[Build] ${{ github.event.head_commit.message || github.ref_name }}"
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+
+jobs:
+  build-push-image:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [ backend, frontend ]
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: apps/${{ matrix.project }}/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/poblaria/${{ matrix.project }}:latest
+            ghcr.io/poblaria/${{ matrix.project }}:${{ github.sha }}

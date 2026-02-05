@@ -24,4 +24,3 @@
 **/.prettierrc
 **/eslint.config.js
 **/eslint.config.mjs
-**/postcss.config.mjs

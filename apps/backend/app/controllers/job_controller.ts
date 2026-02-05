@@ -9,9 +9,14 @@ export default class JobController {
         return jobs.map((job) => new JobDto(job).toJson());
     }
 
-    async store({ request, response }: HttpContext) {
+    async store({ auth, request, response }: HttpContext) {
         return response.created(
-            new JobDto(await Job.create(await request.validateUsing(postJobValidator))).toJson()
+            new JobDto(
+                await Job.create({
+                    ...(await request.validateUsing(postJobValidator)),
+                    userId: auth.user?.id
+                })
+            ).toJson()
         );
     }
 

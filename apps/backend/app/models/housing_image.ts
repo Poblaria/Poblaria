@@ -11,5 +11,5 @@ export default class HousingImage extends BaseModel {
     declare image: Buffer;
 
     @hasOne(() => Housing)
-    declare housings: HasOne<typeof Housing>;
+    declare housing: HasOne<typeof Housing>;
 }

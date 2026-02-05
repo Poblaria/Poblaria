@@ -49,6 +49,13 @@ export default class extends BaseSchema {
 
             table.timestamp("created_at").notNullable();
             table.timestamp("updated_at").nullable();
+            table
+                .integer("user_id")
+                .nullable()
+                .unsigned()
+                .references("id")
+                .inTable("users")
+                .onDelete("SET NULL");
         });
     }
 
