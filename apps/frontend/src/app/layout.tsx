@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import I18nInit from "@/components/I18nInit";
-import { HeaderSwitcher } from "@/components/HeaderSwitcher";
+import { NavBar } from "@/components/NavBar";
 import "./globals.css";
 import Footer from "@/components/Footer";
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="en">
             <body>
                 <I18nInit />
-                <HeaderSwitcher />
+                <NavBar />
                 {children}
                 <Footer />
             </body>
