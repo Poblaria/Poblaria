@@ -3,6 +3,10 @@ type SubscribeData = {
     firstName?: string;
 };
 
+type SubscribeResponse = {
+    message?: string;
+};
+
 export async function subscribeNewsletter({ email, firstName }: SubscribeData) {
     try {
         const res = await fetch("/api/subscribe", {
@@ -12,7 +16,7 @@ export async function subscribeNewsletter({ email, firstName }: SubscribeData) {
         });
 
         if (!res.ok) {
-            const data: { message?: string } = await res.json();
+            const data: SubscribeResponse = await res.json();
             throw new Error(data.message || "Failed to subscribe");
         }
 

@@ -11,6 +11,10 @@ import {
 } from "@mui/material";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
+type SubscribeResponse = {
+    message?: string;
+};
+
 export default function NewsletterForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -24,7 +28,7 @@ export default function NewsletterForm() {
     const accent = "#5E7749";
     const bg = "#F6F7F4";
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault();
 
         // Frontend validation
@@ -45,11 +49,11 @@ export default function NewsletterForm() {
             const res = await fetch("/api/subscribe", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, first_name: name })
+                body: JSON.stringify({ email, firstName: name })
             });
 
             if (!res.ok) {
-                const data = await res.json();
+                const data: SubscribeResponse = await res.json();
                 throw new Error(data.message || "Failed to subscribe");
             }
 
@@ -58,11 +62,13 @@ export default function NewsletterForm() {
             setName("");
             setEmail("");
             setAccepted(false);
-        } catch (err: any) {
+        } catch (err: unknown) {
+            const errorMessage =
+                err instanceof Error
+                    ? err.message
+                    : "Check your email and accept the conditions.";
             setStatus("error");
-            setErrorMessage(
-                err.message || "Check your email and accept the conditions."
-            );
+            setErrorMessage(errorMessage);
         }
     };
 
