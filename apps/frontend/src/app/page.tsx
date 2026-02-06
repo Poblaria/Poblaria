@@ -7,8 +7,7 @@ import {
     Typography,
     Button,
     Card,
-    CardMedia,
-    Paper
+    CardMedia
 } from "@mui/material";
 import {
     ContactSupport as ContactSupportIcon,
