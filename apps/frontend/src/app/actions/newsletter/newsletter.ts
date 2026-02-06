@@ -1,26 +1,27 @@
-interface SubscribeData {
+type SubscribeData = {
     email: string;
-    first_name?: string;
-}
+    firstName?: string;
+};
 
-export async function subscribeNewsletter({
-    email,
-    first_name
-}: SubscribeData) {
+export async function subscribeNewsletter({ email, firstName }: SubscribeData) {
     try {
         const res = await fetch("/api/subscribe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, first_name })
+            body: JSON.stringify({ email, firstName })
         });
 
         if (!res.ok) {
-            const data = await res.json();
+            const data: { message?: string } = await res.json();
             throw new Error(data.message || "Failed to subscribe");
         }
 
         return { success: true };
-    } catch (error: any) {
-        return { success: false, error: error.message };
+    } catch (error: unknown) {
+        const errorMessage =
+            error instanceof Error
+                ? error.message
+                : "An unknown error occurred";
+        return { success: false, error: errorMessage };
     }
 }
