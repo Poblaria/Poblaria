@@ -9,13 +9,13 @@ export const HeaderSwitcher = () => {
 
     const useHomeHeader = pathname === "/";
 
-    if (useHomeHeader) {
+    {/*if (useHomeHeader) {
         return (
             <>
                 <NavBarHome />
             </>
         );
-    }
+    }*/}
     return (
         <>
             <NavBar />

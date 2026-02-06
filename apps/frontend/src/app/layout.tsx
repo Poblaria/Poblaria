@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import I18nInit from "@/components/I18nInit";
 import { HeaderSwitcher } from "@/components/HeaderSwitcher";
 import "./globals.css";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
     title: "Poblaria",
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <I18nInit />
                 <HeaderSwitcher />
                 {children}
+                <Footer />
             </body>
         </html>
     );
