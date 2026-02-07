@@ -4,10 +4,18 @@ import mail from "@adonisjs/mail/services/main";
 import i18nManager from "@adonisjs/i18n/services/main";
 import env from "#start/env";
 import NewsletterSubscriber from "#models/newsletter_subscriber";
-import { newsletterValidator, sendNewsletterValidator } from "#validators/newsletter";
 import NewsletterPolicy from "#policies/newsletter_policy";
+import { newsletterValidator, sendNewsletterValidator } from "#validators/newsletter";
+import NewsletterSubscriberDto from "#dto/newsletter_subscriber";
 
 export default class NewsletterController {
+    async index({ bouncer, response }: HttpContext) {
+        if (await bouncer.with(NewsletterPolicy).denies("index")) return response.forbidden();
+
+        const subscribers = await NewsletterSubscriber.all();
+        return subscribers.map((subscriber) => new NewsletterSubscriberDto(subscriber).toJson());
+    }
+
     async subscribe({ request, response }: HttpContext) {
         const subscriber = await NewsletterSubscriber.create(
             await request.validateUsing(newsletterValidator)

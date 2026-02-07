@@ -87,17 +87,21 @@ type JobTypesGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/offer_properties_controller.ts').default['jobTypes'], false>
 }
+type NewsletterSubscribersGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['index'], false>
+}
 type NewsletterSubscribePost = {
   request: MakeTuyauRequest<InferInput<typeof import('../app/validators/newsletter.ts')['newsletterValidator']>>
   response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['subscribe'], true>
 }
-type NewsletterUnsubscribeIdPost = {
+type NewsletterUnsubscribeIdGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['unsubscribe'], false>
 }
 type NewsletterSendPost = {
-  request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['send'], false>
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/newsletter.ts')['sendNewsletterValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['send'], true>
 }
 export interface ApiDefinition {
   'register': {
@@ -188,6 +192,12 @@ export interface ApiDefinition {
     '$head': JobTypesGetHead;
   };
   'newsletter': {
+    'subscribers': {
+      '$url': {
+      };
+      '$get': NewsletterSubscribersGetHead;
+      '$head': NewsletterSubscribersGetHead;
+    };
     'subscribe': {
       '$url': {
       };
@@ -197,7 +207,8 @@ export interface ApiDefinition {
       ':id': {
         '$url': {
         };
-        '$post': NewsletterUnsubscribeIdPost;
+        '$get': NewsletterUnsubscribeIdGetHead;
+        '$head': NewsletterUnsubscribeIdGetHead;
       };
     };
     'send': {
@@ -350,6 +361,13 @@ const routes = [
   },
   {
     params: [],
+    name: 'newsletter.subscribers',
+    path: '/newsletter/subscribers',
+    method: ["GET","HEAD"],
+    types: {} as NewsletterSubscribersGetHead,
+  },
+  {
+    params: [],
     name: 'newsletter.subscribe',
     path: '/newsletter/subscribe',
     method: ["POST"],
@@ -359,8 +377,8 @@ const routes = [
     params: ["id"],
     name: 'newsletter.unsubscribe',
     path: '/newsletter/unsubscribe/:id',
-    method: ["POST"],
-    types: {} as NewsletterUnsubscribeIdPost,
+    method: ["GET","HEAD"],
+    types: {} as NewsletterUnsubscribeIdGetHead,
   },
   {
     params: [],
