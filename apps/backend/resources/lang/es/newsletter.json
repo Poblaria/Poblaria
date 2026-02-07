@@ -1,7 +1,7 @@
 {
     "subscribe": {
         "subject": "¡Bienvenido al Boletín de Poblaria! 🎉",
-        "greeting": "¡Hola!",
+        "greeting": "¡Hola { name }!",
         "welcome": "Bienvenido al Boletín de Poblaria",
         "thanksMessage": "¡Gracias por suscribirte a nuestro boletín! Estamos encantados de tenerte como parte de nuestra comunidad."
     },

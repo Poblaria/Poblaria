@@ -26,6 +26,7 @@ export default class NewsletterController {
                     .subject(i18n.t("newsletter.subscribe.subject"))
                     .htmlView("emails/newsletter_subscribed", {
                         i18n,
+                        name: subscriber.name,
                         unsubscribeUrl: this.unsubscribeUrl(request.host(), subscriber.id)
                     });
             });

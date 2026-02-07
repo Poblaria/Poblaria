@@ -11,6 +11,7 @@ export const newsletterValidator = vine.compile(
                 async (query, field) =>
                     !(await query.from("newsletter_subscribers").where("email", field).first())
             ),
+        name: vine.string().minLength(3).maxLength(255),
         language: vine.enum(i18nManager.supportedLocales())
     })
 );
