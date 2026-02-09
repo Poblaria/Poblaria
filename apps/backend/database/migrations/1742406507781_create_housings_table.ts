@@ -8,13 +8,7 @@ export default class extends BaseSchema {
             table.increments("id").notNullable();
             table.string("title").notNullable();
             table.text("description").nullable();
-            table
-                .integer("image_id")
-                .nullable()
-                .unsigned()
-                .references("id")
-                .inTable("housing_images")
-                .onDelete("CASCADE");
+            table.string("image_name").nullable();
             table.integer("price").notNullable().unsigned();
             table
                 .integer("type_id")

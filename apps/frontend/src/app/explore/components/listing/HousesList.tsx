@@ -96,7 +96,13 @@ export default function HousesList({
                             {house.image && (
                                 <CardMedia
                                     component="img"
-                                    image={house.image}
+                                    src={
+                                        typeof house.image === "string"
+                                            ? house.image
+                                            : process.env
+                                                  .NEXT_PUBLIC_API_BASE_URL +
+                                              house.image.src
+                                    }
                                     alt={house.title}
                                     sx={{
                                         objectFit: "cover",

@@ -14,7 +14,7 @@ import { middleware } from "#start/kernel";
 const AuthController = () => import("#controllers/auth_controller");
 const UsersController = () => import("#controllers/users_controller");
 const HousingController = () => import("#controllers/housing_controller");
-const HousingImageController = () => import("#controllers/housing_image_controller");
+const ImagesController = () => import("#controllers/images_controller");
 const JobController = () => import("#controllers/job_controller");
 const OfferPropertyController = () => import("#controllers/offer_properties_controller");
 const NewsletterController = () => import("#controllers/newsletter_controller");
@@ -49,10 +49,13 @@ router
 router.resource("housings", HousingController).apiOnly().where("id", router.matchers.number());
 
 router
-    .resource("housing-images", HousingImageController)
-    .apiOnly()
-    .only(["show", "update"])
-    .where("id", router.matchers.number());
+    .group(() => {
+        router.post("/", [ImagesController, "store"]).as("store");
+        router.get("/:name", [ImagesController, "show"]).as("show");
+        router.delete("/:name", [ImagesController, "destroy"]).as("destroy");
+    })
+    .prefix("images")
+    .as("images");
 
 router.resource("jobs", JobController).apiOnly().where("id", router.matchers.number());
 

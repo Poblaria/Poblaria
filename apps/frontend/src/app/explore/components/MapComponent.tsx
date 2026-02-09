@@ -160,7 +160,14 @@ export default function MapComponent({
                                     >
                                         {house.image && (
                                             <Image
-                                                src={house.image}
+                                                src={
+                                                    typeof house.image ===
+                                                    "string"
+                                                        ? house.image
+                                                        : process.env
+                                                              .NEXT_PUBLIC_API_BASE_URL +
+                                                          house.image.src
+                                                }
                                                 alt={house.title}
                                                 width={250}
                                                 height={150}
