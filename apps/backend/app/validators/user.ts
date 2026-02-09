@@ -20,9 +20,13 @@ export const putUserValidator = vine.compile(
         email: vine
             .string()
             .email()
-            // TODO: test that this works correctly when updating a user without changing the email
             .unique(
-                async (query, field) => !(await query.from("users").where("email", field).first())
+                async (query, field, meta) =>
+                    !(await query
+                        .from("users")
+                        .where("email", field)
+                        .whereNot("id", meta.data?.id)
+                        .first())
             ),
         role: vine.enum(["default", "local_authority", "administrator"])
     })
@@ -34,9 +38,13 @@ export const patchUserValidator = vine.compile(
         email: vine
             .string()
             .email()
-            // TODO: test that this works correctly when updating a user without changing the email
             .unique(
-                async (query, field) => !(await query.from("users").where("email", field).first())
+                async (query, field, meta) =>
+                    !(await query
+                        .from("users")
+                        .where("email", field)
+                        .whereNot("id", meta.data?.id)
+                        .first())
             )
             .optional(),
         role: vine.enum(["default", "local_authority", "administrator"]).optional()

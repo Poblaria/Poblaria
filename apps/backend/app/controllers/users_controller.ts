@@ -33,10 +33,14 @@ export default class UsersController {
 
         switch (request.method()) {
             case "PUT":
-                user.merge(await request.validateUsing(putUserValidator));
+                user.merge(
+                    await request.validateUsing(putUserValidator, { meta: { id: params.id } })
+                );
                 break;
             case "PATCH":
-                user.merge(await request.validateUsing(patchUserValidator));
+                user.merge(
+                    await request.validateUsing(patchUserValidator, { meta: { id: params.id } })
+                );
                 break;
             default:
                 return response.methodNotAllowed();
