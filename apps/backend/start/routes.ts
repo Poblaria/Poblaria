@@ -18,6 +18,7 @@ const ImagesController = () => import("#controllers/images_controller");
 const JobController = () => import("#controllers/job_controller");
 const OfferPropertyController = () => import("#controllers/offer_properties_controller");
 const NewsletterController = () => import("#controllers/newsletter_controller");
+const StatisticsController = () => import("#controllers/statistics_controller");
 
 /**
  * Health check route
@@ -90,3 +91,10 @@ router
     })
     .prefix("newsletter")
     .as("newsletter");
+
+router
+    .group(() => {
+        router.get("/", [StatisticsController, "show"]).use(middleware.auth()).as("show");
+    })
+    .prefix("statistics")
+    .as("statistics");

@@ -127,6 +127,10 @@ type NewsletterSendPost = {
   request: MakeTuyauRequest<InferInput<typeof import('../app/validators/newsletter.ts')['sendNewsletterValidator']>>
   response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['send'], true>
 }
+type StatisticsGetHead = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/statistics.ts')['getStatisticsValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/statistics_controller.ts').default['show'], true>
+}
 export interface ApiDefinition {
   'register': {
     '$url': {
@@ -258,6 +262,12 @@ export interface ApiDefinition {
       };
       '$post': NewsletterSendPost;
     };
+  };
+  'statistics': {
+    '$url': {
+    };
+    '$get': StatisticsGetHead;
+    '$head': StatisticsGetHead;
   };
 }
 const routes = [
@@ -470,6 +480,13 @@ const routes = [
     path: '/newsletter/send',
     method: ["POST"],
     types: {} as NewsletterSendPost,
+  },
+  {
+    params: [],
+    name: 'statistics.show',
+    path: '/statistics',
+    method: ["GET","HEAD"],
+    types: {} as StatisticsGetHead,
   },
 ] as const;
 export const api = {
