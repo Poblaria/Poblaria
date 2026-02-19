@@ -76,7 +76,7 @@ export default function NewsletterForm() {
         <Box
             component="form"
             onSubmit={(e) => {
-                handleSubmit(e);
+                void handleSubmit(e);
             }}
             sx={{ width: "100%" }}
         >
