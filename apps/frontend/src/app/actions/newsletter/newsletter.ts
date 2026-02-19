@@ -16,7 +16,7 @@ export async function subscribeNewsletter({ email, firstName }: SubscribeData) {
         });
 
         if (!res.ok) {
-            const data: SubscribeResponse = await res.json();
+            const data = (await res.json()) as SubscribeResponse;
             throw new Error(data.message || "Failed to subscribe");
         }
 

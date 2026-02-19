@@ -53,7 +53,7 @@ export default function NewsletterForm() {
             });
 
             if (!res.ok) {
-                const data: SubscribeResponse = await res.json();
+                const data = (await res.json()) as SubscribeResponse;
                 throw new Error(data.message || "Failed to subscribe");
             }
 
@@ -73,7 +73,13 @@ export default function NewsletterForm() {
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+        <Box
+            component="form"
+            onSubmit={(e) => {
+                handleSubmit(e);
+            }}
+            sx={{ width: "100%" }}
+        >
             {/* Row inputs */}
             <Box
                 sx={{
