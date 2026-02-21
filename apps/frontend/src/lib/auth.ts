@@ -25,13 +25,13 @@ async function request<T>(path: string, options: RequestInit): Promise<T> {
 
     if (!res.ok) {
         let body: { message?: string; errors?: { message?: string }[] } | null =
-            null; // Replaced `any` with a more specific type
+            null;
         try {
-            const json = await res.json();
-            body = json as {
+            const json = (await res.json()) as {
                 message?: string;
                 errors?: { message?: string }[];
             };
+            body = json;
         } catch {
             // ignore
         }
