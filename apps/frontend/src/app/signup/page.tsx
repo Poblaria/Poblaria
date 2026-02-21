@@ -24,7 +24,6 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [region, setRegion] = useState(""); // Only for UI purposes unless backend supports it
-    const [remember, setRemember] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -38,8 +37,10 @@ export default function SignupPage() {
             // send required fields
             await apiRegister({ fullName, email, password });
             router.push("/login");
-        } catch (err: any) {
-            setError(err?.message ?? "Signup failed");
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error ? err.message : "Signup failed";
+            setError(errorMessage);
         } finally {
             setLoading(false);
         }

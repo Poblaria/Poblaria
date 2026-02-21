@@ -65,7 +65,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             login,
             logout
         }),
-        [token]
+        [token, logout]
     );
 
     return (
