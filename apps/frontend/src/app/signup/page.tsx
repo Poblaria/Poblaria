@@ -24,6 +24,7 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [region, setRegion] = useState(""); // Only for UI purposes unless backend supports it
+    const [remember, setRemember] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
