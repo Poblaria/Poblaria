@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import I18nInit from "@/components/I18nInit";
-import { HeaderSwitcher } from "@/components/HeaderSwitcher";
+import { NavBar } from "@/components/NavBar";
+import { AuthProvider } from "@/context/AuthContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -13,9 +14,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="en">
             <body>
-                <I18nInit />
-                <HeaderSwitcher />
-                {children}
+                <AuthProvider>
+                    <I18nInit />
+                    <NavBar />
+                    {children}
+                </AuthProvider>
             </body>
         </html>
     );

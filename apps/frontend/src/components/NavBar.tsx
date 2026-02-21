@@ -2,17 +2,29 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
+import {
+    Box,
+    Button,
+    IconButton,
+    Menu,
+    MenuItem,
+    Divider
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { MouseEvent, useMemo, useState } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 export const NavBar = () => {
     const pathname = usePathname();
+    const router = useRouter();
     const { t, i18n } = useTranslation();
+    const { isAuthed, logout } = useAuth();
 
+    // ----- Language menu -----
     const supportedLanguages = useMemo<string[]>(() => {
         const { supportedLngs, resources } = i18n.options;
 
@@ -42,14 +54,13 @@ export const NavBar = () => {
         "en";
 
     const [lang, setLang] = useState<string>(initialLang);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
+    const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
+    const langOpen = Boolean(langAnchorEl);
 
     const handleOpenLanguageMenu = (event: MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
+        setLangAnchorEl(event.currentTarget);
     };
-
-    const handleCloseLanguageMenu = () => setAnchorEl(null);
+    const handleCloseLanguageMenu = () => setLangAnchorEl(null);
 
     const handleSelectLanguage = async (code: string) => {
         await i18n.changeLanguage(code);
@@ -57,6 +68,39 @@ export const NavBar = () => {
         handleCloseLanguageMenu();
     };
 
+    // ----- Account menu -----
+    const [accountAnchorEl, setAccountAnchorEl] = useState<null | HTMLElement>(
+        null
+    );
+    const accountOpen = Boolean(accountAnchorEl);
+
+    const handleOpenAccountMenu = (event: MouseEvent<HTMLElement>) => {
+        setAccountAnchorEl(event.currentTarget);
+    };
+    const handleCloseAccountMenu = () => setAccountAnchorEl(null);
+
+    const handleGoProfile = () => {
+        handleCloseAccountMenu();
+        router.push("/profile");
+    };
+
+    const handleGoLogin = () => {
+        handleCloseAccountMenu();
+        router.push("/login");
+    };
+
+    const handleGoSignup = () => {
+        handleCloseAccountMenu();
+        router.push("/signup");
+    };
+
+    const handleLogout = async () => {
+        handleCloseAccountMenu();
+        await logout();
+        router.push("/"); // optional redirect
+    };
+
+    // ----- Styles -----
     const buttonStyle = (path: string) => ({
         "backgroundColor": pathname === path ? "#83A16C" : "",
         "color": pathname === path ? "white" : "black",
@@ -82,12 +126,14 @@ export const NavBar = () => {
             }}
         >
             <Box>
-                <Image
-                    src="/images/logo-poblaria.png"
-                    alt="logo"
-                    width={100}
-                    height={100}
-                />
+                <Link href="/">
+                    <Image
+                        src="/images/logo-poblaria.png"
+                        alt="logo"
+                        width={100}
+                        height={100}
+                    />
+                </Link>
             </Box>
 
             <Box
@@ -99,21 +145,74 @@ export const NavBar = () => {
                 }}
             >
                 <Button variant="text" sx={buttonStyle("/")}>
-                    <Link href="/">{t("navbar.home")}</Link>
+                    <Link
+                        href="/"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        {t("navbar.home")}
+                    </Link>
                 </Button>
 
                 <Button variant="text" sx={buttonStyle("/explore")}>
-                    <Link href="/explore">{t("navbar.explore")}</Link>
+                    <Link
+                        href="/explore"
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                        {t("navbar.explore")}
+                    </Link>
                 </Button>
 
-                <IconButton
-                    component={Link}
-                    href="/profile"
-                    sx={buttonStyle("/profile")}
-                >
-                    <AccountCircleIcon sx={{ fontSize: 28 }} />
-                </IconButton>
+                {/* ACCOUNT ICON OR LOGIN BUTTON */}
+                {isAuthed ? (
+                    <IconButton
+                        onClick={handleOpenAccountMenu}
+                        sx={buttonStyle("/profile")}
+                        title="Account"
+                    >
+                        <AccountCircleIcon sx={{ fontSize: 28 }} />
+                    </IconButton>
+                ) : (
+                    <Button
+                        onClick={handleGoLogin}
+                        sx={buttonStyle("/login")}
+                        title="Login"
+                    >
+                        Login
+                    </Button>
+                )}
 
+                <Menu
+                    anchorEl={accountAnchorEl}
+                    open={accountOpen}
+                    onClose={handleCloseAccountMenu}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                    transformOrigin={{ vertical: "top", horizontal: "right" }}
+                >
+                    {isAuthed
+                        ? [
+                              <MenuItem key="profile" onClick={handleGoProfile}>
+                                  <AccountCircleIcon sx={{ marginRight: 1 }} />{" "}
+                                  Profile
+                              </MenuItem>,
+                              <Divider key="divider" />,
+                              <MenuItem
+                                  key="logout"
+                                  onClick={() => void handleLogout()}
+                              >
+                                  <LogoutIcon sx={{ marginRight: 1 }} /> Logout
+                              </MenuItem>
+                          ]
+                        : [
+                              <MenuItem key="login" onClick={handleGoLogin}>
+                                  Login
+                              </MenuItem>,
+                              <MenuItem key="signup" onClick={handleGoSignup}>
+                                  Signup
+                              </MenuItem>
+                          ]}
+                </Menu>
+
+                {/* LANGUAGE ICON */}
                 <IconButton
                     onClick={handleOpenLanguageMenu}
                     title={t("navbar.language")}
@@ -126,8 +225,8 @@ export const NavBar = () => {
                 </IconButton>
 
                 <Menu
-                    anchorEl={anchorEl}
-                    open={open}
+                    anchorEl={langAnchorEl}
+                    open={langOpen}
                     onClose={handleCloseLanguageMenu}
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
