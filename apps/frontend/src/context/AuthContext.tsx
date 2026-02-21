@@ -5,7 +5,8 @@ import React, {
     useContext,
     useEffect,
     useMemo,
-    useState
+    useState,
+    useCallback
 } from "react";
 import { apiLogin, apiLogout } from "@/lib/auth";
 import { clearToken, getToken, setToken } from "@/lib/authStorage";
@@ -43,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setTokenState(res.token);
     };
 
-    const logout = async () => {
+    const logout = useCallback(async () => {
         const t = token ?? getToken();
 
         if (t) {
@@ -56,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         clearToken();
         setTokenState(null);
-    };
+    }, [token]);
 
     const value = useMemo(
         () => ({

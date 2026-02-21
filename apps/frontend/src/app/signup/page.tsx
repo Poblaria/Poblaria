@@ -28,22 +28,24 @@ export default function SignupPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
         setLoading(true);
 
-        try {
-            // send required fields
-            await apiRegister({ fullName, email, password });
-            router.push("/login");
-        } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : "Signup failed";
-            setError(errorMessage);
-        } finally {
-            setLoading(false);
-        }
+        (async () => {
+            try {
+                // send required fields
+                await apiRegister({ fullName, email, password });
+                router.push("/login");
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error ? err.message : "Signup failed";
+                setError(errorMessage);
+            } finally {
+                setLoading(false);
+            }
+        })();
     };
 
     return (

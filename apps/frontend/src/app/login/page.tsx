@@ -28,21 +28,23 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
         setLoading(true);
 
-        try {
-            await login(email, password, remember);
-            router.push("/"); // or /profile
-        } catch (err) {
-            const errorMessage =
-                err instanceof Error ? err.message : "Login failed";
-            setError(errorMessage);
-        } finally {
-            setLoading(false);
-        }
+        (async () => {
+            try {
+                await login(email, password, remember);
+                router.push("/"); // or /profile
+            } catch (err) {
+                const errorMessage =
+                    err instanceof Error ? err.message : "Login failed";
+                setError(errorMessage);
+            } finally {
+                setLoading(false);
+            }
+        })();
     };
 
     return (

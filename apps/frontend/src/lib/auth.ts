@@ -24,7 +24,8 @@ async function request<T>(path: string, options: RequestInit): Promise<T> {
     });
 
     if (!res.ok) {
-        let body: Record<string, any> | null = null; // Replaced `any` with a more specific type
+        let body: { message?: string; errors?: { message?: string }[] } | null =
+            null; // Replaced `any` with a more specific type
         try {
             body = await res.json();
         } catch {
@@ -32,11 +33,8 @@ async function request<T>(path: string, options: RequestInit): Promise<T> {
         }
 
         const message =
-            (body && typeof body.message === "string" && body.message) ||
-            (body &&
-                Array.isArray(body.errors) &&
-                typeof body.errors[0]?.message === "string" &&
-                body.errors[0].message) ||
+            body?.message ||
+            body?.errors?.[0]?.message ||
             `Request failed (${res.status})`;
 
         throw new Error(message);
