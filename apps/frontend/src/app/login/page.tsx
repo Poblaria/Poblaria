@@ -33,7 +33,7 @@ export default function LoginPage() {
         setError(null);
         setLoading(true);
 
-        (async () => {
+        void (async () => {
             try {
                 await login(email, password, remember);
                 router.push("/"); // or /profile

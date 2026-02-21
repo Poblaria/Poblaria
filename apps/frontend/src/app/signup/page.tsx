@@ -33,7 +33,7 @@ export default function SignupPage() {
         setError(null);
         setLoading(true);
 
-        (async () => {
+        void (async () => {
             try {
                 // send required fields
                 await apiRegister({ fullName, email, password });
