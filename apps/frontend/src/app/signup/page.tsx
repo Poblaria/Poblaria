@@ -15,7 +15,7 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
-import { apiRegister } from "@/lib/auth";
+import register from "@/app/actions/auth/register";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -23,7 +23,7 @@ export default function SignupPage() {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [region, setRegion] = useState(""); // Only for UI purposes unless backend supports it
+    const [region, setRegion] = useState(""); // UI only unless backend supports it
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -35,9 +35,19 @@ export default function SignupPage() {
 
         void (async () => {
             try {
-                // send required fields
-                await apiRegister({ fullName, email, password });
+                const result = await register({ fullName, email, password });
+
+                if (result?.error) {
+                    console.error("Signup error:", result.error); // Log the error for debugging
+                    throw new Error(
+                        typeof result.error === "string"
+                            ? result.error
+                            : "Signup failed"
+                    );
+                }
+
                 router.push("/login");
+                router.refresh();
             } catch (err) {
                 const errorMessage =
                     err instanceof Error ? err.message : "Signup failed";
@@ -82,6 +92,7 @@ export default function SignupPage() {
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         fullWidth
+                        required
                         variant="outlined"
                         InputProps={{
                             sx: {
@@ -102,6 +113,7 @@ export default function SignupPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         fullWidth
+                        required
                         variant="outlined"
                         InputProps={{
                             sx: {
@@ -122,6 +134,7 @@ export default function SignupPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         fullWidth
+                        required
                         variant="outlined"
                         InputProps={{
                             sx: {
@@ -136,7 +149,6 @@ export default function SignupPage() {
                         }}
                     />
 
-                    {/* Region dropdown is UI only unless backend supports it */}
                     <TextField
                         select
                         value={region}

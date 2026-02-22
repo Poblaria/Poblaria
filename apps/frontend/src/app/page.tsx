@@ -15,11 +15,11 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "@/context/AuthContext";
 
-export default function Home() {
+export default function Home({ isLogged }: { isLogged: boolean }) {
+    console.log("isLogged in Home:", isLogged);
+
     const { t } = useTranslation();
-    const { isAuthed } = useAuth();
 
     const buttonSx = (extra?: object) => ({
         "height": "40px",
@@ -28,6 +28,7 @@ export default function Home() {
         "&:hover": { backgroundColor: "#83A16C" },
         ...extra
     });
+    console.log("isLogged:", isLogged);
 
     return (
         <div>
@@ -212,7 +213,7 @@ export default function Home() {
                 </Box>
             </section>
 
-            {!isAuthed && (
+            {!isLogged && (
                 <section className="py-16 bg-white text-black">
                     <Box className="container mx-auto px-4 text-center">
                         <Box className="max-w-2xl mx-auto">

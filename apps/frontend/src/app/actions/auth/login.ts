@@ -7,16 +7,21 @@ export default async function login(
     body: InferRequestType<typeof tuyau.login.$post>
 ) {
     const { data, error } = await tuyau.login.$post(body);
-    if (data?.token)
+
+    if (data?.token) {
+        console.log(data);
         (await cookies()).set("token", data.token, {
             maxAge: data.expiresAt
                 ? Math.floor(
                       (new Date(data.expiresAt).getTime() - Date.now()) / 1000
                   )
                 : 60 * 60 * 24 * 30, // 1 month
-            secure: true,
+            secure: process.env.NODE_ENV === "production",
             httpOnly: true,
-            sameSite: "strict"
+            sameSite: "strict",
+            path: "/"
         });
+    }
+
     return { error: error?.value };
 }

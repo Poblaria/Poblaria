@@ -16,13 +16,12 @@ import LanguageIcon from "@mui/icons-material/Language";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { MouseEvent, useMemo, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import logoutAction from "@/app/actions/auth/logout";
 
-export const NavBar = () => {
+export const NavBar = ({ isLogged }: { isLogged: boolean }) => {
     const pathname = usePathname();
     const router = useRouter();
     const { t, i18n } = useTranslation();
-    const { isAuthed, logout } = useAuth();
 
     // ----- Language menu -----
     const supportedLanguages = useMemo<string[]>(() => {
@@ -96,21 +95,28 @@ export const NavBar = () => {
 
     const handleLogout = async () => {
         handleCloseAccountMenu();
-        await logout();
-        router.push("/"); // optional redirect
+
+        try {
+            const result = await logoutAction();
+            if (result?.error) {
+                console.error(result.error);
+            }
+        } finally {
+            router.push("/");
+            router.refresh();
+        }
     };
 
-    // ----- Styles -----
     const buttonStyle = (path: string) => ({
-        "backgroundColor": pathname === path ? "#83A16C" : "",
-        "color": pathname === path ? "white" : "black",
-        "borderRadius": "8px",
-        "padding": "8px 10px",
-        "minWidth": "50px",
-        "display": "flex",
-        "alignItems": "center",
-        "justifyContent": "center",
-        "gap": "6px",
+        backgroundColor: pathname === path ? "#83A16C" : "",
+        color: pathname === path ? "white" : "black",
+        borderRadius: "8px",
+        padding: "8px 10px",
+        minWidth: "50px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "6px",
         "&:hover": { backgroundColor: "#c9e0bbff", color: "white" }
     });
 
@@ -163,7 +169,7 @@ export const NavBar = () => {
                 </Button>
 
                 {/* ACCOUNT ICON OR LOGIN BUTTON */}
-                {isAuthed ? (
+                {isLogged ? (
                     <IconButton
                         onClick={handleOpenAccountMenu}
                         sx={buttonStyle("/profile")}
@@ -181,6 +187,7 @@ export const NavBar = () => {
                     </Button>
                 )}
 
+                {/* ACCOUNT MENU */}
                 <Menu
                     anchorEl={accountAnchorEl}
                     open={accountOpen}
@@ -188,28 +195,31 @@ export const NavBar = () => {
                     anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
                     transformOrigin={{ vertical: "top", horizontal: "right" }}
                 >
-                    {isAuthed
-                        ? [
-                              <MenuItem key="profile" onClick={handleGoProfile}>
-                                  <AccountCircleIcon sx={{ marginRight: 1 }} />{" "}
-                                  Profile
-                              </MenuItem>,
-                              <Divider key="divider" />,
-                              <MenuItem
-                                  key="logout"
-                                  onClick={() => void handleLogout()}
-                              >
-                                  <LogoutIcon sx={{ marginRight: 1 }} /> Logout
-                              </MenuItem>
-                          ]
-                        : [
-                              <MenuItem key="login" onClick={handleGoLogin}>
-                                  Login
-                              </MenuItem>,
-                              <MenuItem key="signup" onClick={handleGoSignup}>
-                                  Signup
-                              </MenuItem>
-                          ]}
+                    {isLogged ? (
+                        [
+                            <MenuItem key="profile" onClick={handleGoProfile}>
+                                <AccountCircleIcon sx={{ mr: 1 }} />
+                                Profile
+                            </MenuItem>,
+                            <Divider key="divider" />,
+                            <MenuItem
+                                key="logout"
+                                onClick={() => void handleLogout()}
+                            >
+                                <LogoutIcon sx={{ mr: 1 }} />
+                                Logout
+                            </MenuItem>
+                        ]
+                    ) : (
+                        [
+                            <MenuItem key="login" onClick={handleGoLogin}>
+                                Login
+                            </MenuItem>,
+                            <MenuItem key="signup" onClick={handleGoSignup}>
+                                Signup
+                            </MenuItem>
+                        ]
+                    )}
                 </Menu>
 
                 {/* LANGUAGE ICON */}

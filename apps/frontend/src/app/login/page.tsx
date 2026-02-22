@@ -15,15 +15,14 @@ import {
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
+import login from "@/app/actions/auth/login";
 
 export default function LoginPage() {
     const router = useRouter();
-    const { login } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [remember, setRemember] = useState(false);
+    const [remember, setRemember] = useState(false); // UI only unless action supports it
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -35,8 +34,16 @@ export default function LoginPage() {
 
         void (async () => {
             try {
-                await login(email, password, remember);
-                router.push("/"); // or /profile
+                const result = await login({ email, password });
+                if (result?.error) {
+                    throw new Error(
+                        typeof result.error === "string"
+                            ? result.error
+                            : "Login failed"
+                    );
+                }
+                router.push("/");
+                router.refresh();
             } catch (err) {
                 const errorMessage =
                     err instanceof Error ? err.message : "Login failed";
@@ -82,6 +89,7 @@ export default function LoginPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         fullWidth
+                        required
                         variant="outlined"
                         InputProps={{
                             sx: {
@@ -102,6 +110,7 @@ export default function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         fullWidth
+                        required
                         variant="outlined"
                         InputProps={{
                             sx: {
