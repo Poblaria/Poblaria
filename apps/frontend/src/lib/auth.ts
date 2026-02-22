@@ -1,5 +1,5 @@
 export type LoginResponse = {
-    type: string; // usually "bearer"
+    type: string; // bearer
     token: string; // raw token
     expiresAt?: string | null;
     expires_at?: string | null;

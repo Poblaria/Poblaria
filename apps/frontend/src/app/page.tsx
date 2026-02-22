@@ -15,9 +15,11 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Home() {
     const { t } = useTranslation();
+    const { isAuthed } = useAuth();
 
     const buttonSx = (extra?: object) => ({
         "height": "40px",
@@ -210,29 +212,31 @@ export default function Home() {
                 </Box>
             </section>
 
-            <section className="py-16 bg-white text-black">
-                <Box className="container mx-auto px-4 text-center">
-                    <Box className="max-w-2xl mx-auto">
-                        <Typography variant="h5" fontWeight={700} mb={3}>
-                            {t("home.cta.title")}
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            color="text.secondary"
-                            mb={4}
-                        >
-                            {t("home.cta.subtitle")}
-                        </Typography>
-                        <Box className="flex flex-col md:flex-row gap-4 justify-center">
-                            <Link href="/login">
-                                <Button variant="contained" sx={buttonSx()}>
-                                    {t("home.cta.button")}
-                                </Button>
-                            </Link>
+            {!isAuthed && (
+                <section className="py-16 bg-white text-black">
+                    <Box className="container mx-auto px-4 text-center">
+                        <Box className="max-w-2xl mx-auto">
+                            <Typography variant="h5" fontWeight={700} mb={3}>
+                                {t("home.cta.title")}
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                mb={4}
+                            >
+                                {t("home.cta.subtitle")}
+                            </Typography>
+                            <Box className="flex flex-col md:flex-row gap-4 justify-center">
+                                <Link href="/login">
+                                    <Button variant="contained" sx={buttonSx()}>
+                                        {t("home.cta.button")}
+                                    </Button>
+                                </Link>
+                            </Box>
                         </Box>
                     </Box>
-                </Box>
-            </section>
+                </section>
+            )}
         </div>
     );
 }
