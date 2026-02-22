@@ -8,9 +8,9 @@
 */
 
 import router from "@adonisjs/core/services/router";
-import i18nManager from "@adonisjs/i18n/services/main";
 import { middleware } from "#start/kernel";
 
+const LanguagesController = () => import("#controllers/languages_controller");
 const AuthController = () => import("#controllers/auth_controller");
 const UsersController = () => import("#controllers/users_controller");
 const HousingController = () => import("#controllers/housing_controller");
@@ -28,10 +28,7 @@ router.get("/", async ({ response }) => response.noContent());
 /**
  * Languages list route
  */
-router.get("languages", async () => ({
-    default: i18nManager.defaultLocale,
-    supported: i18nManager.supportedLocales()
-}));
+router.get("languages", [LanguagesController, "show"]).as("languages");
 
 router
     .group(() => {

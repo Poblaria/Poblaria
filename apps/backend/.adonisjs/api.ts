@@ -7,6 +7,10 @@
 import type { MakeTuyauRequest, MakeTuyauResponse } from '@tuyau/utils/types'
 import type { InferInput } from '@vinejs/vine/types'
 
+type LanguagesGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/languages_controller.ts').default['show'], false>
+}
 type RegisterPost = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['register'], false>
@@ -132,6 +136,12 @@ type StatisticsGetHead = {
   response: MakeTuyauResponse<import('../app/controllers/statistics_controller.ts').default['show'], true>
 }
 export interface ApiDefinition {
+  'languages': {
+    '$url': {
+    };
+    '$get': LanguagesGetHead;
+    '$head': LanguagesGetHead;
+  };
   'register': {
     '$url': {
     };
@@ -271,6 +281,13 @@ export interface ApiDefinition {
   };
 }
 const routes = [
+  {
+    params: [],
+    name: 'languages',
+    path: '/languages',
+    method: ["GET","HEAD"],
+    types: {} as LanguagesGetHead,
+  },
   {
     params: [],
     name: 'auth.register',
