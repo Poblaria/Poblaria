@@ -23,6 +23,10 @@ type LogoutPost = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['logout'], false>
 }
+type MeGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['me'], false>
+}
 type UsersGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['index'], false>
@@ -156,6 +160,12 @@ export interface ApiDefinition {
     '$url': {
     };
     '$post': LogoutPost;
+  };
+  'me': {
+    '$url': {
+    };
+    '$get': MeGetHead;
+    '$head': MeGetHead;
   };
   'users': {
     '$url': {
@@ -308,6 +318,13 @@ const routes = [
     path: '/logout',
     method: ["POST"],
     types: {} as LogoutPost,
+  },
+  {
+    params: [],
+    name: 'auth.me',
+    path: '/me',
+    method: ["GET","HEAD"],
+    types: {} as MeGetHead,
   },
   {
     params: [],

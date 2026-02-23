@@ -35,6 +35,7 @@ router
         router.post("register", [AuthController, "register"]).as("register");
         router.post("login", [AuthController, "login"]).as("login");
         router.post("logout", [AuthController, "logout"]).use(middleware.auth()).as("logout");
+        router.get("me", [AuthController, "me"]).use(middleware.auth()).as("me");
     })
     .as("auth");
 
