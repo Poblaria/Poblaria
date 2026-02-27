@@ -25,8 +25,14 @@ export default function NewsletterManager() {
     } | null>(null);
 
     const fetchList = async () => {
-        const { data } = await getNewsletterSubscribers();
-        if (data) setSubscribers(data);
+        try {
+            const { data } = await getNewsletterSubscribers();
+            console.log("Fetched subscribers:", data);
+            if (data) setSubscribers(data);
+        } catch (error) {
+            console.error("Failed to fetch subscribers:", error);
+            setSubscribers([]);
+        }
     };
 
     const handleSend = async (e: React.FormEvent) => {
