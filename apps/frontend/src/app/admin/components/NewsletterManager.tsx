@@ -14,9 +14,13 @@ import {
 } from "@mui/material";
 import { getNewsletterSubscribers } from "@/app/actions/newsletter/getNewsletterSubscribers";
 import { sendNewsletter } from "@/app/actions/newsletter/sendNewsletter";
+interface Subscriber {
+    email: string;
+    name?: string | null;
+}
 
 export default function NewsletterManager() {
-    const [subscribers, setSubscribers] = useState<any[]>([]);
+    const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
     const [subject, setSubject] = useState("");
     const [content, setContent] = useState("");
     const [status, setStatus] = useState<{
@@ -27,8 +31,9 @@ export default function NewsletterManager() {
     const fetchList = async () => {
         try {
             const { data } = await getNewsletterSubscribers();
-            if (data) setSubscribers(data);
-        } catch (error) {
+            // Cast the data to our Subscriber type
+            if (data) setSubscribers(data as Subscriber[]);
+        } catch (_error) { // Use underscore to indicate it's intentionally ignored
             setSubscribers([]);
         }
     };
@@ -41,15 +46,13 @@ export default function NewsletterManager() {
             content: { en: content }
         };
 
-        const { error } = await sendNewsletter(payload as any, "en");
+        const { error } = await sendNewsletter(payload, "en");
 
         if (error) {
-            console.error("Send Newsletter Error:", error);
-
             const msg =
                 error.errors
-                    ?.map((e) =>
-                        e.field ? `${e.field}: ${e.message}` : e.message
+                    ?.map((err) =>
+                        err.field ? `${err.field}: ${err.message}` : err.message
                     )
                     .join(" • ") || "Failed to send.";
 
@@ -77,7 +80,7 @@ export default function NewsletterManager() {
                 <Button
                     fullWidth
                     variant="contained"
-                    onClick={fetchList}
+                    onClick={() => { void fetchList(); }}
                     sx={{ mb: 2, backgroundColor: "#5E7749" }}
                 >
                     Load Subscribers
@@ -106,7 +109,7 @@ export default function NewsletterManager() {
             <Paper
                 variant="outlined"
                 component="form"
-                onSubmit={handleSend}
+                onSubmit={(e) => { void handleSend(e); }}
                 sx={{ p: 3, borderRadius: 2 }}
             >
                 <Typography variant="h6" sx={{ mb: 2 }}>
