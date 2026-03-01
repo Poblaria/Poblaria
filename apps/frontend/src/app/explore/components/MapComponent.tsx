@@ -407,80 +407,10 @@ export default function MapComponent({
                                         </Box>
                                     </Popup>
                                 </Marker>
-                            );
-                        })}
-
-                    {/* Markers for Houses */}
-                    {dataType === "houses" /* currentZoom >= 17 && */ &&
-                        [...HOUSES, ...(housings || [])].map((house) => (
-                            <Marker
-                                key={`house-${house.id}`}
-                                position={[house.latitude, house.longitude]}
-                                icon={pinIcon({
-                                    icon: "fa-home",
-                                    prefix: "fa",
-                                    color: "blue-dark",
-                                    iconColor: "white"
-                                })}
-                            >
-                                <Popup>
-                                    <Box
-                                        sx={{ minWidth: 250, maxWidth: "100%" }}
-                                    >
-                                        {house.image && (
-                                            <Image
-                                                src={
-                                                    typeof house.image ===
-                                                    "string"
-                                                        ? house.image
-                                                        : process.env
-                                                              .NEXT_PUBLIC_API_BASE_URL +
-                                                          house.image.src
-                                                }
-                                                alt={house.title}
-                                                width={250}
-                                                height={150}
-                                                style={{
-                                                    width: "100%",
-                                                    height: "auto",
-                                                    borderRadius: 6,
-                                                    maxWidth: "100%" // Ensure image scales properly on smaller screens
-                                                }}
-                                            />
-                                        )}
-                                        <Typography
-                                            variant="h6"
-                                            sx={{ fontWeight: "bold" }}
-                                        >
-                                            {house.title}{" "}
-                                        </Typography>
-                                        <Typography variant="body1">
-                                            {house.address}{" "}
-                                        </Typography>
-                                        <Typography
-                                            variant="body2"
-                                            color="textSecondary"
-                                            sx={{ fontWeight: "bold" }}
-                                        >
-                                            {house.price} €
-                                        </Typography>
-                                        <Button
-                                            variant="contained"
-                                            sx={{
-                                                mt: 2,
-                                                backgroundColor: "#5E7749"
-                                            }}
-                                            component={Link}
-                                            href={`/houses/${house.id}`}
-                                        >
-                                            View Details
-                                        </Button>
-                                    </Box>
-                                </Popup>
-                            </Marker>
-                        ))}
-                </MarkerClusterGroup>
-            </MapContainer>
+                            ))}
+                    </MarkerClusterGroup>
+                </MapContainer>
+            </Box>
         </Box>
     );
 }
