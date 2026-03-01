@@ -15,7 +15,6 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import Footer from "@/components/Footer";
 
 export default function Home() {
     const { t } = useTranslation();
@@ -227,8 +226,6 @@ export default function Home() {
                     </Box>
                 </Box>
             </section>
-
-            <Footer />
         </div>
     );
 }
