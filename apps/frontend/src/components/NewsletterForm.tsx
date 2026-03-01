@@ -33,12 +33,14 @@ export default function NewsletterForm() {
     const bg = "#F6F7F4";
 
     useEffect(() => {
-      const browserLanguage = navigator.language.split("-")[0]; // string
-      if ((supportedLanguages as readonly string[]).includes(browserLanguage)) {
-        setLanguage(browserLanguage as SupportedLanguage);
-      } else {
-        setLanguage("en");
-      }
+        const browserLanguage = navigator.language.split("-")[0]; // string
+        if (
+            (supportedLanguages as readonly string[]).includes(browserLanguage)
+        ) {
+            setLanguage(browserLanguage as SupportedLanguage);
+        } else {
+            setLanguage("en");
+        }
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +82,11 @@ export default function NewsletterForm() {
     };
 
     return (
-        <Box component="form" onSubmit={(e) => void handleSubmit(e)} sx={{ width: "100%" }}>
+        <Box
+            component="form"
+            onSubmit={(e) => void handleSubmit(e)}
+            sx={{ width: "100%" }}
+        >
             {/* Main row: Name + Email + Submit */}
             <Box
                 sx={{
@@ -125,11 +131,11 @@ export default function NewsletterForm() {
                     disabled={status === "loading" || !accepted}
                     aria-label="subscribe"
                     sx={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: "999px",
-                        backgroundColor: accent,
-                        color: "white",
+                        "width": 48,
+                        "height": 48,
+                        "borderRadius": "999px",
+                        "backgroundColor": accent,
+                        "color": "white",
                         "&:hover": { backgroundColor: "#83A16C" },
                         "&.Mui-disabled": {
                             backgroundColor: "#A9B8A0",
@@ -152,12 +158,14 @@ export default function NewsletterForm() {
                 <ToggleButtonGroup
                     exclusive
                     value={language}
-                    onChange={(_, val: SupportedLanguage | null) => val && setLanguage(val)}
+                    onChange={(_, val: SupportedLanguage | null) =>
+                        val && setLanguage(val)
+                    }
                     size="small"
                     aria-label="newsletter language"
                     sx={{
-                        backgroundColor: bg,
-                        borderRadius: 2,
+                        "backgroundColor": bg,
+                        "borderRadius": 2,
                         "& .MuiToggleButton-root": {
                             borderColor,
                             color: "#2E3A28",
@@ -166,8 +174,8 @@ export default function NewsletterForm() {
                             minWidth: 64
                         },
                         "& .Mui-selected": {
-                            backgroundColor: accent,
-                            color: "white",
+                            "backgroundColor": accent,
+                            "color": "white",
                             "&:hover": { backgroundColor: "#83A16C" }
                         }
                     }}
@@ -191,7 +199,7 @@ export default function NewsletterForm() {
                         checked={accepted}
                         onChange={(e) => setAccepted(e.target.checked)}
                         sx={{
-                            color: accent,
+                            "color": accent,
                             "&.Mui-checked": { color: accent }
                         }}
                     />
