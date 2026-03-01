@@ -80,7 +80,7 @@ export default function NewsletterForm() {
     };
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+        <Box component="form" onSubmit={(e) => void handleSubmit(e)} sx={{ width: "100%" }}>
             {/* Main row: Name + Email + Submit */}
             <Box
                 sx={{
@@ -152,7 +152,7 @@ export default function NewsletterForm() {
                 <ToggleButtonGroup
                     exclusive
                     value={language}
-                    onChange={(_, val) => val && setLanguage(val)}
+                    onChange={(_, val: SupportedLanguage | null) => val && setLanguage(val)}
                     size="small"
                     aria-label="newsletter language"
                     sx={{

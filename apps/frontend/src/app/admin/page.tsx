@@ -19,7 +19,7 @@ export default function AdminPage() {
 
     useEffect(() => {
         async function checkAccess() {
-            const { data, error } = await me();
+            const { data } = await me();
 
             if (data && data.role === "administrator") {
                 setAuthorized(true);
@@ -27,7 +27,7 @@ export default function AdminPage() {
                 setAuthorized(false);
             }
         }
-        checkAccess();
+        void checkAccess();
     }, []);
 
     if (authorized === null) {
@@ -64,7 +64,7 @@ export default function AdminPage() {
                 {/* Tabs for navigation */}
                 <Tabs
                     value={activeTab}
-                    onChange={(e, newValue) => setActiveTab(newValue)}
+                    onChange={(e, newValue: number) => setActiveTab(newValue)}
                     sx={{
                         "mb": 4,
                         "& .MuiTabs-indicator": {

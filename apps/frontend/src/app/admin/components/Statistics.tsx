@@ -10,11 +10,11 @@ export default function Statistics() {
 
     useEffect(() => {
         async function fetchStats() {
-            const { data, error } = await getStatistics();
+            const { data } = await getStatistics();
             if (data) setStats(data);
             setLoading(false);
         }
-        fetchStats();
+        void fetchStats();
     }, []);
 
     if (loading) {
@@ -32,12 +32,8 @@ export default function Statistics() {
             </Typography>
             {stats ? (
                 <Box>
-                    <Typography>
-                        Total Subscribers: {stats.totalSubscribers}
-                    </Typography>
-                    <Typography>
-                        Newsletters Sent: {stats.newslettersSent}
-                    </Typography>
+                    <Typography>Total Subscribers:</Typography>
+                    <Typography>Newsletters Sent:</Typography>
                 </Box>
             ) : (
                 <Typography>No statistics available.</Typography>
