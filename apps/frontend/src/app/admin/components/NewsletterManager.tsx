@@ -14,10 +14,11 @@ import {
 } from "@mui/material";
 import { getNewsletterSubscribers } from "@/app/actions/newsletter/getNewsletterSubscribers";
 import { sendNewsletter } from "@/app/actions/newsletter/sendNewsletter";
-interface Subscriber {
+
+type Subscriber = {
     email: string;
     name?: string | null;
-}
+};
 
 export default function NewsletterManager() {
     const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
@@ -31,9 +32,8 @@ export default function NewsletterManager() {
     const fetchList = async () => {
         try {
             const { data } = await getNewsletterSubscribers();
-            // Cast the data to our Subscriber type
             if (data) setSubscribers(data as Subscriber[]);
-        } catch (_error) { // Use underscore to indicate it's intentionally ignored
+        } catch {
             setSubscribers([]);
         }
     };
@@ -80,7 +80,9 @@ export default function NewsletterManager() {
                 <Button
                     fullWidth
                     variant="contained"
-                    onClick={() => { void fetchList(); }}
+                    onClick={() => {
+                        void fetchList();
+                    }}
                     sx={{ mb: 2, backgroundColor: "#5E7749" }}
                 >
                     Load Subscribers
@@ -109,7 +111,9 @@ export default function NewsletterManager() {
             <Paper
                 variant="outlined"
                 component="form"
-                onSubmit={(e) => { void handleSend(e); }}
+                onSubmit={(e) => {
+                    void handleSend(e);
+                }}
                 sx={{ p: 3, borderRadius: 2 }}
             >
                 <Typography variant="h6" sx={{ mb: 2 }}>
