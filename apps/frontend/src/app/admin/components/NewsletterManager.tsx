@@ -27,10 +27,8 @@ export default function NewsletterManager() {
     const fetchList = async () => {
         try {
             const { data } = await getNewsletterSubscribers();
-            console.log("Fetched subscribers:", data);
             if (data) setSubscribers(data);
         } catch (error) {
-            console.error("Failed to fetch subscribers:", error);
             setSubscribers([]);
         }
     };
@@ -38,21 +36,33 @@ export default function NewsletterManager() {
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const { error } = await sendNewsletter({ subject, content } as any);
+        const payload = {
+            subject: { en: subject },
+            content: { en: content }
+        };
+
+        const { error } = await sendNewsletter(payload as any, "en");
 
         if (error) {
-            setStatus({
-                type: "error",
-                msg: "Failed to send. Please check your permissions."
-            });
-        } else {
-            setStatus({
-                type: "success",
-                msg: "Newsletter sent to all subscribers!"
-            });
-            setSubject("");
-            setContent("");
+            console.error("Send Newsletter Error:", error);
+
+            const msg =
+                error.errors
+                    ?.map((e) =>
+                        e.field ? `${e.field}: ${e.message}` : e.message
+                    )
+                    .join(" • ") || "Failed to send.";
+
+            setStatus({ type: "error", msg });
+            return;
         }
+
+        setStatus({
+            type: "success",
+            msg: "Newsletter sent to all subscribers!"
+        });
+        setSubject("");
+        setContent("");
     };
 
     return (

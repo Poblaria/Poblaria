@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Box,
     TextField,
     IconButton,
     FormControlLabel,
     Checkbox,
-    Alert
+    Alert,
+    ToggleButton,
+    ToggleButtonGroup
 } from "@mui/material";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
@@ -15,16 +17,29 @@ import { subscribeNewsletter } from "@/app/actions/newsletter/subscribeNewslette
 
 type Status = "idle" | "success" | "error" | "loading";
 
+const supportedLanguages = ["en", "es", "fr"] as const;
+type SupportedLanguage = (typeof supportedLanguages)[number];
+
 export default function NewsletterForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [accepted, setAccepted] = useState(false);
     const [status, setStatus] = useState<Status>("idle");
     const [errorMessage, setErrorMessage] = useState("");
+    const [language, setLanguage] = useState<SupportedLanguage>("en");
 
     const borderColor = "#E6EAE4";
     const accent = "#5E7749";
     const bg = "#F6F7F4";
+
+    useEffect(() => {
+      const browserLanguage = navigator.language.split("-")[0]; // string
+      if ((supportedLanguages as readonly string[]).includes(browserLanguage)) {
+        setLanguage(browserLanguage as SupportedLanguage);
+      } else {
+        setLanguage("en");
+      }
+    }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,6 +49,7 @@ export default function NewsletterForm() {
             setStatus("error");
             return;
         }
+
         if (!email.includes("@")) {
             setErrorMessage("Please enter a valid email address.");
             setStatus("error");
@@ -45,8 +61,7 @@ export default function NewsletterForm() {
         const { error } = await subscribeNewsletter({
             name: name.trim() || "Anonymous",
             email,
-            language:
-                typeof navigator !== "undefined" ? navigator.language : "en"
+            language
         });
 
         if (error) {
@@ -66,6 +81,7 @@ export default function NewsletterForm() {
 
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+            {/* Main row: Name + Email + Submit */}
             <Box
                 sx={{
                     display: "grid",
@@ -109,11 +125,11 @@ export default function NewsletterForm() {
                     disabled={status === "loading" || !accepted}
                     aria-label="subscribe"
                     sx={{
-                        "width": 48,
-                        "height": 48,
-                        "borderRadius": "999px",
-                        "backgroundColor": accent,
-                        "color": "white",
+                        width: 48,
+                        height: 48,
+                        borderRadius: "999px",
+                        backgroundColor: accent,
+                        color: "white",
                         "&:hover": { backgroundColor: "#83A16C" },
                         "&.Mui-disabled": {
                             backgroundColor: "#A9B8A0",
@@ -125,6 +141,49 @@ export default function NewsletterForm() {
                 </IconButton>
             </Box>
 
+            {/* Language toggles UNDER the inputs (no label) */}
+            <Box
+                sx={{
+                    mt: 1.5,
+                    display: "flex",
+                    justifyContent: { xs: "center", md: "flex-start" }
+                }}
+            >
+                <ToggleButtonGroup
+                    exclusive
+                    value={language}
+                    onChange={(_, val) => val && setLanguage(val)}
+                    size="small"
+                    aria-label="newsletter language"
+                    sx={{
+                        backgroundColor: bg,
+                        borderRadius: 2,
+                        "& .MuiToggleButton-root": {
+                            borderColor,
+                            color: "#2E3A28",
+                            px: 2,
+                            textTransform: "none",
+                            minWidth: 64
+                        },
+                        "& .Mui-selected": {
+                            backgroundColor: accent,
+                            color: "white",
+                            "&:hover": { backgroundColor: "#83A16C" }
+                        }
+                    }}
+                >
+                    <ToggleButton value="en" aria-label="English">
+                        EN
+                    </ToggleButton>
+                    <ToggleButton value="es" aria-label="Spanish">
+                        ES
+                    </ToggleButton>
+                    <ToggleButton value="fr" aria-label="French">
+                        FR
+                    </ToggleButton>
+                </ToggleButtonGroup>
+            </Box>
+
             <FormControlLabel
                 sx={{ mt: 2, color: "#2E3A28" }}
                 control={
@@ -132,7 +191,7 @@ export default function NewsletterForm() {
                         checked={accepted}
                         onChange={(e) => setAccepted(e.target.checked)}
                         sx={{
-                            "color": accent,
+                            color: accent,
                             "&.Mui-checked": { color: accent }
                         }}
                     />
@@ -145,6 +204,7 @@ export default function NewsletterForm() {
                     Subscribed successfully!
                 </Alert>
             )}
+
             {status === "error" && (
                 <Alert severity="error" sx={{ mt: 2 }}>
                     {errorMessage ||
