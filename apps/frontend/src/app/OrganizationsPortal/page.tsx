@@ -203,7 +203,7 @@ function SectionCard({
     );
 }
 
-export default function organizationsPortalPage() {
+export default function OrganizationsPortalPage() {
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState<Filter>("All");
     const router = useRouter();
