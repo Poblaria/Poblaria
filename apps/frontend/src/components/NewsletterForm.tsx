@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
     Box,
     TextField,
@@ -8,52 +8,39 @@ import {
     FormControlLabel,
     Checkbox,
     Alert,
-    ToggleButton,
-    ToggleButtonGroup
 } from "@mui/material";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
 import { subscribeNewsletter } from "@/app/actions/newsletter/subscribeNewsletter";
+import { useTranslation } from "react-i18next";
 
 type Status = "idle" | "success" | "error" | "loading";
 
-const supportedLanguages = ["en", "es", "fr"] as const;
-type SupportedLanguage = (typeof supportedLanguages)[number];
-
 export default function NewsletterForm() {
+    const { t, i18n } = useTranslation();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [accepted, setAccepted] = useState(false);
     const [status, setStatus] = useState<Status>("idle");
     const [errorMessage, setErrorMessage] = useState("");
-    const [language, setLanguage] = useState<SupportedLanguage>("en");
+    const initialLanguage = i18n.language;
+
 
     const borderColor = "#E6EAE4";
     const accent = "#5E7749";
     const bg = "#F6F7F4";
 
-    useEffect(() => {
-        const browserLanguage = navigator.language.split("-")[0]; // string
-        if (
-            (supportedLanguages as readonly string[]).includes(browserLanguage)
-        ) {
-            setLanguage(browserLanguage as SupportedLanguage);
-        } else {
-            setLanguage("en");
-        }
-    }, []);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!accepted) {
-            setErrorMessage("You must accept the terms and conditions.");
+            setErrorMessage(t("newsletter.error.acceptTerms", { lng: initialLanguage}));
             setStatus("error");
             return;
         }
 
         if (!email.includes("@")) {
-            setErrorMessage("Please enter a valid email address.");
+            setErrorMessage(t("newsletter.error.invalidEmail", { lng: initialLanguage }));
             setStatus("error");
             return;
         }
@@ -61,15 +48,15 @@ export default function NewsletterForm() {
         setStatus("loading");
 
         const { error } = await subscribeNewsletter({
-            name: name.trim() || "Anonymous",
+            name: name.trim() || t("newsletter.defaultName", { lng: initialLanguage }),
             email,
-            language
+            language: initialLanguage
         });
 
         if (error) {
             setStatus("error");
             setErrorMessage(
-                error.errors?.[0]?.message || "An unknown error occurred."
+                error.errors?.[0]?.message || t("newsletter.error.generic", { lng: initialLanguage })
             );
             return;
         }
@@ -97,7 +84,7 @@ export default function NewsletterForm() {
                 }}
             >
                 <TextField
-                    placeholder="Name"
+                    placeholder={t("newsletter.placeholder.name", { lng: initialLanguage })}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     fullWidth
@@ -111,7 +98,7 @@ export default function NewsletterForm() {
                 />
 
                 <TextField
-                    placeholder="Email"
+                    placeholder={t("newsletter.placeholder.email", { lng: initialLanguage })}
                     type="email"
                     required
                     value={email}
@@ -155,41 +142,6 @@ export default function NewsletterForm() {
                     justifyContent: { xs: "center", md: "flex-start" }
                 }}
             >
-                <ToggleButtonGroup
-                    exclusive
-                    value={language}
-                    onChange={(_, val: SupportedLanguage | null) =>
-                        val && setLanguage(val)
-                    }
-                    size="small"
-                    aria-label="newsletter language"
-                    sx={{
-                        "backgroundColor": bg,
-                        "borderRadius": 2,
-                        "& .MuiToggleButton-root": {
-                            borderColor,
-                            color: "#2E3A28",
-                            px: 2,
-                            textTransform: "none",
-                            minWidth: 64
-                        },
-                        "& .Mui-selected": {
-                            "backgroundColor": accent,
-                            "color": "white",
-                            "&:hover": { backgroundColor: "#83A16C" }
-                        }
-                    }}
-                >
-                    <ToggleButton value="en" aria-label="English">
-                        EN
-                    </ToggleButton>
-                    <ToggleButton value="es" aria-label="Spanish">
-                        ES
-                    </ToggleButton>
-                    <ToggleButton value="fr" aria-label="French">
-                        FR
-                    </ToggleButton>
-                </ToggleButtonGroup>
             </Box>
 
             <FormControlLabel
@@ -204,19 +156,18 @@ export default function NewsletterForm() {
                         }}
                     />
                 }
-                label="I have read and accept the terms and conditions of the website."
+                label={t("newsletter.acceptTerms", { lng: initialLanguage })}
             />
 
             {status === "success" && (
                 <Alert severity="success" sx={{ mt: 2 }}>
-                    Subscribed successfully!
+                    {t("newsletter.success", { lng: initialLanguage })}
                 </Alert>
             )}
 
             {status === "error" && (
                 <Alert severity="error" sx={{ mt: 2 }}>
-                    {errorMessage ||
-                        "Check your email and accept the conditions."}
+                    {errorMessage || t("newsletter.error.generic", { lng: initialLanguage })}
                 </Alert>
             )}
         </Box>

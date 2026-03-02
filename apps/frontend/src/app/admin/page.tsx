@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
     Box,
     Typography,
@@ -13,43 +14,50 @@ import me from "@/app/actions/auth/me";
 import Statistics from "@/app/admin/components/Statistics";
 import NewsletterManager from "@/app/admin/components/NewsletterManager";
 
+function Loading() {
+    return (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
+            <CircularProgress sx={{ color: "#5E7749" }} />
+        </Box>
+    )
+}
+
+function AccessDenied() {
+    return (
+        <Container sx={{ mt: 10, textAlign: "center" }}>
+            <Typography variant="h5" color="error">
+                Access Denied
+            </Typography>
+            <Typography>
+                You do not have permission to view this page.
+            </Typography>
+        </Container>
+    );
+}
+
 export default function AdminPage() {
     const [authorized, setAuthorized] = useState<boolean | null>(null);
     const [activeTab, setActiveTab] = useState(0);
+    const router = useRouter();
 
     useEffect(() => {
         async function checkAccess() {
             const { data } = await me();
-
-            if (data && data.role === "administrator") {
-                setAuthorized(true);
-            } else {
-                setAuthorized(false);
-            }
+            setAuthorized(data?.role === "administrator");
         }
         void checkAccess();
     }, []);
 
-    if (authorized === null) {
-        return (
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
-                <CircularProgress sx={{ color: "#5E7749" }} />
-            </Box>
-        );
-    }
+    useEffect(() => {
+        if (authorized === false) {
+            setTimeout(() => {
+                router.push("/");
+            }, 3000);
+        }
+    }, [authorized, router]);
 
-    if (!authorized) {
-        return (
-            <Container sx={{ mt: 10, textAlign: "center" }}>
-                <Typography variant="h5" color="error">
-                    Access Denied
-                </Typography>
-                <Typography>
-                    You do not have permission to view this page.
-                </Typography>
-            </Container>
-        );
-    }
+    if (authorized === null) return <Loading />
+    if (authorized === false) return <AccessDenied />
 
     return (
         <>

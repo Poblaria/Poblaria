@@ -58,5 +58,31 @@
             "subtitle": "Rejoignez-nous dès aujourd’hui et faites le premier pas vers une nouvelle façon de vivre.",
             "button": "Commencer"
         }
+    },
+    "newsletter": {
+        "error": {
+            "generic": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+            "acceptTerms": "Vous devez accepter les termes et conditions.",
+            "invalidEmail": "Veuillez entrer une adresse e-mail valide."
+        },
+        "success": "Vous vous êtes abonné avec succès !",
+        "acceptTerms": "J'ai lu et j'accepte les termes et conditions du site web.",
+        "placeholder": {
+            "name": "Votre Nom",
+            "email": "Votre Adresse Email"
+        },
+        "defaultName": "Abonné",
+        "languageToggle": "Langue de la Newsletter"
+    },
+    "footer": {
+        "title": "LETTRE D'INFORMATION",
+        "subtitle": "Abonnez-vous pour recevoir des mises à jour sur ce voyage incroyable !",
+
+        "link": {
+            "faq": "Questions",
+            "about-us": "À propos de nous",
+            "contact": "Contact",
+            "partner-portal": "Partenariats"
+        }
     }
 }

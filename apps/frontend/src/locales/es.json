@@ -56,5 +56,31 @@
             "subtitle": "Únete hoy y da el primer paso para descubrir una nueva forma de vivir.",
             "button": "Empezar"
         }
+    },
+    "newsletter": {
+        "error": {
+            "generic": "Ocurrió un error. Por favor, inténtalo de nuevo más tarde.",
+            "acceptTerms": "Debes aceptar los términos y condiciones.",
+            "invalidEmail": "Por favor, introduce una dirección de correo válida."
+        },
+        "success": "¡Te has suscrito con éxito!",
+        "acceptTerms": "He leído y acepto los términos y condiciones del sitio web.",
+        "placeholder": {
+            "name": "Tu Nombre",
+            "email": "Tu Correo Electrónico"
+        },
+        "defaultName": "Suscriptor",
+        "languageToggle": "Idioma del Boletín"
+    },
+    "footer": {
+        "title": "BOLETÍN INFORMATIVO",
+        "subtitle": "¡Suscríbete para recibir actualizaciones de este increíble viaje!",
+
+        "link": {
+            "faq": "Preguntas",
+            "about-us": "Sobre nosotros",
+            "contact": "Contacto",
+            "partner-portal": "Colaboraciones"
+        }
     }
 }
