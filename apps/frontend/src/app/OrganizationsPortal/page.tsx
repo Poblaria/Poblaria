@@ -15,7 +15,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import HomeWorkRoundedIcon from "@mui/icons-material/HomeWorkRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import { useRouter } from "next/navigation";
-import PostTypeDialog from "@/app/partner/components/PostTypeDialog";
+import PostTypeDialog from "@/app/OrganizationsPortal/components/PostTypeDialog";
 
 type MiniPost = { id: number; title: string; createdAt: string };
 type Filter = "All" | "Properties" | "Jobs";
@@ -203,7 +203,7 @@ function SectionCard({
     );
 }
 
-export default function PartnerPage() {
+export default function organizationsPortalPage() {
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState<Filter>("All");
     const router = useRouter();
@@ -281,12 +281,12 @@ export default function PartnerPage() {
                         subtitle={`${housing.length} listings`}
                         items={housing}
                         onItemClick={(id) =>
-                            router.push(`/admin/housing/${id}`)
+                            router.push(`/housings/${id}`)
                         }
                         footerAction={
                             <Button
                                 variant="text"
-                                onClick={() => router.push("/admin/housing")}
+                                onClick={() => router.push("/housings")}
                                 sx={{
                                     alignSelf: "flex-start",
                                     fontWeight: 900,
@@ -305,11 +305,11 @@ export default function PartnerPage() {
                         title="Job offer"
                         subtitle={`${jobs.length} listings`}
                         items={jobs}
-                        onItemClick={(id) => router.push(`/admin/jobs/${id}`)}
+                        onItemClick={(id) => router.push(`/jobs/${id}`)}
                         footerAction={
                             <Button
                                 variant="text"
-                                onClick={() => router.push("/admin/jobs")}
+                                onClick={() => router.push("/jobs")}
                                 sx={{
                                     alignSelf: "flex-start",
                                     fontWeight: 900,
@@ -329,8 +329,8 @@ export default function PartnerPage() {
                 onClose={() => setOpen(false)}
                 onNext={(type) => {
                     setOpen(false);
-                    if (type === "property") router.push("/admin/housing/new");
-                    if (type === "job") router.push("/admin/jobs/new");
+                    if (type === "property") router.push("/housings");
+                    if (type === "job") router.push("/jobs");
                 }}
             />
         </Box>
