@@ -280,9 +280,7 @@ export default function OrganizationsPortalPage() {
                         title="Property"
                         subtitle={`${housing.length} listings`}
                         items={housing}
-                        onItemClick={(id) =>
-                            router.push(`/housings/${id}`)
-                        }
+                        onItemClick={(id) => router.push(`/housings/${id}`)}
                         footerAction={
                             <Button
                                 variant="text"
