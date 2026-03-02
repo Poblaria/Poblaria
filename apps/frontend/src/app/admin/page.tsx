@@ -19,7 +19,7 @@ function Loading() {
         <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
             <CircularProgress sx={{ color: "#5E7749" }} />
         </Box>
-    )
+    );
 }
 
 function AccessDenied() {
@@ -56,8 +56,8 @@ export default function AdminPage() {
         }
     }, [authorized, router]);
 
-    if (authorized === null) return <Loading />
-    if (authorized === false) return <AccessDenied />
+    if (authorized === null) return <Loading />;
+    if (authorized === false) return <AccessDenied />;
 
     return (
         <>

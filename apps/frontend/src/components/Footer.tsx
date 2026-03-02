@@ -9,7 +9,9 @@ export default function Footer() {
 
     const bg = "#EEF1EA";
     const accent = "#5E7749";
-    {/*const text = "#2E3A28";*/}
+    {
+        /*const text = "#2E3A28";*/
+    }
 
     return (
         <Box component="footer" sx={{ bgcolor: bg, py: 10 }}>
@@ -69,7 +71,9 @@ export default function Footer() {
                         <Link href="/faq">{t("footer.link.faq")}</Link>
                         <Link href="/about">{t("footer.link.about-us")}</Link>
                         <Link href="/contact">{t("footer.link.contact")}</Link>
-                        <Link href="/partner-portal">{t("footer.link.partner-portal")}</Link>
+                        <Link href="/partner-portal">
+                            {t("footer.link.partner-portal")}
+                        </Link>
                     </Stack>
                 </Box>
             </Box>

@@ -7,7 +7,7 @@ import {
     IconButton,
     FormControlLabel,
     Checkbox,
-    Alert,
+    Alert
 } from "@mui/material";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
@@ -25,7 +25,6 @@ export default function NewsletterForm() {
     const [errorMessage, setErrorMessage] = useState("");
     const initialLanguage = i18n.language;
 
-
     const borderColor = "#E6EAE4";
     const accent = "#5E7749";
     const bg = "#F6F7F4";
@@ -34,13 +33,17 @@ export default function NewsletterForm() {
         e.preventDefault();
 
         if (!accepted) {
-            setErrorMessage(t("newsletter.error.acceptTerms", { lng: initialLanguage}));
+            setErrorMessage(
+                t("newsletter.error.acceptTerms", { lng: initialLanguage })
+            );
             setStatus("error");
             return;
         }
 
         if (!email.includes("@")) {
-            setErrorMessage(t("newsletter.error.invalidEmail", { lng: initialLanguage }));
+            setErrorMessage(
+                t("newsletter.error.invalidEmail", { lng: initialLanguage })
+            );
             setStatus("error");
             return;
         }
@@ -48,7 +51,9 @@ export default function NewsletterForm() {
         setStatus("loading");
 
         const { error } = await subscribeNewsletter({
-            name: name.trim() || t("newsletter.defaultName", { lng: initialLanguage }),
+            name:
+                name.trim() ||
+                t("newsletter.defaultName", { lng: initialLanguage }),
             email,
             language: initialLanguage
         });
@@ -56,7 +61,8 @@ export default function NewsletterForm() {
         if (error) {
             setStatus("error");
             setErrorMessage(
-                error.errors?.[0]?.message || t("newsletter.error.generic", { lng: initialLanguage })
+                error.errors?.[0]?.message ||
+                    t("newsletter.error.generic", { lng: initialLanguage })
             );
             return;
         }
@@ -84,7 +90,9 @@ export default function NewsletterForm() {
                 }}
             >
                 <TextField
-                    placeholder={t("newsletter.placeholder.name", { lng: initialLanguage })}
+                    placeholder={t("newsletter.placeholder.name", {
+                        lng: initialLanguage
+                    })}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     fullWidth
@@ -98,7 +106,9 @@ export default function NewsletterForm() {
                 />
 
                 <TextField
-                    placeholder={t("newsletter.placeholder.email", { lng: initialLanguage })}
+                    placeholder={t("newsletter.placeholder.email", {
+                        lng: initialLanguage
+                    })}
                     type="email"
                     required
                     value={email}
@@ -141,8 +151,7 @@ export default function NewsletterForm() {
                     display: "flex",
                     justifyContent: { xs: "center", md: "flex-start" }
                 }}
-            >
-            </Box>
+            ></Box>
 
             <FormControlLabel
                 sx={{ mt: 2, color: "#2E3A28" }}
@@ -167,7 +176,8 @@ export default function NewsletterForm() {
 
             {status === "error" && (
                 <Alert severity="error" sx={{ mt: 2 }}>
-                    {errorMessage || t("newsletter.error.generic", { lng: initialLanguage })}
+                    {errorMessage ||
+                        t("newsletter.error.generic", { lng: initialLanguage })}
                 </Alert>
             )}
         </Box>
