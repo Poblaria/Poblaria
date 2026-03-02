@@ -1,0 +1,26 @@
+{
+    "subscribe": {
+        "subject": "Welcome to Poblaria Newsletter! 🎉",
+        "greeting": "Hello { name }!",
+        "welcome": "Welcome to Poblaria Newsletter",
+        "thanksMessage": "Thank you for subscribing to our newsletter! We're excited to have you as part of our community."
+    },
+    "unsubscribe": {
+        "pageTitle": "Unsubscribed - Poblaria Newsletter",
+        "title": "Successfully Unsubscribed",
+        "subtitle": "You will no longer receive emails from us",
+        "message": "Your email address has been successfully removed from our newsletter mailing list.",
+        "whatHappensTitle": "What happens now?",
+        "whatHappensText": "You won't receive any more newsletters from Poblaria. However, you can always resubscribe at any time if you change your mind.",
+        "changeOfMind": "We're sad to see you go, but we understand. Thank you for being part of our community!",
+        "footer": "Thank you for visiting Poblaria"
+    },
+    "send": {
+        "success": "Newsletter sent successfully to {count} out of {total} subscribers"
+    },
+    "regards": "Best regards,",
+    "team": "The Poblaria Team",
+    "unsubscribeInfo": "You can unsubscribe at any time by clicking the link below.",
+    "unsubscribeLink": "Unsubscribe from newsletter",
+    "footer": "You are receiving this email because you subscribed to Poblaria's newsletter."
+}

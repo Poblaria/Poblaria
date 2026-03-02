@@ -32,6 +32,7 @@ COPY apps/backend/scripts/entrypoint.sh ./
 RUN addgroup -S nodeapp && adduser -S nodeapp -G nodeapp \
   && chown -R nodeapp:nodeapp /app \
   && chmod +x /app/entrypoint.sh
+RUN mkdir -p /app/storage && chown -R nodeapp:nodeapp /app/storage
 USER nodeapp
 EXPOSE 8080
 ENTRYPOINT ["./entrypoint.sh"]

@@ -15,7 +15,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import HomeWorkRoundedIcon from "@mui/icons-material/HomeWorkRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import { useRouter } from "next/navigation";
-import PostTypeDialog from "@/components/partner/PostTypeDialog";
+import PostTypeDialog from "@/app/partner/components/PostTypeDialog";
 
 type MiniPost = { id: number; title: string; createdAt: string };
 type Filter = "All" | "Properties" | "Jobs";

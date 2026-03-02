@@ -23,4 +23,8 @@ export default class AuthController {
         await User.accessTokens.delete(user, token);
         return response.noContent();
     }
+
+    async me({ auth }: HttpContext) {
+        return new UserDto(auth.getUserOrFail()).toJson();
+    }
 }

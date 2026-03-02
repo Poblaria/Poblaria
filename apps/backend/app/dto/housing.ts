@@ -1,4 +1,5 @@
 import Housing from "#models/housing";
+import ImageDto from "#dto/image";
 
 export default class HousingDto {
     constructor(private model: Housing) {}
@@ -8,7 +9,7 @@ export default class HousingDto {
             id: this.model.id,
             title: this.model.title,
             description: this.model.description,
-            imageId: this.model.imageId,
+            image: this.model.imageName ? new ImageDto(this.model.imageName).toJson() : null,
             price: this.model.price,
             typeId: this.model.typeId,
             offerTypeId: this.model.offerTypeId,

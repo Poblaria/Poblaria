@@ -14,6 +14,7 @@
             "isAvailable": "disponible",
             "isRemote": "télétravail",
             "landArea": "superficie du terrain",
+            "language": "langue",
             "latitude": "latitude",
             "longitude": "longitude",
             "offerTypeId": "type d'offre",
@@ -27,6 +28,7 @@
         "messages": {
             "boolean": "La valeur doit être un booléen",
             "email": "Le champ {field} doit être une adresse e-mail valide",
+            "enum": "La {field} sélectionnée est invalide",
             "database.unique": "Le champ {field} a déjà été pris",
             "maxLength": "Le champ {field} ne doit pas dépasser {max} caractères",
             "minLength": "Le champ {field} doit contenir au moins {min} caractères",
