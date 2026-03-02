@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Typography, Link, Stack, Divider } from "@mui/material";
+import { Box, Typography, Link, Stack } from "@mui/material";
 import NewsletterForm from "@/components/NewsletterForm";
 import { useTranslation } from "react-i18next";
 
@@ -9,7 +9,7 @@ export default function Footer() {
 
     const bg = "#EEF1EA";
     const accent = "#5E7749";
-    const text = "#2E3A28";
+    {/*const text = "#2E3A28";*/}
 
     return (
         <Box component="footer" sx={{ bgcolor: bg, py: 10 }}>
