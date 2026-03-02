@@ -71,8 +71,8 @@ export default function Footer() {
                         <Link href="/faq">{t("footer.link.faq")}</Link>
                         <Link href="/about">{t("footer.link.about-us")}</Link>
                         <Link href="/contact">{t("footer.link.contact")}</Link>
-                        <Link href="/OrganizationsPortal">
-                            {t("footer.link.organizationsPortal")}
+                        <Link href="/organizations">
+                            {t("footer.link.organizations")}
                         </Link>
                     </Stack>
                 </Box>
