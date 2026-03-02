@@ -15,7 +15,7 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import HomeWorkRoundedIcon from "@mui/icons-material/HomeWorkRounded";
 import WorkRoundedIcon from "@mui/icons-material/WorkRounded";
 import { useRouter } from "next/navigation";
-import PostTypeDialog from "@/components/admin/PostTypeDialog";
+import PostTypeDialog from "@/components/partner/PostTypeDialog";
 
 type MiniPost = { id: number; title: string; createdAt: string };
 type Filter = "All" | "Properties" | "Jobs";
@@ -203,7 +203,7 @@ function SectionCard({
     );
 }
 
-export default function AdminPage() {
+export default function PartnerPage() {
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState<Filter>("All");
     const router = useRouter();
