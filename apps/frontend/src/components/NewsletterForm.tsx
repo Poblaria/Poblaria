@@ -11,76 +11,76 @@ import {
 } from "@mui/material";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 
-type SubscribeResponse = {
-    message?: string;
-};
+import { subscribeNewsletter } from "@/app/actions/newsletter/subscribeNewsletter";
+import { useTranslation } from "react-i18next";
+
+type Status = "idle" | "success" | "error" | "loading";
 
 export default function NewsletterForm() {
+    const { t, i18n } = useTranslation();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [accepted, setAccepted] = useState(false);
-    const [status, setStatus] = useState<
-        "idle" | "success" | "error" | "loading"
-    >("idle");
+    const [status, setStatus] = useState<Status>("idle");
     const [errorMessage, setErrorMessage] = useState("");
+    const initialLanguage = i18n.language;
 
     const borderColor = "#E6EAE4";
     const accent = "#5E7749";
     const bg = "#F6F7F4";
 
-    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Frontend validation
         if (!accepted) {
-            setErrorMessage("You must accept the terms and conditions.");
+            setErrorMessage(
+                t("newsletter.error.acceptTerms", { lng: initialLanguage })
+            );
             setStatus("error");
             return;
         }
+
         if (!email.includes("@")) {
-            setErrorMessage("Please enter a valid email address.");
+            setErrorMessage(
+                t("newsletter.error.invalidEmail", { lng: initialLanguage })
+            );
             setStatus("error");
             return;
         }
 
         setStatus("loading");
 
-        try {
-            const res = await fetch("/api/subscribe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, firstName: name })
-            });
+        const { error } = await subscribeNewsletter({
+            name:
+                name.trim() ||
+                t("newsletter.defaultName", { lng: initialLanguage }),
+            email,
+            language: initialLanguage
+        });
 
-            if (!res.ok) {
-                const data = (await res.json()) as SubscribeResponse;
-                throw new Error(data.message || "Failed to subscribe");
-            }
-
-            setStatus("success");
-            setErrorMessage("");
-            setName("");
-            setEmail("");
-            setAccepted(false);
-        } catch (err: unknown) {
-            const errorMessage =
-                err instanceof Error
-                    ? err.message
-                    : "Check your email and accept the conditions.";
+        if (error) {
             setStatus("error");
-            setErrorMessage(errorMessage);
+            setErrorMessage(
+                error.errors?.[0]?.message ||
+                    t("newsletter.error.generic", { lng: initialLanguage })
+            );
+            return;
         }
+
+        setStatus("success");
+        setErrorMessage("");
+        setName("");
+        setEmail("");
+        setAccepted(false);
     };
 
     return (
         <Box
             component="form"
-            onSubmit={(e) => {
-                void handleSubmit(e);
-            }}
+            onSubmit={(e) => void handleSubmit(e)}
             sx={{ width: "100%" }}
         >
-            {/* Row inputs */}
+            {/* Main row: Name + Email + Submit */}
             <Box
                 sx={{
                     display: "grid",
@@ -90,7 +90,9 @@ export default function NewsletterForm() {
                 }}
             >
                 <TextField
-                    placeholder="Name"
+                    placeholder={t("newsletter.placeholder.name", {
+                        lng: initialLanguage
+                    })}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     fullWidth
@@ -104,7 +106,9 @@ export default function NewsletterForm() {
                 />
 
                 <TextField
-                    placeholder="Email"
+                    placeholder={t("newsletter.placeholder.email", {
+                        lng: initialLanguage
+                    })}
                     type="email"
                     required
                     value={email}
@@ -119,7 +123,6 @@ export default function NewsletterForm() {
                     }}
                 />
 
-                {/* Round arrow button */}
                 <IconButton
                     type="submit"
                     disabled={status === "loading" || !accepted}
@@ -141,7 +144,15 @@ export default function NewsletterForm() {
                 </IconButton>
             </Box>
 
-            {/* Checkbox line */}
+            {/* Language toggles UNDER the inputs (no label) */}
+            <Box
+                sx={{
+                    mt: 1.5,
+                    display: "flex",
+                    justifyContent: { xs: "center", md: "flex-start" }
+                }}
+            ></Box>
+
             <FormControlLabel
                 sx={{ mt: 2, color: "#2E3A28" }}
                 control={
@@ -154,18 +165,19 @@ export default function NewsletterForm() {
                         }}
                     />
                 }
-                label="I have read and accept the terms and conditions of the website."
+                label={t("newsletter.acceptTerms", { lng: initialLanguage })}
             />
 
             {status === "success" && (
                 <Alert severity="success" sx={{ mt: 2 }}>
-                    Subscribed successfully!
+                    {t("newsletter.success", { lng: initialLanguage })}
                 </Alert>
             )}
+
             {status === "error" && (
                 <Alert severity="error" sx={{ mt: 2 }}>
                     {errorMessage ||
-                        "Check your email and accept the conditions."}
+                        t("newsletter.error.generic", { lng: initialLanguage })}
                 </Alert>
             )}
         </Box>

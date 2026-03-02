@@ -5,8 +5,8 @@ import {
     putHousingValidator,
     patchHousingValidator
 } from "#validators/housing";
-import HousingImage from "#models/housing_image";
 import HousingDto from "#dto/housing";
+import { UploadService } from "#services/upload_service";
 
 export default class HousingController {
     async index() {
@@ -17,15 +17,8 @@ export default class HousingController {
     async store({ auth, request, response }: HttpContext) {
         const data = await request.validateUsing(postHousingValidator);
 
-        let image;
-        if (data.image) image = await HousingImage.create({ image: Buffer.from(data.image) });
-
-        const { image: _image, ...housing } = data;
-
         return response.created(
-            new HousingDto(
-                await Housing.create({ ...housing, imageId: image?.id, userId: auth.user?.id })
-            ).toJson()
+            new HousingDto(await Housing.create({ ...data, userId: auth.user?.id })).toJson()
         );
     }
 
@@ -49,11 +42,17 @@ export default class HousingController {
         return new HousingDto(await housing.save()).toJson();
     }
 
-    async destroy({ params, response }: HttpContext) {
+    async destroy({ logger, params, response }: HttpContext) {
         const housing = await Housing.findOrFail(params.id);
-        const image = await HousingImage.find(housing.imageId);
 
-        if (image) await image.delete();
+        try {
+            if (housing.imageName) await UploadService.delete(housing.imageName);
+        } catch {
+            logger.error(
+                `Failed to delete image ${housing.imageName} for housing with id ${housing.id}`
+            );
+        }
+
         await housing.delete();
 
         return response.noContent();

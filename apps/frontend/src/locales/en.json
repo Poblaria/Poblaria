@@ -57,5 +57,31 @@
             "subtitle": "Join us today and take the first step towards discovering a new way of living.",
             "button": "Get Started"
         }
+    },
+    "newsletter": {
+        "error": {
+            "generic": "An error occurred. Please try again later.",
+            "acceptTerms": "You must accept the terms and conditions.",
+            "invalidEmail": "Please enter a valid email address."
+        },
+        "success": "You have successfully subscribed!",
+        "acceptTerms": "I have read and accept the terms and conditions of the website.",
+        "placeholder": {
+            "name": "Your Name",
+            "email": "Your Email"
+        },
+        "defaultName": "Subscriber",
+        "languageToggle": "Newsletter Language"
+    },
+    "footer": {
+        "title": "NEWSLETTER",
+        "subtitle": "Subscribe to receive updated of this amazing journey!",
+
+        "link": {
+            "faq": "Questions",
+            "about-us": "About Us",
+            "contact": "Contact",
+            "partner-portal": "Partnerships"
+        }
     }
 }
