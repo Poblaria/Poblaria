@@ -3,7 +3,7 @@
 import { ReactNode } from "react";
 import { Box } from "@mui/material";
 
-export default function organizationsPortalLayout({
+export default function OrganizationsPortalLayout({
     children
 }: {
     children: ReactNode;
