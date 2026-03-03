@@ -5,6 +5,7 @@ import Job from "#models/job";
 import User from "#models/user";
 import StatisticPolicy from "#policies/statistic_policy";
 import { getStatisticsValidator } from "#validators/statistics";
+import NewsletterSubscriber from "#models/newsletter_subscriber";
 
 export default class StatisticsController {
     async show({ bouncer, request, response }: HttpContext) {
@@ -101,6 +102,18 @@ export default class StatisticsController {
         //endregion
         //endregion
 
+        //region Newsletter
+        const newSubscribersCurrentMonth = await NewsletterSubscriber.query()
+            .whereBetween("subscribed_at", [currentMonthStart.toSQL()!, currentMonthEnd.toSQL()!])
+            .count("* as total");
+
+        const newSubscribersPreviousMonth = await NewsletterSubscriber.query()
+            .whereBetween("subscribed_at", [previousMonthStart.toSQL()!, previousMonthEnd.toSQL()!])
+            .count("* as total");
+
+        const totalSubscribers = await NewsletterSubscriber.query().count("* as total");
+        //endregion
+
         return {
             meta: {
                 periods: {
@@ -149,6 +162,15 @@ export default class StatisticsController {
                         previous: Number(newAdministratorUsersPreviousMonth[0].$extras.total)
                     },
                     total: Number(totalAdministratorUsers[0].$extras.total)
+                }
+            },
+            newsletter: {
+                subscribers: {
+                    new: {
+                        current: Number(newSubscribersCurrentMonth[0].$extras.total),
+                        previous: Number(newSubscribersPreviousMonth[0].$extras.total)
+                    },
+                    total: Number(totalSubscribers[0].$extras.total)
                 }
             }
         };
