@@ -132,6 +132,9 @@ export default function StatisticsPage() {
                     total={totalUsers}
                     newItems={newUsersTotal}
                 />
+                {/* TODO: Add Newsletter StatCard once Backend provides 'newsletter' data 
+                    Acceptance Criteria: Dashboard displays newsletter subscribers count.
+                */}
             </Stack>
 
             <Typography variant="h5" sx={{ mb: 3, fontWeight: 700 }}>
