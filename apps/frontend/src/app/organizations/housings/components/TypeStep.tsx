@@ -16,7 +16,7 @@ const propertyTypes = [
 type Props = {
     selectedType: string | null;
     onSelect: (id: string) => void;
-}
+};
 
 export default function TypeStep({ selectedType, onSelect }: Props) {
     return (

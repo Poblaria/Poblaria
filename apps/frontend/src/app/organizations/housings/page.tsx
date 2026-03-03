@@ -16,7 +16,9 @@ export default function HousingsPage() {
         step > 1 ? setStep((prev) => prev - 1) : window.history.back();
 
     return (
-        <Box sx={{ backgroundColor: "#fff", minHeight: "100vh", pt: 10, pb: 10 }}>
+        <Box
+            sx={{ backgroundColor: "#fff", minHeight: "100vh", pt: 10, pb: 10 }}
+        >
             <Container maxWidth="md">
                 {step === 1 && (
                     <TypeStep
@@ -27,7 +29,7 @@ export default function HousingsPage() {
                     />
                 )}
 
-                {step === 2 && <Box>  </Box>}
+                {step === 2 && <Box> </Box>}
 
                 <Divider sx={{ my: 6, borderColor: "rgba(0,0,0,0.05)" }} />
 

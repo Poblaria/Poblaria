@@ -327,7 +327,8 @@ export default function OrganizationsPortalPage() {
                 onClose={() => setOpen(false)}
                 onNext={(type) => {
                     setOpen(false);
-                    if (type === "property") router.push("/organizations/housings");
+                    if (type === "property")
+                        router.push("/organizations/housings");
                     if (type === "job") router.push("/jobs");
                 }}
             />
