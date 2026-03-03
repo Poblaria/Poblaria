@@ -7,7 +7,8 @@ import {
     Stack,
     Paper,
     Container,
-    Grid
+    Grid,
+    Divider
 } from "@mui/material";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 
@@ -46,6 +47,8 @@ export default function HousingsPage() {
                         >
                             Select a property type.
                         </Typography>
+
+                        {/* Grille 3x3 avec hauteur égale */}
                         <Grid container spacing={2} columns={3}>
                             {propertyTypes.map((type) => (
                                 <Grid
@@ -108,6 +111,11 @@ export default function HousingsPage() {
                                 </Grid>
                             ))}
                         </Grid>
+
+                        <Divider
+                            sx={{ my: 6, borderColor: "rgba(0,0,0,0.05)" }}
+                        />
+
                         <Stack
                             direction="row"
                             justifyContent="space-between"
@@ -130,7 +138,7 @@ export default function HousingsPage() {
                                 disabled={!selectedType}
                                 onClick={() => setStep(2)}
                                 sx={{
-                                    "backgroundColor": "#2E3A28",
+                                    "backgroundColor": "#6E845C",
                                     "color": "#fff",
                                     "px": 6,
                                     "py": 1.5,
@@ -146,6 +154,7 @@ export default function HousingsPage() {
                     </Box>
                 )}
 
+                {/* Step 2 (Ticket #103) viendra ici */}
             </Container>
         </Box>
     );
