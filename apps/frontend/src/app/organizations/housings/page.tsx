@@ -22,7 +22,9 @@ export default function HousingsPage() {
     };
 
     return (
-        <Box sx={{ backgroundColor: "#fff", minHeight: "100vh", pt: 10, pb: 10 }}>
+        <Box
+            sx={{ backgroundColor: "#fff", minHeight: "100vh", pt: 10, pb: 10 }}
+        >
             <Container maxWidth="md">
                 {step === 1 && (
                     <TypeStep

@@ -40,7 +40,7 @@ export default function PurposeStep({ selectedPurpose, onSelect }: Props) {
                             "borderRadius": 4,
                             "display": "flex",
                             "alignItems": "center",
-                            "justifyContent": "space-between", // Pousse les éléments aux extrémités
+                            "justifyContent": "space-between",
                             "transition": "all 0.2s ease-in-out",
                             "borderWidth": selectedPurpose === p.id ? 2 : 1,
                             "borderColor":
@@ -54,7 +54,6 @@ export default function PurposeStep({ selectedPurpose, onSelect }: Props) {
                             "&:hover": { borderColor: "#5E7749" }
                         }}
                     >
-                        {/* Le texte vient en premier pour être à gauche */}
                         <Typography
                             sx={{
                                 fontWeight: 700,
@@ -64,8 +63,6 @@ export default function PurposeStep({ selectedPurpose, onSelect }: Props) {
                         >
                             {p.label}
                         </Typography>
-
-                        {/* L'icône vient en deuxième pour être à droite */}
                         <Box
                             component="img"
                             src={p.icon}
