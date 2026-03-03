@@ -78,7 +78,10 @@ export const NavBar = () => {
                 boxShadow: "0 0 10px rgba(0,0,0,0.1)",
                 backgroundColor: "white",
                 padding: "0px 30px",
-                height: "90px"
+                height: "90px",
+                position: "sticky",
+                top: 0,
+                zIndex: 1100
             }}
         >
             <Box>
