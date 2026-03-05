@@ -66,7 +66,6 @@ export const StatCard = ({
                 >
                     {title}
                 </Typography>
-
                 <Box
                     sx={{
                         display: "flex",
@@ -81,13 +80,11 @@ export const StatCard = ({
                     >
                         {total.toLocaleString()}
                     </Typography>
-
-                    {/* Badge: Shows green if growth > 0, subtle grey if 0 */}
                     <Box
                         sx={{
                             bgcolor: hasGrowth ? "#ECFDF5" : "#F3F4F6",
-                            px: 1.5,
-                            py: 0.5,
+                            px: 1.2,
+                            py: 0.4,
                             borderRadius: 1.5
                         }}
                     >
@@ -98,13 +95,11 @@ export const StatCard = ({
                                 fontWeight: 700
                             }}
                         >
-                            +{newItems} new
+                            +{newItems}
                         </Typography>
                     </Box>
                 </Box>
-
                 <Divider sx={{ mb: 2 }} />
-
                 <Box>
                     <Typography
                         variant="caption"
@@ -115,15 +110,11 @@ export const StatCard = ({
                     </Typography>
                     <Typography
                         variant="body2"
-                        sx={{
-                            fontWeight: 600,
-                            color: "#4B5563",
-                            lineHeight: 1.4
-                        }}
+                        sx={{ fontWeight: 600, color: "#4B5563" }}
                     >
                         {hasGrowth
-                            ? `Database expanded by ${newItems} units in last 30 days`
-                            : `Maintained at ${total} ${total === 1 ? "unit" : "units"} (No new entries)`}
+                            ? `Expanded by ${newItems} units recently`
+                            : "No new entries"}
                     </Typography>
                 </Box>
             </CardContent>
