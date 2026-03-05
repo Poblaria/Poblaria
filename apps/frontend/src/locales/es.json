@@ -82,5 +82,33 @@
             "contact": "Contacto",
             "organizations": "Organizaciones"
         }
+    },
+    "admin": {
+        "tabs": { "statistics": "Estadísticas", "newsletter": "Boletín" },
+        "titles": {
+            "statistics": "Resumen del Sistema",
+            "newsletter": "Centro de Comunicación"
+        },
+        "menu": { "client_view": "Volver al sitio", "logout": "Cerrar sesión" },
+        "loading": "Verificando credenciales...",
+        "error": {
+            "denied_title": "Acceso Denegado",
+            "denied_desc": "No tienes permiso para ver el Portal de Administración.",
+            "redirect_msg": "Redirigiendo en",
+            "seconds": "segundos"
+        },
+        "newsletter": {
+            "load_btn": "Cargar Suscriptores",
+            "found": "Suscriptores Encontrados",
+            "send_btn": "Enviar a Todos los Suscriptores",
+            "content_label": "Contenido del Boletín",
+            "content_placeholder": "Escribe tu mensaje aquí...",
+            "compose": "Redactar Boletín"
+        },
+        "statistics": { "total": "Total", "new": "Nuevo" },
+        "growth_label": "ESTADO DE CRECIMIENTO",
+        "growth_positive": "Ampliado por",
+        "growth_units": "unidades",
+        "growth_none": "Sin entradas nuevas"
     }
 }

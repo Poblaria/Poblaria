@@ -1,96 +1,54 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import {
-    Box,
-    Typography,
-    Container,
-    CircularProgress,
-    Tabs,
-    Tab
-} from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next"; // Ensure useTranslation is imported
 import me from "@/app/actions/auth/me";
 import Statistics from "@/app/admin/components/Statistics";
 import NewsletterManager from "@/app/admin/components/NewsletterManager";
-
-function Loading() {
-    return (
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 10 }}>
-            <CircularProgress sx={{ color: "#5E7749" }} />
-        </Box>
-    );
-}
-
-function AccessDenied() {
-    return (
-        <Container sx={{ mt: 10, textAlign: "center" }}>
-            <Typography variant="h5" color="error">
-                Access Denied
-            </Typography>
-            <Typography>
-                You do not have permission to view this page.
-            </Typography>
-        </Container>
-    );
-}
+import { AdminNavBar } from "./components/AdminNavBar";
+import { AdminAccessGuard } from "./components/AdminAccessGuard";
 
 export default function AdminPage() {
+    // Destructure both 't' for translations and 'i18n' to track language state
+    const { t, i18n } = useTranslation();
     const [authorized, setAuthorized] = useState<boolean | null>(null);
     const [activeTab, setActiveTab] = useState(0);
-    const router = useRouter();
 
     useEffect(() => {
         async function checkAccess() {
-            const { data } = await me();
-            setAuthorized(data?.role === "administrator");
+            try {
+                const { data } = await me();
+                setAuthorized(data?.role === "administrator");
+            } catch {
+                setAuthorized(false);
+            }
         }
         void checkAccess();
     }, []);
 
-    useEffect(() => {
-        if (authorized === false) {
-            setTimeout(() => {
-                router.push("/");
-            }, 3000);
-        }
-    }, [authorized, router]);
-
-    if (authorized === null) return <Loading />;
-    if (authorized === false) return <AccessDenied />;
+    if (authorized !== true) {
+        return <AdminAccessGuard authorized={authorized} />;
+    }
 
     return (
-        <>
-            <Container maxWidth="lg" sx={{ py: 4 }}>
-                <Typography
-                    variant="h4"
-                    sx={{ mb: 4, fontWeight: "bold", color: "#2E3A28" }}
-                >
-                    Admin Dashboard
-                </Typography>
+        /* The 'key' prop forces a full re-render when the language changes */
+        <Box key={i18n.language} sx={{ minHeight: "100vh", bgcolor: "#F9FAFB" }}>
+            <AdminNavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+            
+            <Container maxWidth="lg" sx={{ py: 6 }}>
+                <Box sx={{ mb: 4 }}>
+                    <Typography variant="h4" sx={{ fontWeight: 800, color: "#111827" }}>
+                        {activeTab === 0 
+                            ? t("admin.titles.statistics", "System Overview") 
+                            : t("admin.titles.newsletter", "Communication Center")}
+                    </Typography>
+                </Box>
 
-                {/* Tabs for navigation */}
-                <Tabs
-                    value={activeTab}
-                    onChange={(e, newValue: number) => setActiveTab(newValue)}
-                    sx={{
-                        "mb": 4,
-                        "& .MuiTabs-indicator": {
-                            backgroundColor: "#5E7749"
-                        },
-                        "& .MuiTab-root.Mui-selected": {
-                            color: "#5E7749"
-                        }
-                    }}
-                >
-                    <Tab label="Statistics" />
-                    <Tab label="Newsletter Manager" />
-                </Tabs>
-
-                {/* Render the selected tab content */}
-                {activeTab === 0 && <Statistics />}
-                {activeTab === 1 && <NewsletterManager />}
+                <Box>
+                    {activeTab === 0 ? <Statistics /> : <NewsletterManager />}
+                </Box>
             </Container>
-        </>
+        </Box>
     );
 }

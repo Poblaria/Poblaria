@@ -84,5 +84,33 @@
             "contact": "Contact",
             "organizations": "Organisations"
         }
+    },
+    "admin": {
+        "tabs": { "statistics": "Statistiques", "newsletter": "Newsletter" },
+        "titles": {
+            "statistics": "Aperçu du Système",
+            "newsletter": "Centre de Communication"
+        },
+        "menu": { "client_view": "Vue Client", "logout": "Déconnexion" },
+        "loading": "Vérification des identifiants...",
+        "error": {
+            "denied_title": "Accès Refusé",
+            "denied_desc": "Vous n'avez pas l'autorisation d'accéder au portail administrateur.",
+            "redirect_msg": "Redirection vers l'accueil dans",
+            "seconds": "secondes"
+        },
+        "newsletter": {
+            "load_btn": "Charger les Abonnés",
+            "found": "Abonnés Trouvés",
+            "send_btn": "Envoyer à tous les abonnés",
+            "content_label": "Contenu de la newsletter",
+            "content_placeholder": "Écrivez votre message ici...",
+            "compose": "Rédiger la newsletter"
+        },
+        "statistics": { "total": "Total", "new": "Nouveau" },
+        "growth_label": "ÉTAT DE CROISSANCE",
+        "growth_positive": "Augmentation de",
+        "growth_units": "unités",
+        "growth_none": "Aucune nouvelle entrée"
     }
 }

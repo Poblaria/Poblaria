@@ -6,6 +6,7 @@ import {
     Divider,
     Skeleton
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface StatCardProps {
     title: string;
@@ -23,6 +24,7 @@ export const StatCard = ({
     loading
 }: StatCardProps) => {
     const hasGrowth = newItems > 0;
+    const { t } = useTranslation();
 
     if (loading) {
         return (
@@ -106,15 +108,15 @@ export const StatCard = ({
                         display="block"
                         sx={{ color: "#9CA3AF", fontWeight: 600, mb: 0.5 }}
                     >
-                        GROWTH STATUS
+                        {t("admin.growth_label", "GROWTH STATUS")}
                     </Typography>
                     <Typography
                         variant="body2"
                         sx={{ fontWeight: 600, color: "#4B5563" }}
                     >
                         {hasGrowth
-                            ? `Expanded by ${newItems} units recently`
-                            : "No new entries"}
+                            ? `${t("admin.growth_positive", "Expanded by")} ${newItems} ${t("admin.growth_units", "units")}`
+                            : t("admin.growth_none", "No new entries")}
                     </Typography>
                 </Box>
             </CardContent>
