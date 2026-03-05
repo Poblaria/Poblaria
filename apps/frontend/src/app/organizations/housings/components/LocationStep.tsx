@@ -17,7 +17,31 @@ import {
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+
+
+type PhotonFeature = {
+    properties: {
+        name?: string;
+        street?: string;
+        postcode?: string;
+        city?: string;
+        country?: string;
+    };
+    geometry: {
+        coordinates: [number, number];
+    };
+};
+
+type PhotonResponse = {
+    features: PhotonFeature[];
+};
+
+type AddressOption = {
+    displayName: string;
+    lat: number;
+    lon: number;
+};
 
 const defaultIcon = L.icon({
     iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
@@ -32,7 +56,7 @@ type Props = {
 };
 
 export default function LocationStep({ location, onChange }: Props) {
-    const [options, setOptions] = useState<any[]>([]);
+    const [options, setOptions] = useState<AddressOption[]>([]);
     const [loading, setLoading] = useState(false);
     const [inputValue, setInputValue] = useState("");
 
@@ -56,48 +80,52 @@ export default function LocationStep({ location, onChange }: Props) {
         ) : null;
     }
 
+    const searchAddress = useCallback(async (query: string) => {
+        setLoading(true);
+        try {
+            const response = await fetch(
+                `https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=5`
+            );
+            const data = (await response.json()) as PhotonResponse;
+
+            const formatted: AddressOption[] = data.features.map((f) => ({
+                displayName: [
+                    f.properties.name,
+                    f.properties.street,
+                    f.properties.postcode,
+                    f.properties.city,
+                    f.properties.country
+                ]
+                    .filter(Boolean)
+                    .join(", "),
+                lat: f.geometry.coordinates[1],
+                lon: f.geometry.coordinates[0]
+            }));
+
+            setOptions(formatted);
+        } catch { /* empty */ } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         if (inputValue.length < 3) {
             setOptions([]);
             return;
         }
 
-        const fetchAddresses = setTimeout(async () => {
-            setLoading(true);
-            try {
-                const response = await fetch(
-                    `https://photon.komoot.io/api/?q=${encodeURIComponent(inputValue)}&limit=5`
-                );
-                const data = await response.json();
-                const formatted = data.features.map((f: any) => ({
-                    display_name: [
-                        f.properties.name,
-                        f.properties.street,
-                        f.properties.postcode,
-                        f.properties.city,
-                        f.properties.country
-                    ]
-                        .filter(Boolean)
-                        .join(", "),
-                    lat: f.geometry.coordinates[1],
-                    lon: f.geometry.coordinates[0]
-                }));
-
-                setOptions(formatted);
-            } catch (error) {
-                console.error("Error fetching address:", error);
-            } finally {
-                setLoading(false);
-            }
+        const fetchDelay = setTimeout(() => {
+            void searchAddress(inputValue);
         }, 500);
 
-        return () => clearTimeout(fetchAddresses);
-    }, [inputValue]);
+        return () => clearTimeout(fetchDelay);
+    }, [inputValue, searchAddress]);
 
     useEffect(() => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
             window.dispatchEvent(new Event("resize"));
         }, 200);
+        return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -135,19 +163,19 @@ export default function LocationStep({ location, onChange }: Props) {
                         getOptionLabel={(option) =>
                             typeof option === "string"
                                 ? option
-                                : option.display_name
+                                : option.displayName
                         }
                         filterOptions={(x) => x}
                         onInputChange={(_, newInputValue) =>
                             setInputValue(newInputValue)
                         }
-                        onChange={(_, newValue: any) => {
-                            if (newValue) {
+                        onChange={(_, newValue) => {
+                            if (newValue && typeof newValue !== "string") {
                                 const coords = {
                                     lat: newValue.lat,
                                     lng: newValue.lon
                                 };
-                                onChange(coords, newValue.display_name);
+                                onChange(coords, newValue.displayName);
                             }
                         }}
                         PaperComponent={(props) => (
