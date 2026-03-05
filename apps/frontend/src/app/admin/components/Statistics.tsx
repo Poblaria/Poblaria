@@ -14,8 +14,6 @@ import {
     TableRow,
     Stack,
     IconButton,
-    Tooltip,
-    Skeleton,
     Alert,
     Snackbar
 } from "@mui/material";
@@ -56,7 +54,7 @@ export default function StatisticsPage() {
                         });
                     }
                 }
-            } catch (err) {
+            } catch {
                 setNotification({
                     open: true,
                     message: t("newsletter.error.generic"),
@@ -70,7 +68,7 @@ export default function StatisticsPage() {
     );
 
     useEffect(() => {
-        fetchData();
+        void fetchData();
     }, [fetchData]);
 
     const totals = useMemo(() => {
@@ -125,7 +123,9 @@ export default function StatisticsPage() {
                     </Typography>
                 </Box>
                 <IconButton
-                    onClick={() => fetchData(true)}
+                    onClick={() => {
+                        void fetchData(true);
+                    }}
                     disabled={loading}
                     sx={{ bgcolor: "white", border: "1px solid #E5E7EB" }}
                 >

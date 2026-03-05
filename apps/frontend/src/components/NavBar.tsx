@@ -14,11 +14,11 @@ export const NavBar = () => {
     const pathname = usePathname();
     const { t, i18n } = useTranslation();
 
+    const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
+
     if (pathname.startsWith("/admin")) {
         return null;
     }
-
-    const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleOpenLanguageMenu = (event: MouseEvent<HTMLElement>) => {
         setLangAnchorEl(event.currentTarget);
@@ -109,7 +109,9 @@ export const NavBar = () => {
                 <LanguageMenu
                     anchorEl={langAnchorEl}
                     onClose={handleCloseLanguageMenu}
-                    onSelectLanguage={handleSelectLanguage}
+                    onSelectLanguage={(code) => {
+                        void handleSelectLanguage(code);
+                    }}
                 />
             </Box>
         </nav>

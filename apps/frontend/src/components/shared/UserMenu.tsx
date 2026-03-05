@@ -2,7 +2,7 @@ import { Menu, MenuItem, Divider } from "@mui/material";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-interface UserMenuProps {
+type UserMenuProps = {
     anchorEl: HTMLElement | null;
     onClose: () => void;
     onLogout: () => void;

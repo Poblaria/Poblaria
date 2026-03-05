@@ -12,9 +12,10 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-interface AccessGuardProps {
+// Replace `interface` with `type`
+type AccessGuardProps = {
     authorized: boolean | null;
-}
+};
 
 export const AdminAccessGuard = ({ authorized }: AccessGuardProps) => {
     const { t } = useTranslation();

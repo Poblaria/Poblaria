@@ -5,9 +5,6 @@ import Link from "next/link";
 import {
     Box,
     IconButton,
-    Menu,
-    MenuItem,
-    Divider,
     Stack,
     Paper,
     Tabs,
@@ -17,15 +14,16 @@ import {
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
-import { useState, MouseEvent, useMemo } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import logout from "@/app/actions/auth/logout";
 import LanguageMenu from "@/components/shared/LanguageMenu";
 import UserMenu from "@/components/shared/UserMenu";
-interface AdminNavBarProps {
+
+type AdminNavBarProps = {
     activeTab: number;
     setActiveTab: (value: number) => void;
-}
+};
 
 export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const { t, i18n } = useTranslation();
@@ -38,7 +36,7 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
         if (!error) {
             router.push("/");
         } else {
-            console.error("Logout failed:", error);
+            alert("Logout failed. Please try again.");
         }
     };
     const getLanguageLabel = (code: string) =>
@@ -83,7 +81,7 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
 
                 <Tabs
                     value={activeTab}
-                    onChange={(_, newValue) => setActiveTab(newValue)}
+                    onChange={(_, newValue: number) => setActiveTab(newValue)}
                     sx={{
                         "height": "90px",
                         "& .MuiTabs-indicator": {
@@ -127,7 +125,9 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     <LanguageMenu
                         anchorEl={langAnchorEl}
                         onClose={() => setLangAnchorEl(null)}
-                        onSelectLanguage={handleSelectLanguage}
+                        onSelectLanguage={(code) => {
+                            void handleSelectLanguage(code);
+                        }}
                     />
 
                     {/* PROFILE ICON */}
@@ -140,7 +140,9 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     <UserMenu
                         anchorEl={userAnchorEl}
                         onClose={() => setUserAnchorEl(null)}
-                        onLogout={handleLogout}
+                        onLogout={() => {
+                            void handleLogout();
+                        }}
                     />
                 </Stack>
             </Stack>

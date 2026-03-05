@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-interface StatCardProps {
+type StatCardProps = {
     title: string;
     total: number;
     newItems: number;
