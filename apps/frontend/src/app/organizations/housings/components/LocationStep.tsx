@@ -19,7 +19,6 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useState, useCallback } from "react";
 
-
 type PhotonFeature = {
     properties: {
         name?: string;
@@ -103,7 +102,9 @@ export default function LocationStep({ location, onChange }: Props) {
             }));
 
             setOptions(formatted);
-        } catch { /* empty */ } finally {
+        } catch {
+            /* empty */
+        } finally {
             setLoading(false);
         }
     }, []);
