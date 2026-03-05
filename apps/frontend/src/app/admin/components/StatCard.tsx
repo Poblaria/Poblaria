@@ -1,28 +1,53 @@
-import { Typography, Card, CardContent, Box, Divider } from "@mui/material";
+import {
+    Typography,
+    Card,
+    CardContent,
+    Box,
+    Divider,
+    Skeleton
+} from "@mui/material";
 
 interface StatCardProps {
     title: string;
     total: number;
     newItems: number;
+    loading?: boolean;
 }
 
 const BRAND_GREEN = "#5E7749";
 
-export const StatCard = ({ title, total, newItems }: StatCardProps) => {
+export const StatCard = ({
+    title,
+    total,
+    newItems,
+    loading
+}: StatCardProps) => {
     const hasGrowth = newItems > 0;
 
-    const statusText = hasGrowth
-        ? `Database expanded by ${newItems} units in last 30 days`
-        : `Database maintained at ${total} ${total === 1 ? "unit" : "units"} (No new entries)`;
+    if (loading) {
+        return (
+            <Card
+                sx={{ borderRadius: 4, border: "1px solid #E5E7EB" }}
+                elevation={0}
+            >
+                <CardContent sx={{ p: 3 }}>
+                    <Skeleton width="40%" height={20} sx={{ mb: 1 }} />
+                    <Skeleton width="30%" height={60} sx={{ mb: 2 }} />
+                    <Divider sx={{ mb: 2 }} />
+                    <Skeleton width="80%" height={20} />
+                </CardContent>
+            </Card>
+        );
+    }
 
     return (
         <Card
             elevation={0}
             sx={{
-                "flex": "1 1 300px",
                 "borderRadius": 4,
                 "border": "1px solid #E5E7EB",
                 "bgcolor": "#FFFFFF",
+                "height": "100%",
                 "transition": "all 0.2s ease-in-out",
                 "&:hover": {
                     transform: "translateY(-4px)",
@@ -41,6 +66,7 @@ export const StatCard = ({ title, total, newItems }: StatCardProps) => {
                 >
                     {title}
                 </Typography>
+
                 <Box
                     sx={{
                         display: "flex",
@@ -55,6 +81,8 @@ export const StatCard = ({ title, total, newItems }: StatCardProps) => {
                     >
                         {total.toLocaleString()}
                     </Typography>
+
+                    {/* Badge: Shows green if growth > 0, subtle grey if 0 */}
                     <Box
                         sx={{
                             bgcolor: hasGrowth ? "#ECFDF5" : "#F3F4F6",
@@ -74,7 +102,9 @@ export const StatCard = ({ title, total, newItems }: StatCardProps) => {
                         </Typography>
                     </Box>
                 </Box>
+
                 <Divider sx={{ mb: 2 }} />
+
                 <Box>
                     <Typography
                         variant="caption"
@@ -91,7 +121,9 @@ export const StatCard = ({ title, total, newItems }: StatCardProps) => {
                             lineHeight: 1.4
                         }}
                     >
-                        {statusText}
+                        {hasGrowth
+                            ? `Database expanded by ${newItems} units in last 30 days`
+                            : `Maintained at ${total} ${total === 1 ? "unit" : "units"} (No new entries)`}
                     </Typography>
                 </Box>
             </CardContent>

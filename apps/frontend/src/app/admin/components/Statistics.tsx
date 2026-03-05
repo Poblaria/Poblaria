@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import {
     Typography,
     Paper,
-    CircularProgress,
     Box,
     Table,
     TableBody,
@@ -14,7 +13,8 @@ import {
     TableRow,
     Stack,
     IconButton,
-    Tooltip
+    Tooltip,
+    Skeleton
 } from "@mui/material";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { StatCard } from "@/app/admin/components/StatCard";
@@ -48,28 +48,21 @@ export default function StatisticsPage() {
         fetchData();
     }, [fetchData]);
 
-    if (loading && !data)
-        return (
-            <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                minHeight="50vh"
-            >
-                <CircularProgress sx={{ color: BRAND_GREEN }} />
-            </Box>
-        );
+    const totals = useMemo(() => {
+        if (!data) return { users: 0, newUsers: 0 };
+        return {
+            users:
+                data.users.default.total +
+                data.users.localAuthorities.total +
+                data.users.administrators.total,
+            newUsers:
+                data.users.default.new.current +
+                data.users.localAuthorities.new.current +
+                data.users.administrators.new.current
+        };
+    }, [data]);
 
-    const totalUsers = data
-        ? data.users.default.total +
-          data.users.localAuthorities.total +
-          data.users.administrators.total
-        : 0;
-    const newUsersTotal = data
-        ? data.users.default.new.current +
-          data.users.localAuthorities.new.current +
-          data.users.administrators.new.current
-        : 0;
+    const isFirstLoad = loading && !data;
 
     return (
         <Box
@@ -96,7 +89,6 @@ export default function StatisticsPage() {
                         Last updated: {lastUpdated}
                     </Typography>
                 </Box>
-
                 <Tooltip title="Refresh Data">
                     <IconButton
                         onClick={fetchData}
@@ -107,98 +99,130 @@ export default function StatisticsPage() {
                             sx={{
                                 color: BRAND_GREEN,
                                 animation: loading
-                                    ? "spin 2s linear infinite"
+                                    ? "spin 1s linear infinite"
                                     : "none"
                             }}
                         />
-                        <style>{`@keyframes spin { 100% { transform:rotate(360deg); } }`}</style>
                     </IconButton>
                 </Tooltip>
             </Stack>
 
-            <Stack direction="row" gap={3} sx={{ mb: 6, flexWrap: "wrap" }}>
+            {/* This Grid ensures all 4 cards are perfectly uniform */}
+            <Box
+                sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                        xs: "1fr",
+                        sm: "1fr 1fr",
+                        lg: "repeat(4, 1fr)"
+                    },
+                    gap: 3,
+                    mb: 6
+                }}
+            >
                 <StatCard
+                    loading={isFirstLoad}
                     title="Housings"
                     total={data?.housings.total || 0}
                     newItems={data?.housings.new.current || 0}
                 />
                 <StatCard
+                    loading={isFirstLoad}
                     title="Jobs"
                     total={data?.jobs.total || 0}
                     newItems={data?.jobs.new.current || 0}
                 />
                 <StatCard
+                    loading={isFirstLoad}
                     title="Total Users"
-                    total={totalUsers}
-                    newItems={newUsersTotal}
+                    total={totals.users}
+                    newItems={totals.newUsers}
                 />
-                {/* TODO: Add Newsletter StatCard once Backend provides 'newsletter' data 
-                    Acceptance Criteria: Dashboard displays newsletter subscribers count.
-                */}
-            </Stack>
+                <StatCard
+                    loading={isFirstLoad}
+                    title="Newsletter"
+                    total={data?.newsletter.subscribers.total || 0}
+                    newItems={data?.newsletter.subscribers.new.current || 0}
+                />
+            </Box>
 
             <Typography variant="h5" sx={{ mb: 3, fontWeight: 700 }}>
                 User Breakdown
             </Typography>
-
             <TableContainer
                 component={Paper}
                 elevation={0}
                 sx={{ borderRadius: 4, border: "1px solid #E5E7EB" }}
             >
-                <Table>
-                    <TableHead sx={{ bgcolor: "#F9FAFB" }}>
-                        <TableRow>
-                            <TableCell sx={{ fontWeight: 700 }}>
-                                Role Type
-                            </TableCell>
-                            <TableCell align="right" sx={{ fontWeight: 700 }}>
-                                Total Registered
-                            </TableCell>
-                            <TableCell align="right" sx={{ fontWeight: 700 }}>
-                                New (This Month)
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {data &&
-                            [
-                                {
-                                    name: "Default Users",
-                                    stats: data.users.default
-                                },
-                                {
-                                    name: "Local Authorities",
-                                    stats: data.users.localAuthorities
-                                },
-                                {
-                                    name: "Administrators",
-                                    stats: data.users.administrators
-                                }
-                            ].map((row) => (
-                                <TableRow key={row.name} hover>
-                                    <TableCell sx={{ fontWeight: 600 }}>
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {row.stats.total.toLocaleString()}
-                                    </TableCell>
-                                    <TableCell
-                                        align="right"
-                                        sx={{
-                                            color:
-                                                row.stats.new.current > 0
-                                                    ? BRAND_GREEN
-                                                    : "#9CA3AF",
-                                            fontWeight: 700
-                                        }}
-                                    >
-                                        +{row.stats.new.current}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                    </TableBody>
-                </Table>
+                {isFirstLoad ? (
+                    <Box sx={{ p: 3 }}>
+                        <Skeleton
+                            variant="rectangular"
+                            height={200}
+                            sx={{ borderRadius: 2 }}
+                        />
+                    </Box>
+                ) : (
+                    <Table>
+                        <TableHead sx={{ bgcolor: "#F9FAFB" }}>
+                            <TableRow>
+                                <TableCell sx={{ fontWeight: 700 }}>
+                                    Role Type
+                                </TableCell>
+                                <TableCell
+                                    align="right"
+                                    sx={{ fontWeight: 700 }}
+                                >
+                                    Total Registered
+                                </TableCell>
+                                <TableCell
+                                    align="right"
+                                    sx={{ fontWeight: 700 }}
+                                >
+                                    New (This Month)
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {data &&
+                                [
+                                    {
+                                        name: "Default Users",
+                                        stats: data.users.default
+                                    },
+                                    {
+                                        name: "Local Authorities",
+                                        stats: data.users.localAuthorities
+                                    },
+                                    {
+                                        name: "Administrators",
+                                        stats: data.users.administrators
+                                    }
+                                ].map((row) => (
+                                    <TableRow key={row.name} hover>
+                                        <TableCell sx={{ fontWeight: 600 }}>
+                                            {row.name}
+                                        </TableCell>
+                                        <TableCell align="right">
+                                            {row.stats.total.toLocaleString()}
+                                        </TableCell>
+                                        <TableCell
+                                            align="right"
+                                            sx={{
+                                                color:
+                                                    row.stats.new.current > 0
+                                                        ? BRAND_GREEN
+                                                        : "#9CA3AF",
+                                                fontWeight: 700
+                                            }}
+                                        >
+                                            +{row.stats.new.current}
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                        </TableBody>
+                    </Table>
+                )}
             </TableContainer>
         </Box>
     );
