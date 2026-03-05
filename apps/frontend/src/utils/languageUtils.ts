@@ -5,7 +5,9 @@ export const getSupportedLanguages = (i18n: i18n): string[] => {
     let langs: string[] = [];
 
     if (Array.isArray(supportedLngs)) {
-        langs = supportedLngs.filter((lng): lng is string => typeof lng === "string");
+        langs = supportedLngs.filter(
+            (lng): lng is string => typeof lng === "string"
+        );
     } else if (typeof supportedLngs === "string") {
         langs = [supportedLngs];
     }
@@ -17,6 +19,9 @@ export const getSupportedLanguages = (i18n: i18n): string[] => {
     return langs.filter((lng) => lng && lng !== "cimode" && lng !== "dev");
 };
 
-export const getLanguageLabel = (t: (key: string, defaultValue?: string) => string, code: string): string => {
+export const getLanguageLabel = (
+    t: (key: string, defaultValue?: string) => string,
+    code: string
+): string => {
     return t(`languages.${code}`, code.toUpperCase());
 };

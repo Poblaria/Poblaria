@@ -13,8 +13,8 @@ export const NavBar = () => {
     const pathname = usePathname();
     const { t, i18n } = useTranslation();
 
-    if (pathname.startsWith('/admin')) {
-        return null; 
+    if (pathname.startsWith("/admin")) {
+        return null;
     }
 
     const supportedLanguages = useMemo<string[]>(() => {

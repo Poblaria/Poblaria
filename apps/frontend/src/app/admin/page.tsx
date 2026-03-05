@@ -33,15 +33,24 @@ export default function AdminPage() {
 
     return (
         /* The 'key' prop forces a full re-render when the language changes */
-        <Box key={i18n.language} sx={{ minHeight: "100vh", bgcolor: "#F9FAFB" }}>
+        <Box
+            key={i18n.language}
+            sx={{ minHeight: "100vh", bgcolor: "#F9FAFB" }}
+        >
             <AdminNavBar activeTab={activeTab} setActiveTab={setActiveTab} />
-            
+
             <Container maxWidth="lg" sx={{ py: 6 }}>
                 <Box sx={{ mb: 4 }}>
-                    <Typography variant="h4" sx={{ fontWeight: 800, color: "#111827" }}>
-                        {activeTab === 0 
-                            ? t("admin.titles.statistics", "System Overview") 
-                            : t("admin.titles.newsletter", "Communication Center")}
+                    <Typography
+                        variant="h4"
+                        sx={{ fontWeight: 800, color: "#111827" }}
+                    >
+                        {activeTab === 0
+                            ? t("admin.titles.statistics", "System Overview")
+                            : t(
+                                  "admin.titles.newsletter",
+                                  "Communication Center"
+                              )}
                     </Typography>
                 </Box>
 
