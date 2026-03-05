@@ -89,7 +89,10 @@
             "statistics": "Resumen del Sistema",
             "newsletter": "Centro de Comunicación"
         },
-        "menu": { "client_view": "Volver al sitio", "logout": "Cerrar sesión" },
+        "menu": {
+            "client_view": "Volver al sitio cliente",
+            "logout": "Cerrar sesión"
+        },
         "loading": "Verificando credenciales...",
         "error": {
             "denied_title": "Acceso Denegado",

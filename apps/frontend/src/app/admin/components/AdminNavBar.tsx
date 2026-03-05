@@ -18,7 +18,10 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
 import { useState, MouseEvent, useMemo } from "react";
-
+import { useRouter } from "next/navigation";
+import logout from "@/app/actions/auth/logout";
+import LanguageMenu from "@/components/shared/LanguageMenu";
+import UserMenu from "@/components/shared/UserMenu";
 interface AdminNavBarProps {
     activeTab: number;
     setActiveTab: (value: number) => void;
@@ -28,27 +31,16 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const { t, i18n } = useTranslation();
     const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
     const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
+    const router = useRouter();
 
-    // --- LANGUAGE LOGIC ---
-    const supportedLanguages = useMemo<string[]>(() => {
-        const { supportedLngs, resources } = i18n.options;
-        let langs: string[] = [];
-
-        if (Array.isArray(supportedLngs)) {
-            langs = supportedLngs.filter(
-                (lng): lng is string => typeof lng === "string"
-            );
-        } else if (typeof supportedLngs === "string") {
-            langs = [supportedLngs];
+    const handleLogout = async () => {
+        const { error } = await logout();
+        if (!error) {
+            router.push("/");
+        } else {
+            console.error("Logout failed:", error);
         }
-
-        if (!langs.length && resources && typeof resources === "object") {
-            langs = Object.keys(resources as Record<string, unknown>);
-        }
-
-        return langs.filter((lng) => lng && lng !== "cimode" && lng !== "dev");
-    }, [i18n.options]);
-
+    };
     const getLanguageLabel = (code: string) =>
         t(`languages.${code}`, code.toUpperCase());
 
@@ -56,7 +48,6 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
         await i18n.changeLanguage(code);
         setLangAnchorEl(null);
     };
-    // ----------------------------------
 
     return (
         <Paper
@@ -119,7 +110,6 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     sx={{ marginLeft: "auto !important" }}
                     alignItems="center"
                 >
-                    {/* LANGUAGE TOGGLE - MATCHING PUBLIC NAVBAR STYLE */}
                     <IconButton
                         onClick={(e) => setLangAnchorEl(e.currentTarget)}
                         sx={{
@@ -134,6 +124,11 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                             {getLanguageLabel(i18n.language)}
                         </Typography>
                     </IconButton>
+                    <LanguageMenu
+                        anchorEl={langAnchorEl}
+                        onClose={() => setLangAnchorEl(null)}
+                        onSelectLanguage={handleSelectLanguage}
+                    />
 
                     {/* PROFILE ICON */}
                     <IconButton
@@ -142,47 +137,13 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     >
                         <AccountCircleIcon sx={{ fontSize: 28 }} />
                     </IconButton>
+                    <UserMenu
+                        anchorEl={userAnchorEl}
+                        onClose={() => setUserAnchorEl(null)}
+                        onLogout={handleLogout}
+                    />
                 </Stack>
             </Stack>
-
-            {/* Language Menu */}
-            <Menu
-                anchorEl={langAnchorEl}
-                open={Boolean(langAnchorEl)}
-                onClose={() => setLangAnchorEl(null)}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-            >
-                {supportedLanguages.map((code) => (
-                    <MenuItem
-                        key={code}
-                        selected={code === i18n.language}
-                        onClick={() => void handleSelectLanguage(code)}
-                    >
-                        {getLanguageLabel(code)}
-                    </MenuItem>
-                ))}
-            </Menu>
-
-            {/* User Menu */}
-            <Menu
-                anchorEl={userAnchorEl}
-                open={Boolean(userAnchorEl)}
-                onClose={() => setUserAnchorEl(null)}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                transformOrigin={{ vertical: "top", horizontal: "right" }}
-            >
-                <MenuItem component={Link} href="/profile">
-                    {t("navbar.profile")}
-                </MenuItem>
-                <MenuItem component={Link} href="/">
-                    {t("admin.menu.client_view", "Switch to Client View")}
-                </MenuItem>
-                <Divider />
-                <MenuItem sx={{ color: "error.main", fontWeight: 600 }}>
-                    {t("admin.menu.logout", "Logout")}
-                </MenuItem>
-            </Menu>
         </Paper>
     );
 };

@@ -82,7 +82,7 @@ export default function NewsletterManager() {
 
     return (
         <Box
-            key={i18n.language} // This forces the page to translate when the header button is clicked
+            key={i18n.language}
             sx={{
                 display: "grid",
                 gridTemplateColumns: { xs: "1fr", md: "1fr 2fr" },
