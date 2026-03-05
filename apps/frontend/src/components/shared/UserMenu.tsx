@@ -6,7 +6,7 @@ type UserMenuProps = {
     anchorEl: HTMLElement | null;
     onClose: () => void;
     onLogout: () => void;
-}
+};
 
 const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, onClose, onLogout }) => {
     const { t } = useTranslation();

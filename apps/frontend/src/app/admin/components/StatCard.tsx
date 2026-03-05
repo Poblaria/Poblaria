@@ -13,7 +13,7 @@ type StatCardProps = {
     total: number;
     newItems: number;
     loading?: boolean;
-}
+};
 
 const BRAND_GREEN = "#5E7749";
 

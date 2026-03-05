@@ -2,11 +2,11 @@ import { Menu, MenuItem, Typography, Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import useSupportedLanguages from "@/utils/languageUtils";
 
-type LanguageMenuProps ={
+type LanguageMenuProps = {
     anchorEl: HTMLElement | null;
     onClose: () => void;
     onSelectLanguage: (code: string) => void;
-}
+};
 
 const LanguageMenu: React.FC<LanguageMenuProps> = ({
     anchorEl,
