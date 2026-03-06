@@ -67,8 +67,7 @@
         "acceptTerms": "He leído y acepto los términos y condiciones del sitio web.",
         "placeholder": {
             "name": "Tu Nombre",
-            "email": "Tu Correo Electrónico",
-            "subject": "Asunto"
+            "email": "Tu Correo Electrónico"
         },
         "defaultName": "Suscriptor",
         "languageToggle": "Idioma del Boletín"
@@ -76,6 +75,7 @@
     "footer": {
         "title": "BOLETÍN INFORMATIVO",
         "subtitle": "¡Suscríbete para recibir actualizaciones de este increíble viaje!",
+
         "link": {
             "faq": "Preguntas",
             "about-us": "Sobre nosotros",
@@ -94,13 +94,7 @@
             "logout": "Cerrar sesión"
         },
         "loading": "Verificando credenciales...",
-        "logout_confirm": "¿Estás seguro de que deseas cerrar la sesión del portal de administración?",
-        "success": {
-            "lang_changed": "Idioma actualizado con éxito",
-            "logout_success": "Sesión cerrada con éxito"
-        },
         "error": {
-            "logout_failed": "Error al cerrar sesión. Inténtalo de nuevo.",
             "denied_title": "Acceso Denegado",
             "denied_desc": "No tienes permiso para ver el Portal de Administración.",
             "redirect_msg": "Redirigiendo en",
