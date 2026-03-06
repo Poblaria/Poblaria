@@ -83,5 +83,30 @@
             "contact": "Contact",
             "organizations": "Organizations"
         }
+    },
+    "admin": {
+        "tabs": { "statistics": "Statistics", "newsletter": "Newsletter" },
+        "titles": {
+            "statistics": "System Overview",
+            "newsletter": "Communication Center"
+        },
+        "menu": { "client_view": "Switch to Client View", "logout": "Logout" },
+        "loading": "Verifying credentials...",
+        "statistics": {
+            "total": "Total",
+            "new": "New"
+        },
+        "growth_label": "GROWTH STATUS",
+        "growth_positive": "Expanded by",
+        "growth_units": "units",
+        "growth_none": "No new entries",
+        "newsletter": {
+            "load_btn": "Load Subscribers",
+            "found": "Subscribers Found",
+            "send_btn": "Blast to All Subscribers",
+            "content_label": "Newsletter Content",
+            "content_placeholder": "Write your message here...",
+            "compose": "Compose Newsletter"
+        }
     }
 }

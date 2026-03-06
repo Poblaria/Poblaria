@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { getNewsletterSubscribers } from "@/app/actions/newsletter/getNewsletterSubscribers";
 import { sendNewsletter } from "@/app/actions/newsletter/sendNewsletter";
+import { useTranslation } from "react-i18next";
 
 type Subscriber = {
     email: string;
@@ -29,6 +30,9 @@ export default function NewsletterManager() {
         msg: string;
     } | null>(null);
 
+    // Destructure i18n to track the current language state
+    const { t, i18n } = useTranslation();
+
     const fetchList = async () => {
         try {
             const { data } = await getNewsletterSubscribers();
@@ -41,9 +45,17 @@ export default function NewsletterManager() {
     const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // Providing both keys ensures the backend validation passes
+        // while respecting the current language.
         const payload = {
-            subject: { en: subject },
-            content: { en: content }
+            subject: {
+                en: subject,
+                [i18n.language]: subject
+            },
+            content: {
+                en: content,
+                [i18n.language]: content
+            }
         };
 
         const { error } = await sendNewsletter(payload, "en");
@@ -54,7 +66,7 @@ export default function NewsletterManager() {
                     ?.map((err) =>
                         err.field ? `${err.field}: ${err.message}` : err.message
                     )
-                    .join(" • ") || "Failed to send.";
+                    .join(" • ") || t("newsletter.error.generic");
 
             setStatus({ type: "error", msg });
             return;
@@ -62,7 +74,7 @@ export default function NewsletterManager() {
 
         setStatus({
             type: "success",
-            msg: "Newsletter sent to all subscribers!"
+            msg: t("newsletter.success")
         });
         setSubject("");
         setContent("");
@@ -70,6 +82,7 @@ export default function NewsletterManager() {
 
     return (
         <Box
+            key={i18n.language}
             sx={{
                 display: "grid",
                 gridTemplateColumns: { xs: "1fr", md: "1fr 2fr" },
@@ -85,20 +98,23 @@ export default function NewsletterManager() {
                     }}
                     sx={{ mb: 2, backgroundColor: "#5E7749" }}
                 >
-                    Load Subscribers
+                    {t("admin.newsletter.load_btn", "Load Subscribers")}
                 </Button>
                 <Typography
                     variant="caption"
                     sx={{ display: "block", mb: 1, textAlign: "center" }}
                 >
-                    {subscribers.length} Subscribers Found
+                    {subscribers.length}{" "}
+                    {t("admin.newsletter.found", "Subscribers Found")}
                 </Typography>
                 <List sx={{ maxHeight: 500, overflow: "auto" }}>
                     {subscribers.map((s, i) => (
                         <ListItem key={i} divider>
                             <ListItemText
                                 primary={s.email}
-                                secondary={s.name || "Anonymous"}
+                                secondary={
+                                    s.name || t("newsletter.defaultName")
+                                }
                                 primaryTypographyProps={{
                                     fontSize: "0.875rem"
                                 }}
@@ -117,11 +133,11 @@ export default function NewsletterManager() {
                 sx={{ p: 3, borderRadius: 2 }}
             >
                 <Typography variant="h6" sx={{ mb: 2 }}>
-                    Compose Newsletter
+                    {t("admin.titles.newsletter")}
                 </Typography>
                 <TextField
                     fullWidth
-                    label="Subject"
+                    label={t("newsletter.placeholder.subject", "Subject")}
                     value={subject}
                     required
                     onChange={(e) => setSubject(e.target.value)}
@@ -131,12 +147,18 @@ export default function NewsletterManager() {
                     fullWidth
                     multiline
                     rows={10}
-                    label="Newsletter Content"
+                    label={t(
+                        "admin.newsletter.content_label",
+                        "Newsletter Content"
+                    )}
                     required
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                     sx={{ mb: 2 }}
-                    placeholder="Write your message here..."
+                    placeholder={t(
+                        "admin.newsletter.content_placeholder",
+                        "Write your message here..."
+                    )}
                 />
                 <Button
                     type="submit"
@@ -148,7 +170,7 @@ export default function NewsletterManager() {
                         "&:hover": { backgroundColor: "#4A5E3A" }
                     }}
                 >
-                    Blast to All Subscribers
+                    {t("admin.newsletter.send_btn", "Blast to All Subscribers")}
                 </Button>
                 {status && (
                     <Alert severity={status.type} sx={{ mt: 2 }}>

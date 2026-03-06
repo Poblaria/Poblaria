@@ -20,8 +20,9 @@
         "@heroicons/react": "^2.2.0",
         "@maptiler/leaflet-maptilersdk": "^4.1.1",
         "@mui/icons-material": "^7.3.4",
-        "@mui/material": "^7.3.5",
+        "@mui/material": "^7.3.9",
         "@mui/system": "^7.3.5",
+        "@mui/x-charts": "^8.27.4",
         "@poblaria/backend": "*",
         "@react-google-maps/api": "^2.20.7",
         "@tuyau/client": "^0.2.10",
@@ -38,6 +39,7 @@
         "react-i18next": "^16.0.1",
         "react-leaflet": "^5.0.0",
         "react-leaflet-markercluster": "^5.0.0-rc.0",
+        "recharts": "^3.7.0",
         "supercluster": "^8.0.1"
     },
     "devDependencies": {

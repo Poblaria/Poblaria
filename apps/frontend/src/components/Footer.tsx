@@ -3,15 +3,21 @@
 import { Box, Typography, Link, Stack } from "@mui/material";
 import NewsletterForm from "@/components/NewsletterForm";
 import { useTranslation } from "react-i18next";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
     const { t } = useTranslation();
+    const pathname = usePathname();
 
-    const bg = "#EEF1EA";
-    const accent = "#5E7749";
     {
         /*const text = "#2E3A28";*/
     }
+    if (pathname === "/admin") {
+        return null;
+    }
+
+    const bg = "#EEF1EA";
+    const accent = "#5E7749";
 
     return (
         <Box component="footer" sx={{ bgcolor: bg, py: 10 }}>
