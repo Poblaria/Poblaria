@@ -10,11 +10,13 @@
         "profile": "Profil",
         "language": "Changer de langue"
     },
+
     "common": {
         "save": "Enregistrer",
         "cancel": "Annuler",
         "back": "Retour"
     },
+
     "home": {
         "regionSelector": {
             "label": "Sélectionnez votre pays",
@@ -67,8 +69,7 @@
         "acceptTerms": "J'ai lu et j'accepte les termes et conditions du site web.",
         "placeholder": {
             "name": "Votre Nom",
-            "email": "Votre Adresse Email",
-            "subject": "Objet"
+            "email": "Votre Adresse Email"
         },
         "defaultName": "Abonné",
         "languageToggle": "Langue de la Newsletter"
@@ -76,6 +77,7 @@
     "footer": {
         "title": "LETTRE D'INFORMATION",
         "subtitle": "Abonnez-vous pour recevoir des mises à jour sur ce voyage incroyable !",
+
         "link": {
             "faq": "Questions",
             "about-us": "À propos de nous",
@@ -91,16 +93,10 @@
         },
         "menu": { "client_view": "Vue Client", "logout": "Déconnexion" },
         "loading": "Vérification des identifiants...",
-        "logout_confirm": "Êtes-vous sûr de vouloir vous déconnecter du portail administrateur ?",
-        "success": {
-            "lang_changed": "Langue mise à jour avec succès",
-            "logout_success": "Session terminée avec succès"
-        },
         "error": {
-            "logout_failed": "Échec de la déconnexion. Veuillez réessayer.",
             "denied_title": "Accès Refusé",
             "denied_desc": "Vous n'avez pas l'autorisation d'accéder au portail administrateur.",
-            "redirect_msg": "Redirection dans",
+            "redirect_msg": "Redirection vers l'accueil dans",
             "seconds": "secondes"
         },
         "newsletter": {

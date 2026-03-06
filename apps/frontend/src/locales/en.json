@@ -15,6 +15,7 @@
         "cancel": "Cancel",
         "back": "Back"
     },
+
     "home": {
         "regionSelector": {
             "label": "Select Your Country",
@@ -67,8 +68,7 @@
         "acceptTerms": "I have read and accept the terms and conditions of the website.",
         "placeholder": {
             "name": "Your Name",
-            "email": "Your Email",
-            "subject": "Subject"
+            "email": "Your Email"
         },
         "defaultName": "Subscriber",
         "languageToggle": "Newsletter Language"
@@ -76,6 +76,7 @@
     "footer": {
         "title": "NEWSLETTER",
         "subtitle": "Subscribe to receive updated of this amazing journey!",
+
         "link": {
             "faq": "Questions",
             "about-us": "About Us",
@@ -91,18 +92,14 @@
         },
         "menu": { "client_view": "Switch to Client View", "logout": "Logout" },
         "loading": "Verifying credentials...",
-        "logout_confirm": "Are you sure you want to log out of the admin portal?",
-        "success": {
-            "lang_changed": "Language updated successfully",
-            "logout_success": "Session ended successfully"
+        "statistics": {
+            "total": "Total",
+            "new": "New"
         },
-        "error": {
-            "logout_failed": "Logout failed. Please try again.",
-            "denied_title": "Access Denied",
-            "denied_desc": "You do not have permission to view the Admin Portal.",
-            "redirect_msg": "Redirecting in",
-            "seconds": "seconds"
-        },
+        "growth_label": "GROWTH STATUS",
+        "growth_positive": "Expanded by",
+        "growth_units": "units",
+        "growth_none": "No new entries",
         "newsletter": {
             "load_btn": "Load Subscribers",
             "found": "Subscribers Found",
@@ -110,11 +107,6 @@
             "content_label": "Newsletter Content",
             "content_placeholder": "Write your message here...",
             "compose": "Compose Newsletter"
-        },
-        "statistics": { "total": "Total", "new": "New" },
-        "growth_label": "GROWTH STATUS",
-        "growth_positive": "Expanded by",
-        "growth_units": "units",
-        "growth_none": "No new entries"
+        }
     }
 }
