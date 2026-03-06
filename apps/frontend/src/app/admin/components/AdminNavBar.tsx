@@ -51,7 +51,6 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
         severity: "success"
     });
     const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
-    
 
     const handleLogout = async () => {
         setLogoutDialogOpen(false);
@@ -231,7 +230,7 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                         {t("common.cancel", "Cancel")}
                     </Button>
                     <Button
-                        onClick={handleLogout}
+                        onClick={void handleLogout()}
                         variant="contained"
                         sx={{
                             "bgcolor": "#DC2626",
