@@ -51,6 +51,7 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
         severity: "success"
     });
     const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
+    
 
     const handleLogout = async () => {
         setLogoutDialogOpen(false);
