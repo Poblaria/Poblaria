@@ -9,14 +9,7 @@ import {
     Paper,
     Tabs,
     Tab,
-    Typography,
-    Snackbar,
-    Alert,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Button
+    Typography
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -26,6 +19,8 @@ import { useRouter } from "next/navigation";
 import logout from "@/app/actions/auth/logout";
 import LanguageMenu from "@/components/shared/LanguageMenu";
 import UserMenu from "@/components/shared/UserMenu";
+import { useToast } from "@/components/providers/ToastProvider";
+import { useConfirm } from "@/components/providers/ConfirmProvider";
 
 type AdminNavBarProps = {
     activeTab: number;
@@ -35,51 +30,37 @@ type AdminNavBarProps = {
 export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const { t, i18n } = useTranslation();
     const router = useRouter();
+    const { showToast } = useToast();
+    const confirm = useConfirm();
 
-    // Menu States
     const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
     const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
 
-    // Feedback States
-    const [toast, setToast] = useState<{
-        open: boolean;
-        message: string;
-        severity: "success" | "error";
-    }>({
-        open: false,
-        message: "",
-        severity: "success"
-    });
-    const [logoutDialogOpen, setLogoutDialogOpen] = useState(false);
-
     const handleLogout = async () => {
-        setLogoutDialogOpen(false);
-        const { error } = await logout();
-        if (!error) {
-            router.push("/");
-        } else {
-            setToast({
-                open: true,
-                message: t(
-                    "admin.error.logout_failed",
-                    "Logout failed. Please try again."
-                ),
-                severity: "error"
-            });
+        setUserAnchorEl(null); // Close the menu
+        const ok = await confirm({
+            title: t("admin.menu.logout"),
+            message: t("admin.logout_confirm"),
+            isDanger: true
+        });
+
+        if (ok) {
+            const { error } = await logout();
+            if (!error) {
+                router.push("/");
+            } else {
+                showToast(t("admin.error.logout_failed"), "error");
+            }
         }
     };
 
     const handleSelectLanguage = async (code: string) => {
         await i18n.changeLanguage(code);
         setLangAnchorEl(null);
-        setToast({
-            open: true,
-            message: t(
-                "admin.success.lang_changed",
-                "Language updated successfully"
-            ),
-            severity: "success"
-        });
+        // Use Global Toast here!
+        showToast(
+            t("admin.success.lang_changed", "Language updated successfully")
+        );
     };
 
     const getLanguageLabel = (code: string) =>
@@ -177,72 +158,10 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     <UserMenu
                         anchorEl={userAnchorEl}
                         onClose={() => setUserAnchorEl(null)}
-                        onLogout={() => {
-                            setLogoutDialogOpen(true);
-                        }}
+                        onLogout={handleLogout} // Points directly to the logic now
                     />
                 </Stack>
             </Stack>
-
-            {/* TOAST NOTIFICATION (Snackbar) */}
-            <Snackbar
-                open={toast.open}
-                autoHideDuration={4000}
-                onClose={() => setToast({ ...toast, open: false })}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            >
-                <Alert
-                    onClose={() => setToast({ ...toast, open: false })}
-                    severity={toast.severity}
-                    variant="filled"
-                    sx={{
-                        width: "100%",
-                        borderRadius: "12px",
-                        fontWeight: 600
-                    }}
-                >
-                    {toast.message}
-                </Alert>
-            </Snackbar>
-
-            {/* LOGOUT CONFIRMATION DIALOG */}
-            <Dialog
-                open={logoutDialogOpen}
-                onClose={() => setLogoutDialogOpen(false)}
-                PaperProps={{ sx: { borderRadius: "20px", p: 1 } }}
-            >
-                <DialogTitle sx={{ fontWeight: 800 }}>
-                    {t("admin.menu.logout", "Logout")}?
-                </DialogTitle>
-                <DialogContent>
-                    <Typography sx={{ color: "#6B7280" }}>
-                        {t(
-                            "admin.logout_confirm",
-                            "Are you sure you want to log out of the admin portal?"
-                        )}
-                    </Typography>
-                </DialogContent>
-                <DialogActions sx={{ p: 2, gap: 1 }}>
-                    <Button
-                        onClick={() => setLogoutDialogOpen(false)}
-                        sx={{ color: "#6B7280", fontWeight: 700 }}
-                    >
-                        {t("common.cancel", "Cancel")}
-                    </Button>
-                    <Button
-                        onClick={void handleLogout()}
-                        variant="contained"
-                        sx={{
-                            "bgcolor": "#DC2626",
-                            "&:hover": { bgcolor: "#B91C1C" },
-                            "borderRadius": "10px",
-                            "px": 3
-                        }}
-                    >
-                        {t("admin.menu.logout", "Logout")}
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </Paper>
     );
 };
