@@ -37,7 +37,7 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleLogout = async () => {
-        setUserAnchorEl(null); // Close the menu
+        setUserAnchorEl(null);
         const ok = await confirm({
             title: t("admin.menu.logout"),
             message: t("admin.logout_confirm"),
@@ -57,7 +57,6 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const handleSelectLanguage = async (code: string) => {
         await i18n.changeLanguage(code);
         setLangAnchorEl(null);
-        // Use Global Toast here!
         showToast(
             t("admin.success.lang_changed", "Language updated successfully")
         );
@@ -158,7 +157,7 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     <UserMenu
                         anchorEl={userAnchorEl}
                         onClose={() => setUserAnchorEl(null)}
-                        onLogout={handleLogout} // Points directly to the logic now
+                        onLogout={() => { void handleLogout(); }}
                     />
                 </Stack>
             </Stack>
