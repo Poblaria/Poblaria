@@ -13,17 +13,21 @@ export const ToastProvider = ({ children }: { children: ReactNode }) => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("");
     const [severity, setSeverity] = useState<AlertColor>("success");
+    // Use a key to force Snackbar to restart the timer on new messages
+    const [toastKey, setToastKey] = useState(0);
 
     const showToast = (msg: string, sev: AlertColor = "success") => {
         setMessage(msg);
         setSeverity(sev);
         setOpen(true);
+        setToastKey((prev) => prev + 1);
     };
 
     return (
         <ToastContext.Provider value={{ showToast }}>
             {children}
             <Snackbar
+                key={toastKey}
                 open={open}
                 autoHideDuration={4000}
                 onClose={() => setOpen(false)}

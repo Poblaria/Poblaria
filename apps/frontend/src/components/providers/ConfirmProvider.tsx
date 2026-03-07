@@ -23,8 +23,15 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
         options: ConfirmOptions;
     } | null>(null);
 
-    const confirm = (options: ConfirmOptions) =>
-        new Promise<boolean>((resolve) => setState({ resolve, options }));
+    // Refuse new confirms if one is pending to prevent Promise loss
+    const confirm = (options: ConfirmOptions) => {
+        if (state !== null) {
+            return Promise.resolve(false);
+        }
+        return new Promise<boolean>((resolve) =>
+            setState({ resolve, options })
+        );
+    };
 
     const handleClose = (value: boolean) => {
         state?.resolve(value);
