@@ -39,8 +39,11 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const handleLogout = async () => {
         setUserAnchorEl(null);
         const ok = await confirm({
-            title: t("admin.menu.logout"),
-            message: t("admin.logout_confirm"),
+            title: t("admin.menu.logout", "Logout"),
+            message: t(
+                "admin.logout_confirm",
+                "Are you sure you want to log out of the admin portal?"
+            ),
             isDanger: true
         });
 
@@ -49,7 +52,13 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
             if (!error) {
                 router.push("/");
             } else {
-                showToast(t("admin.error.logout_failed"), "error");
+                showToast(
+                    t(
+                        "admin.error.logout_failed",
+                        "Logout failed. Please try again."
+                    ),
+                    "error"
+                );
             }
         }
     };
@@ -157,7 +166,9 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                     <UserMenu
                         anchorEl={userAnchorEl}
                         onClose={() => setUserAnchorEl(null)}
-                        onLogout={() => { void handleLogout(); }}
+                        onLogout={() => {
+                            void handleLogout();
+                        }}
                     />
                 </Stack>
             </Stack>

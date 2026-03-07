@@ -92,10 +92,14 @@
         },
         "menu": { "client_view": "Switch to Client View", "logout": "Logout" },
         "loading": "Verifying credentials...",
-        "statistics": {
-            "total": "Total",
-            "new": "New"
+        "success": {
+            "lang_changed": "Language updated successfully"
         },
+        "error": {
+            "logout_failed": "Logout failed. Please try again."
+        },
+        "logout_confirm": "Are you sure you want to log out of the admin portal?",
+        "statistics": { "total": "Total", "new": "New" },
         "growth_label": "GROWTH STATUS",
         "growth_positive": "Expanded by",
         "growth_units": "units",

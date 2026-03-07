@@ -41,7 +41,7 @@ export const ConfirmProvider = ({ children }: { children: ReactNode }) => {
                     PaperProps={{ sx: { borderRadius: "20px", p: 1 } }}
                 >
                     <DialogTitle sx={{ fontWeight: 800 }}>
-                        {state.options.title}?
+                        {state.options.title}
                     </DialogTitle>
                     <DialogContent>
                         <Typography sx={{ color: "#6B7280" }}>
