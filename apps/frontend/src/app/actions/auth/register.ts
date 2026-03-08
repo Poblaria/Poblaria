@@ -6,7 +6,6 @@ export default async function register(
     body: InferRequestType<typeof tuyau.register.$post>
 ) {
     const { data, error } = await tuyau.register.$post(body);
-    console.log("Register response:", { data, error }); // Log the response for debugging
     return { data, error: error?.value };
 }
 

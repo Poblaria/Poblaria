@@ -9,7 +9,6 @@ export default async function login(
     const { data, error } = await tuyau.login.$post(body);
 
     if (data?.token) {
-        console.log(data);
         (await cookies()).set("token", data.token, {
             maxAge: data.expiresAt
                 ? Math.floor(

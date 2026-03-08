@@ -13,7 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { MouseEvent, useState, useEffect } from "react";
+import { MouseEvent, useState } from "react";
 import LanguageMenu from "@/components/shared/LanguageMenu";
 import ProfileMenu from "@/components/shared/ProfileMenu";
 import logout from "@/app/actions/auth/logout";
@@ -139,7 +139,9 @@ export const NavBar = () => {
                             anchorEl={profileAnchorEl}
                             onClose={handleCloseProfileMenu}
                             user={user}
-                            onLogout={handleLogout}
+                            onLogout={() => {
+                                void handleLogout();
+                            }}
                             onViewProfile={() => {
                                 handleCloseProfileMenu();
                                 router.push("/profile");
