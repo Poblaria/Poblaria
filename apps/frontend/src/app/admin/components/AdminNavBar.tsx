@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import logout from "@/app/actions/auth/logout";
 import LanguageMenu from "@/components/shared/LanguageMenu";
 import UserMenu from "@/components/shared/UserMenu";
+import { useToast } from "@/components/providers/ToastProvider";
+import { useConfirm } from "@/components/providers/ConfirmProvider";
 
 type AdminNavBarProps = {
     activeTab: number;
@@ -27,25 +29,50 @@ type AdminNavBarProps = {
 
 export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
     const { t, i18n } = useTranslation();
+    const router = useRouter();
+    const { showToast } = useToast();
+    const confirm = useConfirm();
+
     const [userAnchorEl, setUserAnchorEl] = useState<null | HTMLElement>(null);
     const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
-    const router = useRouter();
 
     const handleLogout = async () => {
-        const { error } = await logout();
-        if (!error) {
-            router.push("/");
-        } else {
-            alert("Logout failed. Please try again.");
+        setUserAnchorEl(null);
+        const ok = await confirm({
+            title: t("admin.menu.logout", "Logout"),
+            message: t(
+                "admin.logout_confirm",
+                "Are you sure you want to log out of the admin portal?"
+            ),
+            isDanger: true
+        });
+
+        if (ok) {
+            const { error } = await logout();
+            if (!error) {
+                router.push("/");
+            } else {
+                showToast(
+                    t(
+                        "admin.error.logout_failed",
+                        "Logout failed. Please try again."
+                    ),
+                    "error"
+                );
+            }
         }
     };
-    const getLanguageLabel = (code: string) =>
-        t(`languages.${code}`, code.toUpperCase());
 
     const handleSelectLanguage = async (code: string) => {
         await i18n.changeLanguage(code);
         setLangAnchorEl(null);
+        showToast(
+            t("admin.success.lang_changed", "Language updated successfully")
+        );
     };
+
+    const getLanguageLabel = (code: string) =>
+        t(`languages.${code}`, code.toUpperCase());
 
     return (
         <Paper
@@ -130,7 +157,6 @@ export const AdminNavBar = ({ activeTab, setActiveTab }: AdminNavBarProps) => {
                         }}
                     />
 
-                    {/* PROFILE ICON */}
                     <IconButton
                         onClick={(e) => setUserAnchorEl(e.currentTarget)}
                         sx={{ color: "black", borderRadius: "8px" }}

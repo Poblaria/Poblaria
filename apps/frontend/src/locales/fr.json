@@ -93,12 +93,13 @@
         },
         "menu": { "client_view": "Vue Client", "logout": "Déconnexion" },
         "loading": "Vérification des identifiants...",
-        "error": {
-            "denied_title": "Accès Refusé",
-            "denied_desc": "Vous n'avez pas l'autorisation d'accéder au portail administrateur.",
-            "redirect_msg": "Redirection vers l'accueil dans",
-            "seconds": "secondes"
+        "success": {
+            "lang_changed": "Langue mise à jour avec succès"
         },
+        "error": {
+            "logout_failed": "Échec de la déconnexion. Veuillez réessayer."
+        },
+        "logout_confirm": "Êtes-vous sûr de vouloir vous déconnecter du portail administrateur ?",
         "newsletter": {
             "load_btn": "Charger les Abonnés",
             "found": "Abonnés Trouvés",

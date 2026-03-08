@@ -94,12 +94,13 @@
             "logout": "Cerrar sesión"
         },
         "loading": "Verificando credenciales...",
-        "error": {
-            "denied_title": "Acceso Denegado",
-            "denied_desc": "No tienes permiso para ver el Portal de Administración.",
-            "redirect_msg": "Redirigiendo en",
-            "seconds": "segundos"
+        "success": {
+            "lang_changed": "Idioma actualizado correctamente"
         },
+        "error": {
+            "logout_failed": "Error al cerrar sesión. Inténtalo de nuevo."
+        },
+        "logout_confirm": "¿Estás seguro de que quieres cerrar la sesión del portal de administración?",
         "newsletter": {
             "load_btn": "Cargar Suscriptores",
             "found": "Suscriptores Encontrados",
