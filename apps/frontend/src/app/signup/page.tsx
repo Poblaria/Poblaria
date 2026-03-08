@@ -35,52 +35,45 @@ export default function SignupPage() {
         setError(null);
         setLoading(true);
 
-        const handleSubmit = (e: React.FormEvent) => {
-            e.preventDefault();
-            setError(null);
-            setLoading(true);
+        void (async () => {
+            try {
+                const result = await register({
+                    fullName,
+                    email,
+                    password
+                });
 
-            void (async () => {
-                try {
-                    const result = await register({
-                        fullName,
-                        email,
-                        password
-                    });
-
-                    if (result?.error) {
-                        if (
-                            typeof result.error === "object" &&
-                            result.error !== null &&
-                            "errors" in result.error
-                        ) {
-                            const errorData = result.error as {
-                                errors: { message: string }[];
-                            };
-                            throw new Error(
-                                errorData.errors[0]?.message ||
-                                    "Registration failed"
-                            );
-                        }
+                if (result?.error) {
+                    if (
+                        typeof result.error === "object" &&
+                        result.error !== null &&
+                        "errors" in result.error
+                    ) {
+                        const errorData = result.error as {
+                            errors: { message: string }[];
+                        };
                         throw new Error(
-                            typeof result.error === "string"
-                                ? result.error
-                                : "Registration failed"
+                            errorData.errors[0]?.message ||
+                                "Registration failed"
                         );
                     }
-
-                    await refreshUser();
-                    router.push("/");
-                } catch (err) {
-                    setError(
-                        err instanceof Error ? err.message : "Signup failed"
+                    throw new Error(
+                        typeof result.error === "string"
+                            ? result.error
+                            : "Registration failed"
                     );
-                } finally {
-                    setLoading(false);
                 }
-            })();
-        };
+
+                await refreshUser();
+                router.push("/");
+            } catch (err) {
+                setError(err instanceof Error ? err.message : "Signup failed");
+            } finally {
+                setLoading(false);
+            }
+        })();
     };
+
     return (
         <Box
             sx={{
