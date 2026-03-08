@@ -8,7 +8,11 @@
         "jobs": "Jobs",
         "contact": "Contact",
         "profile": "Profile",
-        "language": "Change Language"
+        "language": "Change Language",
+        "logged_in_as": "Logged in as",
+        "view_profile": "View Profile",
+        "logout": "Logout",
+        "account": "Account"
     },
     "common": {
         "save": "Save",

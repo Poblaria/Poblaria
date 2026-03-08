@@ -16,13 +16,15 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
 import login from "@/app/actions/auth/login";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 export default function LoginPage() {
     const router = useRouter();
+    const { refreshUser } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [remember, setRemember] = useState(false); // UI only unless action supports it
+    const [remember, setRemember] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -42,6 +44,8 @@ export default function LoginPage() {
                             : "Login failed"
                     );
                 }
+                await refreshUser();
+
                 router.push("/");
                 router.refresh();
             } catch (err) {
@@ -53,7 +57,6 @@ export default function LoginPage() {
             }
         })();
     };
-
     return (
         <Box
             sx={{

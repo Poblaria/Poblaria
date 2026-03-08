@@ -7,7 +7,8 @@ import {
     Typography,
     Button,
     Card,
-    CardMedia
+    CardMedia,
+    CircularProgress
 } from "@mui/material";
 import {
     ContactSupport as ContactSupportIcon,
@@ -15,11 +16,12 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/components/providers/AuthProvider"; // Added
 
-export default function Home({ isLogged }: { isLogged: boolean }) {
-    console.log("isLogged in Home:", isLogged);
-
+export default function Home() {
     const { t } = useTranslation();
+
+    const { isLogged, loading } = useAuth();
 
     const buttonSx = (extra?: object) => ({
         "height": "40px",
@@ -28,7 +30,14 @@ export default function Home({ isLogged }: { isLogged: boolean }) {
         "&:hover": { backgroundColor: "#83A16C" },
         ...extra
     });
-    console.log("isLogged:", isLogged);
+
+    if (loading) {
+        return (
+            <Box sx={{ display: "flex", justifyContent: "center", py: 20 }}>
+                <CircularProgress sx={{ color: "#5E7749" }} />
+            </Box>
+        );
+    }
 
     return (
         <div>
@@ -68,14 +77,7 @@ export default function Home({ isLogged }: { isLogged: boolean }) {
                             zIndex: 2,
                             borderRadius: 15
                         }}
-                    >
-                        {/*<Typography variant="h3" fontWeight={700}>
-                            {t("home.hero.title")}
-                        </Typography>
-                        <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
-                            {t("home.hero.subtitle")}
-                        </Typography> */}
-                    </Box>
+                    ></Box>
                 </Card>
             </Box>
 
@@ -205,7 +207,6 @@ export default function Home({ isLogged }: { isLogged: boolean }) {
                     </Box>
                 </Box>
             </section>
-
             {!isLogged && (
                 <section className="py-16 bg-white text-black">
                     <Box className="container mx-auto px-4 text-center">

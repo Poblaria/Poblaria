@@ -16,14 +16,16 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
 import register from "@/app/actions/auth/register";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 export default function SignupPage() {
     const router = useRouter();
+    const { refreshUser } = useAuth();
 
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [region, setRegion] = useState(""); // UI only unless backend supports it
+    const [region, setRegion] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -38,26 +40,23 @@ export default function SignupPage() {
                 const result = await register({ fullName, email, password });
 
                 if (result?.error) {
-                    console.error("Signup error:", result.error); // Log the error for debugging
-                    throw new Error(
-                        typeof result.error === "string"
-                            ? result.error
-                            : "Signup failed"
-                    );
+                    const errorData = result.error as any;
+                    const message =
+                        errorData?.errors?.[0]?.message ||
+                        "Registration failed";
+                    throw new Error(message);
                 }
+                await refreshUser();
 
-                router.push("/login");
+                router.push("/");
                 router.refresh();
             } catch (err) {
-                const errorMessage =
-                    err instanceof Error ? err.message : "Signup failed";
-                setError(errorMessage);
+                setError(err instanceof Error ? err.message : "Signup failed");
             } finally {
                 setLoading(false);
             }
         })();
     };
-
     return (
         <Box
             sx={{
