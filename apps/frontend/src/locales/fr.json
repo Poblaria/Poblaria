@@ -8,7 +8,11 @@
         "jobs": "Emplois",
         "contact": "Contact",
         "profile": "Profil",
-        "language": "Changer de langue"
+        "language": "Changer de langue",
+        "logged_in_as": "Connecté en tant que",
+        "view_profile": "Voir le profil",
+        "logout": "Déconnexion",
+        "account": "Compte"
     },
 
     "common": {

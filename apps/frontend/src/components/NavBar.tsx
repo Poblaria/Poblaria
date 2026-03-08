@@ -2,19 +2,34 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { usePathname, useRouter } from "next/navigation";
+import {
+    Box,
+    Button,
+    IconButton,
+    Typography,
+    CircularProgress
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import LanguageIcon from "@mui/icons-material/Language";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { MouseEvent, useState } from "react";
 import LanguageMenu from "@/components/shared/LanguageMenu";
+import ProfileMenu from "@/components/shared/ProfileMenu";
+import logout from "@/app/actions/auth/logout";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 export const NavBar = () => {
     const pathname = usePathname();
+    const router = useRouter();
     const { t, i18n } = useTranslation();
 
+    const { user, isLogged, loading, refreshUser } = useAuth();
+
     const [langAnchorEl, setLangAnchorEl] = useState<null | HTMLElement>(null);
+    const [profileAnchorEl, setProfileAnchorEl] = useState<null | HTMLElement>(
+        null
+    );
 
     if (pathname.startsWith("/admin")) {
         return null;
@@ -29,6 +44,22 @@ export const NavBar = () => {
     const handleSelectLanguage = async (code: string) => {
         await i18n.changeLanguage(code);
         setLangAnchorEl(null);
+    };
+
+    const handleOpenProfileMenu = (event: MouseEvent<HTMLElement>) => {
+        setProfileAnchorEl(event.currentTarget);
+    };
+
+    const handleCloseProfileMenu = () => setProfileAnchorEl(null);
+
+    const handleLogout = async () => {
+        setProfileAnchorEl(null);
+        const { error } = await logout();
+        if (!error) {
+            await refreshUser();
+            router.push("/");
+            router.refresh();
+        }
     };
 
     const getLanguageLabel = (code: string) =>
@@ -86,13 +117,38 @@ export const NavBar = () => {
                     <Link href="/explore">{t("navbar.explore")}</Link>
                 </Button>
 
-                <IconButton
-                    component={Link}
-                    href="/profile"
-                    sx={buttonStyle("/profile")}
-                >
-                    <AccountCircleIcon sx={{ fontSize: 28 }} />
-                </IconButton>
+                {loading ? (
+                    <CircularProgress
+                        size={28}
+                        sx={{ color: "#83A16C", mx: 1 }}
+                    />
+                ) : (
+                    <>
+                        <IconButton
+                            onClick={
+                                isLogged ? handleOpenProfileMenu : undefined
+                            }
+                            component={isLogged ? "button" : Link}
+                            href={isLogged ? undefined : "/login"}
+                            sx={buttonStyle("/profile")}
+                        >
+                            <AccountCircleIcon sx={{ fontSize: 28 }} />
+                        </IconButton>
+
+                        <ProfileMenu
+                            anchorEl={profileAnchorEl}
+                            onClose={handleCloseProfileMenu}
+                            user={user}
+                            onLogout={() => {
+                                void handleLogout();
+                            }}
+                            onViewProfile={() => {
+                                handleCloseProfileMenu();
+                                router.push("/profile");
+                            }}
+                        />
+                    </>
+                )}
 
                 {/* LANGUAGE TOGGLE */}
                 <IconButton

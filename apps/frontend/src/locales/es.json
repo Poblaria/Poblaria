@@ -8,7 +8,11 @@
         "support": "Soporte",
         "contact": "Contacto",
         "profile": "Perfil",
-        "language": "Cambiar idioma"
+        "language": "Cambiar idioma",
+        "logged_in_as": "Sesión iniciada como",
+        "view_profile": "Ver Perfil",
+        "logout": "Cerrar sesión",
+        "account": "Cuenta"
     },
     "common": {
         "save": "Guardar",

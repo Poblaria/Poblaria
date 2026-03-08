@@ -6,6 +6,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import { ToastProvider } from "@/components/providers/ToastProvider";
 import { ConfirmProvider } from "@/components/providers/ConfirmProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 export const metadata: Metadata = {
     title: "Poblaria",
@@ -17,13 +18,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <html lang="en">
             <body style={{ margin: 0 }}>
                 <I18nInit />
-                <ConfirmProvider>
-                    <ToastProvider>
-                        <NavBar />
-                        {children}
-                        <Footer />
-                    </ToastProvider>
-                </ConfirmProvider>
+                <AuthProvider>
+                    <ConfirmProvider>
+                        <ToastProvider>
+                            <NavBar />
+                            {children}
+                            <Footer />
+                        </ToastProvider>
+                    </ConfirmProvider>
+                </AuthProvider>
             </body>
         </html>
     );
