@@ -2,7 +2,7 @@ services:
     db:
         container_name: poblaria-db
         image: postgres:17-alpine
-        restart: always
+        restart: unless-stopped
         shm_size: 128mb
         environment:
             POSTGRES_USER: ${DB_USER}
@@ -37,6 +37,8 @@ services:
             DB_HOST: db
             DB_PORT: 5432
             DB_MIGRATE: ${DB_MIGRATE}
+        volumes:
+            - api_volume:/app/storage
         healthcheck:
           test: ["CMD", "wget", "--spider", "-q", "http://127.0.0.1:8080"]
           interval: 5s
@@ -48,6 +50,8 @@ services:
         build:
             context: .
             dockerfile: apps/frontend/Dockerfile
+            args:
+                NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL}
         depends_on:
             api:
                 condition: service_healthy
@@ -58,3 +62,4 @@ services:
 
 volumes:
     db_volume:
+    api_volume:

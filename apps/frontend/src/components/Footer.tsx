@@ -1,13 +1,23 @@
 "use client";
 
-import { Box, Typography, Link, Stack, Divider } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
+import { Box, Typography, Link, Stack } from "@mui/material";
 import NewsletterForm from "@/components/NewsletterForm";
+import { useTranslation } from "react-i18next";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+    const { t } = useTranslation();
+    const pathname = usePathname();
+
+    {
+        /*const text = "#2E3A28";*/
+    }
+    if (pathname === "/admin") {
+        return null;
+    }
+
     const bg = "#EEF1EA";
     const accent = "#5E7749";
-    const text = "#2E3A28";
 
     return (
         <Box component="footer" sx={{ bgcolor: bg, py: 10 }}>
@@ -35,12 +45,12 @@ export default function Footer() {
                             lineHeight: 1
                         }}
                     >
-                        NEWSLETTER
+                        {t("footer.title")}
                     </Typography>
                     <Typography
                         sx={{ mt: 0.5, mb: 3, color: "#2E3A28", opacity: 0.9 }}
                     >
-                        Subscribe to receive updated of this amazing journey!
+                        {t("footer.subtitle")}
                     </Typography>
                     <NewsletterForm />
                 </Box>
@@ -64,30 +74,13 @@ export default function Footer() {
                             }
                         }}
                     >
-                        <Link href="/faq">FAQ</Link>
-                        <Link href="/About us">About us</Link>
-                        <Link href="/contact">Contact</Link>
-                        <Link href="/admin">Administrator</Link>
-                    </Stack>
-                    <Stack
-                        direction="row"
-                        spacing={3}
-                        justifyContent={{ xs: "flex-start", md: "flex-end" }}
-                        sx={{ mb: 5, color: accent, mt: 4 }}
-                    >
-                        <Link href="#" color="inherit" aria-label="Instagram">
-                            <InstagramIcon fontSize="large" />
+                        <Link href="/faq">{t("footer.link.faq")}</Link>
+                        <Link href="/about">{t("footer.link.about-us")}</Link>
+                        <Link href="/contact">{t("footer.link.contact")}</Link>
+                        <Link href="/organizations">
+                            {t("footer.link.organizations")}
                         </Link>
                     </Stack>
-
-                    <Divider
-                        sx={{ my: 4, borderColor: "rgba(46,58,40,0.12)" }}
-                    />
-                    <Typography
-                        sx={{ color: text, opacity: 0.7, fontSize: 12 }}
-                    >
-                        © {new Date().getFullYear()} Poblaria
-                    </Typography>
                 </Box>
             </Box>
         </Box>

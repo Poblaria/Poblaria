@@ -7,6 +7,10 @@
 import type { MakeTuyauRequest, MakeTuyauResponse } from '@tuyau/utils/types'
 import type { InferInput } from '@vinejs/vine/types'
 
+type LanguagesGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/languages_controller.ts').default['show'], false>
+}
 type RegisterPost = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['register'], false>
@@ -18,6 +22,30 @@ type LoginPost = {
 type LogoutPost = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['logout'], false>
+}
+type MeGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['me'], false>
+}
+type UsersGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['index'], false>
+}
+type UsersPost = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['store'], false>
+}
+type UsersIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['show'], false>
+}
+type UsersIdPutPatch = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/user.ts')['putUserValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['update'], true>
+}
+type UsersIdDelete = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['destroy'], false>
 }
 type HousingsGetHead = {
   request: unknown
@@ -39,13 +67,17 @@ type HousingsIdDelete = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/housing_controller.ts').default['destroy'], false>
 }
-type HousingimagesIdGetHead = {
-  request: unknown
-  response: MakeTuyauResponse<import('../app/controllers/housing_image_controller.ts').default['show'], false>
+type ImagesPost = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/image.ts')['imageValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/images_controller.ts').default['store'], true>
 }
-type HousingimagesIdPutPatch = {
-  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/housing_image.ts')['housingImageValidator']>>
-  response: MakeTuyauResponse<import('../app/controllers/housing_image_controller.ts').default['update'], true>
+type ImagesIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/images_controller.ts').default['show'], false>
+}
+type ImagesIdDelete = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/images_controller.ts').default['destroy'], false>
 }
 type JobsGetHead = {
   request: unknown
@@ -87,7 +119,33 @@ type JobTypesGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/offer_properties_controller.ts').default['jobTypes'], false>
 }
+type NewsletterSubscribersGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['index'], false>
+}
+type NewsletterSubscribePost = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/newsletter.ts')['newsletterValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['subscribe'], true>
+}
+type NewsletterUnsubscribeIdGetHead = {
+  request: unknown
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['unsubscribe'], false>
+}
+type NewsletterSendPost = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/newsletter.ts')['sendNewsletterValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/newsletter_controller.ts').default['send'], true>
+}
+type StatisticsGetHead = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/statistics.ts')['getStatisticsValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/statistics_controller.ts').default['show'], true>
+}
 export interface ApiDefinition {
+  'languages': {
+    '$url': {
+    };
+    '$get': LanguagesGetHead;
+    '$head': LanguagesGetHead;
+  };
   'register': {
     '$url': {
     };
@@ -102,6 +160,28 @@ export interface ApiDefinition {
     '$url': {
     };
     '$post': LogoutPost;
+  };
+  'me': {
+    '$url': {
+    };
+    '$get': MeGetHead;
+    '$head': MeGetHead;
+  };
+  'users': {
+    '$url': {
+    };
+    '$get': UsersGetHead;
+    '$head': UsersGetHead;
+    '$post': UsersPost;
+    ':id': {
+      '$url': {
+      };
+      '$get': UsersIdGetHead;
+      '$head': UsersIdGetHead;
+      '$put': UsersIdPutPatch;
+      '$patch': UsersIdPutPatch;
+      '$delete': UsersIdDelete;
+    };
   };
   'housings': {
     '$url': {
@@ -119,14 +199,16 @@ export interface ApiDefinition {
       '$delete': HousingsIdDelete;
     };
   };
-  'housing-images': {
-    ':id': {
+  'images': {
+    '$url': {
+    };
+    '$post': ImagesPost;
+    ':name': {
       '$url': {
       };
-      '$get': HousingimagesIdGetHead;
-      '$head': HousingimagesIdGetHead;
-      '$put': HousingimagesIdPutPatch;
-      '$patch': HousingimagesIdPutPatch;
+      '$get': ImagesIdGetHead;
+      '$head': ImagesIdGetHead;
+      '$delete': ImagesIdDelete;
     };
   };
   'jobs': {
@@ -175,8 +257,47 @@ export interface ApiDefinition {
     '$get': JobTypesGetHead;
     '$head': JobTypesGetHead;
   };
+  'newsletter': {
+    'subscribers': {
+      '$url': {
+      };
+      '$get': NewsletterSubscribersGetHead;
+      '$head': NewsletterSubscribersGetHead;
+    };
+    'subscribe': {
+      '$url': {
+      };
+      '$post': NewsletterSubscribePost;
+    };
+    'unsubscribe': {
+      ':id': {
+        '$url': {
+        };
+        '$get': NewsletterUnsubscribeIdGetHead;
+        '$head': NewsletterUnsubscribeIdGetHead;
+      };
+    };
+    'send': {
+      '$url': {
+      };
+      '$post': NewsletterSendPost;
+    };
+  };
+  'statistics': {
+    '$url': {
+    };
+    '$get': StatisticsGetHead;
+    '$head': StatisticsGetHead;
+  };
 }
 const routes = [
+  {
+    params: [],
+    name: 'languages',
+    path: '/languages',
+    method: ["GET","HEAD"],
+    types: {} as LanguagesGetHead,
+  },
   {
     params: [],
     name: 'auth.register',
@@ -197,6 +318,48 @@ const routes = [
     path: '/logout',
     method: ["POST"],
     types: {} as LogoutPost,
+  },
+  {
+    params: [],
+    name: 'auth.me',
+    path: '/me',
+    method: ["GET","HEAD"],
+    types: {} as MeGetHead,
+  },
+  {
+    params: [],
+    name: 'users.index',
+    path: '/users',
+    method: ["GET","HEAD"],
+    types: {} as UsersGetHead,
+  },
+  {
+    params: [],
+    name: 'users.store',
+    path: '/users',
+    method: ["POST"],
+    types: {} as UsersPost,
+  },
+  {
+    params: ["id"],
+    name: 'users.show',
+    path: '/users/:id',
+    method: ["GET","HEAD"],
+    types: {} as UsersIdGetHead,
+  },
+  {
+    params: ["id"],
+    name: 'users.update',
+    path: '/users/:id',
+    method: ["PUT","PATCH"],
+    types: {} as UsersIdPutPatch,
+  },
+  {
+    params: ["id"],
+    name: 'users.destroy',
+    path: '/users/:id',
+    method: ["DELETE"],
+    types: {} as UsersIdDelete,
   },
   {
     params: [],
@@ -234,18 +397,25 @@ const routes = [
     types: {} as HousingsIdDelete,
   },
   {
-    params: ["id"],
-    name: 'housing_images.show',
-    path: '/housing-images/:id',
-    method: ["GET","HEAD"],
-    types: {} as HousingimagesIdGetHead,
+    params: [],
+    name: 'images.store',
+    path: '/images',
+    method: ["POST"],
+    types: {} as ImagesPost,
   },
   {
-    params: ["id"],
-    name: 'housing_images.update',
-    path: '/housing-images/:id',
-    method: ["PUT","PATCH"],
-    types: {} as HousingimagesIdPutPatch,
+    params: ["name"],
+    name: 'images.show',
+    path: '/images/:name',
+    method: ["GET","HEAD"],
+    types: {} as ImagesIdGetHead,
+  },
+  {
+    params: ["name"],
+    name: 'images.destroy',
+    path: '/images/:name',
+    method: ["DELETE"],
+    types: {} as ImagesIdDelete,
   },
   {
     params: [],
@@ -316,6 +486,41 @@ const routes = [
     path: '/job-types',
     method: ["GET","HEAD"],
     types: {} as JobTypesGetHead,
+  },
+  {
+    params: [],
+    name: 'newsletter.subscribers',
+    path: '/newsletter/subscribers',
+    method: ["GET","HEAD"],
+    types: {} as NewsletterSubscribersGetHead,
+  },
+  {
+    params: [],
+    name: 'newsletter.subscribe',
+    path: '/newsletter/subscribe',
+    method: ["POST"],
+    types: {} as NewsletterSubscribePost,
+  },
+  {
+    params: ["id"],
+    name: 'newsletter.unsubscribe',
+    path: '/newsletter/unsubscribe/:id',
+    method: ["GET","HEAD"],
+    types: {} as NewsletterUnsubscribeIdGetHead,
+  },
+  {
+    params: [],
+    name: 'newsletter.send',
+    path: '/newsletter/send',
+    method: ["POST"],
+    types: {} as NewsletterSendPost,
+  },
+  {
+    params: [],
+    name: 'statistics.show',
+    path: '/statistics',
+    method: ["GET","HEAD"],
+    types: {} as StatisticsGetHead,
   },
 ] as const;
 export const api = {

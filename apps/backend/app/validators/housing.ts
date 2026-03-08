@@ -4,7 +4,7 @@ export const postHousingValidator = vine.compile(
     vine.object({
         title: vine.string().minLength(3).maxLength(255),
         description: vine.string().optional(),
-        image: vine.string().optional(),
+        imageName: vine.string().optional(),
         price: vine.number().positive(),
         typeId: vine.number().positive(),
         offerTypeId: vine.number().positive(),

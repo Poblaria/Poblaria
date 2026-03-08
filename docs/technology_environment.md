@@ -74,72 +74,72 @@ Frontend Justification
 
 1. Next.js (React-based)
 
-    Performance & SEO: Server-Side Rendering (SSR) improves SEO for public job/housing listings, critical for attracting users to rural opportunities.
-    Scalability: Built-in API routes simplify future feature expansion (e.g., integrating payment systems).
-    Ecosystem: Large React community ensures long-term support, abundant libraries, and hiring ease.
-    Unified Codebase: File-system routing reduces boilerplate, streamlining collaboration.
+   Performance & SEO: Server-Side Rendering (SSR) improves SEO for public job/housing listings, critical for attracting users to rural opportunities.
+   Scalability: Built-in API routes simplify future feature expansion (e.g., integrating payment systems).
+   Ecosystem: Large React community ensures long-term support, abundant libraries, and hiring ease.
+   Unified Codebase: File-system routing reduces boilerplate, streamlining collaboration.
 
 2. TypeScript
 
-    Maintainability: Catches type-related errors early, crucial for a distributed team working on housing/job data.
-    Consistency: Shared types between frontend and backend reduce integration risks.
+   Maintainability: Catches type-related errors early, crucial for a distributed team working on housing/job data.
+   Consistency: Shared types between frontend and backend reduce integration risks.
 
 3. Tailwind CSS
 
-    Rapid Development: Utility-first classes accelerate UI iteration for dynamic job/housing listings.
-    Theming: Easy to enforce design consistency across rural/urban partner pages.
+   Rapid Development: Utility-first classes accelerate UI iteration for dynamic job/housing listings.
+   Theming: Easy to enforce design consistency across rural/urban partner pages.
 
 4. Leaflet
 
-    Cost-Effective: Open-source mapping avoids Google Maps API fees.
-    Customization: Geared for rural areas with offline-first potential (e.g., low-connectivity regions).
+   Cost-Effective: Open-source mapping avoids Google Maps API fees.
+   Customization: Geared for rural areas with offline-first potential (e.g., low-connectivity regions).
 
 Here’s a revised and corrected version of your backend justification, incorporating your feedback and clarifying AdonisJS’s architecture and GraphQL integration:
 Backend Justification
 
 1. AdonisJS (Node.js Framework)
 
-    Flexible Structure:
-        AdonisJS it’s streamlined for API development by focusing on:
-            Models (data structure for job/housing listings).
-            Controllers (business logic for user authentication, job posting workflows).
-            Routes (RESTful endpoints) without requiring a "View" layer.
-        Batteries-Included Tooling:
-            Built-in modules (Lucid ORM, VineJS validation, and Auth) reduce dependency sprawl, accelerating development.
-            Avoids fragmented third-party libraries, ensuring consistency and security.
-    TypeScript Native:
-        End-to-end type safety aligns with your Next.js frontend, minimizing integration errors in critical workflows (e.g., housing application submissions).
+   Flexible Structure:
+   AdonisJS it’s streamlined for API development by focusing on:
+   Models (data structure for job/housing listings).
+   Controllers (business logic for user authentication, job posting workflows).
+   Routes (RESTful endpoints) without requiring a "View" layer.
+   Batteries-Included Tooling:
+   Built-in modules (Lucid ORM, VineJS validation, and Auth) reduce dependency sprawl, accelerating development.
+   Avoids fragmented third-party libraries, ensuring consistency and security.
+   TypeScript Native:
+   End-to-end type safety aligns with your Next.js frontend, minimizing integration errors in critical workflows (e.g., housing application submissions).
 
 2. RESTful API (Core) + GraphQL (Optional Future Layer)
 
-    REST for Simplicity:
-        Widely understood by developers and rural partners, reducing onboarding friction.
-        Stateless design simplifies caching and scaling for high-traffic job/housing listings.
-    GraphQL as a Strategic Optional Upgrade:
-        Mobile Optimization: GraphQL’s flexible queries reduce payload sizes for React Native apps in low-bandwidth rural areas.
-        Modular Integration: Can coexist with REST (e.g., REST for core features, GraphQL for mobile-specific queries) using tools like Apollo Server or AdonisJS plugins.
+   REST for Simplicity:
+   Widely understood by developers and rural partners, reducing onboarding friction.
+   Stateless design simplifies caching and scaling for high-traffic job/housing listings.
+   GraphQL as a Strategic Optional Upgrade:
+   Mobile Optimization: GraphQL’s flexible queries reduce payload sizes for React Native apps in low-bandwidth rural areas.
+   Modular Integration: Can coexist with REST (e.g., REST for core features, GraphQL for mobile-specific queries) using tools like Apollo Server or AdonisJS plugins.
 
 Infrastructure & Deployment
 
 1. Vercel/Netlify (Frontend)
 
-    Next.js Optimization: Vercel offers zero-config SSR/ISR for dynamic housing listings.
-    Global CDN: Fast loading for rural users with limited bandwidth.
+   Next.js Optimization: Vercel offers zero-config SSR/ISR for dynamic housing listings.
+   Global CDN: Fast loading for rural users with limited bandwidth.
 
 2. Railway/Render (Backend)
 
-    Scalability: Auto-scaling supports traffic spikes (e.g., seasonal job postings).
-    Cost-Effective: Generous free tiers align with early-stage budgets.
+   Scalability: Auto-scaling supports traffic spikes (e.g., seasonal job postings).
+   Cost-Effective: Generous free tiers align with early-stage budgets.
 
 3. Supabase PostgreSQL
 
-    Auth Integration: Simplifies authentication if Supabase Auth is chosen.
-    Realtime Potential: Built-in PostgreSQL listeners enable real-time job alerts without third-party services.
+   Auth Integration: Simplifies authentication if Supabase Auth is chosen.
+   Realtime Potential: Built-in PostgreSQL listeners enable real-time job alerts without third-party services.
 
 4. GitHub Actions
 
-    Automated Testing: Enforce code quality as rural partners submit job/housing data.
-    Team Alignment: Tight integration with GitHub reduces CI/CD complexity.
+   Automated Testing: Enforce code quality as rural partners submit job/housing data.
+   Team Alignment: Tight integration with GitHub reduces CI/CD complexity.
 
 Authentication Options
 

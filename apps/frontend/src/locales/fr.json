@@ -18,6 +18,15 @@
     },
 
     "home": {
+        "regionSelector": {
+            "label": "Sélectionnez votre pays",
+            "placeholder": "Choisissez un pays",
+            "france": "France",
+            "spain": "Espagne",
+            "reset": "Réinitialiser la sélection",
+            "selected": "Pays sélectionné :",
+            "title": "Sélectionnez votre région"
+        },
         "hero": {
             "imgAlt": "Vie à la campagne",
             "title": "Découvrez une nouvelle façon de vivre",
@@ -49,5 +58,60 @@
             "subtitle": "Rejoignez-nous dès aujourd’hui et faites le premier pas vers une nouvelle façon de vivre.",
             "button": "Commencer"
         }
+    },
+    "newsletter": {
+        "error": {
+            "generic": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+            "acceptTerms": "Vous devez accepter les termes et conditions.",
+            "invalidEmail": "Veuillez entrer une adresse e-mail valide."
+        },
+        "success": "Vous vous êtes abonné avec succès !",
+        "acceptTerms": "J'ai lu et j'accepte les termes et conditions du site web.",
+        "placeholder": {
+            "name": "Votre Nom",
+            "email": "Votre Adresse Email"
+        },
+        "defaultName": "Abonné",
+        "languageToggle": "Langue de la Newsletter"
+    },
+    "footer": {
+        "title": "LETTRE D'INFORMATION",
+        "subtitle": "Abonnez-vous pour recevoir des mises à jour sur ce voyage incroyable !",
+
+        "link": {
+            "faq": "Questions",
+            "about-us": "À propos de nous",
+            "contact": "Contact",
+            "organizations": "Organisations"
+        }
+    },
+    "admin": {
+        "tabs": { "statistics": "Statistiques", "newsletter": "Newsletter" },
+        "titles": {
+            "statistics": "Aperçu du Système",
+            "newsletter": "Centre de Communication"
+        },
+        "menu": { "client_view": "Vue Client", "logout": "Déconnexion" },
+        "loading": "Vérification des identifiants...",
+        "success": {
+            "lang_changed": "Langue mise à jour avec succès"
+        },
+        "error": {
+            "logout_failed": "Échec de la déconnexion. Veuillez réessayer."
+        },
+        "logout_confirm": "Êtes-vous sûr de vouloir vous déconnecter du portail administrateur ?",
+        "newsletter": {
+            "load_btn": "Charger les Abonnés",
+            "found": "Abonnés Trouvés",
+            "send_btn": "Envoyer à tous les abonnés",
+            "content_label": "Contenu de la newsletter",
+            "content_placeholder": "Écrivez votre message ici...",
+            "compose": "Rédiger la newsletter"
+        },
+        "statistics": { "total": "Total", "new": "Nouveau" },
+        "growth_label": "ÉTAT DE CROISSANCE",
+        "growth_positive": "Augmentation de",
+        "growth_units": "unités",
+        "growth_none": "Aucune nouvelle entrée"
     }
 }
