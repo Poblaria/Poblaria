@@ -8,7 +8,7 @@ import {
     Stack,
     Container,
     Divider,
-    Typography,
+    Typography
 } from "@mui/material";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import TypeStep from "./components/TypeStep";
