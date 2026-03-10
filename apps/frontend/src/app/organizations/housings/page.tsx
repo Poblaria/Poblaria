@@ -14,6 +14,7 @@ import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import TypeStep from "./components/TypeStep";
 import PurposeStep from "./components/PurposeStep";
 import DetailsStep from "./components/DetailsStep";
+import PhotosStep from "@/app/organizations/housings/components/PhotosStep";
 const LocationStep = dynamic(() => import("./components/LocationStep"), {
     ssr: false,
     loading: () => (
@@ -43,7 +44,8 @@ export default function HousingsPage() {
         bedrooms: 1,
         bathrooms: 1,
         title: "",
-        description: ""
+        description: "",
+        images: [] as File[]
     });
 
     const handleNext = () => {
@@ -71,7 +73,7 @@ export default function HousingsPage() {
             case 4:
                 return formData.guests < 1;
             case 5:
-                return !formData.title.trim() || !formData.description.trim();
+                return formData.images.length < 5;
             default:
                 return false;
         }
@@ -120,6 +122,14 @@ export default function HousingsPage() {
                             }}
                             onChange={(newData) =>
                                 setFormData({ ...formData, ...newData })
+                            }
+                        />
+                    )}
+                    {step === 5 && (
+                        <PhotosStep
+                            images={formData.images}
+                            onChange={(files) =>
+                                setFormData({ ...formData, images: files })
                             }
                         />
                     )}
