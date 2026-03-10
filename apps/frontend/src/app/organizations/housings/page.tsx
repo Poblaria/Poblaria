@@ -15,6 +15,7 @@ import TypeStep from "./components/TypeStep";
 import PurposeStep from "./components/PurposeStep";
 import DetailsStep from "./components/DetailsStep";
 import PhotosStep from "@/app/organizations/housings/components/PhotosStep";
+import SuccessStep from "@/app/organizations/housings/components/SuccessStep";
 const LocationStep = dynamic(() => import("./components/LocationStep"), {
     ssr: false,
     loading: () => (
@@ -49,7 +50,7 @@ export default function HousingsPage() {
     });
 
     const handleNext = () => {
-        if (step < 5) {
+        if (step < 6) {
             setStep((prev) => prev + 1);
         }
     };
@@ -133,46 +134,58 @@ export default function HousingsPage() {
                             }
                         />
                     )}
+                    {step === 6 && <SuccessStep />}
                 </Box>
 
-                <Typography
-                    sx={{ mt: 4, color: "text.disabled", fontWeight: 700 }}
-                >
-                    Step {step} of 5
-                </Typography>
+                {step < 6 && (
+                    <>
+                        <Typography
+                            sx={{
+                                mt: 4,
+                                color: "text.disabled",
+                                fontWeight: 700
+                            }}
+                        >
+                            Step {step} of 5
+                        </Typography>
 
-                <Divider sx={{ my: 4, borderColor: "rgba(0,0,0,0.05)" }} />
+                        <Divider
+                            sx={{ my: 4, borderColor: "rgba(0,0,0,0.05)" }}
+                        />
 
-                <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                >
-                    <Button
-                        onClick={handleBack}
-                        startIcon={<ChevronLeftRoundedIcon />}
-                        sx={{
-                            color: "#2E3A28",
-                            fontWeight: 700,
-                            textTransform: "none"
-                        }}
-                    >
-                        Back
-                    </Button>
-                    <Button
-                        variant="contained"
-                        disabled={isNextDisabled()}
-                        onClick={handleNext}
-                        sx={{
-                            backgroundColor: "#6E845C",
-                            px: 6,
-                            py: 1.5,
-                            borderRadius: 3
-                        }}
-                    >
-                        {step === 6 ? "Submit" : "Next"}
-                    </Button>
-                </Stack>
+                        <Stack
+                            direction="row"
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+                            <Button
+                                onClick={handleBack}
+                                startIcon={<ChevronLeftRoundedIcon />}
+                                sx={{
+                                    color: "#2E3A28",
+                                    fontWeight: 700,
+                                    textTransform: "none"
+                                }}
+                            >
+                                Back
+                            </Button>
+                            <Button
+                                variant="contained"
+                                disabled={isNextDisabled()}
+                                onClick={handleNext}
+                                sx={{
+                                    "backgroundColor": "#6E845C",
+                                    "px": 6,
+                                    "py": 1.5,
+                                    "borderRadius": 3,
+                                    "&:hover": { backgroundColor: "#5a6d4a" }
+                                }}
+                            >
+                                {step === 5 ? "Submit" : "Next"}
+                            </Button>
+                        </Stack>
+                    </>
+                )}
             </Container>
         </Box>
     );
