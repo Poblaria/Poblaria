@@ -9,7 +9,6 @@ import {
     Container,
     Divider,
     Typography,
-    CircularProgress
 } from "@mui/material";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import TypeStep from "./components/TypeStep";
@@ -24,7 +23,7 @@ const LocationStep = dynamic(() => import("./components/LocationStep"), {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                bgcolor: "#f5f5f5",
+                backgroundColor: "#f5f5f5",
                 borderRadius: 4
             }}
         >
