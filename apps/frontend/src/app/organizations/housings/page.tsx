@@ -8,11 +8,13 @@ import {
     Stack,
     Container,
     Divider,
-    Typography
+    Typography,
+    CircularProgress
 } from "@mui/material";
 import ChevronLeftRoundedIcon from "@mui/icons-material/ChevronLeftRounded";
 import TypeStep from "./components/TypeStep";
 import PurposeStep from "./components/PurposeStep";
+import DetailsStep from "./components/DetailsStep";
 const LocationStep = dynamic(() => import("./components/LocationStep"), {
     ssr: false,
     loading: () => (
@@ -36,53 +38,98 @@ export default function HousingsPage() {
     const [formData, setFormData] = useState({
         type: null as string | null,
         purpose: null as string | null,
-        location: null as { lat: number; lng: number } | null
+        location: null as { lat: number; lng: number } | null,
+        address: "",
+        guests: 1,
+        bedrooms: 1,
+        bathrooms: 1,
+        title: "",
+        description: ""
     });
 
-    const handleNext = () => setStep((prev) => prev + 1);
-    const handleBack = () =>
-        step > 1 ? setStep((prev) => prev - 1) : window.history.back();
+    const handleNext = () => {
+        if (step < 5) {
+            setStep((prev) => prev + 1);
+        }
+    };
+
+    const handleBack = () => {
+        if (step > 1) {
+            setStep((prev) => prev - 1);
+        } else {
+            window.history.back();
+        }
+    };
+
     const isNextDisabled = () => {
-        if (step === 1) return !formData.type;
-        if (step === 2) return !formData.purpose;
-        if (step === 3) return !formData.location;
-        return false;
+        switch (step) {
+            case 1:
+                return !formData.type;
+            case 2:
+                return !formData.purpose;
+            case 3:
+                return !formData.location;
+            case 4:
+                return formData.guests < 1;
+            case 5:
+                return !formData.title.trim() || !formData.description.trim();
+            default:
+                return false;
+        }
     };
 
     return (
-        <Box sx={{ bgcolor: "#fff", minHeight: "100vh", pt: 10, pb: 10 }}>
+        <Box
+            sx={{ backgroundColor: "#fff", minHeight: "100vh", pt: 10, pb: 10 }}
+        >
             <Container maxWidth="md">
-                {step === 1 && (
-                    <TypeStep
-                        selectedType={formData.type}
-                        onSelect={(id) =>
-                            setFormData({ ...formData, type: id })
-                        }
-                    />
-                )}
-
-                {step === 2 && (
-                    <PurposeStep
-                        selectedPurpose={formData.purpose}
-                        onSelect={(id) =>
-                            setFormData({ ...formData, purpose: id })
-                        }
-                    />
-                )}
-
-                {step === 3 && (
-                    <LocationStep
-                        location={formData.location}
-                        onChange={(loc) =>
-                            setFormData({ ...formData, location: loc })
-                        }
-                    />
-                )}
+                <Box sx={{ minHeight: "60vh" }}>
+                    {step === 1 && (
+                        <TypeStep
+                            selectedType={formData.type}
+                            onSelect={(id) =>
+                                setFormData({ ...formData, type: id })
+                            }
+                        />
+                    )}
+                    {step === 2 && (
+                        <PurposeStep
+                            selectedPurpose={formData.purpose}
+                            onSelect={(id) =>
+                                setFormData({ ...formData, purpose: id })
+                            }
+                        />
+                    )}
+                    {step === 3 && (
+                        <LocationStep
+                            location={formData.location}
+                            onChange={(loc, addr) =>
+                                setFormData({
+                                    ...formData,
+                                    location: loc,
+                                    address: addr || formData.address
+                                })
+                            }
+                        />
+                    )}
+                    {step === 4 && (
+                        <DetailsStep
+                            data={{
+                                guests: formData.guests,
+                                bedrooms: formData.bedrooms,
+                                bathrooms: formData.bathrooms
+                            }}
+                            onChange={(newData) =>
+                                setFormData({ ...formData, ...newData })
+                            }
+                        />
+                    )}
+                </Box>
 
                 <Typography
                     sx={{ mt: 4, color: "text.disabled", fontWeight: 700 }}
                 >
-                    Step {step} of 6
+                    Step {step} of 5
                 </Typography>
 
                 <Divider sx={{ my: 4, borderColor: "rgba(0,0,0,0.05)" }} />
