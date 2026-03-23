@@ -2,7 +2,7 @@
 import { Box, Typography, Grid, Paper } from "@mui/material";
 
 const propertyTypes = [
-    { id: "house_cottage", label: "House/ Cottage", icon: "/images/House.svg" },
+    { id: "house_cottage", label: "House/Cottage", icon: "/images/House.svg" },
     { id: "farmhouse", label: "Farmhouse", icon: "/images/Farm.svg" },
     { id: "land_plot", label: "Land plot", icon: "/images/Inland.svg" },
     { id: "cabin", label: "Cabin", icon: "/images/LogCabin.svg" },
