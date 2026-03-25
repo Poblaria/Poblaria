@@ -19,3 +19,10 @@ export const loginValidator = vine.compile(
         password: vine.string().minLength(8).maxLength(512)
     })
 );
+
+export const changePasswordValidator = vine.compile(
+    vine.object({
+        currentPassword: vine.string().minLength(8).maxLength(512),
+        newPassword: vine.string().minLength(8).maxLength(512)
+    })
+);
