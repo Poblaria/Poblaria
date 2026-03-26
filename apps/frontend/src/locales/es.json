@@ -118,5 +118,17 @@
         "growth_positive": "Ampliado por",
         "growth_units": "unidades",
         "growth_none": "Sin entradas nuevas"
+    },
+    "profile": {
+        "title": "Perfil de Usuario",
+        "sectionLabel": "Perfil de Usuario",
+        "welcome": "¡Bienvenid@, {{name}}!",
+        "becomeHost": "Conviértete en anfitrión",
+        "favorites": "Tus favoritos",
+        "email": "Correo electrónico:",
+        "support": "Soporte",
+        "supportPlaceholder": "Añade contenido de soporte aquí.",
+        "resource": "Recurso",
+        "resourcePlaceholder": "Añade enlaces de recursos aquí."
     }
 }

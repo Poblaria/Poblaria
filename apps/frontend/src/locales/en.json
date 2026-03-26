@@ -116,5 +116,17 @@
             "content_placeholder": "Write your message here...",
             "compose": "Compose Newsletter"
         }
+    },
+    "profile": {
+        "title": "User Profile",
+        "sectionLabel": "User Profile",
+        "welcome": "Welcome, {{name}}!",
+        "becomeHost": "Become a host",
+        "favorites": "Your favorites",
+        "email": "Email:",
+        "support": "Support",
+        "supportPlaceholder": "Add support content here.",
+        "resource": "Resource",
+        "resourcePlaceholder": "Add resource links here."
     }
 }
