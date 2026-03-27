@@ -1,7 +1,12 @@
+"use client";
+
 import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ProfileHeader from "@/app/profile/components/ProfileHeader";
 import ProfileAccordion from "@/app/profile/components/ProfileAccordion";
+import IconButton from "@mui/material/IconButton";
+import AddSharpIcon from "@mui/icons-material/AddSharp";
+import Link from "next/link";
 
 type Props = {
     user: {
@@ -31,12 +36,11 @@ export default function ProfileInfo({ user }: Props) {
                 defaultExpanded
             >
                 <Box sx={{ py: 1 }}>
-                    <Typography sx={{ fontWeight: 700, mb: 0.5 }}>
-                        Job Position:
-                    </Typography>
-                    <Typography sx={{ color: "#4B5563" }}>
-                        Baker at La Fornal
-                    </Typography>
+                    <Link href="/explore" passHref>
+                        <IconButton aria-label="add">
+                            <AddSharpIcon />
+                        </IconButton>
+                    </Link>
                 </Box>
             </ProfileAccordion>
 
