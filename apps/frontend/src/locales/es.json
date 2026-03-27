@@ -122,13 +122,21 @@
     "profile": {
         "title": "Perfil de Usuario",
         "sectionLabel": "Información del usuario",
-        "welcome": "¡Bienvenido!",
+        "welcome": "¡Bienvenido, {{name}}!",
         "becomeHost": "Conviértete en anfitrión",
         "favorites": "Tus favoritos",
         "email": "Correo electrónico:",
         "support": "Soporte",
         "supportPlaceholder": "Añade contenido de soporte aquí.",
         "resource": "Recurso",
-        "resourcePlaceholder": "Añade enlaces de recursos aquí."
+        "resourcePlaceholder": "Añade enlaces de recursos aquí.",
+        "passwordRules": "La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.",
+        "passwordDescription": "Asegúrate de que tu cuenta utilice una contraseña larga y aleatoria para mantenerla segura.",
+        "newPassword": "Nueva contraseña",
+        "savePassword": "Guardar contraseña",
+        "deleteAccount": "Eliminar cuenta",
+        "deleteAccountDescription": "Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente.",
+        "permanentlyDelete": "Eliminar cuenta permanentemente",
+        "confirmPassword": "Confirmar contraseña"
     }
 }

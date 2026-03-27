@@ -3,53 +3,49 @@ import { useTranslation } from "react-i18next";
 
 type Props = { userName: string; email: string };
 
-const infoSx = { fontSize: 18, fontWeight: 500, mb: 1, color: "#111827" };
-
-export default function ProfileHeader({ userName, email }: Props) {
+export default function ProfileHeader({ userName }: Props) {
     const { t } = useTranslation();
     return (
-        <>
-            <Box
+        <Box sx={{ mb: 2 }}>
+            <Typography
                 sx={{
-                    mb: 2,
-                    display: "inline-flex",
-                    flexDirection: "column",
-                    width: "fit-content"
+                    fontSize: 16,
+                    textDecoration: "underline",
+                    mb: 4,
+                    color: "#111827",
+                    cursor: "pointer"
                 }}
             >
-                <Typography
-                    variant="body1"
-                    sx={{ fontWeight: 500, display: "inline-block" }}
-                >
-                    {t("profile.sectionLabel", "User Profile")}
-                </Typography>
-                <Box
-                    sx={{ mt: 0.5, width: "100%", height: 2, bgcolor: "#83A16C" }}
-                />
-            </Box>
+                User Profile
+            </Typography>
+
             <Box
                 sx={{
                     display: "flex",
-                    alignItems: "baseline",
                     justifyContent: "space-between",
-                    gap: 2,
-                    mb: 3
+                    alignItems: "baseline",
+                    mb: 4
                 }}
             >
                 <Typography
                     variant="h4"
-                    sx={{ fontWeight: 500, color: "#111827" }}
+                    sx={{
+                        fontWeight: 500,
+                        color: "#111827",
+                        fontSize: { xs: "1.75rem", md: "2.125rem" }
+                    }}
                 >
-                    {t("profile.welcome", "Welcome!", {
+                    {t("profile.welcome", "Welcome, {{name}}!", {
                         name: userName
                     })}
                 </Typography>
+
                 <MuiLink
                     href="#"
                     underline="none"
                     sx={{
                         "color": "#83A16C",
-                        "fontSize": 22,
+                        "fontSize": 20,
                         "fontWeight": 500,
                         "&:hover": { textDecoration: "underline" }
                     }}
@@ -57,18 +53,6 @@ export default function ProfileHeader({ userName, email }: Props) {
                     {t("profile.becomeHost", "Become a host")}
                 </MuiLink>
             </Box>
-            <Typography sx={infoSx}>
-                <Box component="span" sx={{ fontWeight: 700 }}>
-                    {t("profile.name", "Name:")}
-                </Box>{" "}
-                {userName}
-            </Typography>
-            <Typography sx={{ ...infoSx, mb: 3 }}>
-                <Box component="span" sx={{ fontWeight: 700 }}>
-                    {t("profile.email", "Email:")}
-                </Box>{" "}
-                {email}
-            </Typography>
-        </>
+        </Box>
     );
 }
