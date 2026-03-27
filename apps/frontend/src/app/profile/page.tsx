@@ -38,7 +38,7 @@ export default function ProfilePage() {
                         variant="h4"
                         sx={{ fontWeight: 800, color: "#111827" }}
                     >
-                        {t("profile.title", "User Profile")}
+                        {t("profile.title", "User Information")}
                     </Typography>
                 </Box>
 
@@ -51,7 +51,10 @@ export default function ProfilePage() {
                         py: { xs: 3, sm: 4 }
                     }}
                 >
-                    <ProfileHeader userName={user?.fullName || "User"} />
+                    <ProfileHeader
+                        userName={user?.fullName || "User"}
+                        email={user?.email || ""}
+                    />
 
                     <Box
                         sx={{
@@ -64,25 +67,11 @@ export default function ProfilePage() {
                             title={t("profile.favorites", "Your favorites")}
                             defaultExpanded
                         >
-                            <Typography
-                                sx={{
-                                    fontSize: 18,
-                                    fontWeight: 500,
-                                    mb: 1,
-                                    color: "#111827"
-                                }}
-                            >
-                                {t("profile.email", "Email:")}
-                            </Typography>
-                            <Typography
-                                sx={{
-                                    fontSize: 16,
-                                    fontWeight: 700,
-                                    color: "#111827"
-                                }}
-                            >
-                                {user?.fullName}
-                                {user?.email}
+                            <Typography sx={{ color: "#6B7280" }}>
+                                {t(
+                                    "profile.favoritesPlaceholder",
+                                    "Add your favorite items here."
+                                )}
                             </Typography>
                         </ProfileAccordion>
 

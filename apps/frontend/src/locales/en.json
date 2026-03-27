@@ -119,9 +119,10 @@
     },
     "profile": {
         "title": "User Profile",
-        "sectionLabel": "User Profile",
-        "welcome": "Welcome, {{name}}!",
+        "sectionLabel": "User Information",
+        "welcome": "Welcome!",
         "becomeHost": "Become a host",
+        "profile_info": "Profile Information",
         "favorites": "Your favorites",
         "email": "Email:",
         "support": "Support",

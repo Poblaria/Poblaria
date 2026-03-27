@@ -1,13 +1,22 @@
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-type Props = { userName: string };
+type Props = { userName: string; email: string };
 
-export default function ProfileHeader({ userName }: Props) {
+const infoSx = { fontSize: 18, fontWeight: 500, mb: 1, color: "#111827" };
+
+export default function ProfileHeader({ userName, email }: Props) {
     const { t } = useTranslation();
     return (
         <>
-            <Box sx={{ mb: 2 }}>
+            <Box
+                sx={{
+                    mb: 2,
+                    display: "inline-flex",
+                    flexDirection: "column",
+                    width: "fit-content"
+                }}
+            >
                 <Typography
                     variant="body1"
                     sx={{ fontWeight: 500, display: "inline-block" }}
@@ -15,7 +24,7 @@ export default function ProfileHeader({ userName }: Props) {
                     {t("profile.sectionLabel", "User Profile")}
                 </Typography>
                 <Box
-                    sx={{ mt: 0.5, width: 110, height: 2, bgcolor: "#111827" }}
+                    sx={{ mt: 0.5, width: "100%", height: 2, bgcolor: "#83A16C" }}
                 />
             </Box>
             <Box
@@ -31,7 +40,7 @@ export default function ProfileHeader({ userName }: Props) {
                     variant="h4"
                     sx={{ fontWeight: 500, color: "#111827" }}
                 >
-                    {t("profile.welcome", "Welcome, {{name}}!", {
+                    {t("profile.welcome", "Welcome!", {
                         name: userName
                     })}
                 </Typography>
@@ -48,6 +57,18 @@ export default function ProfileHeader({ userName }: Props) {
                     {t("profile.becomeHost", "Become a host")}
                 </MuiLink>
             </Box>
+            <Typography sx={infoSx}>
+                <Box component="span" sx={{ fontWeight: 700 }}>
+                    {t("profile.name", "Name:")}
+                </Box>{" "}
+                {userName}
+            </Typography>
+            <Typography sx={{ ...infoSx, mb: 3 }}>
+                <Box component="span" sx={{ fontWeight: 700 }}>
+                    {t("profile.email", "Email:")}
+                </Box>{" "}
+                {email}
+            </Typography>
         </>
     );
 }

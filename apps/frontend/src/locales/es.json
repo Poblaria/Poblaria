@@ -121,8 +121,8 @@
     },
     "profile": {
         "title": "Perfil de Usuario",
-        "sectionLabel": "Perfil de Usuario",
-        "welcome": "¡Bienvenid@, {{name}}!",
+        "sectionLabel": "Información del usuario",
+        "welcome": "¡Bienvenido!",
         "becomeHost": "Conviértete en anfitrión",
         "favorites": "Tus favoritos",
         "email": "Correo electrónico:",

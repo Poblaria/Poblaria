@@ -120,8 +120,8 @@
     },
     "profile": {
         "title": "Profil Utilisateur",
-        "sectionLabel": "Profil Utilisateur",
-        "welcome": "Bienvenue, {{name}} !",
+        "sectionLabel": "Informations sur l'utilisateur",
+        "welcome": "Bienvenue!",
         "becomeHost": "Devenir hôte",
         "favorites": "Vos favoris",
         "email": "Email :",
