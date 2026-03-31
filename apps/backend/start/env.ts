@@ -43,5 +43,8 @@ export default await Env.create(new URL("../", import.meta.url), {
     | disabled by default in example env files - to save email credits
     |----------------------------------------------------------
     */
-    NEWSLETTER_SUBSCRIPTION_CONFIRMATION_EMAIL: Env.schema.boolean()
+    NEWSLETTER_SUBSCRIPTION_CONFIRMATION_EMAIL: Env.schema.boolean(),
+
+    IDEALISTA_API_KEY: Env.schema.string(),
+    IDEALISTA_SECRET: Env.schema.string()
 });
