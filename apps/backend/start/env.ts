@@ -50,5 +50,6 @@ export default await Env.create(new URL("../", import.meta.url), {
     NEWSLETTER_SUBSCRIPTION_CONFIRMATION_EMAIL: Env.schema.boolean(),
 
     IDEALISTA_API_KEY: Env.schema.string(),
-    IDEALISTA_SECRET: Env.schema.string()
+    IDEALISTA_SECRET: Env.schema.string(),
+    IDEALISTA_API_BASE_URL: Env.schema.string()
 });

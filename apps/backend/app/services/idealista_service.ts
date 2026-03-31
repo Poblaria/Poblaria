@@ -27,11 +27,7 @@ interface CachedToken {
 export class IdealistaService {
     private static readonly CACHE_KEY = "idealista:oauth:token";
 
-    /**
-     * TODO: env var
-     */
-    private static readonly TOKEN_URL =
-        "https://api.idealista.com/oauth/token?grant_type=client_credentials";
+    private static readonly TOKEN_ENDPOINT = "/oauth/token?grant_type=client_credentials";
 
     private static readonly EXPIRY_SAFETY_MARGIN_MS = 60_000;
 
@@ -111,7 +107,7 @@ export class IdealistaService {
     private static async fetchAndCacheToken() {
         const credentials = this.buildBase64Credentials();
 
-        const response = await fetch(this.TOKEN_URL, {
+        const response = await fetch(env.get("IDEALISTA_API_BASE_URL") + this.TOKEN_ENDPOINT, {
             method: "POST",
             headers: { Authorization: `Basic ${credentials}` }
         });
