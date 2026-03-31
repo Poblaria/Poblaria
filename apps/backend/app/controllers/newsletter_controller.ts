@@ -53,7 +53,7 @@ export default class NewsletterController {
         return view.render("newsletter_unsubscribed", { i18n });
     }
 
-    async send({ bouncer, logger, request, response }: HttpContext) {
+    async send({ i18n, bouncer, logger, request, response }: HttpContext) {
         if (await bouncer.with(NewsletterPolicy).denies("send")) return response.forbidden();
 
         const data = await request.validateUsing(sendNewsletterValidator);
@@ -64,8 +64,6 @@ export default class NewsletterController {
 
         let errors = 0;
         const emailPromises = subscribers.map(async (subscriber) => {
-            const i18n = i18nManager.locale(subscriber.language);
-
             /**
              * Default locale subject and content are required in the validator, so they can't be undefined here.
              */
@@ -81,7 +79,7 @@ export default class NewsletterController {
                         .htmlView("emails/newsletter", {
                             subject,
                             content,
-                            i18n,
+                            i18n: i18nManager.locale(subscriber.language),
                             unsubscribeUrl: this.unsubscribeUrl(request.host(), subscriber.id)
                         });
                 });
@@ -93,7 +91,6 @@ export default class NewsletterController {
 
         await Promise.all(emailPromises);
 
-        const i18n = i18nManager.locale(request.languages()[0] || i18nManager.defaultLocale);
         return response.ok({
             message: i18n.formatMessage("newsletter.send.success", {
                 count: subscribers.length - errors,
