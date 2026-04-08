@@ -137,5 +137,36 @@
         "deleteAccountDescription": "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées.",
         "permanentlyDelete": "Supprimer définitivement le compte",
         "confirmPassword": "Confirmer le mot de passe"
+    },
+    "auth": {
+        "signup": {
+            "title": "Inscription",
+            "placeholders": {
+                "fullName": "Nom complet",
+                "email": "Email",
+                "password": "Mot de passe",
+                "region": "Sélectionnez une région pour commencer"
+            },
+            "errors": {
+                "generic": "Une erreur s'est produite. Veuillez réessayer.",
+                "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
+                "requiredField": "Ce champ est obligatoire."
+            },
+            "cta": "Vous avez déjà un compte ? Connectez-vous"
+        },
+        "login": {
+            "title": "Connexion",
+            "placeholders": {
+                "email": "Email",
+                "password": "Mot de passe"
+            },
+            "errors": {
+                "generic": "Une erreur s'est produite. Veuillez réessayer.",
+                "invalidCredentials": "Email ou mot de passe invalide."
+            },
+            "rememberMe": "Se souvenir de moi",
+            "forgotPassword": "Mot de passe oublié ?",
+            "cta": "Vous n'avez pas de compte ? Inscrivez-vous"
+        }
     }
 }

@@ -17,10 +17,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useState } from "react";
 import login from "@/app/actions/auth/login";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
     const router = useRouter();
     const { refreshUser } = useAuth();
+    const { t } = useTranslation();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -78,7 +80,7 @@ export default function LoginPage() {
                 }}
             >
                 <Typography variant="h4" sx={{ fontWeight: 500, mb: 3 }}>
-                    Login
+                    {t("auth.login.title")}
                 </Typography>
 
                 <Box
@@ -87,7 +89,7 @@ export default function LoginPage() {
                     sx={{ display: "grid", gap: 3 }}
                 >
                     <TextField
-                        placeholder="email"
+                        placeholder={t("auth.login.placeholders.email")}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
@@ -108,7 +110,7 @@ export default function LoginPage() {
                     />
 
                     <TextField
-                        placeholder="password"
+                        placeholder={t("auth.login.placeholders.password")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
@@ -144,7 +146,7 @@ export default function LoginPage() {
                                     }
                                 />
                             }
-                            label="Remember me"
+                            label={t("auth.login.rememberMe")}
                         />
 
                         <Typography component="span" sx={{ fontSize: 14 }}>
@@ -155,7 +157,7 @@ export default function LoginPage() {
                                     textDecoration: "none"
                                 }}
                             >
-                                Forgot password?
+                                {t("auth.login.forgotPassword")}
                             </Link>
                         </Typography>
                     </Box>
@@ -164,7 +166,7 @@ export default function LoginPage() {
                         <Typography
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
-                            {error}
+                            {t(`auth.login.errors.${error}`, error)}
                         </Typography>
                     )}
 
@@ -181,16 +183,18 @@ export default function LoginPage() {
                             "&:hover": { backgroundColor: "#6f8f59" }
                         }}
                     >
-                        {loading ? "Logging in..." : "Login"}
+                        {loading
+                            ? t("auth.login.loading")
+                            : t("auth.login.title")}
                     </Button>
 
                     <Typography sx={{ fontSize: 14 }}>
-                        Don´t have an account?{" "}
+                        {t("auth.login.cta")}{" "}
                         <Link
                             href="/signup"
                             style={{ fontWeight: 700, color: "inherit" }}
                         >
-                            Register
+                            {t("auth.signup.title")}
                         </Link>
                     </Typography>
                 </Box>

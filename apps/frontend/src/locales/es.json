@@ -138,5 +138,36 @@
         "deleteAccountDescription": "Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente.",
         "permanentlyDelete": "Eliminar cuenta permanentemente",
         "confirmPassword": "Confirmar contraseña"
+    },
+    "auth": {
+        "signup": {
+            "title": "Registro",
+            "placeholders": {
+                "fullName": "Nombre completo",
+                "email": "Correo electrónico",
+                "password": "Contraseña",
+                "region": "Selecciona una región para empezar"
+            },
+            "errors": {
+                "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+                "invalidEmail": "Por favor, introduce una dirección de correo válida.",
+                "requiredField": "Este campo es obligatorio."
+            },
+            "cta": "¿Ya tienes una cuenta? Inicia sesión"
+        },
+        "login": {
+            "title": "Iniciar sesión",
+            "placeholders": {
+                "email": "Correo electrónico",
+                "password": "Contraseña"
+            },
+            "errors": {
+                "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+                "invalidCredentials": "Correo o contraseña inválidos."
+            },
+            "rememberMe": "Recuérdame",
+            "forgotPassword": "¿Olvidaste tu contraseña?",
+            "cta": "¿No tienes una cuenta? Regístrate"
+        }
     }
 }
