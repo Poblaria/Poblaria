@@ -178,7 +178,7 @@ export default function LoginPage() {
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
                             {t(`auth.login.errors.${error}`, {
-                               defaultValue: error
+                                defaultValue: error
                             })}
                         </Typography>
                     )}
