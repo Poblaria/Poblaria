@@ -26,9 +26,7 @@ export default function ProfileInfo({ user }: Props) {
                 gap: 3
             }}
         >
-            <ProfileHeader
-                userName={user?.fullName || "User"}
-            />
+            <ProfileHeader userName={user?.fullName || "User"} />
 
             <ProfileAccordion
                 title={t("profile.favorites", "Your favorites")}
