@@ -35,9 +35,7 @@ export default function ProfilePage() {
             .then(({ data }) => {
                 if (data) setUser(data);
             })
-            .catch((err) => {
-                console.error("Failed to fetch user data:", err);
-            });
+            .catch(() => {});
     }, []);
 
     const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
