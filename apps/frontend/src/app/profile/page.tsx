@@ -29,13 +29,20 @@ const tabSx = {
 export default function ProfilePage() {
     const { t, i18n } = useTranslation();
     const [user, setUser] = useState<User | null>(null);
-    const [activeTab, setActiveTab] = useState(0);
-
+    const [activeTab, setActiveTab] = useState<number>(0);
     useEffect(() => {
-        me().then(({ data }) => {
-            if (data) setUser(data);
-        });
+        me()
+            .then(({ data }) => {
+                if (data) setUser(data);
+            })
+            .catch((err) => {
+                console.error("Failed to fetch user data:", err);
+            });
     }, []);
+
+    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
+        setActiveTab(newValue);
+    };
 
     return (
         <Box
@@ -72,7 +79,7 @@ export default function ProfilePage() {
                     >
                         <Tabs
                             value={activeTab}
-                            onChange={(_, v) => setActiveTab(v)}
+                            onChange={handleTabChange}
                             sx={tabSx}
                         >
                             <Tab
