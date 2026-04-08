@@ -116,5 +116,25 @@
             "content_placeholder": "Write your message here...",
             "compose": "Compose Newsletter"
         }
+    },
+    "profile": {
+        "title": "User Profile",
+        "sectionLabel": "User Information",
+        "welcome": "Welcome, {{name}}!",
+        "becomeHost": "Become a host",
+        "favorites": "Your favorites",
+        "email": "Email:",
+        "support": "Support",
+        "supportPlaceholder": "Add support content here.",
+        "resource": "Resource",
+        "resourcePlaceholder": "Add resource links here.",
+        "passwordRules": "The password must be at least 8 characters long, including an uppercase letter, a lowercase letter, a number, and a special character.",
+        "passwordDescription": "Ensure your account is using a long, random password to stay secure.",
+        "newPassword": "New Password",
+        "savePassword": "Save Password",
+        "deleteAccount": "Delete Account",
+        "deleteAccountDescription": "Once your account is deleted, all of its resources and data will be permanently deleted.",
+        "permanentlyDelete": "Permanently Delete Account",
+        "confirmPassword": "Confirm Password"
     }
 }
