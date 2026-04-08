@@ -36,6 +36,10 @@ router
         router.post("login", [AuthController, "login"]).as("login");
         router.post("logout", [AuthController, "logout"]).use(middleware.auth()).as("logout");
         router.get("me", [AuthController, "me"]).use(middleware.auth()).as("me");
+        router
+            .patch("password", [AuthController, "changePassword"])
+            .use(middleware.auth())
+            .as("password");
     })
     .as("auth");
 
