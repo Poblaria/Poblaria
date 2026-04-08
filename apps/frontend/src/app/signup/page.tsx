@@ -213,12 +213,12 @@ export default function SignupPage() {
                     </Button>
 
                     <Typography sx={{ fontSize: 14 }}>
-                        {t("auth.signup.cta")}{" "}
+                        {t("auth.signup.ctaText")}{" "}
                         <Link
                             href="/login"
                             style={{ fontWeight: 700, color: "inherit" }}
                         >
-                            {t("auth.login.title")}
+                            {t("auth.signup.ctaLink")}
                         </Link>
                     </Typography>
                 </Box>

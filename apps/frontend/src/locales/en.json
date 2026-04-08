@@ -140,6 +140,7 @@
     "auth": {
         "signup": {
             "title": "Signup",
+            "loading": "Signing up...",
             "placeholders": {
                 "fullName": "Full Name",
                 "email": "Email",
@@ -151,10 +152,12 @@
                 "invalidEmail": "Please enter a valid email address.",
                 "requiredField": "This field is required."
             },
-            "cta": "Already have an account? Login"
+            "ctaText": "Already have an account?",
+            "ctaLink": "Login"
         },
         "login": {
             "title": "Login",
+            "loading": "Logging in...",
             "placeholders": {
                 "email": "Email",
                 "password": "Password"
@@ -165,7 +168,8 @@
             },
             "rememberMe": "Remember me",
             "forgotPassword": "Forgot password?",
-            "cta": "Don't have an account? Register"
+            "ctaText": "Don't have an account?",
+            "ctaLink": "Register"
         }
     }
 }

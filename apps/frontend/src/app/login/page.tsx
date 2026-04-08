@@ -43,7 +43,7 @@ export default function LoginPage() {
                     throw new Error(
                         typeof result.error === "string"
                             ? result.error
-                            : "Login failed"
+                            : "generic"
                     );
                 }
                 await refreshUser();
@@ -52,7 +52,7 @@ export default function LoginPage() {
                 router.refresh();
             } catch (err) {
                 const errorMessage =
-                    err instanceof Error ? err.message : "Login failed";
+                    err instanceof Error ? err.message : "generic";
                 setError(errorMessage);
             } finally {
                 setLoading(false);
@@ -166,7 +166,9 @@ export default function LoginPage() {
                         <Typography
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
-                            {t(`auth.login.errors.${error}`, error)}
+                            {t(`auth.login.errors.${error}`, {
+                                defaultValue: t("auth.login.errors.generic")
+                            })}
                         </Typography>
                     )}
 
@@ -189,12 +191,12 @@ export default function LoginPage() {
                     </Button>
 
                     <Typography sx={{ fontSize: 14 }}>
-                        {t("auth.login.cta")}{" "}
+                        {t("auth.login.ctaText")}{" "}
                         <Link
                             href="/signup"
                             style={{ fontWeight: 700, color: "inherit" }}
                         >
-                            {t("auth.signup.title")}
+                            {t("auth.login.ctaLink")}
                         </Link>
                     </Typography>
                 </Box>

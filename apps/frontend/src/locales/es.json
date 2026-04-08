@@ -142,6 +142,7 @@
     "auth": {
         "signup": {
             "title": "Registro",
+            "loading": "Registrando...",
             "placeholders": {
                 "fullName": "Nombre completo",
                 "email": "Correo electrónico",
@@ -153,10 +154,12 @@
                 "invalidEmail": "Por favor, introduce una dirección de correo válida.",
                 "requiredField": "Este campo es obligatorio."
             },
-            "cta": "¿Ya tienes una cuenta? Inicia sesión"
+            "ctaText": "¿Ya tienes una cuenta?",
+            "ctaLink": "Inicia sesión"
         },
         "login": {
             "title": "Iniciar sesión",
+            "loading": "Iniciando sesión...",
             "placeholders": {
                 "email": "Correo electrónico",
                 "password": "Contraseña"
@@ -167,7 +170,8 @@
             },
             "rememberMe": "Recuérdame",
             "forgotPassword": "¿Olvidaste tu contraseña?",
-            "cta": "¿No tienes una cuenta? Regístrate"
+            "ctaText": "¿No tienes una cuenta?",
+            "ctaLink": "Regístrate"
         }
     }
 }

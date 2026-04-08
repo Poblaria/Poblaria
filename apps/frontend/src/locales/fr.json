@@ -141,6 +141,7 @@
     "auth": {
         "signup": {
             "title": "Inscription",
+            "loading": "Inscription en cours...",
             "placeholders": {
                 "fullName": "Nom complet",
                 "email": "Email",
@@ -152,10 +153,12 @@
                 "invalidEmail": "Veuillez entrer une adresse e-mail valide.",
                 "requiredField": "Ce champ est obligatoire."
             },
-            "cta": "Vous avez déjà un compte ? Connectez-vous"
+            "ctaText": "Vous avez déjà un compte ?",
+            "ctaLink": "Connectez-vous"
         },
         "login": {
             "title": "Connexion",
+            "loading": "Connexion en cours...",
             "placeholders": {
                 "email": "Email",
                 "password": "Mot de passe"
@@ -166,7 +169,8 @@
             },
             "rememberMe": "Se souvenir de moi",
             "forgotPassword": "Mot de passe oublié ?",
-            "cta": "Vous n'avez pas de compte ? Inscrivez-vous"
+            "ctaText": "Vous n'avez pas de compte ?",
+            "ctaLink": "Inscrivez-vous"
         }
     }
 }
