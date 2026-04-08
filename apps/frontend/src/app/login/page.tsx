@@ -18,7 +18,6 @@ import { useState } from "react";
 import login from "@/app/actions/auth/login";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useTranslation } from "react-i18next";
-import { normalizeError } from "@/utils/normalizeError";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -50,17 +49,13 @@ export default function LoginPage() {
                             errors: { message: string }[];
                         };
                         throw new Error(
-                            normalizeError(
-                                errorData.errors[0]?.message || "generic"
-                            )
+                            errorData.errors[0]?.message || "generic"
                         );
                     }
                     throw new Error(
-                        normalizeError(
-                            typeof result.error === "string"
-                                ? result.error
-                                : "generic"
-                        )
+                        typeof result.error === "string"
+                            ? result.error
+                            : "generic"
                     );
                 }
                 await refreshUser();
@@ -74,6 +69,7 @@ export default function LoginPage() {
             }
         })();
     };
+
     return (
         <Box
             sx={{
@@ -182,7 +178,7 @@ export default function LoginPage() {
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
                             {t(`auth.login.errors.${error}`, {
-                                defaultValue: t("auth.login.errors.generic")
+                               defaultValue: error
                             })}
                         </Typography>
                     )}

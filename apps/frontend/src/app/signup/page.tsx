@@ -18,7 +18,6 @@ import { useState } from "react";
 import register from "@/app/actions/auth/register";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useTranslation } from "react-i18next";
-import { normalizeError } from "@/utils/normalizeError";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -56,17 +55,13 @@ export default function SignupPage() {
                             errors: { message: string }[];
                         };
                         throw new Error(
-                            normalizeError(
-                                errorData.errors[0]?.message || "generic"
-                            )
+                            errorData.errors[0]?.message || "generic"
                         );
                     }
                     throw new Error(
-                        normalizeError(
-                            typeof result.error === "string"
-                                ? result.error
-                                : "generic"
-                        )
+                        typeof result.error === "string"
+                            ? result.error
+                            : "generic"
                     );
                 }
 
@@ -197,7 +192,7 @@ export default function SignupPage() {
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
                             {t(`auth.signup.errors.${error}`, {
-                                defaultValue: t("auth.signup.errors.generic")
+                                defaultValue: error
                             })}
                         </Typography>
                     )}
