@@ -164,7 +164,8 @@
             },
             "errors": {
                 "generic": "An error occurred. Please try again.",
-                "invalidCredentials": "Invalid email or password."
+                "invalidCredentials": "Invalid email or password.",
+                "accountLocked": "Your account has been locked. Please contact support."
             },
             "rememberMe": "Remember me",
             "forgotPassword": "Forgot password?",

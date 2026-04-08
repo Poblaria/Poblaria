@@ -165,7 +165,8 @@
             },
             "errors": {
                 "generic": "Une erreur s'est produite. Veuillez réessayer.",
-                "invalidCredentials": "Email ou mot de passe invalide."
+                "invalidCredentials": "Email ou mot de passe invalide.",
+                "accountLocked": "Votre compte a été verrouillé. Veuillez contacter le support."
             },
             "rememberMe": "Se souvenir de moi",
             "forgotPassword": "Mot de passe oublié ?",

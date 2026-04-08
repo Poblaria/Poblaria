@@ -18,6 +18,7 @@ import { useState } from "react";
 import register from "@/app/actions/auth/register";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useTranslation } from "react-i18next";
+import { normalizeError } from "@/utils/normalizeError";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -55,21 +56,26 @@ export default function SignupPage() {
                             errors: { message: string }[];
                         };
                         throw new Error(
-                            errorData.errors[0]?.message ||
-                                "Registration failed"
+                            normalizeError(
+                                errorData.errors[0]?.message || "generic"
+                            )
                         );
                     }
                     throw new Error(
-                        typeof result.error === "string"
-                            ? result.error
-                            : "Registration failed"
+                        normalizeError(
+                            typeof result.error === "string"
+                                ? result.error
+                                : "generic"
+                        )
                     );
                 }
 
                 await refreshUser();
                 router.push("/");
             } catch (err) {
-                setError(err instanceof Error ? err.message : "Signup failed");
+                const errorMessage =
+                    err instanceof Error ? err.message : "generic";
+                setError(errorMessage);
             } finally {
                 setLoading(false);
             }
@@ -190,7 +196,9 @@ export default function SignupPage() {
                         <Typography
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
-                            {error}
+                            {t(`auth.signup.errors.${error}`, {
+                                defaultValue: t("auth.signup.errors.generic")
+                            })}
                         </Typography>
                     )}
 

@@ -166,7 +166,8 @@
             },
             "errors": {
                 "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
-                "invalidCredentials": "Correo o contraseña inválidos."
+                "invalidCredentials": "Correo o contraseña inválidos.",
+                "accountLocked": "Tu cuenta ha sido bloqueada. Por favor, contacta con soporte."
             },
             "rememberMe": "Recuérdame",
             "forgotPassword": "¿Olvidaste tu contraseña?",

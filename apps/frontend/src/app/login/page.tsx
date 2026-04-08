@@ -18,6 +18,7 @@ import { useState } from "react";
 import login from "@/app/actions/auth/login";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useTranslation } from "react-i18next";
+import { normalizeError } from "@/utils/normalizeError";
 
 export default function LoginPage() {
     const router = useRouter();
@@ -49,19 +50,21 @@ export default function LoginPage() {
                             errors: { message: string }[];
                         };
                         throw new Error(
-                            errorData.errors[0]?.message || "Login failed"
+                            normalizeError(
+                                errorData.errors[0]?.message || "generic"
+                            )
                         );
                     }
                     throw new Error(
-                        typeof result.error === "string"
-                            ? result.error
-                            : "Login failed"
+                        normalizeError(
+                            typeof result.error === "string"
+                                ? result.error
+                                : "generic"
+                        )
                     );
                 }
                 await refreshUser();
-
                 router.push("/");
-                router.refresh();
             } catch (err) {
                 const errorMessage =
                     err instanceof Error ? err.message : "generic";
