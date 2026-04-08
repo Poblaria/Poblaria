@@ -40,10 +40,22 @@ export default function LoginPage() {
             try {
                 const result = await login({ email, password });
                 if (result?.error) {
+                    if (
+                        typeof result.error === "object" &&
+                        result.error !== null &&
+                        "errors" in result.error
+                    ) {
+                        const errorData = result.error as {
+                            errors: { message: string }[];
+                        };
+                        throw new Error(
+                            errorData.errors[0]?.message || "Login failed"
+                        );
+                    }
                     throw new Error(
                         typeof result.error === "string"
                             ? result.error
-                            : "generic"
+                            : "Login failed"
                     );
                 }
                 await refreshUser();
