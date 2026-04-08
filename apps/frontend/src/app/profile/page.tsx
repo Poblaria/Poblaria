@@ -2,17 +2,10 @@
 
 import { Box, Container, Typography, Tabs, Tab, Paper } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import me from "@/app/actions/auth/me";
+import { useState } from "react";
 import ProfileInfo from "@/app/profile/components/ProfileInfo";
 import AccountSecurity from "@/app/profile/components/AccountSecurity";
-
-type User = {
-    fullName: string | null;
-    id: number;
-    email: string;
-    role: "default" | "local_authority" | "administrator";
-};
+import { useAuth } from "@/components/providers/AuthProvider";
 
 const tabSx = {
     "& .MuiTabs-indicator": { backgroundColor: "#5E7749", height: 3 },
@@ -28,15 +21,8 @@ const tabSx = {
 
 export default function ProfilePage() {
     const { t, i18n } = useTranslation();
-    const [user, setUser] = useState<User | null>(null);
+    const { user } = useAuth();
     const [activeTab, setActiveTab] = useState<number>(0);
-    useEffect(() => {
-        me()
-            .then(({ data }) => {
-                if (data) setUser(data);
-            })
-            .catch(() => {});
-    }, []);
 
     const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
         setActiveTab(newValue);

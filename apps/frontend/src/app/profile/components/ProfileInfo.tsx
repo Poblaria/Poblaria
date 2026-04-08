@@ -28,7 +28,6 @@ export default function ProfileInfo({ user }: Props) {
         >
             <ProfileHeader
                 userName={user?.fullName || "User"}
-                email={user?.email || "no email available"}
             />
 
             <ProfileAccordion
@@ -46,13 +45,19 @@ export default function ProfileInfo({ user }: Props) {
 
             <ProfileAccordion title={t("profile.support", "Support")}>
                 <Typography sx={{ color: "#6B7280" }}>
-                    Need help? Contact our team at support@poblaria.com
+                    {t(
+                        "profile.supportPlaceholder",
+                        "Add support content here."
+                    )}
                 </Typography>
             </ProfileAccordion>
 
             <ProfileAccordion title={t("profile.resource", "Resource")}>
                 <Typography sx={{ color: "#6B7280" }}>
-                    View community guidelines and documentation.
+                    {t(
+                        "profile.resourcePlaceholder",
+                        "Add resource links here."
+                    )}
                 </Typography>
             </ProfileAccordion>
         </Box>

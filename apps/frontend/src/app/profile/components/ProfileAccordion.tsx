@@ -6,10 +6,11 @@ import {
     Typography
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import type { ReactNode } from "react";
 
 type Props = {
     title: string;
-    children: React.ReactNode;
+    children: ReactNode;
     defaultExpanded?: boolean;
 };
 

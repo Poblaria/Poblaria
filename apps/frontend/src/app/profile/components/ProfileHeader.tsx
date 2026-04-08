@@ -1,7 +1,7 @@
 import { Box, Typography, Link as MuiLink } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-type Props = { userName: string; email: string };
+type Props = { userName: string };
 
 export default function ProfileHeader({ userName }: Props) {
     const { t } = useTranslation();
