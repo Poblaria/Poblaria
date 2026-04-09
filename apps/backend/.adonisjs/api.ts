@@ -27,6 +27,10 @@ type MeGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['me'], false>
 }
+type PasswordPatch = {
+  request: MakeTuyauRequest<InferInput<typeof import('../app/validators/auth.ts')['changePasswordValidator']>>
+  response: MakeTuyauResponse<import('../app/controllers/auth_controller.ts').default['changePassword'], true>
+}
 type UsersGetHead = {
   request: unknown
   response: MakeTuyauResponse<import('../app/controllers/users_controller.ts').default['index'], false>
@@ -166,6 +170,11 @@ export interface ApiDefinition {
     };
     '$get': MeGetHead;
     '$head': MeGetHead;
+  };
+  'password': {
+    '$url': {
+    };
+    '$patch': PasswordPatch;
   };
   'users': {
     '$url': {
@@ -325,6 +334,13 @@ const routes = [
     path: '/me',
     method: ["GET","HEAD"],
     types: {} as MeGetHead,
+  },
+  {
+    params: [],
+    name: 'auth.password',
+    path: '/password',
+    method: ["PATCH"],
+    types: {} as PasswordPatch,
   },
   {
     params: [],
