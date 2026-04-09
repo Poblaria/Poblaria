@@ -17,10 +17,12 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { useState } from "react";
 import register from "@/app/actions/auth/register";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useTranslation } from "react-i18next";
 
 export default function SignupPage() {
     const router = useRouter();
     const { refreshUser } = useAuth();
+    const { t } = useTranslation();
 
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -53,21 +55,22 @@ export default function SignupPage() {
                             errors: { message: string }[];
                         };
                         throw new Error(
-                            errorData.errors[0]?.message ||
-                                "Registration failed"
+                            errorData.errors[0]?.message || "generic"
                         );
                     }
                     throw new Error(
                         typeof result.error === "string"
                             ? result.error
-                            : "Registration failed"
+                            : "generic"
                     );
                 }
 
                 await refreshUser();
                 router.push("/");
             } catch (err) {
-                setError(err instanceof Error ? err.message : "Signup failed");
+                const errorMessage =
+                    err instanceof Error ? err.message : "generic";
+                setError(errorMessage);
             } finally {
                 setLoading(false);
             }
@@ -95,7 +98,7 @@ export default function SignupPage() {
                 }}
             >
                 <Typography variant="h4" sx={{ fontWeight: 500, mb: 3 }}>
-                    Signup
+                    {t("auth.signup.title")}
                 </Typography>
 
                 <Box
@@ -104,7 +107,7 @@ export default function SignupPage() {
                     sx={{ display: "grid", gap: 3 }}
                 >
                     <TextField
-                        placeholder="full name"
+                        placeholder={t("auth.signup.placeholders.fullName")}
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                         fullWidth
@@ -124,7 +127,7 @@ export default function SignupPage() {
                     />
 
                     <TextField
-                        placeholder="email"
+                        placeholder={t("auth.signup.placeholders.email")}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
@@ -145,7 +148,7 @@ export default function SignupPage() {
                     />
 
                     <TextField
-                        placeholder="password"
+                        placeholder={t("auth.signup.placeholders.password")}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
@@ -180,18 +183,17 @@ export default function SignupPage() {
                         }}
                     >
                         <MenuItem value="" disabled>
-                            select a region to start with
+                            {t("auth.signup.placeholders.region")}
                         </MenuItem>
-                        <MenuItem value="north">North</MenuItem>
-                        <MenuItem value="center">Center</MenuItem>
-                        <MenuItem value="south">South</MenuItem>
                     </TextField>
 
                     {error && (
                         <Typography
                             sx={{ color: "error.main", fontSize: 14, mt: -1 }}
                         >
-                            {error}
+                            {t(`auth.signup.errors.${error}`, {
+                                defaultValue: error
+                            })}
                         </Typography>
                     )}
 
@@ -208,16 +210,18 @@ export default function SignupPage() {
                             "&:hover": { backgroundColor: "#6f8f59" }
                         }}
                     >
-                        {loading ? "Signing up..." : "Signup"}
+                        {loading
+                            ? t("auth.signup.loading")
+                            : t("auth.signup.title")}
                     </Button>
 
                     <Typography sx={{ fontSize: 14 }}>
-                        Already have an account?{" "}
+                        {t("auth.signup.ctaText")}{" "}
                         <Link
                             href="/login"
                             style={{ fontWeight: 700, color: "inherit" }}
                         >
-                            Login
+                            {t("auth.signup.ctaLink")}
                         </Link>
                     </Typography>
                 </Box>

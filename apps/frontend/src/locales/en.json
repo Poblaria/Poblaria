@@ -136,5 +136,41 @@
         "deleteAccountDescription": "Once your account is deleted, all of its resources and data will be permanently deleted.",
         "permanentlyDelete": "Permanently Delete Account",
         "confirmPassword": "Confirm Password"
+    },
+    "auth": {
+        "signup": {
+            "title": "Signup",
+            "loading": "Signing up...",
+            "placeholders": {
+                "fullName": "Full Name",
+                "email": "Email",
+                "password": "Password",
+                "region": "Select a region to start with"
+            },
+            "errors": {
+                "generic": "An error occurred. Please try again.",
+                "invalidEmail": "Please enter a valid email address.",
+                "requiredField": "This field is required."
+            },
+            "ctaText": "Already have an account?",
+            "ctaLink": "Login"
+        },
+        "login": {
+            "title": "Login",
+            "loading": "Logging in...",
+            "placeholders": {
+                "email": "Email",
+                "password": "Password"
+            },
+            "errors": {
+                "generic": "An error occurred. Please try again.",
+                "invalidCredentials": "Invalid email or password.",
+                "accountLocked": "Your account has been locked. Please contact support."
+            },
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "ctaText": "Don't have an account?",
+            "ctaLink": "Register"
+        }
     }
 }
