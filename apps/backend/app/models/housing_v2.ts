@@ -4,6 +4,8 @@ import type { BelongsTo } from "@adonisjs/lucid/types/relations";
 import User from "#models/user";
 
 export default class HousingV2 extends BaseModel {
+    static table = "housings_v2";
+
     @column({ isPrimary: true })
     declare id: number;
 
@@ -139,10 +141,10 @@ export default class HousingV2 extends BaseModel {
     @column()
     declare hasPlan: boolean;
 
-    @column()
+    @column({ columnName: "has_3d_tour" })
     declare has3DTour: boolean;
 
-    @column()
+    @column({ columnName: "has_360" })
     declare has360: boolean;
 
     @column()
