@@ -14,6 +14,7 @@ const LanguagesController = () => import("#controllers/languages_controller");
 const AuthController = () => import("#controllers/auth_controller");
 const UsersController = () => import("#controllers/users_controller");
 const HousingController = () => import("#controllers/housing_controller");
+const HousingsV2Controller = () => import("#controllers/housings_v2_controller");
 const ImagesController = () => import("#controllers/images_controller");
 const JobController = () => import("#controllers/job_controller");
 const OfferPropertyController = () => import("#controllers/offer_properties_controller");
@@ -46,6 +47,11 @@ router
     .use("*", middleware.auth());
 
 router.resource("housings", HousingController).apiOnly().where("id", router.matchers.number());
+
+router
+    .resource("housings-v2", HousingsV2Controller)
+    .apiOnly()
+    .where("id", router.matchers.number());
 
 router
     .group(() => {
