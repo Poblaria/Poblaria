@@ -59,7 +59,6 @@ export default class extends BaseSchema {
             table.string("country", 2).nullable();
             table.decimal("latitude", 10, 7).nullable();
             table.decimal("longitude", 10, 7).nullable();
-            table.integer("distance").nullable().unsigned();
             table.boolean("show_address").nullable();
             //endregion
 

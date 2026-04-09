@@ -115,9 +115,6 @@ export default class HousingV2 extends BaseModel {
     declare longitude: number | null;
 
     @column()
-    declare distance: number | null;
-
-    @column()
     declare showAddress: boolean | null;
     //endregion
 

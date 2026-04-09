@@ -44,8 +44,7 @@ export default class HousingV2Dto {
                 subregion: this.model.subregion,
                 country: this.model.country,
                 latitude: this.model.latitude,
-                longitude: this.model.longitude,
-                distance: this.model.distance
+                longitude: this.model.longitude
             },
             description: this.model.description,
             status: this.model.status,
