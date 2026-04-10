@@ -138,7 +138,7 @@ export default function AccountSecurity() {
                     )}
                     <Button
                         variant="contained"
-                        onClick={handleChangePassword}
+                        onClick={() => handleChangePassword()}
                         sx={{
                             bgcolor: "#111827",
                             textTransform: "none",
@@ -164,7 +164,7 @@ export default function AccountSecurity() {
                     variant="outlined"
                     color="error"
                     sx={{ textTransform: "none" }}
-                    onClick={handleDeleteUser}
+                    onClick={() => handleDeleteUser()}
                 >
                     {t("profile.permanentlyDelete")}
                 </Button>
