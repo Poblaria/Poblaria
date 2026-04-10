@@ -19,7 +19,7 @@ import { useToast } from "@/components/providers/ToastProvider";
 
 export default function AccountSecurity() {
     const { t } = useTranslation();
-    const { user } = useAuth();
+    const { user, refreshUser } = useAuth();
     const confirm = useConfirm();
     const { showToast } = useToast();
     const router = useRouter();
@@ -71,6 +71,7 @@ export default function AccountSecurity() {
                 "error"
             );
         } else {
+            await refreshUser();
             router.push("/");
         }
     };
