@@ -6,7 +6,12 @@ import {
     Button,
     Tooltip,
     IconButton,
-    Alert
+    Alert,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { useTranslation } from "react-i18next";
@@ -25,16 +30,14 @@ export default function AccountSecurity() {
         type: "success" | "error";
         text: string;
     } | null>(null);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const isWeakPassword = (pwd: string) => pwd.length < 8;
 
     const handleChangePassword = async () => {
         setPasswordMsg(null);
         if (isWeakPassword(newPassword)) {
-            setPasswordMsg({
-                type: "error",
-                text: t("profile.passwordRules")
-            });
+            setPasswordMsg({ type: "error", text: t("profile.passwordRules") });
             return;
         }
         if (newPassword !== confirmPassword) {
@@ -66,7 +69,7 @@ export default function AccountSecurity() {
     };
 
     const handleDeleteUser = async () => {
-        if (!user?.id || !confirm(t("profile.deleteAccountConfirm"))) return;
+        if (!user?.id) return;
         const { error } = await deleteUser(String(user.id));
         if (error) {
             const err = error as { errors?: { message: string }[] };
@@ -74,6 +77,7 @@ export default function AccountSecurity() {
         } else {
             window.location.href = "/";
         }
+        setDeleteDialogOpen(false);
     };
 
     return (
@@ -138,7 +142,7 @@ export default function AccountSecurity() {
                     )}
                     <Button
                         variant="contained"
-                        onClick={() => handleChangePassword()}
+                        onClick={() => void handleChangePassword()}
                         sx={{
                             bgcolor: "#111827",
                             textTransform: "none",
@@ -150,6 +154,7 @@ export default function AccountSecurity() {
                     </Button>
                 </Box>
             </Box>
+
             <Box sx={{ mt: 2, pt: 4, borderTop: "1px solid #E5E7EB" }}>
                 <Typography
                     variant="h6"
@@ -164,11 +169,41 @@ export default function AccountSecurity() {
                     variant="outlined"
                     color="error"
                     sx={{ textTransform: "none" }}
-                    onClick={() => handleDeleteUser()}
+                    onClick={() => setDeleteDialogOpen(true)}
                 >
                     {t("profile.permanentlyDelete")}
                 </Button>
             </Box>
+
+            <Dialog
+                open={deleteDialogOpen}
+                onClose={() => setDeleteDialogOpen(false)}
+            >
+                <DialogTitle sx={{ fontWeight: 700 }}>
+                    {t("profile.deleteAccount")}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {t("profile.deleteAccountConfirm")}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => setDeleteDialogOpen(false)}
+                        sx={{ textTransform: "none" }}
+                    >
+                        {t("common.cancel")}
+                    </Button>
+                    <Button
+                        onClick={() => void handleDeleteUser()}
+                        color="error"
+                        variant="contained"
+                        sx={{ textTransform: "none" }}
+                    >
+                        {t("profile.permanentlyDelete")}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
