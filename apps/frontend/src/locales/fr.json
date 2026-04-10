@@ -129,14 +129,19 @@
         "supportPlaceholder": "Ajoutez du contenu de support ici.",
         "resource": "Ressource",
         "resourcePlaceholder": "Ajoutez des liens de ressources ici.",
-        "passwordRules": "Le mot de passe doit contenir au moins 8 caractères, y compris une majuscule, une minuscule, un chiffre et un caractère spécial.",
+        "passwordRules": "Le mot de passe doit contenir au moins 8 caractères.",
         "passwordDescription": "Assurez-vous que votre compte utilise un mot de passe long et aléatoire pour rester sécurisé.",
         "newPassword": "Nouveau mot de passe",
         "savePassword": "Enregistrer le mot de passe",
         "deleteAccount": "Supprimer le compte",
         "deleteAccountDescription": "Une fois votre compte supprimé, toutes ses ressources et données seront définitivement supprimées.",
         "permanentlyDelete": "Supprimer définitivement le compte",
-        "confirmPassword": "Confirmer le mot de passe"
+        "confirmPassword": "Confirmer le mot de passe",
+        "currentPassword": "Mot de passe actuel",
+        "changePassword": "Changer le mot de passe",
+        "passwordMismatch": "Les mots de passe ne correspondent pas.",
+        "passwordChanged": "Mot de passe mis à jour avec succès.",
+        "deleteAccountConfirm": "Êtes-vous sûr ? Cette action est irréversible."
     },
     "auth": {
         "signup": {

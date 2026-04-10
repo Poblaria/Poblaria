@@ -22,8 +22,10 @@ export default function ProfileHeader({ userName }: Props) {
             <Box
                 sx={{
                     display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
                     justifyContent: "space-between",
-                    alignItems: "baseline",
+                    alignItems: { xs: "flex-start", sm: "baseline" },
+                    gap: { xs: 1, sm: 0 },
                     mb: 4
                 }}
             >
