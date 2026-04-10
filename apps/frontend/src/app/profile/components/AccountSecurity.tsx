@@ -5,46 +5,37 @@ import {
     TextField,
     Button,
     Tooltip,
-    IconButton,
-    Alert,
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogContentText,
-    DialogActions
+    IconButton
 } from "@mui/material";
 import InfoIcon from "@mui/icons-material/Info";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import changePassword from "@/app/actions/auth/changePassword";
 import deleteUser from "@/app/actions/users/deleteUser";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { useConfirm } from "@/components/providers/ConfirmProvider";
+import { useToast } from "@/components/providers/ToastProvider";
 
 export default function AccountSecurity() {
     const { t } = useTranslation();
     const { user } = useAuth();
+    const confirm = useConfirm();
+    const { showToast } = useToast();
+    const router = useRouter();
     const [currentPassword, setCurrentPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [passwordMsg, setPasswordMsg] = useState<{
-        type: "success" | "error";
-        text: string;
-    } | null>(null);
-    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
     const isWeakPassword = (pwd: string) => pwd.length < 8;
 
     const handleChangePassword = async () => {
-        setPasswordMsg(null);
         if (isWeakPassword(newPassword)) {
-            setPasswordMsg({ type: "error", text: t("profile.passwordRules") });
+            showToast(t("profile.passwordRules"), "error");
             return;
         }
         if (newPassword !== confirmPassword) {
-            setPasswordMsg({
-                type: "error",
-                text: t("profile.passwordMismatch")
-            });
+            showToast(t("profile.passwordMismatch"), "error");
             return;
         }
         const { error } = await changePassword({
@@ -53,15 +44,12 @@ export default function AccountSecurity() {
         });
         if (error) {
             const err = error as { errors?: { message: string }[] };
-            setPasswordMsg({
-                type: "error",
-                text: err.errors?.[0]?.message ?? t("auth.login.errors.generic")
-            });
+            showToast(
+                err.errors?.[0]?.message ?? t("auth.login.errors.generic"),
+                "error"
+            );
         } else {
-            setPasswordMsg({
-                type: "success",
-                text: t("profile.passwordChanged")
-            });
+            showToast(t("profile.passwordChanged"), "success");
             setCurrentPassword("");
             setNewPassword("");
             setConfirmPassword("");
@@ -69,15 +57,22 @@ export default function AccountSecurity() {
     };
 
     const handleDeleteUser = async () => {
-        if (!user?.id) return;
+        const confirmed = await confirm({
+            title: t("profile.deleteAccount"),
+            message: t("profile.deleteAccountConfirm"),
+            isDanger: true
+        });
+        if (!confirmed || !user?.id) return;
         const { error } = await deleteUser(String(user.id));
         if (error) {
             const err = error as { errors?: { message: string }[] };
-            alert(err.errors?.[0]?.message ?? t("auth.login.errors.generic"));
+            showToast(
+                err.errors?.[0]?.message ?? t("auth.login.errors.generic"),
+                "error"
+            );
         } else {
-            window.location.href = "/";
+            router.push("/");
         }
-        setDeleteDialogOpen(false);
     };
 
     return (
@@ -99,7 +94,7 @@ export default function AccountSecurity() {
                     }}
                 >
                     <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                        {t("profile.changePassword", "Change Password")}
+                        {t("profile.changePassword")}
                     </Typography>
                     <Tooltip title={t("profile.passwordRules")}>
                         <IconButton>
@@ -115,7 +110,7 @@ export default function AccountSecurity() {
                         fullWidth
                         type="password"
                         size="small"
-                        label={t("profile.currentPassword", "Current Password")}
+                        label={t("profile.currentPassword")}
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
                     />
@@ -135,11 +130,6 @@ export default function AccountSecurity() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
-                    {passwordMsg && (
-                        <Alert severity={passwordMsg.type}>
-                            {passwordMsg.text}
-                        </Alert>
-                    )}
                     <Button
                         variant="contained"
                         onClick={() => void handleChangePassword()}
@@ -169,41 +159,11 @@ export default function AccountSecurity() {
                     variant="outlined"
                     color="error"
                     sx={{ textTransform: "none" }}
-                    onClick={() => setDeleteDialogOpen(true)}
+                    onClick={() => void handleDeleteUser()}
                 >
                     {t("profile.permanentlyDelete")}
                 </Button>
             </Box>
-
-            <Dialog
-                open={deleteDialogOpen}
-                onClose={() => setDeleteDialogOpen(false)}
-            >
-                <DialogTitle sx={{ fontWeight: 700 }}>
-                    {t("profile.deleteAccount")}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {t("profile.deleteAccountConfirm")}
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={() => setDeleteDialogOpen(false)}
-                        sx={{ textTransform: "none" }}
-                    >
-                        {t("common.cancel")}
-                    </Button>
-                    <Button
-                        onClick={() => void handleDeleteUser()}
-                        color="error"
-                        variant="contained"
-                        sx={{ textTransform: "none" }}
-                    >
-                        {t("profile.permanentlyDelete")}
-                    </Button>
-                </DialogActions>
-            </Dialog>
         </Box>
     );
 }
