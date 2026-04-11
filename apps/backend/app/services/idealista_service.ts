@@ -108,10 +108,16 @@ export class IdealistaService {
     private static async fetchAndCacheToken() {
         const credentials = this.buildBase64Credentials();
 
-        const response = await fetch(env.get("IDEALISTA_API_BASE_URL") + this.TOKEN_ENDPOINT, {
-            method: "POST",
-            headers: { Authorization: `Basic ${credentials}` }
-        });
+        let response: Response;
+        try {
+            response = await fetch(env.get("IDEALISTA_API_BASE_URL") + this.TOKEN_ENDPOINT, {
+                method: "POST",
+                headers: { Authorization: `Basic ${credentials}` }
+            });
+        } catch (error) {
+            logger.error(error);
+            return null;
+        }
 
         if (!response.ok) {
             logger.error(
