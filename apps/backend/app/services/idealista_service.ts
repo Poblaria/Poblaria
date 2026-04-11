@@ -1,3 +1,4 @@
+import logger from "@adonisjs/core/services/logger";
 import cache from "@adonisjs/cache/services/main";
 import env from "#start/env";
 
@@ -113,10 +114,13 @@ export class IdealistaService {
         });
 
         if (!response.ok) {
-            const body = await response.text();
-            throw new Error(
-                `Idealista OAuth failed [${response.status} ${response.statusText}]: ${body}`
+            logger.error(
+                "Idealista OAuth request failed. Response status: %d %s. Response body: %s",
+                response.status,
+                response.statusText,
+                await response.text()
             );
+            return null;
         }
 
         let data: unknown;
@@ -124,11 +128,18 @@ export class IdealistaService {
         try {
             data = await response.json();
         } catch {
-            throw new Error("Idealista OAuth returned a non-JSON response");
+            logger.error(
+                "Failed to parse Idealista OAuth response as JSON. Response status: %d %s",
+                response.status,
+                response.statusText
+            );
+            return null;
         }
 
-        if (!this.isIdealistaToken(data))
-            throw new Error("Idealista OAuth returned an invalid token payload");
+        if (!this.isIdealistaToken(data)) {
+            logger.error("Idealista OAuth returned an invalid token payload");
+            return null;
+        }
 
         const cachedToken = {
             token: data.access_token,
