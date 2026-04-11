@@ -48,6 +48,8 @@ export default class HousingV2Dto {
             },
             description: this.model.description,
             status: this.model.status,
+            newDevelopment: this.model.newDevelopment,
+            newDevelopmentFinished: this.model.newDevelopmentFinished,
             features: {
                 hasVideo: this.model.hasVideo,
                 hasPlan: this.model.hasPlan,
