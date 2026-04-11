@@ -148,3 +148,49 @@ export const patchHousingV2Validator = vine.compile(
         isAvailable: vine.boolean().optional()
     })
 );
+
+export const getHousingV2QueryValidator = vine.compile(
+    vine.object({
+        page: vine.number().min(1).optional(),
+        perPage: vine.number().min(1).max(50).optional(),
+        sort: vine.enum(["asc", "desc"] as const).optional(),
+        orderBy: vine
+            .enum(["createdAt", "price", "size", "rooms", "bathrooms"] as const)
+            .optional(),
+        operation: vine.enum(["sale", "rent"] as const).optional(),
+        propertyType: vine.string().maxLength(255).optional(),
+        typology: vine.string().maxLength(255).optional(),
+        subTypology: vine.string().maxLength(255).optional(),
+        province: vine.string().maxLength(255).optional(),
+        municipality: vine.string().maxLength(255).optional(),
+        district: vine.string().maxLength(255).optional(),
+        neighborhood: vine.string().maxLength(255).optional(),
+        minPrice: vine.number().positive().optional(),
+        maxPrice: vine.number().positive().optional(),
+        minSize: vine.number().positive().optional(),
+        maxSize: vine.number().positive().optional(),
+        rooms: vine.number().min(0).optional(),
+        bathrooms: vine.number().min(0).optional(),
+        exterior: vine.boolean().optional(),
+        elevator: vine.boolean().optional(),
+        garage: vine.boolean().optional(),
+        newDevelopment: vine.boolean().optional(),
+        newDevelopmentFinished: vine.boolean().nullable().optional(),
+        furnished: vine.enum(["furnished", "furnishedKitchen"] as const).optional(),
+        hasMultimedia: vine.boolean().optional(),
+        virtualTour: vine.boolean().optional(),
+        flat: vine.boolean().optional(),
+        penthouse: vine.boolean().optional(),
+        duplex: vine.boolean().optional(),
+        studio: vine.boolean().optional(),
+        chalet: vine.boolean().optional(),
+        countryHouse: vine.boolean().optional(),
+        sinceDate: vine.enum(["W", "M", "T", "Y"] as const).optional(),
+        center: vine
+            .string()
+            .regex(/^-?\d+(\.\d+)?,-?\d+(\.\d+)?$/)
+            .optional(),
+        distance: vine.number().positive().optional(),
+        country: vine.enum(["es", "it", "pt"] as const).optional()
+    })
+);
