@@ -54,6 +54,11 @@ interface CachedIdealistaSearch {
     items: unknown[];
 }
 
+interface IdealistaSearchResult {
+    items: unknown[];
+    cacheable: boolean;
+}
+
 type PersistableHousingV2 = Omit<
     Partial<HousingV2>,
     "id" | "createdAt" | "updatedAt" | "user" | "$attributes"
@@ -115,8 +120,8 @@ export class IdealistaHousingSearchService {
         if (inFlight) return inFlight;
 
         const requestPromise = this.performSearch(filters)
-            .then(async (items) => {
-                await this.setCachedSearch(key, items);
+            .then(async ({ items, cacheable }) => {
+                if (cacheable) await this.setCachedSearch(key, items);
                 return items;
             })
             .finally(() => {
@@ -128,10 +133,10 @@ export class IdealistaHousingSearchService {
         return requestPromise;
     }
 
-    /** Performs the Idealista HTTP call and returns a normalized element list. */
+    /** Performs the Idealista HTTP call and returns items plus cacheability metadata. */
     private static async performSearch(filters: HousingV2SearchFilters) {
         const token = await IdealistaService.getToken();
-        if (!token) return [];
+        if (!token) return this.nonCacheableSearchResult();
 
         let response: Response;
         try {
@@ -145,7 +150,7 @@ export class IdealistaHousingSearchService {
             });
         } catch (error) {
             logger.error(error);
-            return [];
+            return this.nonCacheableSearchResult();
         }
 
         if (!response.ok) {
@@ -155,7 +160,7 @@ export class IdealistaHousingSearchService {
                 response.statusText,
                 await response.text()
             );
-            return [];
+            return this.nonCacheableSearchResult();
         }
 
         let payload: unknown;
@@ -168,10 +173,21 @@ export class IdealistaHousingSearchService {
                 response.status,
                 response.statusText
             );
-            return [];
+            return this.nonCacheableSearchResult();
         }
 
-        return this.extractElements(payload);
+        return {
+            items: this.extractElements(payload),
+            cacheable: true
+        } as const;
+    }
+
+    /** Helper for technical failures that must not be cached. */
+    private static nonCacheableSearchResult(): IdealistaSearchResult {
+        return {
+            items: [],
+            cacheable: false
+        };
     }
 
     /**
