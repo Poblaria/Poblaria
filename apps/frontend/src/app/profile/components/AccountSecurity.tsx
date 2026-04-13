@@ -43,9 +43,8 @@ export default function AccountSecurity() {
             newPassword
         });
         if (error) {
-            const err = error as { errors?: { message: string }[] };
             showToast(
-                err.errors?.[0]?.message ?? t("auth.login.errors.generic"),
+                error.errors?.[0]?.message ?? t("auth.login.errors.generic"),
                 "error"
             );
         } else {
@@ -63,13 +62,9 @@ export default function AccountSecurity() {
             isDanger: true
         });
         if (!confirmed || !user?.id) return;
-        const { error } = await deleteUser(String(user.id));
-        if (error) {
-            const err = error as { errors?: { message: string }[] };
-            showToast(
-                err.errors?.[0]?.message ?? t("auth.login.errors.generic"),
-                "error"
-            );
+        const ok = await deleteUser(String(user.id));
+        if (!ok) {
+            showToast(t("auth.login.errors.generic"), "error");
         } else {
             await refreshUser();
             router.push("/");
