@@ -329,7 +329,7 @@ export default function OrganizationsPortalPage() {
                     setOpen(false);
                     if (type === "property")
                         router.push("/organizations/housings");
-                    if (type === "job") router.push("/jobs");
+                    if (type === "job") router.push("/organizations/jobs");
                 }}
             />
         </Box>
