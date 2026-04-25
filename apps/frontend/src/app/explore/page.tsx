@@ -152,7 +152,10 @@ export default function Explore() {
     // Do the same thing for other options like houses*/
 
     return (
-        <main className="w-full h-full">
+        <main
+            className="w-full"
+            style={{ height: "calc(100vh - 64px)", overflow: "hidden" }}
+        >
             <Box
                 height={"100%"}
                 sx={{ display: "flex", flexDirection: "column" }}

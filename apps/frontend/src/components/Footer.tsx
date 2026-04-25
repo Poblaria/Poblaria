@@ -12,7 +12,7 @@ export default function Footer() {
     {
         /*const text = "#2E3A28";*/
     }
-    if (pathname === "/admin") {
+    if (pathname === "/admin" || pathname === "/explore") {
         return null;
     }
 
