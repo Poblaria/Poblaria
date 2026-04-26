@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
 import { BaseModel, column, belongsTo } from "@adonisjs/lucid/orm";
 import type { BelongsTo } from "@adonisjs/lucid/types/relations";
-import HousingImage from "#models/housing_image";
 import HousingType from "#models/housing_type";
 import HousingOfferType from "#models/housing_offer_type";
 import HousingCondition from "#models/housing_condition";
@@ -18,10 +17,7 @@ export default class Housing extends BaseModel {
     declare description: string | null;
 
     @column()
-    declare imageId: number;
-
-    @belongsTo(() => HousingImage)
-    declare image: BelongsTo<typeof HousingImage>;
+    declare imageName: string | null;
 
     @column()
     declare price: number;

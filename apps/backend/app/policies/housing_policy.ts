@@ -9,15 +9,15 @@ export default class HousingPolicy extends BasePolicy {
         return true;
     }
 
-    create(): AuthorizerResponse {
-        return true;
+    create(user: User): AuthorizerResponse {
+        return user.role === "administrator" || user.role === "local_authority";
     }
 
     edit(user: User, housing: Housing): AuthorizerResponse {
-        return user.id === housing.userId;
+        return user.role === "administrator" || user.id === housing.userId;
     }
 
     delete(user: User, housing: Housing): AuthorizerResponse {
-        return user.id === housing.userId;
+        return user.role === "administrator" || user.id === housing.userId;
     }
 }

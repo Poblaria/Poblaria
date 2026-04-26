@@ -9,15 +9,15 @@ export default class JobPolicy extends BasePolicy {
         return true;
     }
 
-    create(): AuthorizerResponse {
-        return true;
+    create(user: User): AuthorizerResponse {
+        return user.role === "administrator" || user.role === "local_authority";
     }
 
     edit(user: User, job: Job): AuthorizerResponse {
-        return user.id === job.userId;
+        return user.role === "administrator" || user.id === job.userId;
     }
 
     delete(user: User, job: Job): AuthorizerResponse {
-        return user.id === job.userId;
+        return user.role === "administrator" || user.id === job.userId;
     }
 }

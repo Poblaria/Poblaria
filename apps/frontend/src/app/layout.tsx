@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import I18nInit from "@/components/I18nInit";
-import { HeaderSwitcher } from "@/components/HeaderSwitcher";
+import { NavBar } from "@/components/NavBar";
 import "./globals.css";
+import Footer from "@/components/Footer";
+import { ToastProvider } from "@/components/providers/ToastProvider";
+import { ConfirmProvider } from "@/components/providers/ConfirmProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
 
 export const metadata: Metadata = {
     title: "Poblaria",
@@ -12,10 +16,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html lang="en">
-            <body>
+            <body style={{ margin: 0 }}>
                 <I18nInit />
-                <HeaderSwitcher />
-                {children}
+                <AuthProvider>
+                    <ConfirmProvider>
+                        <ToastProvider>
+                            <NavBar />
+                            {children}
+                            <Footer />
+                        </ToastProvider>
+                    </ConfirmProvider>
+                </AuthProvider>
             </body>
         </html>
     );

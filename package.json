@@ -1,7 +1,7 @@
 {
-    "name": "@poblaria/monorepo",
-    "type": "module",
-    "workspaces": [
-        "apps/*"
-    ]
+  "name": "@poblaria/monorepo",
+  "type": "module",
+  "workspaces": [
+    "apps/*"
+  ]
 }

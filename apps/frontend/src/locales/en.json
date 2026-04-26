@@ -8,7 +8,11 @@
         "jobs": "Jobs",
         "contact": "Contact",
         "profile": "Profile",
-        "language": "Change Language"
+        "language": "Change Language",
+        "logged_in_as": "Logged in as",
+        "view_profile": "View Profile",
+        "logout": "Logout",
+        "account": "Account"
     },
     "common": {
         "save": "Save",
@@ -17,6 +21,15 @@
     },
 
     "home": {
+        "regionSelector": {
+            "label": "Select Your Country",
+            "placeholder": "Choose a country",
+            "france": "France",
+            "spain": "Spain",
+            "reset": "Reset Selection",
+            "selected": "Selected Country:",
+            "title": "Select Your Region"
+        },
         "hero": {
             "imgAlt": "Countryside Living",
             "title": "Discover a New Way of Living",
@@ -47,6 +60,122 @@
             "title": "Ready for Your New Beginning?",
             "subtitle": "Join us today and take the first step towards discovering a new way of living.",
             "button": "Get Started"
+        }
+    },
+    "newsletter": {
+        "error": {
+            "generic": "An error occurred. Please try again later.",
+            "acceptTerms": "You must accept the terms and conditions.",
+            "invalidEmail": "Please enter a valid email address."
+        },
+        "success": "You have successfully subscribed!",
+        "acceptTerms": "I have read and accept the terms and conditions of the website.",
+        "placeholder": {
+            "name": "Your Name",
+            "email": "Your Email"
+        },
+        "defaultName": "Subscriber",
+        "languageToggle": "Newsletter Language"
+    },
+    "footer": {
+        "title": "NEWSLETTER",
+        "subtitle": "Subscribe to receive updated of this amazing journey!",
+
+        "link": {
+            "faq": "Questions",
+            "about-us": "About Us",
+            "contact": "Contact",
+            "organizations": "Organizations"
+        }
+    },
+    "admin": {
+        "tabs": { "statistics": "Statistics", "newsletter": "Newsletter" },
+        "titles": {
+            "statistics": "System Overview",
+            "newsletter": "Communication Center"
+        },
+        "menu": { "client_view": "Switch to Client View", "logout": "Logout" },
+        "loading": "Verifying credentials...",
+        "success": {
+            "lang_changed": "Language updated successfully"
+        },
+        "error": {
+            "logout_failed": "Logout failed. Please try again."
+        },
+        "logout_confirm": "Are you sure you want to log out of the admin portal?",
+        "statistics": { "total": "Total", "new": "New" },
+        "growth_label": "GROWTH STATUS",
+        "growth_positive": "Expanded by",
+        "growth_units": "units",
+        "growth_none": "No new entries",
+        "newsletter": {
+            "load_btn": "Load Subscribers",
+            "found": "Subscribers Found",
+            "send_btn": "Blast to All Subscribers",
+            "content_label": "Newsletter Content",
+            "content_placeholder": "Write your message here...",
+            "compose": "Compose Newsletter"
+        }
+    },
+    "profile": {
+        "title": "User Profile",
+        "sectionLabel": "User Information",
+        "welcome": "Welcome, {{name}}!",
+        "becomeHost": "Become a host",
+        "favorites": "Your favorites",
+        "email": "Email:",
+        "support": "Support",
+        "supportPlaceholder": "Add support content here.",
+        "resource": "Resource",
+        "resourcePlaceholder": "Add resource links here.",
+        "passwordRules": "The password must be at least 8 characters long.",
+        "passwordDescription": "Ensure your account is using a long, random password to stay secure.",
+        "newPassword": "New Password",
+        "savePassword": "Save Password",
+        "deleteAccount": "Delete Account",
+        "deleteAccountDescription": "Once your account is deleted, all of its resources and data will be permanently deleted.",
+        "permanentlyDelete": "Permanently Delete Account",
+        "confirmPassword": "Confirm Password",
+        "currentPassword": "Current Password",
+        "changePassword": "Change Password",
+        "passwordMismatch": "Passwords do not match.",
+        "passwordChanged": "Password updated successfully.",
+        "deleteAccountConfirm": "Are you sure? This action is irreversible."
+    },
+    "auth": {
+        "signup": {
+            "title": "Signup",
+            "loading": "Signing up...",
+            "placeholders": {
+                "fullName": "Full Name",
+                "email": "Email",
+                "password": "Password",
+                "region": "Select a region to start with"
+            },
+            "errors": {
+                "generic": "An error occurred. Please try again.",
+                "invalidEmail": "Please enter a valid email address.",
+                "requiredField": "This field is required."
+            },
+            "ctaText": "Already have an account?",
+            "ctaLink": "Login"
+        },
+        "login": {
+            "title": "Login",
+            "loading": "Logging in...",
+            "placeholders": {
+                "email": "Email",
+                "password": "Password"
+            },
+            "errors": {
+                "generic": "An error occurred. Please try again.",
+                "invalidCredentials": "Invalid email or password.",
+                "accountLocked": "Your account has been locked. Please contact support."
+            },
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "ctaText": "Don't have an account?",
+            "ctaLink": "Register"
         }
     }
 }

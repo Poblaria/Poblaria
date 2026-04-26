@@ -8,7 +8,11 @@
         "support": "Soporte",
         "contact": "Contacto",
         "profile": "Perfil",
-        "language": "Cambiar idioma"
+        "language": "Cambiar idioma",
+        "logged_in_as": "Sesión iniciada como",
+        "view_profile": "Ver Perfil",
+        "logout": "Cerrar sesión",
+        "account": "Cuenta"
     },
     "common": {
         "save": "Guardar",
@@ -16,6 +20,15 @@
         "back": "Atrás"
     },
     "home": {
+        "regionSelector": {
+            "label": "Selecciona tu país",
+            "placeholder": "Elige un país",
+            "france": "Francia",
+            "spain": "España",
+            "reset": "Restablecer selección",
+            "selected": "País seleccionado:",
+            "title": "Selecciona tu región"
+        },
         "hero": {
             "imgAlt": "Vida en el campo",
             "title": "Descubre una nueva forma de vivir",
@@ -46,6 +59,125 @@
             "title": "¿Lista para un nuevo comienzo?",
             "subtitle": "Únete hoy y da el primer paso para descubrir una nueva forma de vivir.",
             "button": "Empezar"
+        }
+    },
+    "newsletter": {
+        "error": {
+            "generic": "Ocurrió un error. Por favor, inténtalo de nuevo más tarde.",
+            "acceptTerms": "Debes aceptar los términos y condiciones.",
+            "invalidEmail": "Por favor, introduce una dirección de correo válida."
+        },
+        "success": "¡Te has suscrito con éxito!",
+        "acceptTerms": "He leído y acepto los términos y condiciones del sitio web.",
+        "placeholder": {
+            "name": "Tu Nombre",
+            "email": "Tu Correo Electrónico"
+        },
+        "defaultName": "Suscriptor",
+        "languageToggle": "Idioma del Boletín"
+    },
+    "footer": {
+        "title": "BOLETÍN INFORMATIVO",
+        "subtitle": "¡Suscríbete para recibir actualizaciones de este increíble viaje!",
+
+        "link": {
+            "faq": "Preguntas",
+            "about-us": "Sobre nosotros",
+            "contact": "Contacto",
+            "organizations": "Organizaciones"
+        }
+    },
+    "admin": {
+        "tabs": { "statistics": "Estadísticas", "newsletter": "Boletín" },
+        "titles": {
+            "statistics": "Resumen del Sistema",
+            "newsletter": "Centro de Comunicación"
+        },
+        "menu": {
+            "client_view": "Volver al sitio cliente",
+            "logout": "Cerrar sesión"
+        },
+        "loading": "Verificando credenciales...",
+        "success": {
+            "lang_changed": "Idioma actualizado correctamente"
+        },
+        "error": {
+            "logout_failed": "Error al cerrar sesión. Inténtalo de nuevo."
+        },
+        "logout_confirm": "¿Estás seguro de que quieres cerrar la sesión del portal de administración?",
+        "newsletter": {
+            "load_btn": "Cargar Suscriptores",
+            "found": "Suscriptores Encontrados",
+            "send_btn": "Enviar a Todos los Suscriptores",
+            "content_label": "Contenido del Boletín",
+            "content_placeholder": "Escribe tu mensaje aquí...",
+            "compose": "Redactar Boletín"
+        },
+        "statistics": { "total": "Total", "new": "Nuevo" },
+        "growth_label": "ESTADO DE CRECIMIENTO",
+        "growth_positive": "Ampliado por",
+        "growth_units": "unidades",
+        "growth_none": "Sin entradas nuevas"
+    },
+    "profile": {
+        "title": "Perfil de Usuario",
+        "sectionLabel": "Información del usuario",
+        "welcome": "¡Bienvenido, {{name}}!",
+        "becomeHost": "Conviértete en anfitrión",
+        "favorites": "Tus favoritos",
+        "email": "Correo electrónico:",
+        "support": "Soporte",
+        "supportPlaceholder": "Añade contenido de soporte aquí.",
+        "resource": "Recurso",
+        "resourcePlaceholder": "Añade enlaces de recursos aquí.",
+        "passwordRules": "La contraseña debe tener al menos 8 caracteres.",
+        "passwordDescription": "Asegúrate de que tu cuenta utilice una contraseña larga y aleatoria para mantenerla segura.",
+        "newPassword": "Nueva contraseña",
+        "savePassword": "Guardar contraseña",
+        "deleteAccount": "Eliminar cuenta",
+        "deleteAccountDescription": "Una vez que tu cuenta sea eliminada, todos sus recursos y datos serán eliminados permanentemente.",
+        "permanentlyDelete": "Eliminar cuenta permanentemente",
+        "confirmPassword": "Confirmar contraseña",
+        "currentPassword": "Contraseña actual",
+        "changePassword": "Cambiar contraseña",
+        "passwordMismatch": "Las contraseñas no coinciden.",
+        "passwordChanged": "Contraseña actualizada correctamente.",
+        "deleteAccountConfirm": "¿Estás seguro? Esta acción es irreversible."
+    },
+    "auth": {
+        "signup": {
+            "title": "Registro",
+            "loading": "Registrando...",
+            "placeholders": {
+                "fullName": "Nombre completo",
+                "email": "Correo electrónico",
+                "password": "Contraseña",
+                "region": "Selecciona una región para empezar"
+            },
+            "errors": {
+                "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+                "invalidEmail": "Por favor, introduce una dirección de correo válida.",
+                "requiredField": "Este campo es obligatorio."
+            },
+            "ctaText": "¿Ya tienes una cuenta?",
+            "ctaLink": "Inicia sesión"
+        },
+        "login": {
+            "title": "Iniciar sesión",
+            "loading": "Iniciando sesión...",
+            "placeholders": {
+                "email": "Correo electrónico",
+                "password": "Contraseña"
+            },
+            "errors": {
+                "generic": "Ocurrió un error. Por favor, inténtalo de nuevo.",
+                "invalidCredentials": "Correo o contraseña inválidos.",
+                "accountLocked": "Tu cuenta ha sido bloqueada. Por favor, contacta con soporte."
+            },
+            "rememberMe": "Recuérdame",
+            "forgotPassword": "¿Olvidaste tu contraseña?",
+            "ctaText": "¿No tienes una cuenta?",
+            "ctaLink": "Regístrate"
         }
     }
 }

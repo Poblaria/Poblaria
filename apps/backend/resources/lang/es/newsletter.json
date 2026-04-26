@@ -1,0 +1,26 @@
+{
+    "subscribe": {
+        "subject": "¡Bienvenido al Boletín de Poblaria! 🎉",
+        "greeting": "¡Hola { name }!",
+        "welcome": "Bienvenido al Boletín de Poblaria",
+        "thanksMessage": "¡Gracias por suscribirte a nuestro boletín! Estamos encantados de tenerte como parte de nuestra comunidad."
+    },
+    "unsubscribe": {
+        "pageTitle": "Baja Completada - Boletín de Poblaria",
+        "title": "Baja Completada Exitosamente",
+        "subtitle": "Ya no recibirás correos de nuestra parte",
+        "message": "Tu dirección de correo electrónico ha sido eliminada exitosamente de nuestra lista de distribución.",
+        "whatHappensTitle": "¿Qué sucede ahora?",
+        "whatHappensText": "No recibirás más boletines de Poblaria. Sin embargo, siempre puedes volver a suscribirte en cualquier momento si cambias de opinión.",
+        "changeOfMind": "Lamentamos verte partir, pero lo entendemos. ¡Gracias por ser parte de nuestra comunidad!",
+        "footer": "Gracias por visitar Poblaria"
+    },
+    "send": {
+        "success": "Boletín enviado exitosamente a {count} suscriptores"
+    },
+    "regards": "Saludos cordiales,",
+    "team": "El equipo de Poblaria",
+    "unsubscribeInfo": "Puedes darte de baja en cualquier momento haciendo clic en el enlace a continuación.",
+    "unsubscribeLink": "Cancelar suscripción al boletín",
+    "footer": "Recibes este correo porque te suscribiste al boletín de Poblaria."
+}

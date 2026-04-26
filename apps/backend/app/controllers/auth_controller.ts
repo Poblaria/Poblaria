@@ -1,5 +1,6 @@
 import type { HttpContext } from "@adonisjs/core/http";
-import { loginValidator, registerValidator } from "#validators/auth";
+import hash from "@adonisjs/core/services/hash";
+import { changePasswordValidator, loginValidator, registerValidator } from "#validators/auth";
 import User from "#models/user";
 import UserDto from "#dto/user";
 
@@ -21,6 +22,23 @@ export default class AuthController {
         const token = user.currentAccessToken.identifier;
 
         await User.accessTokens.delete(user, token);
+        return response.noContent();
+    }
+
+    async me({ auth }: HttpContext) {
+        return new UserDto(auth.getUserOrFail()).toJson();
+    }
+
+    async changePassword({ auth, request, response }: HttpContext) {
+        const user = auth.getUserOrFail();
+        const { currentPassword, newPassword } =
+            await request.validateUsing(changePasswordValidator);
+
+        if (!(await hash.verify(user.password, currentPassword))) return response.unauthorized();
+
+        user.password = newPassword;
+        await user.save();
+
         return response.noContent();
     }
 }

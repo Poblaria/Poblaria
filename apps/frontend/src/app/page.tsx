@@ -7,7 +7,8 @@ import {
     Typography,
     Button,
     Card,
-    CardMedia
+    CardMedia,
+    CircularProgress
 } from "@mui/material";
 import {
     ContactSupport as ContactSupportIcon,
@@ -15,9 +16,12 @@ import {
     Work as WorkIcon
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/components/providers/AuthProvider"; // Added
 
 export default function Home() {
     const { t } = useTranslation();
+
+    const { isLogged, loading } = useAuth();
 
     const buttonSx = (extra?: object) => ({
         "height": "40px",
@@ -26,6 +30,14 @@ export default function Home() {
         "&:hover": { backgroundColor: "#83A16C" },
         ...extra
     });
+
+    if (loading) {
+        return (
+            <Box sx={{ display: "flex", justifyContent: "center", py: 20 }}>
+                <CircularProgress sx={{ color: "#5E7749" }} />
+            </Box>
+        );
+    }
 
     return (
         <div>
@@ -38,30 +50,22 @@ export default function Home() {
             >
                 <Card
                     sx={{
-                        height: "100%",
-                        overflow: "hidden",
-                        position: "relative"
+                        height: "90%",
+                        position: "relative",
+                        borderRadius: 3,
+                        overflow: "hidden"
                     }}
                 >
                     <CardMedia>
                         <Image
-                            src="/images/happy-family-pictures.jpg"
+                            src="/images/sven-V7WkmXntA8M-unsplash.jpg"
                             alt={t("home.hero.imgAlt")}
                             layout="fill"
                             objectFit="cover"
-                            quality={90}
+                            quality={100}
                         />
                     </CardMedia>
-                    <Box
-                        sx={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            backgroundColor: "rgba(0, 0, 0, 0.2)"
-                        }}
-                    />
+
                     <Box
                         sx={{
                             position: "absolute",
@@ -70,16 +74,10 @@ export default function Home() {
                             transform: "translateX(-50%)",
                             textAlign: "center",
                             color: "white",
-                            zIndex: 2
+                            zIndex: 2,
+                            borderRadius: 15
                         }}
-                    >
-                        <Typography variant="h3" fontWeight={700}>
-                            {t("home.hero.title")}
-                        </Typography>
-                        <Typography variant="h6" sx={{ mt: 2, opacity: 0.9 }}>
-                            {t("home.hero.subtitle")}
-                        </Typography>
-                    </Box>
+                    ></Box>
                 </Card>
             </Box>
 
@@ -209,30 +207,31 @@ export default function Home() {
                     </Box>
                 </Box>
             </section>
-
-            <section className="py-16 bg-white text-black">
-                <Box className="container mx-auto px-4 text-center">
-                    <Box className="max-w-2xl mx-auto">
-                        <Typography variant="h5" fontWeight={700} mb={3}>
-                            {t("home.cta.title")}
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            color="text.secondary"
-                            mb={4}
-                        >
-                            {t("home.cta.subtitle")}
-                        </Typography>
-                        <Box className="flex flex-col md:flex-row gap-4 justify-center">
-                            <Link href="/login">
-                                <Button variant="contained" sx={buttonSx()}>
-                                    {t("home.cta.button")}
-                                </Button>
-                            </Link>
+            {!isLogged && (
+                <section className="py-16 bg-white text-black">
+                    <Box className="container mx-auto px-4 text-center">
+                        <Box className="max-w-2xl mx-auto">
+                            <Typography variant="h5" fontWeight={700} mb={3}>
+                                {t("home.cta.title")}
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                                color="text.secondary"
+                                mb={4}
+                            >
+                                {t("home.cta.subtitle")}
+                            </Typography>
+                            <Box className="flex flex-col md:flex-row gap-4 justify-center">
+                                <Link href="/login">
+                                    <Button variant="contained" sx={buttonSx()}>
+                                        {t("home.cta.button")}
+                                    </Button>
+                                </Link>
+                            </Box>
                         </Box>
                     </Box>
-                </Box>
-            </section>
+                </section>
+            )}
         </div>
     );
 }
