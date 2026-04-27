@@ -25,9 +25,21 @@ export const REGIONS: Record<Country, string[]> = {
     ]
 };
 
+function normalizeRegionName(region: string): string {
+    return region.replace(/['\u2019]/g, "'");
+}
+
 export function getCountryForRegion(region: string): Country | null {
+    const normalizedRegion = normalizeRegionName(region);
     for (const [country, regions] of Object.entries(REGIONS)) {
-        if (regions.includes(region)) return country as Country;
+        if (
+            regions.some(
+                (candidate) =>
+                    normalizeRegionName(candidate) === normalizedRegion
+            )
+        ) {
+            return country as Country;
+        }
     }
     return null;
 }

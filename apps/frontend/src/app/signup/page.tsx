@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import {
     Box,
     Button,
+    ButtonBase,
     MenuItem,
     Paper,
     TextField,
     Typography,
     InputAdornment
 } from "@mui/material";
+
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -180,12 +182,18 @@ export default function SignupPage() {
                     >
                         <Box sx={{ display: "flex", gap: 2 }}>
                             {(["ES", "FR"] as const).map((c) => (
-                                <Box
+                                <ButtonBase
                                     key={c}
                                     onClick={() => {
                                         setRegion("");
                                         setSelectedCountry(c);
                                     }}
+                                    aria-pressed={selectedCountry === c}
+                                    aria-label={
+                                        c === "ES"
+                                            ? t("home.regionSelector.spain")
+                                            : t("home.regionSelector.france")
+                                    }
                                     sx={{
                                         flex: 1,
                                         py: 1.5,
@@ -198,7 +206,6 @@ export default function SignupPage() {
                                             selectedCountry === c
                                                 ? "#f0f5ec"
                                                 : "white",
-                                        cursor: "pointer",
                                         textAlign: "center",
                                         fontWeight: 600,
                                         fontSize: 15,
@@ -210,7 +217,7 @@ export default function SignupPage() {
                                     {c === "ES"
                                         ? `🇪🇸 ${t("home.regionSelector.spain")}`
                                         : `🇫🇷 ${t("home.regionSelector.france")}`}
-                                </Box>
+                                </ButtonBase>
                             ))}
                         </Box>
 

@@ -112,7 +112,7 @@ export default function MapComponent({
         const detectedCountry = getCountryForRegion(regionParam);
         if (detectedCountry) {
             setCountry(detectedCountry);
-            setSelectedRegionName(regionParam);
+            setSelectedRegionName(regionParam.replace(/\u2019/g, "'"));
         }
     }, [searchParams]);
 
@@ -322,7 +322,9 @@ export default function MapComponent({
                     <NutsRegionsLayer
                         country={country}
                         selectedName={selectedRegionName}
-                        onSelectName={(name) => setSelectedRegionName(name)}
+                        onSelectName={(name) =>
+                            setSelectedRegionName(name.replace(/\u2019/g, "'"))
+                        }
                     />
                     <MarkerClusterGroup
                         chunkedLoading
