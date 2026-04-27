@@ -37,19 +37,31 @@ export default function NewsletterPopup() {
     const initialLanguage = i18n.language;
 
     useEffect(() => {
+        if (pathname === "/explore") return;
+
         const subscribed = localStorage.getItem(SUBSCRIBED_KEY) === "true";
         if (subscribed) return;
 
         const snoozedUntil = Number(sessionStorage.getItem(SNOOZE_KEY) ?? 0);
         if (Date.now() < snoozedUntil) return;
 
-        const timer = setTimeout(() => setOpen(true), DELAY_MS);
+        const timer = setTimeout(() => {
+            const stillSubscribed =
+                localStorage.getItem(SUBSCRIBED_KEY) === "true";
+            if (!stillSubscribed) setOpen(true);
+        }, DELAY_MS);
+
         return () => clearTimeout(timer);
-    }, []);
+    }, [pathname]);
 
     const handleDismiss = () => {
         sessionStorage.setItem(SNOOZE_KEY, String(Date.now() + SNOOZE_MS));
         setOpen(false);
+        setName("");
+        setEmail("");
+        setAccepted(false);
+        setStatus("idle");
+        setErrorMessage("");
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -58,6 +70,14 @@ export default function NewsletterPopup() {
         if (!accepted) {
             setErrorMessage(
                 t("newsletter.error.acceptTerms", { lng: initialLanguage })
+            );
+            setStatus("error");
+            return;
+        }
+
+        if (!email.includes("@")) {
+            setErrorMessage(
+                t("newsletter.error.invalidEmail", { lng: initialLanguage })
             );
             setStatus("error");
             return;
@@ -85,8 +105,6 @@ export default function NewsletterPopup() {
         localStorage.setItem(SUBSCRIBED_KEY, "true");
         setOpen(false);
     };
-
-    if (pathname === "/explore") return null;
 
     const accent = "#5E7749";
     const bg = "#F6F7F4";
@@ -195,6 +213,7 @@ export default function NewsletterPopup() {
                             {errorMessage}
                         </Alert>
                     )}
+
                     <Box
                         sx={{
                             display: "flex",

@@ -154,7 +154,7 @@ export default function Explore() {
     return (
         <main
             className="w-full"
-            style={{ height: "calc(100vh - 64px)", overflow: "hidden" }}
+            style={{ height: "calc(100vh - 90px)", overflow: "hidden" }}
         >
             <Box
                 height={"100%"}
