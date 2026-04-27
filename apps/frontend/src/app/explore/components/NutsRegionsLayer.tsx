@@ -15,35 +15,16 @@ import type {
     LeafletMouseEvent,
     PathOptions
 } from "leaflet";
+import { REGIONS, type Country } from "../data/regions";
 
-export type Country = "ES" | "FR";
+export type { Country };
 
 const NUTS_PATH = "/geo/nuts/NUTS_RG_01M_2024_4326_LEVL_2.geojson";
 
-const SPAIN = new Set([
-    "Andalucía",
-    "Cataluña",
-    "Comunitat Valenciana",
-    "Comunidad de Madrid",
-    "Galicia"
-]);
+const normalize = (s: string) => s.replace(/'/g, "\u2019");
 
-const FRANCE = new Set([
-    "Auvergne-Rhône-Alpes",
-    "Bourgogne-Franche-Comté",
-    "Bretagne",
-    "Centre-Val de Loire",
-    "Corse",
-    "Grand Est",
-    "Hauts-de-France",
-    "Île-de-France",
-    "Normandie",
-    "Nouvelle-Aquitaine",
-    "Occitanie",
-    "Pays de la Loire",
-    "Provence-Alpes-Côte d’Azur",
-    "Provence-Alpes-Côte d'Azur"
-]);
+const SPAIN = new Set(REGIONS.ES.map(normalize));
+const FRANCE = new Set(REGIONS.FR.map(normalize));
 
 type NutsProps = GeoJsonProperties & {
     CNTR_CODE: Country;
@@ -111,7 +92,7 @@ export default function NutsRegionsLayer({
             return (
                 p.LEVL_CODE === 2 &&
                 p.CNTR_CODE === country &&
-                allowedNames.has(p.NAME_LATN)
+                allowedNames.has(normalize(p.NAME_LATN))
             );
         });
 
@@ -128,7 +109,8 @@ export default function NutsRegionsLayer({
             data={filtered}
             style={(feature?: NutsFeature) => {
                 const name = feature?.properties.NAME_LATN;
-                const isSelected = !!name && selectedName === name;
+                const isSelected =
+                    !!name && normalize(selectedName ?? "") === normalize(name);
                 return regionStyle(stroke, isSelected);
             }}
             onEachFeature={(feature: NutsFeature, layer: Layer) => {
@@ -161,7 +143,8 @@ export default function NutsRegionsLayer({
                     },
                     mouseout: (e: LeafletEvent) => {
                         const evt = e as LeafletMouseEvent;
-                        const isSelected = selectedName === name;
+                        const isSelected =
+                            normalize(selectedName ?? "") === normalize(name);
                         setLayerStyle(
                             evt.target as unknown as Layer,
                             regionStyle(stroke, isSelected)
