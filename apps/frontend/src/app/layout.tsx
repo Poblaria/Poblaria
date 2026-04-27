@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import { ToastProvider } from "@/components/providers/ToastProvider";
 import { ConfirmProvider } from "@/components/providers/ConfirmProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
+import NeweletterPopup from "@/components/NewsletterPopup";
 
 export const metadata: Metadata = {
     title: "Poblaria",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                             <NavBar />
                             {children}
                             <Footer />
+                            <NeweletterPopup />
                         </ToastProvider>
                     </ConfirmProvider>
                 </AuthProvider>
