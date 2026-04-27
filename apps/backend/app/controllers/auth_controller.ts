@@ -7,7 +7,9 @@ import UserDto from "#dto/user";
 export default class AuthController {
     async register({ request, response }: HttpContext) {
         return response.created(
-            new UserDto(await User.create(await request.validateUsing(registerValidator))).toJson()
+            await User.accessTokens.create(
+                await User.create(await request.validateUsing(registerValidator))
+            )
         );
     }
 
