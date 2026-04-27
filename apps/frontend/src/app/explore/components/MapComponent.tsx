@@ -26,7 +26,9 @@ import type { HousingsResponse } from "@actions/housings/getHousings";
 import type { JobsResponse } from "@actions/jobs/getJobs";
 import Link from "next/link";
 import NutsRegionsLayer, { type Country } from "./NutsRegionsLayer";
+import { REGIONS, getCountryForRegion } from "../data/regions";
 import { t } from "i18next";
+import { useSearchParams } from "next/navigation";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import PublicIcon from "@mui/icons-material/Public";
 
@@ -50,7 +52,6 @@ function ZoomListener({
         };
 
         handleZoom();
-
         map.on("zoomend", handleZoom);
 
         return () => {
@@ -89,8 +90,8 @@ export default function MapComponent({
     jobs,
     error
 }: MapComponentProps) {
+    const searchParams = useSearchParams();
     const [, setCurrentZoom] = useState(8);
-
     const [country, setCountry] = useState<Country>("ES");
     const [selectedRegionName, setSelectedRegionName] = useState<string | null>(
         null
@@ -104,6 +105,16 @@ export default function MapComponent({
     const handleOpen = (e: React.MouseEvent<HTMLElement>) =>
         setAnchorEl(e.currentTarget);
     const handleClose = () => setAnchorEl(null);
+
+    useEffect(() => {
+        const regionParam = searchParams.get("region");
+        if (!regionParam) return;
+        const detectedCountry = getCountryForRegion(regionParam);
+        if (detectedCountry) {
+            setCountry(detectedCountry);
+            setSelectedRegionName(regionParam);
+        }
+    }, [searchParams]);
 
     if (error) return <div>Error: {error}</div>;
     if (dataType === "houses" && !housings && !HOUSES.length)
@@ -216,7 +227,6 @@ export default function MapComponent({
                                 >
                                     {t("home.regionSelector.spain")}
                                 </ToggleButton>
-
                                 <ToggleButton
                                     value="FR"
                                     sx={{
@@ -245,6 +255,41 @@ export default function MapComponent({
                             )}
                         </Stack>
 
+                        <Box
+                            sx={{
+                                mt: 1.5,
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: 0.75,
+                                maxWidth: 280
+                            }}
+                        >
+                            {REGIONS[country].map((name) => (
+                                <Chip
+                                    key={name}
+                                    label={name}
+                                    size="small"
+                                    onClick={() => {
+                                        setSelectedRegionName(name);
+                                        handleClose();
+                                    }}
+                                    sx={{
+                                        cursor: "pointer",
+                                        bgcolor:
+                                            selectedRegionName === name
+                                                ? country === "ES"
+                                                    ? "#5E7749"
+                                                    : "#2D5B8A"
+                                                : undefined,
+                                        color:
+                                            selectedRegionName === name
+                                                ? "white"
+                                                : undefined
+                                    }}
+                                />
+                            ))}
+                        </Box>
+
                         {selectedRegionName && (
                             <Chip
                                 size="small"
@@ -266,23 +311,19 @@ export default function MapComponent({
                     style={{ height: "calc(100vh - 120px)", width: "100%" }}
                 >
                     <MapViewController center={view.center} zoom={view.zoom} />
-
                     <ZoomListener
                         onZoomChange={(value) => setCurrentZoom(value)}
                     />
-
                     <TileLayer
                         attribution='&copy; OpenStreetMap contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
                         url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                         subdomains={["a", "b", "c", "d"]}
                     />
-
                     <NutsRegionsLayer
                         country={country}
                         selectedName={selectedRegionName}
                         onSelectName={(name) => setSelectedRegionName(name)}
                     />
-
                     <MarkerClusterGroup
                         chunkedLoading
                         maxClusterRadius={45}
@@ -294,7 +335,6 @@ export default function MapComponent({
                             [...JOBS, ...(jobs || [])].map((job) => {
                                 if (!job.latitude || !job.longitude)
                                     return null;
-
                                 return (
                                     <Marker
                                         key={`job-${job.id}`}
@@ -380,18 +420,15 @@ export default function MapComponent({
                                                     }}
                                                 />
                                             )}
-
                                             <Typography
                                                 variant="h6"
                                                 sx={{ fontWeight: "bold" }}
                                             >
                                                 {house.title}
                                             </Typography>
-
                                             <Typography variant="body1">
                                                 {house.address}
                                             </Typography>
-
                                             <Typography
                                                 variant="body2"
                                                 color="textSecondary"
@@ -399,7 +436,6 @@ export default function MapComponent({
                                             >
                                                 {house.price} €
                                             </Typography>
-
                                             <Button
                                                 variant="contained"
                                                 sx={{
