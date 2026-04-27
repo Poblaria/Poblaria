@@ -25,7 +25,7 @@ export const REGIONS: Record<Country, string[]> = {
     ]
 };
 
-function normalizeRegionName(region: string): string {
+export function normalizeRegionName(region: string): string {
     return region.replace(/['\u2019]/g, "'");
 }
 
