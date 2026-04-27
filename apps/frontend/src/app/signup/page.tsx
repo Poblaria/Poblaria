@@ -20,7 +20,7 @@ import { useState } from "react";
 import register from "@/app/actions/auth/register";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useTranslation } from "react-i18next";
-import { REGIONS } from "@/app/explore/data/regions";
+import { REGIONS, type Country } from "@/app/explore/data/regions";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -31,7 +31,7 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [region, setRegion] = useState("");
-    const [selectedCountry, setSelectedCountry] = useState<"ES" | "FR" | null>(
+    const [selectedCountry, setSelectedCountry] = useState<Country | null>(
         null
     );
 

@@ -26,7 +26,11 @@ import type { HousingsResponse } from "@actions/housings/getHousings";
 import type { JobsResponse } from "@actions/jobs/getJobs";
 import Link from "next/link";
 import NutsRegionsLayer, { type Country } from "./NutsRegionsLayer";
-import { REGIONS, getCountryForRegion } from "../data/regions";
+import {
+    REGIONS,
+    getCountryForRegion,
+    normalizeRegionName
+} from "../data/regions";
 import { t } from "i18next";
 import { useSearchParams } from "next/navigation";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
@@ -112,7 +116,7 @@ export default function MapComponent({
         const detectedCountry = getCountryForRegion(regionParam);
         if (detectedCountry) {
             setCountry(detectedCountry);
-            setSelectedRegionName(regionParam.replace(/\u2019/g, "'"));
+            setSelectedRegionName(normalizeRegionName(regionParam));
         }
     }, [searchParams]);
 
@@ -323,7 +327,7 @@ export default function MapComponent({
                         country={country}
                         selectedName={selectedRegionName}
                         onSelectName={(name) =>
-                            setSelectedRegionName(name.replace(/\u2019/g, "'"))
+                            setSelectedRegionName(normalizeRegionName(name))
                         }
                     />
                     <MarkerClusterGroup
