@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation";
 import {
     Box,
     Button,
+    ButtonBase,
     MenuItem,
     Paper,
     TextField,
     Typography,
     InputAdornment
 } from "@mui/material";
+
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -18,6 +20,7 @@ import { useState } from "react";
 import register from "@/app/actions/auth/register";
 import { useAuth } from "@/components/providers/AuthProvider";
 import { useTranslation } from "react-i18next";
+import { REGIONS, type Country } from "@/app/explore/data/regions";
 
 export default function SignupPage() {
     const router = useRouter();
@@ -28,6 +31,9 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [region, setRegion] = useState("");
+    const [selectedCountry, setSelectedCountry] = useState<Country | null>(
+        null
+    );
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -39,11 +45,7 @@ export default function SignupPage() {
 
         void (async () => {
             try {
-                const result = await register({
-                    fullName,
-                    email,
-                    password
-                });
+                const result = await register({ fullName, email, password });
 
                 if (result?.error) {
                     if (
@@ -66,11 +68,13 @@ export default function SignupPage() {
                 }
 
                 await refreshUser();
-                router.push("/");
+                router.push(
+                    region
+                        ? `/explore?region=${encodeURIComponent(region)}`
+                        : "/explore"
+                );
             } catch (err) {
-                const errorMessage =
-                    err instanceof Error ? err.message : "generic";
-                setError(errorMessage);
+                setError(err instanceof Error ? err.message : "generic");
             } finally {
                 setLoading(false);
             }
@@ -168,24 +172,82 @@ export default function SignupPage() {
                         }}
                     />
 
-                    <TextField
-                        select
-                        value={region}
-                        onChange={(e) => setRegion(e.target.value)}
-                        fullWidth
-                        variant="outlined"
-                        SelectProps={{ displayEmpty: true }}
-                        InputProps={{
-                            sx: {
-                                borderRadius: "14px",
-                                boxShadow: "0 8px 18px rgba(0,0,0,0.12)"
-                            }
+                    {/* Country + Region selector */}
+                    <Box
+                        sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 1.5
                         }}
                     >
-                        <MenuItem value="" disabled>
-                            {t("auth.signup.placeholders.region")}
-                        </MenuItem>
-                    </TextField>
+                        <Box sx={{ display: "flex", gap: 2 }}>
+                            {(["ES", "FR"] as const).map((c) => (
+                                <ButtonBase
+                                    key={c}
+                                    onClick={() => {
+                                        setRegion("");
+                                        setSelectedCountry(c);
+                                    }}
+                                    aria-pressed={selectedCountry === c}
+                                    aria-label={
+                                        c === "ES"
+                                            ? t("home.regionSelector.spain")
+                                            : t("home.regionSelector.france")
+                                    }
+                                    sx={{
+                                        flex: 1,
+                                        py: 1.5,
+                                        borderRadius: "14px",
+                                        border:
+                                            selectedCountry === c
+                                                ? "2px solid #83A16C"
+                                                : "2px solid #e0e0e0",
+                                        backgroundColor:
+                                            selectedCountry === c
+                                                ? "#f0f5ec"
+                                                : "white",
+                                        textAlign: "center",
+                                        fontWeight: 600,
+                                        fontSize: 15,
+                                        boxShadow:
+                                            "0 8px 18px rgba(0,0,0,0.08)",
+                                        transition: "all 0.15s"
+                                    }}
+                                >
+                                    {c === "ES"
+                                        ? `🇪🇸 ${t("home.regionSelector.spain")}`
+                                        : `🇫🇷 ${t("home.regionSelector.france")}`}
+                                </ButtonBase>
+                            ))}
+                        </Box>
+
+                        {selectedCountry && (
+                            <TextField
+                                select
+                                value={region}
+                                onChange={(e) => setRegion(e.target.value)}
+                                fullWidth
+                                required
+                                variant="outlined"
+                                SelectProps={{ displayEmpty: true }}
+                                InputProps={{
+                                    sx: {
+                                        borderRadius: "14px",
+                                        boxShadow: "0 8px 18px rgba(0,0,0,0.12)"
+                                    }
+                                }}
+                            >
+                                <MenuItem value="" disabled>
+                                    {t("auth.signup.placeholders.region")}
+                                </MenuItem>
+                                {REGIONS[selectedCountry].map((r) => (
+                                    <MenuItem key={r} value={r}>
+                                        {r}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        )}
+                    </Box>
 
                     {error && (
                         <Typography
