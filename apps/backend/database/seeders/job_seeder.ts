@@ -16,6 +16,8 @@ import JobIndustry from "#models/job_industry";
 import jobs from "#data/jobs";
 import locations from "#data/locations";
 
+const GENERIC_LOCATIONS = new Set(["Spain", "France"]);
+
 const jobTypes = await JobType.all();
 const jobIndustries = await JobIndustry.all();
 
@@ -51,22 +53,30 @@ export default class extends BaseSeeder {
     async run() {
         await Job.updateOrCreateMany(
             "title",
-            jobs.map((job) => ({
-                title: job.jobTitle,
-                description: job.description,
-                company: job.company,
-                address: job.longLocation,
-                salary: job.avgAnnualSalaryUsd,
-                typeId: getJobTypeId(job.employmentStatuses[0]),
-                industryId: getJobIndustryId(job.companyObject.industry),
-                isRemote: job.remote,
-                latitude:
-                    job.latitude ??
-                    locations.find((location) => location.location === job.location)?.latitude,
-                longitude:
-                    job.longitude ??
-                    locations.find((location) => location.location === job.location)?.longitude
-            }))
+            jobs.map((job) => {
+                const resolvedLocation = locations.find(
+                    (location) => location.location === job.location
+                );
+                const isGenericLocation =
+                    resolvedLocation && GENERIC_LOCATIONS.has(resolvedLocation.location);
+
+                return {
+                    title: job.jobTitle,
+                    description: job.description,
+                    company: job.company,
+                    address: job.longLocation,
+                    salary: job.avgAnnualSalaryUsd,
+                    typeId: getJobTypeId(job.employmentStatuses[0]),
+                    industryId: getJobIndustryId(job.companyObject.industry),
+                    isRemote: job.remote,
+                    latitude:
+                        job.latitude ??
+                        (!isGenericLocation ? resolvedLocation?.latitude : undefined),
+                    longitude:
+                        job.longitude ??
+                        (!isGenericLocation ? resolvedLocation?.longitude : undefined)
+                };
+            })
         );
     }
 }

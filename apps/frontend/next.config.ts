@@ -4,7 +4,10 @@ const nextConfig: NextConfig = {
     reactStrictMode: true,
     transpilePackages: ["@poblaria/backend"],
     experimental: {
-        typedEnv: true
+        typedEnv: true,
+        serverActions: {
+            bodySizeLimit: "20mb"
+        }
     },
     webpack: (config: {
         resolve: { extensionAlias: Record<string, string[]> };
