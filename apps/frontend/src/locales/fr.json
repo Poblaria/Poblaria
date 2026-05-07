@@ -157,6 +157,41 @@
             "desc": "Explorez des villages, des opportunités de logement, des emplois et des ressources locales conçus pour vous aider à imaginer une nouvelle vie dans une communauté rurale.",
             "button": "Commencer à explorer"
         }
+    },
+"contact": {
+    "hero": {
+      "label": "Contactez-nous",
+      "title": "Construisons ensemble un meilleur avenir rural.",
+      "desc": "Vous avez une question, une idée ou souhaitez collaborer avec Poblaria ? Nous serions ravis d’échanger avec vous."
+    },
+    "info": {
+      "title": "Entrer en contact",
+      "desc": "Que vous soyez un village, une organisation ou une personne intéressée par la vie rurale, Poblaria est là pour connecter les personnes, les opportunités et les communautés locales.",
+      "email": {
+        "title": "E-mail",
+        "text": "contact@poblaria.com"
+      },
+      "phone": {
+        "title": "Téléphone",
+        "text": "+34 600 000 000"
+      },
+      "location": {
+        "title": "Localisation",
+        "text": "Barcelone, Espagne"
+      }
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "subject": "Sujet",
+      "message": "Message",
+      "button": "Envoyer le message"
+    },
+    "cta": {
+      "title": "Prêt à commencer la conversation ?",
+      "desc": "Ensemble, nous pouvons aider les communautés rurales à se développer à nouveau et créer de nouvelles opportunités pour les personnes à la recherche d’un nouveau mode de vie.",
+      "button": "Contacter Poblaria"
     }
-
+    }
 }

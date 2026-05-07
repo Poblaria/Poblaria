@@ -121,42 +121,78 @@
     }, 
 
     "about": {
-    "badge": "SOBRE NOSOTROS",
+        "badge": "SOBRE NOSOTROS",
 
-    "hero": {
-        "title1": "Sobre",
-        "title2": "Poblaria",
-        "desc1": "Poblaria es una plataforma creada para ayudar a las personas a descubrir nuevas oportunidades de vida en áreas rurales, conectándolas con viviendas, empleos, servicios y comunidades locales reales.",
-        "desc2": "Nuestra misión es apoyar la revitalización de los pueblos haciendo que la reubicación sea más fácil, más humana y más accesible.",
-        "button": "Explorar pueblos"
-    },
-
-    "mission": {
-        "title": "Nuestra misión",
-        "desc": "Queremos hacer que la vida rural sea visible, atractiva y realista, ofreciendo a las personas la información y las herramientas necesarias para dar el primer paso."
-    },
-
-    "features": {
-        "revitalize": {
-            "title": "Revitalizar pueblos",
-            "desc": "Ayudamos a las zonas rurales a ganar visibilidad mostrando sus viviendas, empleos y oportunidades de estilo de vida."
+        "hero": {
+            "title1": "Sobre",
+            "title2": "Poblaria",
+            "desc1": "Poblaria es una plataforma creada para ayudar a las personas a descubrir nuevas oportunidades de vida en áreas rurales, conectándolas con viviendas, empleos, servicios y comunidades locales reales.",
+            "desc2": "Nuestra misión es apoyar la revitalización de los pueblos haciendo que la reubicación sea más fácil, más humana y más accesible.",
+            "button": "Explorar pueblos"
         },
 
-        "connect": {
-            "title": "Conectar personas",
-            "desc": "Poblaria conecta a personas que buscan una nueva vida con comunidades preparadas para recibir nuevos residentes."
+        "mission": {
+            "title": "Nuestra misión",
+            "desc": "Queremos hacer que la vida rural sea visible, atractiva y realista, ofreciendo a las personas la información y las herramientas necesarias para dar el primer paso."
         },
 
-        "future": {
-            "title": "Construir un mejor futuro",
-            "desc": "Creemos que la vida rural puede ofrecer equilibrio, sostenibilidad y conexiones humanas más fuertes."
+        "features": {
+            "revitalize": {
+                "title": "Revitalizar pueblos",
+                "desc": "Ayudamos a las zonas rurales a ganar visibilidad mostrando sus viviendas, empleos y oportunidades de estilo de vida."
+            },
+
+            "connect": {
+                "title": "Conectar personas",
+                "desc": "Poblaria conecta a personas que buscan una nueva vida con comunidades preparadas para recibir nuevos residentes."
+            },
+
+            "future": {
+                "title": "Construir un mejor futuro",
+                "desc": "Creemos que la vida rural puede ofrecer equilibrio, sostenibilidad y conexiones humanas más fuertes."
+            }
+        },
+
+        "cta": {
+            "title": "¿Listo para descubrir tu próximo lugar?",
+            "desc": "Explora pueblos, oportunidades de vivienda, empleos y recursos locales diseñados para ayudarte a imaginar una nueva vida en una comunidad rural.",
+            "button": "Comenzar a explorar"
         }
     },
-
+"contact": {
+    "hero": {
+      "label": "Contáctanos",
+      "title": "Construyamos juntos un mejor futuro rural.",
+      "desc": "¿Tienes una pregunta, una idea o quieres colaborar con Poblaria? Nos encantaría saber de ti."
+    },
+    "info": {
+      "title": "Ponte en contacto",
+      "desc": "Ya seas un pueblo, una organización o alguien interesado en mudarse a una zona rural, Poblaria está aquí para conectar personas, oportunidades y comunidades locales.",
+      "email": {
+        "title": "Correo electrónico",
+        "text": "contact@poblaria.com"
+      },
+      "phone": {
+        "title": "Teléfono",
+        "text": "+34 600 000 000"
+      },
+      "location": {
+        "title": "Ubicación",
+        "text": "Barcelona, España"
+      }
+    },
+    "form": {
+      "title": "Envíanos un mensaje",
+      "name": "Nombre completo",
+      "email": "Correo electrónico",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "button": "Enviar mensaje"
+    },
     "cta": {
-        "title": "¿Listo para descubrir tu próximo lugar?",
-        "desc": "Explora pueblos, oportunidades de vivienda, empleos y recursos locales diseñados para ayudarte a imaginar una nueva vida en una comunidad rural.",
-        "button": "Comenzar a explorar"
+      "title": "¿Listo para comenzar la conversación?",
+      "desc": "Juntos podemos ayudar a que las comunidades rurales vuelvan a crecer y crear nuevas oportunidades para las personas que buscan una nueva forma de vida.",
+      "button": "Contactar con Poblaria"
     }
-}
+  }
 }
