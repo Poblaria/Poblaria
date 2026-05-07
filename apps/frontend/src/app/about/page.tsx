@@ -12,8 +12,11 @@ import {
     Groups as GroupsIcon,
     FavoriteBorder as FavoriteBorderIcon
 } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
+
 
 export default function AboutPage() {
+    const { t, i18n } = useTranslation();
     const accent = "#5E7749";
     const light = "#EEF1EA";
 
@@ -69,7 +72,7 @@ export default function AboutPage() {
                                     mb: 3
                                 }}
                             >
-                                ABOUT US
+                                {t("about.badge")}
                             </Typography>
 
                             <Typography
@@ -84,9 +87,9 @@ export default function AboutPage() {
                                     mb: 4
                                 }}
                             >
-                                About <br />
+                                {t("about.hero.title1")} <br />
                                 <span style={{ color: accent }}>
-                                    Poblaria
+                                    {t("about.hero.title2")} 
                                 </span>
                             </Typography>
 
@@ -109,10 +112,7 @@ export default function AboutPage() {
                                     mb: 4
                                 }}
                             >
-                                Poblaria is a platform created to help people
-                                discover new life opportunities in rural areas,
-                                connecting them with housing, jobs, services
-                                and real local communities.
+                             {t("about.hero.desc1")} 
                             </Typography>
 
                             <Typography
@@ -124,14 +124,12 @@ export default function AboutPage() {
                                     mb: 5
                                 }}
                             >
-                                Our mission is to support village revitalization
-                                by making relocation easier, more human and more
-                                accessible.
+                                {t("about.hero.desc2")} 
                             </Typography>
 
                             <Link href="/explore">
                                 <Button sx={buttonSx}>
-                                    Explore Villages
+                                    {t("about.hero.button")} 
                                 </Button>
                             </Link>
                         </Box>
@@ -219,7 +217,7 @@ export default function AboutPage() {
                                 mb: 2
                             }}
                         >
-                            Our Mission
+                            {t("about.mission.title")} 
                         </Typography>
 
                         <Box
@@ -242,9 +240,7 @@ export default function AboutPage() {
                                 lineHeight: 1.8
                             }}
                         >
-                            We want to make rural living visible, attractive
-                            and realistic by giving people the information and
-                            tools they need to take the first step.
+                            {t("about.mission.desc")} 
                         </Typography>
                     </Box>
 
@@ -260,20 +256,20 @@ export default function AboutPage() {
                         }}
                     >
                         {[
-                            {
+                         {
                                 icon: <ForestIcon />,
-                                title: "Revitalize Villages",
-                                desc: "We help rural areas become more visible by showing their housing, jobs and lifestyle opportunities."
+                                title: t("about.features.revitalize.title"),
+                                desc: t("about.features.revitalize.desc")
                             },
                             {
                                 icon: <GroupsIcon />,
-                                title: "Connect People",
-                                desc: "Poblaria connects people who want a new life with communities ready to welcome new residents."
+                                title:t("about.features.connect.title"),
+                                desc: t("about.features.connect.desc")
                             },
                             {
                                 icon: <FavoriteBorderIcon />,
-                                title: "Build a Better Future",
-                                desc: "We believe rural life can offer balance, sustainability and stronger human connection."
+                                title: t("about.features.future.title"),
+                                desc: t("about.features.future.desc"),
                             }
                         ].map((item, i) => (
                             <Box
@@ -368,7 +364,7 @@ export default function AboutPage() {
                                 color: "#1F1F1F"
                             }}
                         >
-                            Ready to discover your next place?
+                            {t("about.cta.title")}
                         </Typography>
 
                         <Typography
@@ -379,14 +375,12 @@ export default function AboutPage() {
                                 mb: 5
                             }}
                         >
-                            Explore villages, housing opportunities, jobs and
-                            local resources designed to help you imagine a new
-                            life in a rural community.
+                            {t("about.cta.desc")}
                         </Typography>
 
                         <Link href="/explore">
                             <Button sx={buttonSx}>
-                                Start Exploring
+                                {t("about.cta.button")}
                             </Button>
                         </Link>
                     </Box>

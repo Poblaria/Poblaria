@@ -117,5 +117,46 @@
         "growth_positive": "Augmentation de",
         "growth_units": "unités",
         "growth_none": "Aucune nouvelle entrée"
+    },
+
+    "about": {
+        "badge": "À PROPOS",
+
+        "hero": {
+            "title1": "À propos de",
+            "title2": "Poblaria",
+            "desc1": "Poblaria est une plateforme créée pour aider les personnes à découvrir de nouvelles opportunités de vie dans les zones rurales, en les connectant avec des logements, des emplois, des services et de véritables communautés locales.",
+            "desc2": "Notre mission est de soutenir la revitalisation des villages en rendant la relocalisation plus simple, plus humaine et plus accessible.",
+            "button": "Explorer les villages"
+        },
+
+        "mission": {
+            "title": "Notre mission",
+            "desc": "Nous voulons rendre la vie rurale visible, attractive et réaliste en donnant aux personnes les informations et les outils nécessaires pour faire le premier pas."
+        },
+
+        "features": {
+            "revitalize": {
+                "title": "Revitaliser les villages",
+                "desc": "Nous aidons les zones rurales à devenir plus visibles en mettant en avant leurs logements, emplois et opportunités de vie."
+            },
+
+            "connect": {
+                "title": "Connecter les personnes",
+                "desc": "Poblaria met en relation des personnes souhaitant une nouvelle vie avec des communautés prêtes à accueillir de nouveaux habitants."
+            },
+
+            "future": {
+                "title": "Construire un meilleur avenir",
+                "desc": "Nous croyons que la vie rurale peut offrir équilibre, durabilité et des liens humains plus forts."
+            }
+        },
+
+        "cta": {
+            "title": "Prêt à découvrir votre prochain endroit ?",
+            "desc": "Explorez des villages, des opportunités de logement, des emplois et des ressources locales conçus pour vous aider à imaginer une nouvelle vie dans une communauté rurale.",
+            "button": "Commencer à explorer"
+        }
     }
+
 }

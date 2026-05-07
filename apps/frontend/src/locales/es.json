@@ -118,5 +118,45 @@
         "growth_positive": "Ampliado por",
         "growth_units": "unidades",
         "growth_none": "Sin entradas nuevas"
+    }, 
+
+    "about": {
+    "badge": "SOBRE NOSOTROS",
+
+    "hero": {
+        "title1": "Sobre",
+        "title2": "Poblaria",
+        "desc1": "Poblaria es una plataforma creada para ayudar a las personas a descubrir nuevas oportunidades de vida en áreas rurales, conectándolas con viviendas, empleos, servicios y comunidades locales reales.",
+        "desc2": "Nuestra misión es apoyar la revitalización de los pueblos haciendo que la reubicación sea más fácil, más humana y más accesible.",
+        "button": "Explorar pueblos"
+    },
+
+    "mission": {
+        "title": "Nuestra misión",
+        "desc": "Queremos hacer que la vida rural sea visible, atractiva y realista, ofreciendo a las personas la información y las herramientas necesarias para dar el primer paso."
+    },
+
+    "features": {
+        "revitalize": {
+            "title": "Revitalizar pueblos",
+            "desc": "Ayudamos a las zonas rurales a ganar visibilidad mostrando sus viviendas, empleos y oportunidades de estilo de vida."
+        },
+
+        "connect": {
+            "title": "Conectar personas",
+            "desc": "Poblaria conecta a personas que buscan una nueva vida con comunidades preparadas para recibir nuevos residentes."
+        },
+
+        "future": {
+            "title": "Construir un mejor futuro",
+            "desc": "Creemos que la vida rural puede ofrecer equilibrio, sostenibilidad y conexiones humanas más fuertes."
+        }
+    },
+
+    "cta": {
+        "title": "¿Listo para descubrir tu próximo lugar?",
+        "desc": "Explora pueblos, oportunidades de vivienda, empleos y recursos locales diseñados para ayudarte a imaginar una nueva vida en una comunidad rural.",
+        "button": "Comenzar a explorar"
     }
+}
 }

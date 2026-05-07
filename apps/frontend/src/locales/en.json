@@ -116,5 +116,45 @@
             "content_placeholder": "Write your message here...",
             "compose": "Compose Newsletter"
         }
+    },
+
+    "about": {
+    "badge": "ABOUT US",
+
+    "hero": {
+        "title1": "About",
+        "title2": "Poblaria",
+        "desc1": "Poblaria is a platform created to help people discover new life opportunities in rural areas, connecting them with housing, jobs, services and real local communities.",
+        "desc2": "Our mission is to support village revitalization by making relocation easier, more human and more accessible.",
+        "button": "Explore Villages"
+    },
+
+    "mission": {
+        "title": "Our Mission",
+        "desc": "We want to make rural living visible, attractive and realistic by giving people the information and tools they need to take the first step."
+    },
+
+    "features": {
+        "revitalize": {
+            "title": "Revitalize Villages",
+            "desc": "We help rural areas become more visible by showing their housing, jobs and lifestyle opportunities."
+        },
+
+        "connect": {
+            "title": "Connect People",
+            "desc": "Poblaria connects people who want a new life with communities ready to welcome new residents."
+        },
+
+        "future": {
+            "title": "Build a Better Future",
+            "desc": "We believe rural life can offer balance, sustainability and stronger human connection."
+        }
+    },
+
+    "cta": {
+        "title": "Ready to discover your next place?",
+        "desc": "Explore villages, housing opportunities, jobs and local resources designed to help you imagine a new life in a rural community.",
+        "button": "Start Exploring"
     }
+}
 }
