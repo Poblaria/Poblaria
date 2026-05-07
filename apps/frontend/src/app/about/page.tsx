@@ -39,7 +39,7 @@ export default function AboutPage() {
             <Box
                 sx={{
                     py: { xs: 10, md: 16 },
-                    position: "relative"
+                    position: "relaive"
                 }}
             >
                 <Container maxWidth="xl">
@@ -175,21 +175,6 @@ export default function AboutPage() {
                                     boxShadow:
                                         "0 20px 50px rgba(0,0,0,0.15)",
                                     zIndex: 2
-                                }}
-                            />
-
-                            {/* BACKGROUND SHAPE */}
-                            <Box
-                                sx={{
-                                    position: "absolute",
-                                    right: 0,
-                                    top: 80,
-                                    width: 220,
-                                    height: 220,
-                                    bgcolor: "#E7EEDC",
-                                    borderRadius: "40px",
-                                    zIndex: 0,
-                                    filter: "blur(4px)"
                                 }}
                             />
 
